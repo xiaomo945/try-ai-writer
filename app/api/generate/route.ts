@@ -105,7 +105,8 @@ export async function POST(request: NextRequest) {
     const systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
 
     const apiKey = process.env.CLAUDE_API_KEY;
-    if (!apiKey) {
+    const isMockMode = !apiKey || apiKey === "sk-ant-xxxxx" || apiKey.startsWith("your-");
+    if (isMockMode) {
       const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
       return new Response(mockText, {
         headers: {
