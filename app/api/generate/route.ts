@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,31 +22,68 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "API key not configured" }, { status: 500 });
     }
 
-    const anthropic = new Anthropic({ apiKey });
-
-    const stream = anthropic.messages.stream({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 4096,
-      messages: [{ role: "user", content: systemPrompt }],
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4096,
+        stream: true,
+        messages: [{ role: "user", content: systemPrompt }],
+      }),
     });
 
+    if (!response.ok) {
+      const errBody = await response.text();
+      return Response.json(
+        { error: `Claude API error: ${response.status} - ${errBody}` },
+        { status: response.status }
+      );
+    }
+
+    const reader = response.body?.getReader();
+    if (!reader) {
+      return Response.json({ error: "No stream available" }, { status: 500 });
+    }
+
+    const decoder = new TextDecoder();
     const encoder = new TextEncoder();
-    const readable = new ReadableStream({
+
+    const stream = new ReadableStream({
       async start(controller) {
-        stream.on("text", (textDelta: string) => {
-          controller.enqueue(encoder.encode(textDelta));
-        });
-        stream.on("error", (error) => {
-          controller.enqueue(encoder.encode(`\n\n[Error: ${error.message}]`));
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split("\n");
+            for (const line of lines) {
+              if (line.startsWith("data: ")) {
+                const data = line.slice(6);
+                if (data === "[DONE]") continue;
+                try {
+                  const parsed = JSON.parse(data);
+                  if (parsed.type === "content_block_delta" && parsed.delta?.text) {
+                    controller.enqueue(encoder.encode(parsed.delta.text));
+                  }
+                } catch {
+                  // ignore parse errors
+                }
+              }
+            }
+          }
           controller.close();
-        });
-        stream.on("end", () => {
-          controller.close();
-        });
+        } catch (error) {
+          controller.error(error);
+        }
       },
     });
 
-    return new Response(readable, {
+    return new Response(stream, {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
         "Cache-Control": "no-cache",

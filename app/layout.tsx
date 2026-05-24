@@ -2,8 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tryaiwriter.com"),
   title: "Use AI Writer — Affordable AI Writing Tool | Try Free",
   description: "Write blog posts, emails, and social media content 3x faster. The most affordable AI writer with deep context awareness. Start free — no credit card required.",
+  openGraph: {
+    title: "Use AI Writer — Affordable AI Writing Tool",
+    description: "Write blog posts, emails, and social media content 3x faster.",
+    url: "https://tryaiwriter.com",
+    siteName: "Use AI Writer",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Use AI Writer",
+    description: "Write blog posts, emails, and social media content 3x faster.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
