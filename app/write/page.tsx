@@ -21,7 +21,21 @@ export default function WriteEditor() {
   const [error, setError] = useState<string | null>(null);
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [savedToast, setSavedToast] = useState(false);
+  const [model, setModel] = useState<string>("mock");
   const resultRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function fetchModel() {
+      try {
+        const res = await fetch("/api/model");
+        const data = await res.json();
+        setModel(data.model);
+      } catch {
+        // ignore
+      }
+    }
+    fetchModel();
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -166,7 +180,7 @@ export default function WriteEditor() {
         {/* Left: Input */}
         <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
           {/* Mode Selector */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             {modes.map(({ key, label }) => (
               <button
                 key={key}
@@ -180,6 +194,13 @@ export default function WriteEditor() {
                 {label}
               </button>
             ))}
+            <span className="ml-auto px-3 py-1.5 rounded-full text-xs font-medium bg-slate-200 dark:bg-gray-700 text-slate-700 dark:text-slate-300">
+              {model === "deepseek"
+                ? "🧠 DeepSeek"
+                : model === "claude"
+                ? "🤖 Claude"
+                : "🎭 模拟模式（配置 API Key 后启用真实 AI）"}
+            </span>
           </div>
 
           {/* Prompt Input */}

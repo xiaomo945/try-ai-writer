@@ -1,4 +1,7 @@
 import { NextRequest } from "next/server";
+import { generateDeepSeekStream } from "@/lib/ai-providers/deepseek";
+import { generateClaudeStream } from "@/lib/ai-providers/claude";
+import { checkCostLimit, trackCost } from "@/lib/cost-control";
 
 type ModePrompt = {
   blog: string;
@@ -88,8 +91,10 @@ The best part? They learn your style and get better every time.
 Try it free today. Your future self will thank you. ✨
 
 #AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude API key in the environment variables.`,
+  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your API key in the environment variables.`,
 };
+
+type AIProvider = "deepseek" | "claude" | "mock";
 
 export async function POST(request: NextRequest) {
   try {
@@ -104,8 +109,18 @@ export async function POST(request: NextRequest) {
     const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
     const systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
 
-    const apiKey = process.env.CLAUDE_API_KEY;
-    const isMockMode = !apiKey || apiKey === "sk-ant-xxxxx" || apiKey.startsWith("your-");
+    const aiProvider = (process.env.AI_PROVIDER || "mock") as AIProvider;
+    const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
+    const claudeApiKey = process.env.CLAUDE_API_KEY;
+    
+    let isMockMode = aiProvider === "mock";
+    if (aiProvider === "deepseek" && (!deepseekApiKey || deepseekApiKey.startsWith("your-"))) {
+      isMockMode = true;
+    }
+    if (aiProvider === "claude" && (!claudeApiKey || claudeApiKey.startsWith("your-"))) {
+      isMockMode = true;
+    }
+
     if (isMockMode) {
       const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
       return new Response(mockText, {
@@ -115,66 +130,37 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4096,
-        stream: true,
-        messages: [{ role: "user", content: systemPrompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errBody = await response.text();
-      return Response.json(
-        { error: `Claude API error: ${response.status} - ${errBody}` },
-        { status: response.status }
-      );
+    // Cost check (using dummy userId for now)
+    const userId = "anonymous";
+    if (!checkCostLimit(userId)) {
+      return Response.json({ error: "今日服务繁忙，请稍后再试" }, { status: 429 });
     }
 
-    const reader = response.body?.getReader();
-    if (!reader) {
-      return Response.json({ error: "No stream available" }, { status: 500 });
+    let stream: ReadableStream<Uint8Array>;
+    let model: AIProvider;
+
+    if (aiProvider === "deepseek" && deepseekApiKey) {
+      stream = await generateDeepSeekStream(deepseekApiKey, [
+        { role: "user", content: systemPrompt },
+      ]);
+      model = "deepseek";
+    } else if (aiProvider === "claude" && claudeApiKey) {
+      stream = await generateClaudeStream(claudeApiKey, [
+        { role: "user", content: systemPrompt },
+      ]);
+      model = "claude";
+    } else {
+      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
+      return new Response(mockText, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+        },
+      });
     }
 
-    const decoder = new TextDecoder();
-    const encoder = new TextEncoder();
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split("\n");
-            for (const line of lines) {
-              if (line.startsWith("data: ")) {
-                const data = line.slice(6);
-                if (data === "[DONE]") continue;
-                try {
-                  const parsed = JSON.parse(data);
-                  if (parsed.type === "content_block_delta" && parsed.delta?.text) {
-                    controller.enqueue(encoder.encode(parsed.delta.text));
-                  }
-                } catch {
-                  // ignore parse errors
-                }
-              }
-            }
-          }
-          controller.close();
-        } catch (error) {
-          controller.error(error);
-        }
-      },
-    });
+    // Track cost after successful stream start
+    // Estimate tokens as 2000 (rough estimate for max_tokens 4096)
+    trackCost(userId, model, 2000);
 
     return new Response(stream, {
       headers: {
