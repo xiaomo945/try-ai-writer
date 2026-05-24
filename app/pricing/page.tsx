@@ -14,6 +14,7 @@ type Plan = {
   features: string[];
   cta: string;
   popular?: boolean;
+  recommended?: boolean;
 };
 
 type FAQ = {
@@ -25,23 +26,31 @@ const plans: Plan[] = [
   {
     name: "Free",
     price: "$0",
-    description: "For casual writers",
-    features: ["10 generations/day", "Basic templates", "Email support"],
+    description: "Free to get started",
+    features: ["0 Claude generations/month", "10 DeepSeek generations/day", "Basic templates", "Email support"],
     cta: "Get Started",
   },
   {
     name: "Pro",
-    price: "$5",
-    description: "For serious creators",
-    features: ["100 generations/day", "All templates", "API access", "Priority support", "Custom tone"],
+    price: "$9",
+    description: "Best value for money",
+    features: ["50 Claude generations/month", "100 DeepSeek generations/day", "All templates", "API access", "Priority support", "Custom tone"],
     cta: "Start Pro",
+    recommended: true,
+  },
+  {
+    name: "Max",
+    price: "$25",
+    description: "Most popular",
+    features: ["300 Claude generations/month", "Unlimited DeepSeek generations", "All templates", "API access", "Priority support", "Custom tone", "Brand kit"],
+    cta: "Start Max",
     popular: true,
   },
   {
     name: "Team",
-    price: "$15",
-    description: "For small teams",
-    features: ["Unlimited generations", "5 members", "Priority support", "API access", "Brand kit", "Analytics"],
+    price: "$59",
+    description: "For 5-person teams",
+    features: ["1000 Claude generations/month", "Unlimited DeepSeek generations", "All templates", "API access", "Priority support", "Brand kit", "Analytics", "5 team members"],
     cta: "Start Team",
   },
 ];
@@ -65,38 +74,43 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="w-full bg-slate-50 dark:bg-gray-900 py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`card flex flex-col ${plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
-              >
-                {plan.popular && (
-                  <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Popular
-                  </span>
-                )}
-                <h3 className="text-2xl font-display font-extrabold mb-2">{plan.name}</h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">{plan.description}</p>
-                <p className="text-4xl font-bold mb-6">
-                  {plan.price}
-                  <span className="text-lg font-normal text-slate-500">/mo</span>
-                </p>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <Check size={18} className="text-emerald-600 flex-shrink-0" />
-                      <span className="text-slate-700 dark:text-slate-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/login" className={plan.popular ? "btn-primary w-full" : "btn-outline w-full"}>
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {plans.map((plan) => (
+                <div
+                  key={plan.name}
+                  className={`card flex flex-col ${plan.recommended || plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
+                >
+                  {plan.recommended && (
+                    <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                      Recommended
+                    </span>
+                  )}
+                  {plan.popular && (
+                    <span className="absolute top-0 right-6 -translate-y-1/2 bg-teal-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                      Most Popular
+                    </span>
+                  )}
+                  <h3 className="text-2xl font-display font-extrabold mb-2">{plan.name}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 mb-6">{plan.description}</p>
+                  <p className="text-4xl font-bold mb-6">
+                    {plan.price}
+                    <span className="text-lg font-normal text-slate-500">/mo</span>
+                  </p>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2">
+                        <Check size={18} className="text-emerald-600 flex-shrink-0" />
+                        <span className="text-slate-700 dark:text-slate-300">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/login" className={(plan.recommended || plan.popular) ? "btn-primary w-full" : "btn-outline w-full"}>
+                    {plan.cta}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
       </section>
 
       {/* FAQ */}

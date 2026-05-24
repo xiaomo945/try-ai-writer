@@ -7,13 +7,14 @@ import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { analyzeTone } from "@/lib/tone-analyzer";
+import { AdReward } from "@/components/AdReward";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
 type CopyState = "idle" | "copied";
 
 export default function WriteEditor() {
-  const { used, limit, canGenerate, increment } = useUsage();
+  const { used, limit, canGenerate, increment, adBonus } = useUsage();
   const { records, addRecord } = useHistory();
   const { profile, samples, addSample, updateProfile, getContextPrompt } = useBrandVoice();
 
@@ -185,6 +186,9 @@ export default function WriteEditor() {
           <div className="flex items-center gap-4">
             <span className="text-sm text-slate-500 dark:text-slate-400">
               {used}/{limit} today
+              {adBonus > 0 && (
+                <span className="text-emerald-600 ml-1">(+{adBonus} bonus)</span>
+              )}
             </span>
             <Link href="/dashboard" className="text-sm text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
               Dashboard
@@ -250,10 +254,11 @@ export default function WriteEditor() {
                     Daily limit reached
                   </p>
                   <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
-                    You have used all {limit} free generations today. Upgrade to Pro for unlimited access.
+                    You have used all {limit} free generations today. Watch an ad or upgrade to Pro for more.
                   </p>
                 </div>
               </div>
+              <AdReward />
               <Link href="/pricing" className="btn-primary text-sm w-full text-center">
                 Upgrade to Pro
               </Link>

@@ -4,14 +4,32 @@ import { generateClaudeStream } from "@/lib/ai-providers/claude";
 import { checkCostLimit, trackCost } from "@/lib/cost-control";
 
 type ModePrompt = {
-  blog: string;
-  email: string;
-  social: string;
-  custom: string;
+  blog: { en: string; zh: string };
+  email: { en: string; zh: string };
+  social: { en: string; zh: string };
+  custom: { en: string; zh: string };
 };
 
+function detectLanguage(text: string): "en" | "zh" {
+  const chineseChars = text.match(/[\u4e00-\u9fff]/g);
+  if (chineseChars && chineseChars.length > text.length * 0.3) {
+    return "zh";
+  }
+  return "en";
+}
+
+function isCreativeWriting(prompt: string): boolean {
+  const creativeKeywords = [
+    "小说", "故事", "创作", "穿越", "重生", "言情", "武侠", "科幻", "玄幻",
+    "novel", "story", "fiction", "creative writing", "fanfiction", "fantasy"
+  ];
+  const lowerPrompt = prompt.toLowerCase();
+  return creativeKeywords.some(keyword => lowerPrompt.includes(keyword));
+}
+
 const modePrompts: ModePrompt = {
-  blog: `You are an expert blog writer. Write a comprehensive, engaging blog post using markdown formatting. Requirements:
+  blog: {
+    en: `You are an expert blog writer. Write a comprehensive, engaging blog post using markdown formatting. Requirements:
 - Start with a compelling H2 title
 - Include at least 3 H3 subheadings
 - Use bullet points or numbered lists where appropriate
@@ -19,7 +37,17 @@ const modePrompts: ModePrompt = {
 - Keep paragraphs concise (3-4 sentences max)
 
 Topic: `,
-  email: `You are a professional email copywriter. Write a polished, persuasive email. Requirements:
+    zh: `你是一位专业的博客作者。请使用 Markdown 格式撰写一篇全面且吸引人的博客文章。要求：
+- 以引人入胜的 H2 标题开头
+- 至少包含 3 个 H3 子标题
+- 在合适的地方使用项目符号或编号列表
+- 以强有力的结论段落结尾
+- 保持段落简洁（最多 3-4 句）
+
+主题：`
+  },
+  email: {
+    en: `You are a professional email copywriter. Write a polished, persuasive email. Requirements:
 - Include a clear Subject line at the top
 - Professional greeting
 - Concise body with a clear call-to-action
@@ -27,7 +55,17 @@ Topic: `,
 - Keep it under 200 words
 
 Brief: `,
-  social: `You are a social media content creator. Write an engaging social media post. Requirements:
+    zh: `你是一位专业的邮件文案撰稿人。请撰写一封精炼且有说服力的邮件。要求：
+- 顶部包含清晰的主题行
+- 专业的问候语
+- 简洁的正文，带有明确的行动号召
+- 专业的落款
+- 保持在 200 字以内
+
+要点：`
+  },
+  social: {
+    en: `You are a social media content creator. Write an engaging social media post. Requirements:
 - Hook the reader in the first line
 - Keep it under 280 characters for the main text
 - Include 3-5 relevant hashtags at the end
@@ -35,11 +73,24 @@ Brief: `,
 - Add emojis where appropriate
 
 Topic: `,
-  custom: "",
+    zh: `你是一位社交媒体内容创作者。请撰写一篇引人入胜的社交媒体帖子。要求：
+- 第一行就抓住读者注意力
+- 正文保持在 280 字以内
+- 末尾包含 3-5 个相关的标签
+- 使用充满活力的对话式语气
+- 在合适的地方添加表情符号
+
+主题：`
+  },
+  custom: {
+    en: "",
+    zh: ""
+  },
 };
 
-const mockResponses: ModePrompt = {
-  blog: `## Getting Started with AI Writing in 2025
+const mockResponses: { [key: string]: { en: string; zh: string } } = {
+  blog: {
+    en: `## Getting Started with AI Writing in 2025
 
 The landscape of content creation has shifted dramatically. With AI-powered tools, writers can now produce high-quality drafts in minutes rather than hours.
 
@@ -65,7 +116,35 @@ The most successful creators use AI as a collaborator, not a replacement. Your e
 ### Conclusion
 
 AI writing is here to stay. The question is not whether to use it, but how to use it well. Start experimenting today and find the workflow that works for you.`,
-  email: `Subject: Quick question about your Q2 content strategy
+    zh: `## 2025 年 AI 写作入门指南
+
+内容创作领域已发生翻天覆地的变化。借助 AI 工具，创作者现在只需几分钟而非几小时就能产出高质量的初稿。
+
+### 为什么 AI 写作很重要
+
+AI 写作工具不再只是高级的自动补全。它们理解上下文、保持语气，并适应你独特的风格。以下是让它们变得不可或缺的原因：
+
+- **速度**：30 秒内生成完整初稿
+- **质量**：专业结构化的内容，格式规范
+- **一致性**：在所有作品中保持你的品牌声音
+
+### AI 辅助写作最佳实践
+
+1. 从清晰、具体的提示开始
+2. 检查并编辑 AI 输出以确保准确性
+3. 添加你的个人风格和独特见解
+4. 核实任何主张或统计数据
+
+### 未来是协作的
+
+最成功的创作者将 AI 视为协作者而非替代品。你的专业知识与 AI 的效率相结合，创造出任何一方都无法单独完成的内容。
+
+### 结论
+
+AI 写作已成为常态。问题不在于是否使用它，而在于如何用好它。今天就开始尝试，找到适合你的工作流程。`
+  },
+  email: {
+    en: `Subject: Quick question about your Q2 content strategy
 
 Hi there,
 
@@ -82,7 +161,26 @@ Would you be open to a quick 15-minute call this week to discuss? I have some id
 Looking forward to hearing from you.
 
 Best regards`,
-  social: `🚀 Stop writing from scratch.
+    zh: `主题：关于你的 Q2 内容策略的快速询问
+
+你好，
+
+希望你一切顺利。我想就我们之前关于本季度扩大内容产出的谈话跟进一下。
+
+以下是我的建议：
+
+1. **利用 AI 完成初稿** - 减少 60% 的写作时间
+2. **创建内容日历** - 至少提前 2 周规划
+3. **批量处理类似任务** - 周一撰写所有博客，周二编辑
+
+本周可以安排一个 15 分钟的快速电话讨论吗？我有一些想法可能会对你的团队有所帮助。
+
+期待你的回复。
+
+祝好`
+  },
+  social: {
+    en: `🚀 Stop writing from scratch.
 
 AI-powered writing tools can generate blog posts, emails, and social content in seconds.
 
@@ -91,7 +189,20 @@ The best part? They learn your style and get better every time.
 Try it free today. Your future self will thank you. ✨
 
 #AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your API key in the environment variables.`,
+    zh: `🚀 不要从零开始写作。
+
+AI 写作工具可以在几秒钟内生成博客文章、邮件和社交媒体内容。
+
+最棒的是？它们会学习你的风格，每次都变得更好。
+
+今天就免费试用吧。未来的你会感谢你的。✨
+
+#AI写作 #内容创作 #效率技巧 #作家生活 #AI工具`
+  },
+  custom: {
+    en: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your API key in the environment variables.`,
+    zh: `这是你的自定义生成内容：\n\n感谢使用 Use AI Writer。在完整配置 API 凭证后，此部分将包含根据你具体提示生成的 AI 内容。\n\n要解锁完整功能，请在环境变量中配置你的 API 密钥。`
+  },
 };
 
 type AIProvider = "deepseek" | "claude" | "mock";
@@ -100,15 +211,26 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const prompt: string | undefined = body.prompt;
-    const mode: string | undefined = body.mode;
+    const mode: keyof typeof modePrompts = (body.mode || "custom") as keyof typeof modePrompts;
     const brandContext: string | undefined = body.brandContext;
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Prompt is required" }, { status: 400 });
     }
 
-    const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
-    let systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    const lang = detectLanguage(prompt);
+    const isCreative = isCreativeWriting(prompt);
+    let systemPrompt: string;
+
+    if (mode === "custom" || isCreative) {
+      // Custom or creative mode: just use user's prompt, don't add templates
+      systemPrompt = prompt;
+    } else {
+      const basePrompts = modePrompts[mode];
+      const basePrompt = basePrompts[lang];
+      systemPrompt = `${basePrompt}${prompt}`;
+    }
+
     if (brandContext) {
       systemPrompt = `${brandContext}\n\n${systemPrompt}`;
     }
@@ -126,7 +248,8 @@ export async function POST(request: NextRequest) {
     }
 
     if (isMockMode) {
-      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
+      const mockTexts = (mockResponses[mode] || mockResponses.custom)!;
+      const mockText = mockTexts[lang];
       return new Response(mockText, {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
@@ -154,7 +277,8 @@ export async function POST(request: NextRequest) {
       ]);
       model = "claude";
     } else {
-      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
+      const mockTexts = (mockResponses[mode] || mockResponses.custom)!;
+      const mockText = mockTexts[lang];
       return new Response(mockText, {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
