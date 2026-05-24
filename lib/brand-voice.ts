@@ -1,155 +1,88 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import {
+  loadProfileFromStorage,
+  saveProfileToStorage,
+  loadSamplesFromStorage,
+  saveSamplesToStorage,
+  loadViewpointsFromStorage,
+  saveViewpointsToStorage,
+  createDefaultProfile,
+  getContextPromptFromProfile,
+  getToday,
+  BrandVoiceProfile,
+  BrandVoiceSample,
+  KeyViewPoint
+} from "./brand-voice-shared";
 
-export type Tone = "formal" | "casual" | "humorous" | "professional";
-
-export interface BrandVoiceProfile {
-  tone: Tone;
-  style: string;
-  commonPhrases: string[];
-  industry: string;
-  targetAudience: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface BrandVoiceSample {
-  id: string;
-  content: string;
-  mode: "blog" | "email" | "social" | "custom";
-  timestamp: string;
-}
-
-const STORAGE_KEY_PROFILE = "use-ai-writer-brand-profile";
-const STORAGE_KEY_SAMPLES = "use-ai-writer-brand-samples";
-
-function getToday(): string {
-  return new Date().toISOString();
-}
-
-function loadProfile(): BrandVoiceProfile | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY_PROFILE);
-    if (!raw) return null;
-    return JSON.parse(raw) as BrandVoiceProfile;
-  } catch {
-    return null;
-  }
-}
-
-function saveProfile(profile: BrandVoiceProfile): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
-  } catch {
-    // ignore
-  }
-}
-
-function loadSamples(): BrandVoiceSample[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY_SAMPLES);
-    if (!raw) return [];
-    return JSON.parse(raw) as BrandVoiceSample[];
-  } catch {
-    return [];
-  }
-}
-
-function saveSamples(samples: BrandVoiceSample[]): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY_SAMPLES, JSON.stringify(samples));
-  } catch {
-    // ignore
-  }
-}
+export { getContextPromptFromProfile as getContextPromptFromProfile };
+export type { Tone, BrandVoiceProfile, BrandVoiceSample, KeyViewPoint } from "./brand-voice-shared";
 
 export function useBrandVoice() {
   const [profile, setProfile] = useState<BrandVoiceProfile | null>(null);
   const [samples, setSamples] = useState<BrandVoiceSample[]>([]);
+  const [viewpoints, setViewpoints] = useState<KeyViewPoint[]>([]);
 
   useEffect(() => {
-    setProfile(loadProfile());
-    setSamples(loadSamples());
+    setProfile(loadProfileFromStorage());
+    setSamples(loadSamplesFromStorage());
+    setViewpoints(loadViewpointsFromStorage());
   }, []);
 
   const updateProfile = useCallback(
     (newProfile: Partial<BrandVoiceProfile>) => {
-      const now = getToday();
+      const today = getToday();
       let updatedProfile: BrandVoiceProfile;
       if (profile) {
-        updatedProfile = { ...profile, ...newProfile, updatedAt: now };
+        updatedProfile = { ...profile, ...newProfile, updatedAt: today };
       } else {
-        updatedProfile = {
-          tone: "professional",
-          style: "clear and concise",
-          commonPhrases: [],
-          industry: "",
-          targetAudience: "",
-          createdAt: now,
-          updatedAt: now,
-          ...newProfile,
-        };
+        updatedProfile = createDefaultProfile(newProfile);
       }
       setProfile(updatedProfile);
-      saveProfile(updatedProfile);
+      saveProfileToStorage(updatedProfile);
     },
     [profile]
   );
 
-  const addSample = useCallback((content: string, mode: "blog" | "email" | "social" | "custom") => {
+  const addSample = useCallback((content: string, mode: "blog" | "email" | "social" | "custom", keyPoints: string[] = []) => {
     const sample: BrandVoiceSample = {
       id: Date.now().toString(),
       content,
       mode,
       timestamp: getToday(),
+      keyPoints,
     };
     const updatedSamples = [sample, ...samples].slice(0, 50); // keep last 50 samples
     setSamples(updatedSamples);
-    saveSamples(updatedSamples);
+    saveSamplesToStorage(updatedSamples);
+    
+    // Add new viewpoints
+    const newViewpoints = keyPoints.map((text, i) => ({
+      id: `${sample.id}-${i}`,
+      text,
+      sourceSampleId: sample.id,
+      sourceSampleTitle: content.slice(0, 50) + (content.length > 50 ? "..." : ""),
+    }));
+    const allViewpoints = [...newViewpoints, ...viewpoints].slice(0, 50); // keep last 50 viewpoints
+    setViewpoints(allViewpoints);
+    saveViewpointsToStorage(allViewpoints);
     return sample;
-  }, [samples]);
+  }, [samples, viewpoints]);
 
   const getContextPrompt = useCallback((): string => {
     if (!profile) {
       return "";
     }
-    let prompt = `You are writing in a ${profile.tone} tone. `;
-    prompt += `Your style is ${profile.style}. `;
-    if (profile.commonPhrases.length > 0) {
-      prompt += `Common phrases: ${profile.commonPhrases.join(", ")}. `;
-    }
-    if (profile.industry) {
-      prompt += `Industry: ${profile.industry}. `;
-    }
-    if (profile.targetAudience) {
-      prompt += `Audience: ${profile.targetAudience}.`;
-    }
-    return prompt;
+    return getContextPromptFromProfile(profile);
   }, [profile]);
 
   return {
     profile,
     samples,
+    viewpoints,
     addSample,
     updateProfile,
     getContextPrompt,
   };
-}
-
-export function getRecentContext(
-  samples: BrandVoiceSample[],
-  maxTokens: number = 1000
-): string {
-  const recent = samples.slice(0, 3);
-  if (recent.length === 0) return "";
-  let context = "\n\nHere are some recent examples of your writing for reference:\n";
-  recent.forEach((sample, i) => {
-    context += `\nExample ${i + 1} (${sample.mode}):\n${sample.content.slice(0, 300)}\n`;
-  });
-  return context;
 }

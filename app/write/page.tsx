@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X } from "lucide-react";
 import Link from "next/link";
 import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { analyzeTone } from "@/lib/tone-analyzer";
+import { extractKeyPoints } from "@/lib/memory-extractor";
 import { AdReward } from "@/components/AdReward";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
@@ -16,7 +17,7 @@ type CopyState = "idle" | "copied";
 export default function WriteEditor() {
   const { used, limit, canGenerate, increment, adBonus } = useUsage();
   const { records, addRecord } = useHistory();
-  const { profile, samples, addSample, updateProfile, getContextPrompt } = useBrandVoice();
+  const { profile, samples, viewpoints, addSample, updateProfile, getContextPrompt } = useBrandVoice();
 
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -28,6 +29,11 @@ export default function WriteEditor() {
   const [model, setModel] = useState<string>("mock");
   const [learnMode, setLearnMode] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [sampleContent, setSampleContent] = useState("");
+  const [sampleMode, setSampleMode] = useState<WritingMode>("blog");
+  const [uploading, setUploading] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
 
   useEffect(() => {
     async function fetchModel() {
@@ -88,10 +94,11 @@ export default function WriteEditor() {
 
     try {
       const brandContext = learnMode ? getContextPrompt() : "";
+      const viewpointTexts = learnMode ? viewpoints.map((v) => v.text) : [];
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, mode, brandContext }),
+        body: JSON.stringify({ prompt, mode, brandContext, viewpoints: viewpointTexts }),
       });
 
       if (!response.ok) {
@@ -121,7 +128,7 @@ export default function WriteEditor() {
         mode,
         result: accumulated,
       });
-      
+
       if (learnMode && accumulated.length > 100) {
         addSample(accumulated, mode);
         if (!profile) {
@@ -143,7 +150,7 @@ export default function WriteEditor() {
       setError(message);
       setState("error");
     }
-  }, [prompt, mode, canGenerate, increment, addRecord, learnMode, getContextPrompt, addSample, updateProfile, profile]);
+  }, [prompt, mode, canGenerate, increment, addRecord, learnMode, getContextPrompt, addSample, updateProfile, profile, viewpoints]);
 
   const handleCopy = useCallback(() => {
     if (result) {
@@ -175,6 +182,34 @@ export default function WriteEditor() {
     setError(null);
   }, []);
 
+  const handleUploadSample = useCallback(async () => {
+    if (sampleContent.length < 100) return;
+
+    setUploading(true);
+    try {
+      const keyPoints = extractKeyPoints(sampleContent);
+      addSample(sampleContent, sampleMode, keyPoints);
+      if (!profile) {
+        const analysis = analyzeTone(sampleContent);
+        updateProfile({
+          tone: analysis.tone,
+          style: "natural and engaging",
+        });
+      } else {
+        const analysis = analyzeTone(sampleContent);
+        updateProfile({ tone: analysis.tone });
+      }
+      setSuccessToast(true);
+      setTimeout(() => setSuccessToast(false), 3000);
+      setShowModal(false);
+      setSampleContent("");
+    } catch {
+      // ignore
+    } finally {
+      setUploading(false);
+    }
+  }, [sampleContent, sampleMode, addSample, profile, updateProfile]);
+
   return (
     <main className="min-h-screen flex flex-col">
       {/* Header */}
@@ -186,9 +221,7 @@ export default function WriteEditor() {
           <div className="flex items-center gap-4">
             <span className="text-sm text-slate-500 dark:text-slate-400">
               {used}/{limit} today
-              {adBonus > 0 && (
-                <span className="text-emerald-600 ml-1">(+{adBonus} bonus)</span>
-              )}
+              {adBonus > 0 && <span className="text-emerald-600 ml-1">(+{adBonus} bonus)</span>}
             </span>
             <Link href="/dashboard" className="text-sm text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
               Dashboard
@@ -219,13 +252,19 @@ export default function WriteEditor() {
             ))}
             <button
               onClick={() => setLearnMode(!learnMode)}
-              className={`ml-auto px-3 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] flex items-center gap-2 ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] flex items-center gap-2 ${
                 learnMode
                   ? "bg-emerald-600 text-white"
                   : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
               }`}
             >
               ✏️ 学习我的风格
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-3 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] flex items-center gap-2 bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+            >
+              📄 上传范文
             </button>
             <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-200 dark:bg-gray-700 text-slate-700 dark:text-slate-300">
               {model === "deepseek"
@@ -250,9 +289,7 @@ export default function WriteEditor() {
               <div className="flex items-start gap-3">
                 <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-amber-800 dark:text-amber-200">
-                    Daily limit reached
-                  </p>
+                  <p className="font-semibold text-amber-800 dark:text-amber-200">Daily limit reached</p>
                   <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
                     You have used all {limit} free generations today. Watch an ad or upgrade to Pro for more.
                   </p>
@@ -300,11 +337,7 @@ export default function WriteEditor() {
             </h2>
             {result && (
               <div className="flex gap-2">
-                <button
-                  onClick={handleCopy}
-                  className="btn-outline text-sm gap-2 min-h-[44px]"
-                  aria-label="Copy result"
-                >
+                <button onClick={handleCopy} className="btn-outline text-sm gap-2 min-h-[44px]" aria-label="Copy result">
                   {copyState === "copied" ? (
                     <>
                       <Check className="w-4 h-4 text-emerald-600" /> Copied
@@ -315,11 +348,7 @@ export default function WriteEditor() {
                     </>
                   )}
                 </button>
-                <button
-                  onClick={handleDownload}
-                  className="btn-outline text-sm gap-2 min-h-[44px]"
-                  aria-label="Download result"
-                >
+                <button onClick={handleDownload} className="btn-outline text-sm gap-2 min-h-[44px]" aria-label="Download result">
                   <Download className="w-4 h-4" /> Download
                 </button>
               </div>
@@ -366,6 +395,71 @@ export default function WriteEditor() {
           )}
         </section>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="card w-full max-w-lg mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-display font-extrabold text-2xl text-slate-900 dark:text-white">📄 上传范文</h3>
+              <button onClick={() => setShowModal(false)} className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-200">
+                <X />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">选择类型</label>
+                <div className="flex gap-2 flex-wrap">
+                  {modes.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => setSampleMode(key)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] ${
+                        sampleMode === key
+                          ? "bg-emerald-600 text-white"
+                          : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">粘贴你的范文（支持 Markdown）</label>
+                <textarea
+                  value={sampleContent}
+                  onChange={(e) => setSampleContent(e.target.value)}
+                  placeholder="Paste your writing sample here..."
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white h-64 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                {sampleContent.length > 0 && sampleContent.length < 100 && (
+                  <p className="text-amber-600 text-xs mt-1">Sample must be at least 100 characters</p>
+                )}
+              </div>
+              <button
+                onClick={handleUploadSample}
+                disabled={uploading || sampleContent.length < 100}
+                className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {uploading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                    Uploading...
+                  </>
+                ) : (
+                  "📄 提交范文让 AI 学习"
+                )}
+              </button>
+            </div>
+            {successToast && (
+              <div className="rounded-lg bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 px-4 py-2 text-sm text-emerald-700 dark:text-emerald-300 mt-4">
+                ✅ AI 已学习你的新范文，风格模型已更新
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

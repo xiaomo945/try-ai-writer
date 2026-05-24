@@ -2,12 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, PenTool } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, PenTool, Sparkles } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
+import { recommendStyle } from "@/lib/style-recommender";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
+
+const toneIcons: Record<string, string> = {
+  formal: "🎩",
+  casual: "😎",
+  humorous: "😂",
+  professional: "💼",
+};
 
 function getRelativeTime(isoString: string): string {
   const date = new Date(isoString);
@@ -28,14 +36,26 @@ function getWordCount(text: string): number {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
+function getMatchScore(sampleCount: number): number {
+  if (sampleCount === 0) return 0;
+  if (sampleCount <= 3) return 20;
+  if (sampleCount <= 10) return 50;
+  if (sampleCount <= 20) return 80;
+  return 95;
+}
+
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
   const { used, limit } = useUsage();
-  const { profile, samples } = useBrandVoice();
+  const { profile, samples, viewpoints } = useBrandVoice();
   const [expanded, setExpanded] = useState(false);
+  const [viewpointExpanded, setViewpointExpanded] = useState<string | null>(null);
   const percentage = (used / limit) * 100;
+  const sampleProgress = Math.min(samples.length / 20, 1) * 100;
+  const matchScore = getMatchScore(samples.length);
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
+  const recommendation = profile ? recommendStyle(profile, samples.length) : null;
 
   const totalWords = records.reduce((sum, r) => sum + getWordCount(r.result), 0);
   const avgWords = records.length > 0 ? Math.round(totalWords / records.length) : 0;
@@ -118,31 +138,115 @@ export default function DashboardPage() {
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
           </div>
 
-          {/* My Brand Voice */}
+          {/* AI Style Match */}
           <div className="card">
+            <div className="flex items-center gap-3 mb-4">
+              <Sparkles className="w-6 h-6 text-emerald-600" />
+              <h3 className="font-semibold text-slate-900 dark:text-white">AI Style Match</h3>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="relative w-20 h-20">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#e2e8f0" strokeWidth="10" />
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#059669" strokeWidth="10" strokeDasharray={`${matchScore * 2.83} 283`} strokeDashoffset="70.75" transform="rotate(-90 50 50)" className="transition-all duration-700" />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xl font-bold text-slate-900 dark:text-white">{matchScore}%</span>
+                </div>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  {matchScore === 0 ? "Upload samples to start learning" : 
+                   matchScore <= 20 ? "Basic match" :
+                   matchScore <=50 ? "Medium match" :
+                   matchScore <=80 ? "High match" : "Deep match"}
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Samples: {samples.length}/20
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Brand Voice & Viewpoints Grid */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* My Brand Voice */}
+          <div className="lg:col-span-2 card">
             <div className="flex items-center gap-3 mb-4">
               <PenTool className="w-6 h-6 text-emerald-600" />
               <h3 className="font-semibold text-slate-900 dark:text-white">My Brand Voice</h3>
             </div>
             {profile ? (
-              <div className="space-y-2">
-                <p className="text-sm text-slate-700 dark:text-slate-300">
-                  <span className="font-semibold text-slate-900 dark:text-white">Tone:</span> {profile.tone}
-                </p>
-                {profile.industry && (
-                  <p className="text-sm text-slate-700 dark:text-slate-300">
-                    <span className="font-semibold text-slate-900 dark:text-white">Industry:</span> {profile.industry}
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Tone</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {toneIcons[profile.tone]} {profile.tone}
                   </p>
+                </div>
+                {profile.industry && (
+                  <div>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Industry</p>
+                    <p className="text-lg font-semibold text-slate-900 dark:text-white">
+                      {profile.industry}
+                    </p>
+                  </div>
                 )}
                 {profile.targetAudience && (
-                  <p className="text-sm text-slate-700 dark:text-slate-300">
-                    <span className="font-semibold text-slate-900 dark:text-white">Audience:</span> {profile.targetAudience}
-                  </p>
+                  <div>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Target Audience</p>
+                    <p className="text-lg font-semibold text-slate-900 dark:text-white">
+                      {profile.targetAudience}
+                    </p>
+                  </div>
                 )}
-                <p className="text-sm text-slate-700 dark:text-slate-300">
-                  <span className="font-semibold text-slate-900 dark:text-white">Samples:</span> {samples.length}
-                </p>
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Samples Learned</p>
+                  <p className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {samples.length}
+                  </p>
+                </div>
               </div>
+
+              {/* Common Phrases */}
+              {profile.commonPhrases.length >0 && (
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-2">Common Words/Phrases</p>
+                  <div className="flex flex-wrap gap-2">
+                    {profile.commonPhrases.map((phrase, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300"
+                      >
+                        {phrase}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Sample Progress Bar */}
+              <div className="w-full bg-slate-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+                <div
+                  className="h-full bg-emerald-600 rounded-full transition-all duration-500"
+                  style={{ width: `${sampleProgress}%` }}
+                />
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                {samples.length >= 20 ? "Deep learning achieved" : `Keep uploading samples to get better results`}
+              </p>
+
+              {/* Recommendation */}
+              {recommendation && (
+                <div className="rounded-lg border border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-800/50 p-4">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
+                    💡 {recommendation}
+                  </p>
+                </div>
+              )}
+            </div>
             ) : (
               <div className="space-y-2">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -152,6 +256,43 @@ export default function DashboardPage() {
                   Start Writing & Learn
                 </Link>
               </div>
+            )}
+          </div>
+
+          {/* Key Viewpoints */}
+          <div className="card">
+            <div className="flex items-center gap-3 mb-4">
+              <Sparkles className="w-6 h-6 text-emerald-600" />
+              <h3 className="font-semibold text-slate-900 dark:text-white">Your Key Viewpoints</h3>
+            </div>
+            {viewpoints.length >0 ? (
+              <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                {viewpoints.slice(0, 8).map((vp) => (
+                  <div
+                    key={vp.id}
+                    className="border-l-4 border-emerald-600 pl-3 py-1 bg-slate-50 dark:bg-gray-800/50 rounded-r-lg"
+                  >
+                    <p className="text-sm text-slate-700 dark:text-slate-300">
+                      {vp.text}
+                    </p>
+                    <button
+                      onClick={() => setViewpointExpanded(viewpointExpanded === vp.id ? null : vp.id)}
+                      className="text-xs text-slate-500 dark:text-slate-400 hover:text-emerald-600 mt-1"
+                    >
+                      {viewpointExpanded === vp.id ? "Hide source" : "Show source"}
+                    </button>
+                    {viewpointExpanded === vp.id && (
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        From: {vp.sourceSampleTitle}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+              No key viewpoints extracted yet. Write more to extract them!
+            </p>
             )}
           </div>
         </div>

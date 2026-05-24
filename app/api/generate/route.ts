@@ -223,6 +223,7 @@ export async function POST(request: NextRequest) {
     const prompt: string | undefined = body.prompt;
     const mode: keyof typeof modePrompts = (body.mode || "custom") as keyof typeof modePrompts;
     const brandContext: string | undefined = body.brandContext;
+    const viewpoints: string[] = body.viewpoints || [];
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Prompt is required" }, { status: 400 });
@@ -246,6 +247,13 @@ export async function POST(request: NextRequest) {
 
     if (brandContext) {
       systemPrompt = `${brandContext}\n\n${systemPrompt}`;
+    }
+
+    if (viewpoints.length > 0) {
+      const viewpointPrompt = lang === "zh" 
+        ? `\n\n在你过去的作品中，你表达了以下观点：${viewpoints.map(v => `\n- ${v}`).join("")}\n\n请在当前创作中保持这些观点的一致性，除非当前提示有相反的要求。` 
+        : `\n\nIn your past writings, you have expressed the following viewpoints:${viewpoints.map(v => `\n- ${v}`).join("")}\n\nPlease ensure consistency with these viewpoints unless the current prompt suggests otherwise.`;
+      systemPrompt += viewpointPrompt;
     }
 
     const aiProvider = (process.env.AI_PROVIDER || "mock") as AIProvider;
