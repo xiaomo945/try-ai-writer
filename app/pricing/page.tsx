@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, ChevronDown } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pricing — Use AI Writer | Plans from $0 to $15/mo",
+  title: "Pricing — Use AI Writer | Plans from $0 to $25/mo",
   description: "Choose the perfect plan for your needs. Free tier available with 10 generations per day. No credit card required.",
 };
 
@@ -14,7 +14,6 @@ type Plan = {
   features: string[];
   cta: string;
   popular?: boolean;
-  recommended?: boolean;
 };
 
 type FAQ = {
@@ -26,32 +25,24 @@ const plans: Plan[] = [
   {
     name: "Free",
     price: "$0",
-    description: "Free to get started",
+    description: "免费入门",
     features: ["0 Claude generations/month", "10 DeepSeek generations/day", "Basic templates", "Email support"],
     cta: "Get Started",
   },
   {
     name: "Pro",
     price: "$9",
-    description: "Best value for money",
+    description: "最佳性价比",
     features: ["50 Claude generations/month", "100 DeepSeek generations/day", "All templates", "API access", "Priority support", "Custom tone"],
     cta: "Start Pro",
-    recommended: true,
+    popular: true,
   },
   {
     name: "Max",
     price: "$25",
-    description: "Most popular",
+    description: "Claude 量大管饱",
     features: ["300 Claude generations/month", "Unlimited DeepSeek generations", "All templates", "API access", "Priority support", "Custom tone", "Brand kit"],
     cta: "Start Max",
-    popular: true,
-  },
-  {
-    name: "Team",
-    price: "$59",
-    description: "For 5-person teams",
-    features: ["1000 Claude generations/month", "Unlimited DeepSeek generations", "All templates", "API access", "Priority support", "Brand kit", "Analytics", "5 team members"],
-    cta: "Start Team",
   },
 ];
 
@@ -74,19 +65,14 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="w-full bg-slate-50 dark:bg-gray-900 py-24">
         <div className="max-w-7xl mx-auto px-4">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`card flex flex-col ${plan.recommended || plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
+                  className={`card flex flex-col ${plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
                 >
-                  {plan.recommended && (
-                    <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                      Recommended
-                    </span>
-                  )}
                   {plan.popular && (
-                    <span className="absolute top-0 right-6 -translate-y-1/2 bg-teal-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
                       Most Popular
                     </span>
                   )}
@@ -104,7 +90,7 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/login" className={(plan.recommended || plan.popular) ? "btn-primary w-full" : "btn-outline w-full"}>
+                  <Link href="/login" className={plan.popular ? "btn-primary w-full" : "btn-outline w-full"}>
                     {plan.cta}
                   </Link>
                 </div>

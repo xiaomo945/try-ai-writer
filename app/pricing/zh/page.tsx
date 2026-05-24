@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, ChevronDown } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "定价 — Use AI Writer | 从 ¥0 到 ¥499/月",
+  title: "定价 — Use AI Writer | 从 ¥0 到 ¥199/月",
   description: "选择最适合你的套餐。免费版可用，看广告获得额外次数。无需信用卡。",
 };
 
@@ -15,13 +15,6 @@ type Plan = {
   cta: string;
   popular?: boolean;
   recommended?: boolean;
-  team?: boolean;
-};
-
-type AddOn = {
-  name: string;
-  price: string;
-  description: string;
 };
 
 type FAQ = {
@@ -34,7 +27,7 @@ const plans: Plan[] = [
     name: "白嫖版",
     price: "¥0",
     description: "免费入门",
-    features: ["0 Claude 次/月", "50 DeepSeek 次/天", "看广告获得额外次数", "基础模板", "邮件支持"],
+    features: ["0 Claude 次/月", "50 DeepSeek 次/天", "基础模板", "邮件支持"],
     cta: "开始使用",
   },
   {
@@ -60,20 +53,6 @@ const plans: Plan[] = [
     cta: "开始 Max 版",
     popular: true,
   },
-  {
-    name: "Team 版",
-    price: "¥499",
-    description: "团队协作",
-    features: ["1200 Claude 次/月", "无限 DeepSeek 次/天", "所有模板", "API 访问", "优先支持", "品牌套件", "数据分析", "5 团队成员"],
-    cta: "开始 Team 版",
-    team: true,
-  },
-];
-
-const addOns: AddOn[] = [
-  { name: "小包", price: "¥19", description: "30 Claude 次" },
-  { name: "中包", price: "¥59", description: "120 Claude 次" },
-  { name: "大包", price: "¥149", description: "350 Claude 次" },
 ];
 
 const faqs: FAQ[] = [
@@ -95,11 +74,11 @@ export default function PricingPage() {
       {/* Pricing Cards */}
       <section className="w-full bg-slate-50 dark:bg-gray-900 py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`card flex flex-col ${plan.recommended || plan.popular || plan.team ? "border-2 border-emerald-600 relative" : ""}`}
+                className={`card flex flex-col ${plan.recommended || plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
               >
                 {plan.recommended && (
                   <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
@@ -109,11 +88,6 @@ export default function PricingPage() {
                 {plan.popular && (
                   <span className="absolute top-0 right-6 -translate-y-1/2 bg-teal-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
                     最受欢迎
-                  </span>
-                )}
-                {plan.team && (
-                  <span className="absolute top-0 right-6 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    团队协作
                   </span>
                 )}
                 <h3 className="text-2xl font-display font-extrabold mb-2">{plan.name}</h3>
@@ -130,7 +104,7 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/login" className={(plan.recommended || plan.popular || plan.team) ? "btn-primary w-full" : "btn-outline w-full"}>
+                <Link href="/login" className={(plan.recommended || plan.popular) ? "btn-primary w-full" : "btn-outline w-full"}>
                   {plan.cta}
                 </Link>
               </div>
@@ -139,18 +113,12 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Add-Ons */}
-      <section className="w-full max-w-4xl mx-auto px-4 py-24">
-        <h2 className="text-4xl text-center mb-12 font-display font-extrabold text-slate-900 dark:text-white">加购套餐</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {addOns.map((addOn) => (
-            <div key={addOn.name} className="card text-center">
-              <h3 className="text-2xl font-display font-extrabold mb-2">{addOn.name}</h3>
-              <p className="text-4xl font-bold mb-4">{addOn.price}</p>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">{addOn.description}</p>
-              <Link href="/login" className="btn-outline w-full">购买</Link>
-            </div>
-          ))}
+      {/* Description */}
+      <section className="w-full max-w-3xl mx-auto px-4 py-12">
+        <div className="space-y-4 text-slate-700 dark:text-slate-300">
+          <p><strong>Claude</strong> 为海外顶级 AI 写作模型，写作质量公认最佳</p>
+          <p><strong>DeepSeek</strong> 为国产优秀模型，中文写作流畅自然</p>
+          <p>所有套餐按月计费，到期自动续费，可随时取消</p>
         </div>
       </section>
 
