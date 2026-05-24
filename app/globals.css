@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --color-primary: #059669;
+  --color-primary-light: #14b8a6;
   --color-emerald-50: #ecfdf5;
   --color-emerald-600: #059669;
   --color-emerald-700: #047857;
@@ -12,13 +14,13 @@
 
 @layer base {
   body { @apply bg-white text-slate-900 font-sans antialiased; }
-  .dark body, .dark { @apply bg-gray-950 text-gray-100; }
+  .dark body { @apply bg-gray-950 text-gray-100; }
   h1, h2, h3 { @apply font-display font-extrabold tracking-tight; }
 }
 
 @layer components {
   .card { @apply bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-slate-200 dark:border-gray-800 p-6; }
   .card-hover { @apply card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/5; }
-  .btn-primary { @apply inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-emerald-500 active:bg-emerald-800 transition-colors min-h-[44px] min-w-[44px]; }
-  .btn-outline { @apply inline-flex items-center justify-center px-6 py-3 border-2 border-slate-300 dark:border-gray-700 text-slate-700 dark:text-gray-200 font-semibold rounded-lg hover:border-emerald-600 hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-emerald-500 active:bg-emerald-50 transition-colors min-h-[44px] min-w-[44px]; }
+  .btn-primary { @apply inline-flex items-center justify-center px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-emerald-500 active:bg-emerald-800 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/20 min-h-[44px] min-w-[44px]; }
+  .btn-outline { @apply inline-flex items-center justify-center px-8 py-4 border-2 border-slate-300 dark:border-gray-700 text-slate-700 dark:text-gray-200 font-semibold rounded-lg hover:border-emerald-600 hover:text-emerald-600 focus-visible:outline-2 focus-visible:outline-emerald-500 active:bg-emerald-50 transition-all duration-300 hover:-translate-y-0.5 min-h-[44px] min-w-[44px]; }
 }

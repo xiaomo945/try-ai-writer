@@ -2,30 +2,41 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2 } from "lucide-react";
+import { useHistory } from "@/lib/history";
+import { useUsage } from "@/lib/usage";
 
-type HistoryItem = {
-  id: string;
-  mode: string;
-  prompt: string;
-  createdAt: string;
-  wordCount: number;
-};
+type WritingMode = "blog" | "email" | "social" | "custom";
 
-const mockHistory: HistoryItem[] = [
-  { id: "1", mode: "blog", prompt: "How to start a side hustle in 2025", createdAt: "2h ago", wordCount: 842 },
-  { id: "2", mode: "email", prompt: "Follow-up after product demo", createdAt: "5h ago", wordCount: 156 },
-  { id: "3", mode: "social", prompt: "Launch announcement for new feature", createdAt: "1d ago", wordCount: 98 },
-  { id: "4", mode: "blog", prompt: "Best practices for remote work", createdAt: "2d ago", wordCount: 1203 },
-  { id: "5", mode: "custom", prompt: "Product description for eco-friendly notebook", createdAt: "3d ago", wordCount: 234 },
-];
+function getRelativeTime(isoString: string): string {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHour = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHour / 24);
+
+  if (diffMin < 1) return "Just now";
+  if (diffMin < 60) return `${diffMin}m ago`;
+  if (diffHour < 24) return `${diffHour}h ago`;
+  if (diffDay < 7) return `${diffDay}d ago`;
+  return date.toLocaleDateString();
+}
+
+function getWordCount(text: string): number {
+  return text.split(/\s+/).filter(Boolean).length;
+}
 
 export default function DashboardPage() {
+  const { records, deleteRecord, clearAll } = useHistory();
+  const { used, limit } = useUsage();
   const [expanded, setExpanded] = useState(false);
+  const percentage = (used / limit) * 100;
 
-  const dailyLimit = 10;
-  const dailyUsed = 3;
-  const percentage = (dailyUsed / dailyLimit) * 100;
+  const visibleRecords = expanded ? records : records.slice(0, 5);
+
+  const totalWords = records.reduce((sum, r) => sum + getWordCount(r.result), 0);
+  const avgWords = records.length > 0 ? Math.round(totalWords / records.length) : 0;
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -47,9 +58,20 @@ export default function DashboardPage() {
       {/* Dashboard Content */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-4 py-12 space-y-8">
         {/* Welcome */}
-        <div>
-          <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">Dashboard</h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">Welcome back! Here&apos;s your usage overview.</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">Dashboard</h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-2">Welcome back! Here&apos;s your usage overview.</p>
+          </div>
+          {records.length > 0 && (
+            <button
+              onClick={clearAll}
+              className="btn-outline text-sm gap-2 min-h-[40px]"
+              aria-label="Clear all history"
+            >
+              <Trash2 className="w-4 h-4" /> Clear History
+            </button>
+          )}
         </div>
 
         {/* Stats Grid */}
@@ -61,7 +83,7 @@ export default function DashboardPage() {
               <h3 className="font-semibold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
             </div>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-              {dailyUsed}/{dailyLimit}
+              {used}/{limit}
             </p>
             <div className="w-full bg-slate-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
               <div
@@ -70,7 +92,7 @@ export default function DashboardPage() {
               />
             </div>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-              {dailyLimit - dailyUsed} generations remaining today
+              {limit - used} generations remaining today
             </p>
           </div>
 
@@ -78,10 +100,10 @@ export default function DashboardPage() {
           <div className="card">
             <div className="flex items-center gap-3 mb-4">
               <FileText className="w-6 h-6 text-emerald-600" />
-              <h3 className="font-semibold text-slate-900 dark:text-white">Total Generations</h3>
+              <h3 className="font-semibold text-slate-900 dark:text-white">Total History</h3>
             </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white">47</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">This month</p>
+            <p className="text-3xl font-bold text-slate-900 dark:text-white">{records.length}</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Saved generations</p>
           </div>
 
           {/* Avg Word Count */}
@@ -90,7 +112,7 @@ export default function DashboardPage() {
               <Clock className="w-6 h-6 text-emerald-600" />
               <h3 className="font-semibold text-slate-900 dark:text-white">Avg. Word Count</h3>
             </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white">312</p>
+            <p className="text-3xl font-bold text-slate-900 dark:text-white">{avgWords}</p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
           </div>
         </div>
@@ -99,52 +121,75 @@ export default function DashboardPage() {
         <div className="card">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white">Recent Generations</h2>
-            <Link href="/write" className="text-sm text-emerald-600 hover:text-emerald-700 font-semibold">
-              View All
-            </Link>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-slate-200 dark:border-gray-700">
-                  <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Mode</th>
-                  <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Prompt</th>
-                  <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hidden sm:table-cell">Words</th>
-                  <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">When</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
-                {(expanded ? mockHistory : mockHistory.slice(0, 3)).map((item) => (
-                  <tr key={item.id} className="group">
-                    <td className="py-3">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 capitalize">
-                        {item.mode}
-                      </span>
-                    </td>
-                    <td className="py-3 text-sm text-slate-700 dark:text-slate-300 max-w-xs truncate">
-                      {item.prompt}
-                    </td>
-                    <td className="py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell">
-                      {item.wordCount}
-                    </td>
-                    <td className="py-3 text-sm text-slate-500 dark:text-slate-400">
-                      {item.createdAt}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          {records.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <FileText className="w-12 h-12 text-slate-300 dark:text-gray-600 mb-4" />
+              <p className="text-slate-500 dark:text-slate-400 font-medium">No generation records yet</p>
+              <p className="text-slate-400 dark:text-slate-500 text-sm mt-2">Start writing to see your history here.</p>
+              <Link href="/write" className="btn-primary mt-6 text-sm">Start Writing</Link>
+            </div>
+          ) : (
+            <>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b border-slate-200 dark:border-gray-700">
+                      <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Mode</th>
+                      <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Title</th>
+                      <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hidden sm:table-cell">Words</th>
+                      <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">When</th>
+                      <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
+                    {visibleRecords.map((item) => (
+                      <tr key={item.id} className="group hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors">
+                        <td className="py-3">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 capitalize">
+                            {item.mode}
+                          </span>
+                        </td>
+                        <td className="py-3">
+                          <Link
+                            href={`/write?load=${item.id}`}
+                            className="text-sm text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 font-medium hover:underline max-w-xs truncate block"
+                          >
+                            {item.title}
+                          </Link>
+                        </td>
+                        <td className="py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell">
+                          {getWordCount(item.result)}
+                        </td>
+                        <td className="py-3 text-sm text-slate-500 dark:text-slate-400">
+                          {getRelativeTime(item.createdAt)}
+                        </td>
+                        <td className="py-3">
+                          <button
+                            onClick={() => deleteRecord(item.id)}
+                            className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-500 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+                            aria-label="Delete record"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-          {mockHistory.length > 3 && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="w-full flex items-center justify-center gap-2 mt-4 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
-            >
-              {expanded ? "Show Less" : `Show All (${mockHistory.length})`}
-              <ChevronDown className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`} />
-            </button>
+              {records.length > 5 && (
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="w-full flex items-center justify-center gap-2 mt-4 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
+                >
+                  {expanded ? "Show Less" : `Show All (${records.length})`}
+                  <ChevronDown className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`} />
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
