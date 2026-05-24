@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, ChevronDown } from "lucide-react";
+import CheckoutButton from "@/components/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "定价 — Use AI Writer | 从 ¥0 到 ¥199/月",
@@ -104,9 +105,20 @@ export default function PricingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/login" className={(plan.recommended || plan.popular) ? "btn-primary w-full" : "btn-outline w-full"}>
-                  {plan.cta}
-                </Link>
+                {plan.name === "白嫖版" ? (
+                    <Link href="/login" className="btn-outline w-full">
+                      {plan.cta}
+                    </Link>
+                  ) : (
+                    <CheckoutButton
+                      plan={
+                        plan.name === "基础版" ? "basic" : plan.name === "Pro 版" ? "pro" : plan.name === "Max 版" ? "max" : "team"
+                      }
+                      currency="cny"
+                      label={plan.cta}
+                      variant={plan.recommended || plan.popular ? "primary" : "outline"}
+                    />
+                  )}
               </div>
             ))}
           </div>

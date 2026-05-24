@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, ChevronDown } from "lucide-react";
+import CheckoutButton from "@/components/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "Pricing — Use AI Writer | Plans from $0 to $25/mo",
@@ -90,9 +91,18 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/login" className={plan.popular ? "btn-primary w-full" : "btn-outline w-full"}>
-                    {plan.cta}
-                  </Link>
+                  {plan.name === "Free" ? (
+                    <Link href="/login" className="btn-outline w-full">
+                      {plan.cta}
+                    </Link>
+                  ) : (
+                    <CheckoutButton
+                      plan={plan.name.toLowerCase()}
+                      currency="usd"
+                      label={plan.cta}
+                      variant={plan.popular ? "primary" : "outline"}
+                    />
+                  )}
                 </div>
               ))}
             </div>
