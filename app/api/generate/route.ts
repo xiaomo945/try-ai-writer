@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     const anthropic = new Anthropic({ apiKey });
 
-    const stream = await anthropic.messages.stream({
+    const stream = anthropic.messages.stream({
       model: "claude-sonnet-4-20250514",
       max_tokens: 4096,
       messages: [{ role: "user", content: systemPrompt }],
@@ -34,18 +34,16 @@ export async function POST(request: NextRequest) {
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
-        try {
-          for await (const event of stream) {
-            if (event.type === "text_delta" && event.delta) {
-              controller.enqueue(encoder.encode(event.delta));
-            }
-          }
-        } catch (error) {
-          const message = error instanceof Error ? error.message : "Stream error";
-          controller.enqueue(encoder.encode(`\n\n[Error: ${message}]`));
-        } finally {
+        stream.on("text", (textDelta: string) => {
+          controller.enqueue(encoder.encode(textDelta));
+        });
+        stream.on("error", (error) => {
+          controller.enqueue(encoder.encode(`\n\n[Error: ${error.message}]`));
           controller.close();
-        }
+        });
+        stream.on("end", () => {
+          controller.close();
+        });
       },
     });
 
