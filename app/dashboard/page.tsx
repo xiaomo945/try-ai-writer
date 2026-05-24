@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2 } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, PenTool } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
+import { useBrandVoice } from "@/lib/brand-voice";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -30,6 +31,7 @@ function getWordCount(text: string): number {
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
   const { used, limit } = useUsage();
+  const { profile, samples } = useBrandVoice();
   const [expanded, setExpanded] = useState(false);
   const percentage = (used / limit) * 100;
 
@@ -75,7 +77,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Daily Usage */}
           <div className="card">
             <div className="flex items-center gap-3 mb-4">
@@ -114,6 +116,43 @@ export default function DashboardPage() {
             </div>
             <p className="text-3xl font-bold text-slate-900 dark:text-white">{avgWords}</p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
+          </div>
+
+          {/* My Brand Voice */}
+          <div className="card">
+            <div className="flex items-center gap-3 mb-4">
+              <PenTool className="w-6 h-6 text-emerald-600" />
+              <h3 className="font-semibold text-slate-900 dark:text-white">My Brand Voice</h3>
+            </div>
+            {profile ? (
+              <div className="space-y-2">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-slate-900 dark:text-white">Tone:</span> {profile.tone}
+                </p>
+                {profile.industry && (
+                  <p className="text-sm text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold text-slate-900 dark:text-white">Industry:</span> {profile.industry}
+                  </p>
+                )}
+                {profile.targetAudience && (
+                  <p className="text-sm text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold text-slate-900 dark:text-white">Audience:</span> {profile.targetAudience}
+                  </p>
+                )}
+                <p className="text-sm text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-slate-900 dark:text-white">Samples:</span> {samples.length}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  AI hasn&apos;t learned your style yet.
+                </p>
+                <Link href="/write" className="btn-primary text-sm mt-2 inline-block">
+                  Start Writing & Learn
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

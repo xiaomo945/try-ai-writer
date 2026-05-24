@@ -101,13 +101,17 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const prompt: string | undefined = body.prompt;
     const mode: string | undefined = body.mode;
+    const brandContext: string | undefined = body.brandContext;
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Prompt is required" }, { status: 400 });
     }
 
     const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
-    const systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    let systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    if (brandContext) {
+      systemPrompt = `${brandContext}\n\n${systemPrompt}`;
+    }
 
     const aiProvider = (process.env.AI_PROVIDER || "mock") as AIProvider;
     const deepseekApiKey = process.env.DEEPSEEK_API_KEY;

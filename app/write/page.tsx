@@ -5,6 +5,8 @@ import { Zap, Copy, Download, Trash2, Loader2, Check, Info } from "lucide-react"
 import Link from "next/link";
 import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
+import { useBrandVoice } from "@/lib/brand-voice";
+import { analyzeTone } from "@/lib/tone-analyzer";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -13,6 +15,7 @@ type CopyState = "idle" | "copied";
 export default function WriteEditor() {
   const { used, limit, canGenerate, increment } = useUsage();
   const { records, addRecord } = useHistory();
+  const { profile, samples, addSample, updateProfile, getContextPrompt } = useBrandVoice();
 
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -22,6 +25,7 @@ export default function WriteEditor() {
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [savedToast, setSavedToast] = useState(false);
   const [model, setModel] = useState<string>("mock");
+  const [learnMode, setLearnMode] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -82,10 +86,11 @@ export default function WriteEditor() {
     setResult("");
 
     try {
+      const brandContext = learnMode ? getContextPrompt() : "";
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, mode }),
+        body: JSON.stringify({ prompt, mode, brandContext }),
       });
 
       if (!response.ok) {
@@ -115,6 +120,20 @@ export default function WriteEditor() {
         mode,
         result: accumulated,
       });
+      
+      if (learnMode && accumulated.length > 100) {
+        addSample(accumulated, mode);
+        if (!profile) {
+          const analysis = analyzeTone(accumulated);
+          updateProfile({
+            tone: analysis.tone,
+            style: "natural and engaging",
+          });
+        } else {
+          const analysis = analyzeTone(accumulated);
+          updateProfile({ tone: analysis.tone });
+        }
+      }
 
       setSavedToast(true);
       setTimeout(() => setSavedToast(false), 2000);
@@ -123,7 +142,7 @@ export default function WriteEditor() {
       setError(message);
       setState("error");
     }
-  }, [prompt, mode, canGenerate, increment, addRecord]);
+  }, [prompt, mode, canGenerate, increment, addRecord, learnMode, getContextPrompt, addSample, updateProfile, profile]);
 
   const handleCopy = useCallback(() => {
     if (result) {
@@ -194,7 +213,17 @@ export default function WriteEditor() {
                 {label}
               </button>
             ))}
-            <span className="ml-auto px-3 py-1.5 rounded-full text-xs font-medium bg-slate-200 dark:bg-gray-700 text-slate-700 dark:text-slate-300">
+            <button
+              onClick={() => setLearnMode(!learnMode)}
+              className={`ml-auto px-3 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] flex items-center gap-2 ${
+                learnMode
+                  ? "bg-emerald-600 text-white"
+                  : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+              }`}
+            >
+              ✏️ 学习我的风格
+            </button>
+            <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-200 dark:bg-gray-700 text-slate-700 dark:text-slate-300">
               {model === "deepseek"
                 ? "🧠 DeepSeek"
                 : model === "claude"
