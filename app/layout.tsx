@@ -78,6 +78,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        
+        {/* LCP Performance Monitoring */}
+        <script
+          dangerouslySetInnerHTML={{ __html: `
+            if (typeof window !== 'undefined') {
+              try {
+                const observer = new PerformanceObserver((list) => {
+                  for (const entry of list.getEntries()) {
+                    console.log('[LCP] Largest Contentful Paint:', entry.startTime, entry.element);
+                  }
+                });
+                observer.observe({ entryTypes: ['largest-contentful-paint'] });
+                
+                const clsObserver = new PerformanceObserver((list) => {
+                  for (const entry of list.getEntries()) {
+                    console.log('[CLS] Cumulative Layout Shift:', entry.value);
+                  }
+                });
+                clsObserver.observe({ entryTypes: ['layout-shift'] });
+              } catch (e) {
+                // Ignore errors if browser doesn't support
+              }
+            }
+          `}}
+        />
       </head>
       <body className="min-h-screen">
         <SessionProvider>
