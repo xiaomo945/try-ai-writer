@@ -15,6 +15,10 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { fileProcessor, ProcessedFile } from "@/lib/file-processor";
 import { DigitalTwinAvatar } from "@/app/components/DigitalTwinAvatar";
 import { TwinIntroBubble } from "@/app/components/TwinIntroBubble";
+import { Skeleton } from "@/app/components/Skeleton";
+import { EmptyState } from "@/app/components/EmptyState";
+import { ErrorState } from "@/app/components/ErrorState";
+import { PenLine } from "lucide-react";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -715,7 +719,22 @@ export default function WriteEditor() {
                   {/* Interview Questions */}
                   <div className="flex-1 overflow-y-auto space-y-4">
                     {interviewResult.questions.map((question, index) => (
-                      <div key={index} className="flex flex-col gap-2">
+                      <div 
+                        key={index} 
+                        className="flex flex-col gap-2 opacity-0 transform -translate-x-2.5"
+                        style={{
+                          animation: `fadeInFromLeft 0.3s ease-out forwards`,
+                          animationDelay: `${index * 0.3}s`
+                        }}
+                      >
+                        <style jsx global>{`
+                          @keyframes fadeInFromLeft {
+                            to {
+                              opacity: 1;
+                              transform: translateX(0);
+                            }
+                          }
+                        `}</style>
                         <div className="flex items-start gap-3">
                           <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                             <span className="text-emerald-600 font-bold">🧠</span>
@@ -878,17 +897,17 @@ export default function WriteEditor() {
                 </div>
               )}
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-col">
                 <button
                   onClick={handleGenerateClick}
                   disabled={state === "loading" || !prompt.trim() || !canGenerate}
-                  className="btn-primary flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary flex-1 gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   aria-label="Generate content"
                 >
                   {state === "loading" || viewState === "generating" ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      Generating...
+                      生成中...
                     </>
                   ) : (
                     <>
@@ -897,7 +916,21 @@ export default function WriteEditor() {
                     </>
                   )}
                 </button>
-                <button onClick={handleClear} className="btn-outline min-w-[44px]" aria-label="Clear all">
+                {(state === "loading" || viewState === "generating") && (
+                  <div className="h-1 bg-slate-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                    <div className="h-full w-1/3 bg-emerald-600 animate-pulse" style={{
+                      animation: 'progress 1.5s ease-in-out infinite'
+                    }} />
+                    <style jsx>{`
+                      @keyframes progress {
+                        0% { transform: translateX(-100%); }
+                        50% { transform: translateX(150%); }
+                        100% { transform: translateX(-100%); }
+                      }
+                    `}</style>
+                  </div>
+                )}
+                <button onClick={handleClear} className="btn-outline min-w-[44px] w-full" aria-label="Clear all">
                   <Trash2 className="w-5 h-5" />
                 </button>
               </div>
@@ -954,18 +987,20 @@ export default function WriteEditor() {
           )}
 
           {state === "error" && (
-            <div className="flex-1 rounded-xl border border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950 p-6">
-              <p className="text-red-600 dark:text-red-400 font-semibold">Error</p>
-              <p className="text-red-500 dark:text-red-300 text-sm mt-2">{error}</p>
-              <button onClick={() => handleGenerate()} className="btn-primary mt-4 text-sm">
-                Retry
-              </button>
-            </div>
+            <ErrorState 
+              title="生成失败"
+              message={error || "发生了未知错误"}
+              onRetry={() => handleGenerate()}
+            />
           )}
           {(state === "idle" && viewState !== "interview" && !result) && (
-            <div className="flex-1 rounded-xl border border-dashed border-slate-300 dark:border-gray-700 flex items-center justify-center">
-              <p className="text-slate-400 dark:text-slate-500">Your AI-generated content will appear here...</p>
-            </div>
+            <EmptyState
+              icon={PenLine}
+              title="还没有生成内容"
+              description="你的AI生成内容将在这里展示"
+              actionLabel="开始写作"
+              actionHref="/write"
+            />
           )}
           {(result || state === "loading" || viewState === "generating") && (
             <div
@@ -975,10 +1010,7 @@ export default function WriteEditor() {
               {result ? (
                 <div className="whitespace-pre-wrap">{result}</div>
               ) : (
-                <div className="flex items-center gap-2 text-slate-400">
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Waiting for response...
-                </div>
+                <Skeleton variant="paragraph" />
               )}
             </div>
           )}
