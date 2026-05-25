@@ -1,331 +1,229 @@
+"use client";
+
 import { Check, PenTool, Zap, Brain, FileText, Clock, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { ScrollReveal } from "./components/ScrollReveal";
-import { TypewriterEffect } from "./components/TypewriterEffect";
-import { AnimatedCounter, AnimatedProgressBar } from "./components/AnimatedCounter";
-import { SocialProofWall } from "./components/SocialProofWall";
-import { LaunchCountdown } from "./components/LaunchCountdown";
+import { useState, useEffect } from "react";
 import { plans } from "@/lib/pricing";
 
-const typewriterTexts = [
-  "Generating a blog post about sustainable tech...",
-  "Drafting an email with a professional yet friendly tone...",
-  "Creating social media captions that match your brand voice...",
-  "Writing a LinkedIn article on leadership insights...",
-];
-
-const featureStories = [
+const bentoFeatures = [
   {
     icon: Brain,
-    title: "Your Brand's Memory.",
-    description: "Stop rewriting the same context every time. Use AI Writer remembers your voice, your style, your audience — across every session.",
-    visual: "memory",
+    title: "Brand Memory",
+    description: "Your voice, style, and audience remembered across every session.",
+    size: "large",
+    delay: 0
   },
   {
     icon: Zap,
-    title: "From Thought to Draft.",
-    description: "Thirty seconds. That's all it takes to go from a rough idea to a polished draft you can actually use.",
-    visual: "speed",
+    title: "Instant Drafts",
+    description: "Idea to polished draft in 30 seconds flat.",
+    size: "small",
+    delay: 100
   },
   {
     icon: PenTool,
-    title: "Write Like You.",
-    description: "Not generic AI. Your words, amplified. The tool learns your tone, not just your prompts.",
-    visual: "voice",
+    title: "Your Voice",
+    description: "Not generic AI. Your words, amplified.",
+    size: "small",
+    delay: 200
   },
+  {
+    icon: Sparkles,
+    title: "Creative Assistant",
+    description: "AI that understands your creative vision perfectly.",
+    size: "large",
+    delay: 300
+  }
 ];
 
-function VisualElement({ type }: { type: string }) {
-  if (type === "memory") {
-    return (
-      <div className="w-full max-w-lg mx-auto md:mx-0">
-        <div className="relative">
-          <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex items-center justify-center">
-            <div className="w-full space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-emerald-600" />
-                </div>
-                <div className="h-4 bg-slate-200 rounded w-32" />
-              </div>
-              <div className="space-y-2 pl-13">
-                <div className="h-3 bg-slate-100 rounded w-full" />
-                <div className="h-3 bg-slate-100 rounded w-4/5" />
-                <div className="h-3 bg-slate-100 rounded w-3/4" />
-              </div>
-              <div className="pt-4 border-t border-slate-100">
-                <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">Brand Voice Learned</div>
-                <div className="flex gap-2">
-                  <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-full">Professional</span>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Concise</span>
-                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Friendly</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-emerald-50 rounded-full -z-10" />
-        </div>
-      </div>
-    );
-  }
-
-  if (type === "speed") {
-    return (
-      <div className="w-full max-w-lg mx-auto md:mx-0">
-        <div className="relative">
-          <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex flex-col items-center justify-center">
-            <div className="text-6xl font-display font-extrabold text-slate-900 mb-6">30s</div>
-            <div className="w-full space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
-                  <span className="text-xs font-semibold text-slate-500">1</span>
-                </div>
-                <div className="h-2 bg-slate-200 rounded flex-1" />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-emerald-600" />
-                </div>
-                <div className="h-2 bg-emerald-200 rounded flex-1" />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                  <Check className="w-4 h-4 text-emerald-600" />
-                </div>
-                <div className="h-2 bg-emerald-200 rounded flex-1" />
-              </div>
-            </div>
-            <div className="mt-6 text-sm text-slate-500">Idea → Draft → Done</div>
-          </div>
-          <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-slate-100 rounded-full -z-10" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full max-w-lg mx-auto md:mx-0">
-      <div className="relative">
-        <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex items-center justify-center">
-          <div className="w-full space-y-6">
-            <div className="flex items-center justify-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center">
-                <PenTool className="w-8 h-8 text-slate-400" />
-              </div>
-              <div className="w-8 h-px bg-slate-300" />
-              <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-                <Brain className="w-8 h-8 text-emerald-600" />
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Your Voice</div>
-              <div className="text-lg font-semibold text-slate-900">Amplified</div>
-            </div>
-          </div>
-        </div>
-        <div className="absolute -top-4 -right-4 w-16 h-16 bg-emerald-100 rounded-full -z-10" />
-      </div>
-    </div>
-  );
-}
+const loadingTexts = [
+  "> Learning your brand voice...",
+  "> Analyzing writing patterns...",
+  "> Generating creative content...",
+  "> Polishing final output..."
+];
 
 export default function LandingPage() {
+  const [loadingTextIndex, setLoadingTextIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoadingTextIndex((prev) => (prev + 1) % loadingTexts.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="flex flex-col items-center w-full">
-      <section className="w-full min-h-screen flex items-center justify-center bg-white">
-        <div className="w-full max-w-3xl mx-auto px-6 py-16 md:py-32 text-center hero-fade-in">
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-display font-extrabold text-slate-900 leading-none tracking-tight mb-8">
+      {/* Hero Section */}
+      <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden">
+        {/* CSS Noise Texture */}
+        <div 
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+        
+        <div className="w-full max-w-5xl mx-auto px-6 py-16 md:py-32 text-center relative z-10">
+          {/* Kinetic Typography Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-extrabold leading-none tracking-tight mb-8"
+              style={{ textShadow: '0 0 80px rgba(74,144,226,0.3)' }}>
             Write Like You,
             <br />
-            <span className="text-slate-500">Only Faster.</span>
+            <span className="text-slate-400">Only Faster.</span>
             <br />
-            <span className="text-2xl md:text-4xl text-emerald-600">Now Claude-Powered.</span>
+            <span className="text-3xl md:text-5xl bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent">
+              Claude-Powered.
+            </span>
           </h1>
-          <p className="text-base md:text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-8 leading-relaxed">
+          
+          <p className="text-lg md:text-xl text-slate-400 font-normal max-w-xl mx-auto mb-12 leading-relaxed">
             The AI writing tool that learns your voice, powered by Claude.
           </p>
           
-          {/* Typewriter Effect */}
-          <div className="mb-12 h-8 flex items-center justify-center">
-            <TypewriterEffect 
-              texts={typewriterTexts} 
-              typingSpeed={40}
-              deletingSpeed={25}
-              pauseDuration={2000}
-              className="text-sm md:text-base"
-            />
+          {/* Typewriter Effect with JetBrains Mono */}
+          <div className="mb-12 h-10 flex items-center justify-center">
+            <code className="font-mono text-sm md:text-base text-slate-400 relative">
+              {loadingTexts[loadingTextIndex]}
+              <span className="inline-block w-3 h-5 bg-white ml-1 align-middle animate-pulse" />
+            </code>
           </div>
           
-          {/* Launch Countdown */}
-          <ScrollReveal>
-            <LaunchCountdown />
-          </ScrollReveal>
-          
-          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block mt-8">
+          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
             Start Writing Free
           </Link>
         </div>
+
+        {/* Abstract Flowing Light Band */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-96 pointer-events-none opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#4A90E2]/30 to-transparent blur-3xl animate-pulse" />
+        </div>
       </section>
 
-      {/* Social Proof Wall */}
-      <SocialProofWall />
-      
-      {/* Divider */}
-      <div className="w-full h-px bg-slate-100" />
-
-      {/* Feature Highlights Bar */}
-      <section className="w-full py-16 bg-slate-50/50 border-y border-slate-100">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
-            <ScrollReveal>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <FileText className="w-8 h-8 text-emerald-600" />
-                  </div>
-                </div>
-                <span className="text-4xl font-display font-bold text-emerald-600 block mb-2">
-                  <AnimatedCounter end={10} suffix="+" />
-                </span>
-                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
-                <p className="text-sm text-slate-600">Writing Templates</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={100}>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <Clock className="w-8 h-8 text-emerald-600" />
-                  </div>
-                </div>
-                <span className="text-4xl font-display font-bold text-emerald-600 block mb-2">&lt; 30s</span>
-                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
-                <p className="text-sm text-slate-600">To First Draft</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={200}>
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-                    <Sparkles className="w-8 h-8 text-emerald-600" />
-                  </div>
-                </div>
-                <AnimatedProgressBar className="max-w-[120px] mx-auto mb-2" duration={2500} />
-                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
-                <p className="text-sm text-slate-600">Your Brand Voice, Learned</p>
-              </div>
-            </ScrollReveal>
+      {/* Bento Grid Features */}
+      <section className="w-full py-16 md:py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-4">
+              Features That Matter
+            </h2>
+            <p className="text-slate-400 text-lg">Designed for professional writers who care about quality.</p>
           </div>
-        </div>
-      </section>
-      
-      {/* Divider */}
-      <div className="w-full h-px bg-slate-100" />
 
-      <section className="w-full py-16 md:py-32 bg-slate-50/50">
-        <div className="max-w-6xl mx-auto px-6">
-          {featureStories.map((story, index) => (
-            <ScrollReveal key={story.title} delay={index * 100} direction={index % 2 === 0 ? "left" : "right"}>
-              <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 py-16 md:py-24`}>
-                <div className="flex-1 text-center md:text-left">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto md:mx-0 mb-6">
-                    <story.icon className="w-8 h-8 text-emerald-600" />
-                  </div>
-                  <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-4 leading-tight">
-                    {story.title}
-                  </h2>
-                  <div className="h-1 w-10 bg-emerald-500 mx-auto md:mx-0 mb-4" />
-                  <p className="text-base md:text-xl text-slate-500 leading-relaxed max-w-md">
-                    {story.description}
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {bentoFeatures.map((feature, index) => (
+              <div 
+                key={feature.title}
+                className={`glass-card p-8 ${feature.size === 'large' ? 'md:col-span-1' : 'md:col-span-1'}`}
+                style={{ animationDelay: `${feature.delay}ms` }}>
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#4A90E2]/20 to-[#A855F7]/20 flex items-center justify-center mb-6">
+                  <feature.icon className="w-6 h-6 text-[#4A90E2]" />
                 </div>
-                <div className="flex-1 w-full">
-                  <VisualElement type={story.visual} />
+                
+                {/* Title */}
+                <h3 className="text-xl font-display font-bold mb-3">
+                  {feature.title}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-slate-400 mb-6">
+                  {feature.description}
+                </p>
+                
+                {/* AI Pulse Dot */}
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-[#4A90E2] animate-pulse" />
+                  <span className="text-xs text-slate-500 font-mono">active</span>
                 </div>
               </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-      
-      {/* Divider */}
-      <div className="w-full h-px bg-slate-100" />
-
-      <section className="w-full py-16 md:py-32 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center mb-20 md:mb-32">
-              <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6">
-                Simple Pricing.
-              </h2>
-              <p className="text-lg md:text-2xl text-slate-500">
-                Start free. Upgrade when you need more.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="flex flex-col md:flex-row gap-8">
-            {plans.map((plan, index) => (
-              <ScrollReveal key={plan.name} delay={index * 100} direction="scale">
-                <div className={`
-                  flex-1 px-6 md:px-10 py-10 rounded-2xl
-                  ${plan.recommended 
-                    ? 'shadow-md shadow-emerald-500/10 border-2 border-emerald-400/50' 
-                    : 'shadow-sm border border-slate-200'}
-                `}>
-                  <div className="mb-8">
-                    <h3 className="text-xl md:text-2xl font-display font-bold text-slate-900 mb-2">{plan.name}</h3>
-                    <p className="text-sm text-slate-500">{plan.description}</p>
-                  </div>
-                  <p className={`
-                    text-4xl md:text-5xl font-display mb-2
-                    ${plan.recommended 
-                      ? 'font-extrabold text-emerald-700' 
-                      : 'font-bold text-emerald-600'}
-                  `}>
-                    {plan.price}
-                  </p>
-                  <p className="text-sm text-slate-400 mb-10">{plan.period}</p>
-                  <ul className="space-y-4 mb-12">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <Check size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-slate-600 text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="/login"
-                    className={plan.recommended ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}
-                  >
-                    {plan.cta}
-                  </Link>
-                </div>
-              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
-      
-      {/* Divider */}
-      <div className="w-full h-px bg-slate-100" />
 
-      <section className="w-full py-20 md:py-40 bg-emerald-50/30">
-        <ScrollReveal>
-          <div className="max-w-2xl mx-auto px-6 text-center">
-            <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-10 leading-tight">
-              Ready to write differently?
+      {/* Pricing Section */}
+      <section className="w-full py-16 md:py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-4">
+              Simple Pricing
             </h2>
-            <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
+            <p className="text-slate-400 text-lg">Start free. Upgrade when you need more.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {plans.map((plan, index) => (
+              <div 
+                key={plan.name}
+                className={`glass-card p-8 transition-all duration-300 ${
+                  plan.recommended 
+                    ? 'border-[rgba(168,85,247,0.2)]' 
+                    : ''
+                }`}
+                style={plan.recommended ? { boxShadow: '0 0 40px rgba(168, 85, 247, 0.1)' } : {}}>
+                <div className="mb-8">
+                  <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
+                  <p className="text-sm text-slate-400">{plan.description}</p>
+                </div>
+                
+                <div className="mb-8">
+                  <p className="text-5xl font-display font-extrabold text-white mb-2">
+                    {plan.price}
+                  </p>
+                  <p className="text-sm text-slate-400">{plan.period}</p>
+                </div>
+                
+                <ul className="space-y-3 mb-10">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{'>'}</span>
+                      <span className="text-slate-400 text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <Link
+                  href="/login"
+                  className={plan.recommended ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}
+                >
+                  {plan.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Bottom Banner */}
+      <section className="w-full py-20 md:py-40 px-6 relative overflow-hidden">
+        {/* Radial Gradient Glow */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(74,144,226,0.15) 0%, rgba(168,85,247,0.08) 30%, transparent 70%)'
+          }}
+        />
+        
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <div className="glass-card p-12 md:p-16">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6">
+              Ready to experience the future of writing?
+            </h2>
+            <p className="text-slate-400 mb-10 text-lg">
+              Join thousands of writers already creating better content.
+            </p>
+            <Link href="/login" className="btn-primary text-lg px-16 py-5 inline-block">
               Start Writing Free
             </Link>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
 
-      <footer className="w-full py-12 bg-white border-t border-slate-100">
+      <footer className="w-full py-12 border-t border-glass-border">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-sm text-slate-400">© 2026 Use AI Writer.</p>
+          <p className="text-sm text-slate-500">© 2026 Use AI Writer.</p>
         </div>
       </footer>
     </main>
