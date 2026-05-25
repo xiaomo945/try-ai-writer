@@ -1,4 +1,5 @@
 import { BrandVoiceProfile } from './brand-voice';
+import type { MemoryItem } from './memory-bank';
 import { getPersonaGreeting, getPersonaQuestions } from './digital-twin-persona';
 
 export interface InterviewResult {
@@ -43,14 +44,15 @@ export function interviewUser(
   prompt: string,
   mode: string,
   brandProfile?: BrandVoiceProfile,
-  historicalViews?: string[]
+  historicalViews?: string[],
+  memories?: MemoryItem[]
 ): InterviewResult {
   const trimmedPrompt = prompt.trim();
   const greeting = getPersonaGreeting(brandProfile);
   
   // Very short prompt (< 30 chars) → always trigger interview
   if (trimmedPrompt.length < 30) {
-    const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews);
+    const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
     return {
       needsInterview: true,
       greeting,
@@ -63,7 +65,7 @@ export function interviewUser(
   // Medium prompt (30-80 chars) → check if missing key elements
   if (trimmedPrompt.length >= 30 && trimmedPrompt.length <= 80) {
     if (!hasKeyElements(trimmedPrompt)) {
-      const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews);
+      const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
       return {
         needsInterview: true,
         greeting,
@@ -87,7 +89,7 @@ export function interviewUser(
   // Medium prompt (30-80 chars) with key elements but no detailed description → light interview
   if (trimmedPrompt.length >= 30 && trimmedPrompt.length <= 80 && hasKeyElements(trimmedPrompt)) {
     if (!hasDetailedDescription(trimmedPrompt)) {
-      const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews);
+      const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
       return {
         needsInterview: true,
         greeting,
@@ -109,7 +111,7 @@ export function interviewUser(
   }
   
   // Default: light interview
-  const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews);
+  const questions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
   return {
     needsInterview: true,
     greeting,

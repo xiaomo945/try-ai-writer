@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain } from "lucide-react";
 import { useHistory } from "@/lib/history";
@@ -8,6 +8,8 @@ import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { useMemoryBank } from "@/lib/memory-bank";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
+import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
+import { getWeeklyInsights } from "@/lib/weekly-insights";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -157,7 +159,7 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
 
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
-  const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName } = useUsage();
+  const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName, getWeeklyStats } = useUsage();
   const { hasProfile, isLoaded } = useBrandVoice();
   const { memories, deleteMemory } = useMemoryBank();
   const [expanded, setExpanded] = useState(false);
@@ -170,6 +172,17 @@ export default function DashboardPage() {
 
   const totalWords = records.reduce((sum, r) => sum + getWordCount(r.result), 0);
   const avgWords = records.length > 0 ? Math.round(totalWords / records.length) : 0;
+
+  const weeklyStats = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      return getWeeklyStats();
+    }
+    return { thisWeekCount: 0, lastWeekCount: 0 };
+  }, [records, getWeeklyStats]);
+
+  const insights = useMemo(() => {
+    return getWeeklyInsights(records, memories, weeklyStats);
+  }, [records, memories, weeklyStats]);
 
   // Set registration time and calculate user stage in useEffect
   useEffect(() => {
@@ -336,6 +349,11 @@ export default function DashboardPage() {
               </div>
             </Link>
           </div>
+        )}
+
+        {/* Weekly Insights Card */}
+        {userStage > 0 && (
+          <WeeklyInsightCard insights={insights} />
         )}
 
         {/* Stats Grid */}

@@ -227,7 +227,7 @@ export default function WriteEditor() {
   const { used, limit, canGenerate, increment } = useUsage();
   const { records, addRecord } = useHistory();
   const { profile } = useBrandVoice();
-  const { addMemory, getRelevantMemories } = useMemoryBank();
+  const { memories, addMemory, getRelevantMemories } = useMemoryBank();
 
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -435,7 +435,7 @@ export default function WriteEditor() {
 
     const relevantMemories = getRelevantMemories(prompt);
     const historicalViews = relevantMemories.map(m => m.content);
-    const interview = interviewUser(prompt, mode, profile ?? undefined, historicalViews);
+    const interview = interviewUser(prompt, mode, profile ?? undefined, historicalViews, memories);
     if (interview.needsInterview) {
       setInterviewResult(interview);
       setInterviewAnswers(new Array(interview.questions.length).fill(""));

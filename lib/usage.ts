@@ -1,10 +1,14 @@
 import { useState, useCallback, useEffect } from "react";
 import { plans } from "./pricing";
 
-type UsageData = {
+type DailyUsageData = {
   date: string;
   claudeCount: number;
   deepseekCount: number;
+};
+
+type AllUsageData = {
+  [date: string]: DailyUsageData;
 };
 
 const STORAGE_KEY = "use-ai-writer-usage";
@@ -12,6 +16,12 @@ const FREE_PLAN = plans[0]; // Free plan is always first
 
 function getToday(): string {
   return new Date().toISOString().split("T")[0] ?? "";
+}
+
+function getDateDaysAgo(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toISOString().split("T")[0] ?? "";
 }
 
 /** Parse the daily limit from the Free plan's claudeLimit string (e.g. "10/day" → 10) */
@@ -23,27 +33,32 @@ function parseDailyLimit(limitStr: string): number {
 const CLAUDE_DAILY_LIMIT = FREE_PLAN ? parseDailyLimit(FREE_PLAN.claudeLimit) : 10;
 const DEEPSEEK_DAILY_LIMIT = FREE_PLAN ? parseDailyLimit(FREE_PLAN.deepseekLimit) : 10;
 
-function readUsage(): UsageData {
+function readAllUsage(): AllUsageData {
   if (typeof window === "undefined") {
-    return { date: getToday(), claudeCount: 0, deepseekCount: 0 };
+    return {};
   }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { date: getToday(), claudeCount: 0, deepseekCount: 0 };
-    const parsed: UsageData = JSON.parse(raw) as UsageData;
-    if (parsed.date !== getToday()) {
-      return { date: getToday(), claudeCount: 0, deepseekCount: 0 };
-    }
+    if (!raw) return {};
+    const parsed: AllUsageData = JSON.parse(raw) as AllUsageData;
     return parsed;
   } catch {
-    return { date: getToday(), claudeCount: 0, deepseekCount: 0 };
+    return {};
   }
 }
 
-function writeUsage(data: UsageData): void {
+function readTodayUsage(): DailyUsageData {
+  const allUsage = readAllUsage();
+  const today = getToday();
+  return allUsage[today] ?? { date: today, claudeCount: 0, deepseekCount: 0 };
+}
+
+function writeUsage(data: DailyUsageData): void {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    const allUsage = readAllUsage();
+    allUsage[data.date] = data;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allUsage));
   } catch {
     // storage full or unavailable
   }
@@ -144,20 +159,20 @@ export function isNoiseInput(input: string): NoiseCheckResult {
 }
 
 export function useUsage() {
-  const [usage, setUsage] = useState<UsageData>(readUsage);
+  const [usage, setUsage] = useState<DailyUsageData>(readTodayUsage);
 
   useEffect(() => {
-    const data = readUsage();
+    const data = readTodayUsage();
     setUsage(data);
   }, []);
 
   const increment = useCallback((model: ModelType = "claude"): boolean => {
-    const current = readUsage();
+    const current = readTodayUsage();
 
     if (model === "claude" && current.claudeCount >= CLAUDE_DAILY_LIMIT) return false;
     if (model === "deepseek" && current.deepseekCount >= DEEPSEEK_DAILY_LIMIT) return false;
 
-    const updated: UsageData = {
+    const updated: DailyUsageData = {
       date: current.date,
       claudeCount: model === "claude" ? current.claudeCount + 1 : current.claudeCount,
       deepseekCount: model === "deepseek" ? current.deepseekCount + 1 : current.deepseekCount,
@@ -166,6 +181,26 @@ export function useUsage() {
     writeUsage(updated);
     setUsage(updated);
     return true;
+  }, []);
+  
+  // New helper functions for weekly insights
+  const getWeeklyStats = useCallback(() => {
+    const allUsage = readAllUsage();
+    const today = new Date();
+    let thisWeekCount = 0;
+    let lastWeekCount = 0;
+    
+    for (let i = 0; i < 7; i++) {
+      const date = getDateDaysAgo(i);
+      thisWeekCount += (allUsage[date]?.claudeCount ?? 0) + (allUsage[date]?.deepseekCount ?? 0);
+    }
+    
+    for (let i = 7; i < 14; i++) {
+      const date = getDateDaysAgo(i);
+      lastWeekCount += (allUsage[date]?.claudeCount ?? 0) + (allUsage[date]?.deepseekCount ?? 0);
+    }
+    
+    return { thisWeekCount, lastWeekCount };
   }, []);
 
   const used = usage.claudeCount + usage.deepseekCount;
@@ -182,5 +217,6 @@ export function useUsage() {
     canGenerate,
     increment,
     planName: FREE_PLAN?.name ?? "Free",
+    getWeeklyStats,
   };
 }

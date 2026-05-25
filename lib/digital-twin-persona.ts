@@ -1,4 +1,5 @@
 import { BrandVoiceProfile } from "./brand-voice";
+import type { MemoryItem } from "./memory-bank";
 
 export function getPersonaGreeting(profile?: BrandVoiceProfile): string {
   if (profile) {
@@ -8,12 +9,38 @@ export function getPersonaGreeting(profile?: BrandVoiceProfile): string {
   return "嗨，我是你的数字写作分身。告诉我你的想法，我会帮你变成好作品。";
 }
 
+function extractKeywords(text: string): string[] {
+  if (!text) return [];
+  const words = text.split(/[\s,.!?;]+/).filter(word => word.length > 2);
+  return [...new Set(words.map(w => w.toLowerCase()))];
+}
+
+function getRelevantMemories(currentTopic: string, memories: MemoryItem[]): MemoryItem[] {
+  if (!currentTopic.trim()) return [];
+  const lowerTopic = currentTopic.toLowerCase();
+  const topicKeywords = extractKeywords(currentTopic);
+  return memories.filter(m => {
+    return m.keywords.some(k => topicKeywords.some(tk => k.includes(tk) || tk.includes(k))) ||
+           m.content.toLowerCase().includes(lowerTopic);
+  }).slice(0, 3);
+}
+
 export function getPersonaQuestions(
   profile?: BrandVoiceProfile,
   topic?: string,
-  historicalViews?: string[]
+  historicalViews?: string[],
+  memories?: MemoryItem[]
 ): string[] {
   const questions: string[] = [];
+
+  if (memories && topic) {
+      const relevantMemories = getRelevantMemories(topic, memories);
+      if (relevantMemories.length > 0) {
+        const memory = relevantMemories[0];
+        const memoryKeyword = memory?.keywords?.[0] || memory?.content?.slice(0, 15) || "";
+        questions.push(`你之前提到过${memoryKeyword}，这次是想继续那个方向，还是换个角度？`);
+      }
+    }
 
   if (topic && topic.length > 0) {
     questions.push(`你这次的核心主题是“${topic}”吗？能再补充一点背景吗？`);
