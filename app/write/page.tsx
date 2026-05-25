@@ -5,13 +5,17 @@ import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles,
 import Link from "next/link";
 import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
+import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, hasBrandProfile, getBrandProfile } from "@/lib/style-matcher";
 import { checkStyleConsistency, ConsistencyWarning } from "@/lib/style-checker";
 import { searchHistory, SearchResult } from "@/lib/history-search";
+import { interviewUser, InterviewResult } from "@/lib/creative-interview";
+import { buildEnhancedPrompt } from "@/lib/prompt-builder";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
 type CopyState = "idle" | "copied";
+type ViewState = "input" | "interview" | "generating" | "result";
 
 const examplePrompts = [
   { text: "How to write blog posts with AI that actually sound like you", icon: "📝" },
@@ -218,6 +222,7 @@ function HistorySearchModal({
 export default function WriteEditor() {
   const { used, limit, canGenerate, increment } = useUsage();
   const { records, addRecord } = useHistory();
+  const { profile } = useBrandVoice();
 
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -230,6 +235,27 @@ export default function WriteEditor() {
   const [styleScore, setStyleScore] = useState<StyleScore | null>(null);
   const [consistencyWarnings, setConsistencyWarnings] = useState<ConsistencyWarning[]>([]);
   const resultRef = useRef<HTMLDivElement>(null);
+
+  // Creative Assistant state
+  const [creativeAssistantEnabled, setCreativeAssistantEnabled] = useState(true);
+  const [viewState, setViewState] = useState<ViewState>("input");
+  const [interviewQuestions, setInterviewQuestions] = useState<string[]>([]);
+  const [interviewAnswers, setInterviewAnswers] = useState<string[]>([]);
+
+  // Load Creative Assistant setting from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("creative-assistant-enabled");
+    if (stored === null) {
+      localStorage.setItem("creative-assistant-enabled", "true");
+    } else {
+      setCreativeAssistantEnabled(stored === "true");
+    }
+  }, []);
+
+  const handleCreativeAssistantToggle = (enabled: boolean) => {
+    setCreativeAssistantEnabled(enabled);
+    localStorage.setItem("creative-assistant-enabled", enabled ? "true" : "false");
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -245,6 +271,7 @@ export default function WriteEditor() {
             setPrompt(record.title);
             setMode(record.mode as WritingMode);
             setState("done");
+            setViewState("result");
           }
         } catch {
           // ignore parse errors
@@ -282,8 +309,9 @@ export default function WriteEditor() {
     setConsistencyWarnings(consistency.warnings);
   }, [records]);
 
-  const handleGenerate = useCallback(async () => {
-    if (!prompt.trim()) return;
+  const handleGenerate = useCallback(async (enhancedPrompt?: string) => {
+    const promptToUse = enhancedPrompt || prompt;
+    if (!promptToUse.trim()) return;
     if (!canGenerate) return;
 
     const allowed = increment();
@@ -294,6 +322,7 @@ export default function WriteEditor() {
     }
 
     setState("loading");
+    setViewState("generating");
     setError(null);
     setResult("");
     setStyleScore(null);
@@ -303,7 +332,11 @@ export default function WriteEditor() {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, mode }),
+        body: JSON.stringify({ 
+          prompt: enhancedPrompt ? prompt : prompt, 
+          mode, 
+          enhancedPrompt 
+        }),
       });
 
       if (!response.ok) {
@@ -327,6 +360,7 @@ export default function WriteEditor() {
         }
       }
       setState("done");
+      setViewState("result");
 
       addRecord({
         title: prompt.length > 50 ? `${prompt.slice(0, 50)}...` : prompt,
@@ -344,6 +378,31 @@ export default function WriteEditor() {
       setState("error");
     }
   }, [prompt, mode, canGenerate, increment, addRecord, calculateStyleScore]);
+
+  const handleGenerateClick = useCallback(() => {
+    if (!creativeAssistantEnabled) {
+      handleGenerate();
+      return;
+    }
+
+    const interviewResult: InterviewResult = interviewUser(prompt, mode, profile ?? undefined);
+    if (interviewResult.needsInterview) {
+      setInterviewQuestions(interviewResult.questions);
+      setInterviewAnswers(new Array(interviewResult.questions.length).fill(""));
+      setViewState("interview");
+    } else {
+      handleGenerate();
+    }
+  }, [creativeAssistantEnabled, prompt, mode, profile, handleGenerate]);
+
+  const handleContinueWriting = useCallback(() => {
+    const enhancedPrompt = buildEnhancedPrompt(prompt, interviewAnswers, interviewQuestions, mode, profile ?? undefined);
+    handleGenerate(enhancedPrompt);
+  }, [prompt, interviewAnswers, interviewQuestions, mode, profile, handleGenerate]);
+
+  const handleSkipInterview = useCallback(() => {
+    handleGenerate();
+  }, [handleGenerate]);
 
   const handleOptimize = useCallback(async () => {
     if (!prompt.trim() || consistencyWarnings.length === 0) return;
@@ -388,9 +447,12 @@ export default function WriteEditor() {
     setPrompt("");
     setResult("");
     setState("idle");
+    setViewState("input");
     setError(null);
     setStyleScore(null);
     setConsistencyWarnings([]);
+    setInterviewQuestions([]);
+    setInterviewAnswers([]);
   }, []);
 
   const handleQuoteFromHistory = useCallback((text: string) => {
@@ -432,103 +494,174 @@ export default function WriteEditor() {
 
       <div className="flex-1 grid lg:grid-cols-[40%_60%]">
         <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-          <div className="flex flex-wrap gap-2">
-            {modes.map(({ key, label }) => (
+          <div className="flex flex-wrap gap-2 items-center justify-between">
+            <div className="flex flex-wrap gap-2">
+              {modes.map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => setMode(key)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] ${
+                    mode === key
+                      ? "bg-emerald-600 text-white"
+                      : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Creative Assistant Toggle */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-slate-600 dark:text-slate-400">
+                🧠 Creative Assistant
+              </span>
               <button
-                key={key}
-                onClick={() => setMode(key)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] ${
-                  mode === key
-                    ? "bg-emerald-600 text-white"
-                    : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+                onClick={() => handleCreativeAssistantToggle(!creativeAssistantEnabled)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  creativeAssistantEnabled ? "bg-emerald-600" : "bg-slate-300"
                 }`}
               >
-                {label}
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    creativeAssistantEnabled ? "translate-x-6" : "translate-x-1"
+                  }`}
+                />
               </button>
-            ))}
+            </div>
           </div>
 
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder={`Describe what you want to write in ${mode} mode...`}
-            className="flex-1 min-h-[300px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-          />
-
-          {/* Empty State Prompt Suggestions */}
-          {!prompt && !result && state === "idle" && (
-            <div className="bg-slate-50 dark:bg-gray-800/50 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
-              <div className="flex items-center gap-2 mb-3">
-                <Lightbulb className="w-4 h-4 text-emerald-600" />
-                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Describe what you want to write, or choose a template below
-                </span>
+          {viewState === "interview" ? (
+            <div className="flex-1 flex flex-col gap-4">
+              <div className="text-center py-4">
+                <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">
+                  Let's personalize your writing
+                </h3>
+                <p className="text-sm text-slate-500">
+                  Answer a few quick questions to get better results
+                </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {examplePrompts.map((example) => (
-                  <button
-                    key={example.text}
-                    onClick={() => setPrompt(example.text)}
-                    className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-                  >
-                    <span>{example.icon}</span>
-                    <span className="truncate max-w-[200px]">{example.text}</span>
-                  </button>
+
+              <div className="flex-1 overflow-y-auto space-y-4">
+                {interviewQuestions.map((question, index) => (
+                  <div key={index} className="p-4 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                    <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                      {question}
+                    </p>
+                    <textarea
+                      value={interviewAnswers[index]}
+                      onChange={(e) => {
+                        const newAnswers = [...interviewAnswers];
+                        newAnswers[index] = e.target.value;
+                        setInterviewAnswers(newAnswers);
+                      }}
+                      placeholder="Your answer..."
+                      className="w-full rounded-lg border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                    />
+                  </div>
                 ))}
               </div>
-            </div>
-          )}
 
-          <button
-            onClick={() => setShowHistoryModal(true)}
-            className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors"
-          >
-            <MessageSquare className="w-4 h-4" />
-            Quote from History
-          </button>
-
-          {!canGenerate && state !== "loading" && (
-            <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4 space-y-3">
-              <div className="flex items-start gap-3">
-                <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-amber-800 dark:text-amber-200">
-                    Daily limit reached
-                  </p>
-                  <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
-                    You have used all {limit} free generations today. Upgrade to Pro for unlimited access.
-                  </p>
-                </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleSkipInterview}
+                  className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                >
+                  Skip for now
+                </button>
+                <button
+                  onClick={handleContinueWriting}
+                  className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors min-h-[44px] shadow-lg shadow-emerald-500/25"
+                >
+                  Continue writing
+                </button>
               </div>
-              <Link href="/pricing" className="btn-primary text-sm w-full text-center">
-                Upgrade to Pro
-              </Link>
             </div>
-          )}
+          ) : (
+            <>
+              <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder={`Describe what you want to write in ${mode} mode...`}
+                className="flex-1 min-h-[300px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
 
-          <div className="flex gap-3">
-            <button
-              onClick={handleGenerate}
-              disabled={state === "loading" || !prompt.trim() || !canGenerate}
-              className="btn-primary flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Generate content"
-            >
-              {state === "loading" ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <Zap className="w-5 h-5" />
-                  Generate
-                </>
+              {/* Empty State Prompt Suggestions */}
+              {!prompt && !result && state === "idle" && (
+                <div className="bg-slate-50 dark:bg-gray-800/50 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Lightbulb className="w-4 h-4 text-emerald-600" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      Describe what you want to write, or choose a template below
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {examplePrompts.map((example) => (
+                      <button
+                        key={example.text}
+                        onClick={() => setPrompt(example.text)}
+                        className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                      >
+                        <span>{example.icon}</span>
+                        <span className="truncate max-w-[200px]">{example.text}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               )}
-            </button>
-            <button onClick={handleClear} className="btn-outline min-w-[44px]" aria-label="Clear all">
-              <Trash2 className="w-5 h-5" />
-            </button>
-          </div>
+
+              <button
+                onClick={() => setShowHistoryModal(true)}
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Quote from History
+              </button>
+
+              {!canGenerate && state !== "loading" && (
+                <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-amber-800 dark:text-amber-200">
+                        Daily limit reached
+                      </p>
+                      <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
+                        You have used all {limit} free generations today. Upgrade to Pro for unlimited access.
+                      </p>
+                    </div>
+                  </div>
+                  <Link href="/pricing" className="btn-primary text-sm w-full text-center">
+                    Upgrade to Pro
+                  </Link>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleGenerateClick}
+                  disabled={state === "loading" || !prompt.trim() || !canGenerate}
+                  className="btn-primary flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Generate content"
+                >
+                  {state === "loading" ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-5 h-5" />
+                      Generate
+                    </>
+                  )}
+                </button>
+                <button onClick={handleClear} className="btn-outline min-w-[44px]" aria-label="Clear all">
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </div>
+            </>
+          )}
         </section>
 
         <section className="p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900">
@@ -583,12 +716,12 @@ export default function WriteEditor() {
             <div className="flex-1 rounded-xl border border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950 p-6">
               <p className="text-red-600 dark:text-red-400 font-semibold">Error</p>
               <p className="text-red-500 dark:text-red-300 text-sm mt-2">{error}</p>
-              <button onClick={handleGenerate} className="btn-primary mt-4 text-sm">
+              <button onClick={() => handleGenerate()} className="btn-primary mt-4 text-sm">
                 Retry
               </button>
             </div>
           )}
-          {(state === "idle" || (state === "done" && !result)) && (
+          {(state === "idle" && viewState !== "interview" && !result) && (
             <div className="flex-1 rounded-xl border border-dashed border-slate-300 dark:border-gray-700 flex items-center justify-center">
               <p className="text-slate-400 dark:text-slate-500">Your AI-generated content will appear here...</p>
             </div>

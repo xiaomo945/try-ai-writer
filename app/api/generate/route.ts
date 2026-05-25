@@ -96,13 +96,19 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const prompt: string | undefined = body.prompt;
     const mode: string | undefined = body.mode;
+    const enhancedPrompt: string | undefined = body.enhancedPrompt;
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Prompt is required" }, { status: 400 });
     }
 
-    const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
-    const systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    let systemPrompt: string;
+    if (enhancedPrompt) {
+      systemPrompt = enhancedPrompt;
+    } else {
+      const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
+      systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    }
 
     const apiKey = process.env.CLAUDE_API_KEY;
     const isMockMode = !apiKey || apiKey === "sk-ant-xxxxx" || apiKey.startsWith("your-");
