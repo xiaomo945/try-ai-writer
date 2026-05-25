@@ -1,21 +1,25 @@
-import { Zap, Shield, Brain, Check, X, Sparkles, PenTool, Users } from "lucide-react";
+import { Check, PenTool, Zap, Brain } from "lucide-react";
 import Link from "next/link";
+import { ScrollReveal } from "./components/ScrollReveal";
 
-const features = [
-  {
-    icon: Zap,
-    title: "Lightning Fast Drafts",
-    description: "From prompt to polished draft in under 30 seconds. No more staring at a blank page.",
-  },
+const featureStories = [
   {
     icon: Brain,
-    title: "Deep Context Awareness",
-    description: "Remembers your brand voice, tone, and style preferences across every session.",
+    title: "Your Brand's Memory.",
+    description: "Stop rewriting the same context every time. Use AI Writer remembers your voice, your style, your audience — across every session.",
+    visual: "memory",
   },
   {
-    icon: Shield,
-    title: "100% Private & Secure",
-    description: "Your data is never used for training or sold. Built with privacy first.",
+    icon: Zap,
+    title: "From Thought to Draft.",
+    description: "Thirty seconds. That's all it takes to go from a rough idea to a polished draft you can actually use.",
+    visual: "speed",
+  },
+  {
+    icon: PenTool,
+    title: "Write Like You.",
+    description: "Not generic AI. Your words, amplified. The tool learns your tone, not just your prompts.",
+    visual: "voice",
   },
 ];
 
@@ -23,276 +27,231 @@ const plans = [
   {
     name: "Free",
     price: "$0",
+    period: "forever",
     description: "For casual writers",
-    features: ["10 generations/day", "Basic templates", "Email support"],
-    cta: "Get Started",
-    popular: false,
+    features: ["10 generations per day", "Basic templates", "Standard support"],
+    cta: "Start Free",
+    recommended: false,
   },
   {
     name: "Pro",
     price: "$5",
+    period: "per month",
     description: "For serious creators",
-    features: ["100 generations/day", "All templates", "API access", "Priority support", "Custom tone"],
+    features: ["100 generations per day", "All templates", "API access", "Priority support", "Custom tone learning"],
     cta: "Start Pro",
-    popular: true,
+    recommended: true,
   },
   {
     name: "Team",
     price: "$15",
+    period: "per month",
     description: "For small teams",
-    features: ["Unlimited generations", "5 members", "Priority support", "API access", "Brand kit", "Analytics"],
+    features: ["Unlimited generations", "5 team members", "API access", "Brand kit", "Analytics dashboard"],
     cta: "Start Team",
-    popular: false,
+    recommended: false,
   },
 ];
 
-const comparisonData = [
-  { feature: "Monthly Price", ours: "$5", jasper: "$49", copyai: "$49" },
-  { feature: "Free Tier", ours: "10/day", jasper: "7-day trial", copyai: "2K words/mo" },
-  { feature: "Chinese Optimization", ours: true, jasper: false, copyai: false },
-  { feature: "No AI Training", ours: true, jasper: false, copyai: false },
-];
+function VisualElement({ type }: { type: string }) {
+  if (type === "memory") {
+    return (
+      <div className="w-full max-w-lg mx-auto md:mx-0">
+        <div className="relative">
+          <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex items-center justify-center">
+            <div className="w-full space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div className="h-4 bg-slate-200 rounded w-32" />
+              </div>
+              <div className="space-y-2 pl-13">
+                <div className="h-3 bg-slate-100 rounded w-full" />
+                <div className="h-3 bg-slate-100 rounded w-4/5" />
+                <div className="h-3 bg-slate-100 rounded w-3/4" />
+              </div>
+              <div className="pt-4 border-t border-slate-100">
+                <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">Brand Voice Learned</div>
+                <div className="flex gap-2">
+                  <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-full">Professional</span>
+                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Concise</span>
+                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Friendly</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-emerald-50 rounded-full -z-10" />
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "speed") {
+    return (
+      <div className="w-full max-w-lg mx-auto md:mx-0">
+        <div className="relative">
+          <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex flex-col items-center justify-center">
+            <div className="text-6xl font-display font-extrabold text-slate-900 mb-6">30s</div>
+            <div className="w-full space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                  <span className="text-xs font-semibold text-slate-500">1</span>
+                </div>
+                <div className="h-2 bg-slate-200 rounded flex-1" />
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-emerald-600" />
+                </div>
+                <div className="h-2 bg-emerald-200 rounded flex-1" />
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-emerald-600" />
+                </div>
+                <div className="h-2 bg-emerald-200 rounded flex-1" />
+              </div>
+            </div>
+            <div className="mt-6 text-sm text-slate-500">Idea → Draft → Done</div>
+          </div>
+          <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-slate-100 rounded-full -z-10" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-lg mx-auto md:mx-0">
+      <div className="relative">
+        <div className="aspect-[4/3] rounded-2xl border border-slate-200 bg-white p-8 flex items-center justify-center">
+          <div className="w-full space-y-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center">
+                <PenTool className="w-8 h-8 text-slate-400" />
+              </div>
+              <div className="w-8 h-px bg-slate-300" />
+              <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+                <Brain className="w-8 h-8 text-emerald-600" />
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Your Voice</div>
+              <div className="text-lg font-semibold text-slate-900">Amplified</div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute -top-4 -right-4 w-16 h-16 bg-emerald-100 rounded-full -z-10" />
+      </div>
+    </div>
+  );
+}
 
 export default function LandingPage() {
   return (
     <main className="flex flex-col items-center w-full">
-      {/* Hero */}
-      <section className="w-full min-h-[90vh] bg-gradient-to-b from-slate-50 to-white flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-4 py-20 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-extrabold leading-tight">
-              <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">Write Better, Faster, Cheaper</span>
-              <br />
-              <span className="text-slate-900 dark:text-white">Meet Use AI Writer</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-[600px]">
-              The AI writing tool built for creators who refuse to overpay. Start free &mdash; no credit card required.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/login" className="btn-primary text-center">Start Writing Free</Link>
-              <Link href="/pricing" className="btn-outline text-center">See Pricing</Link>
-            </div>
-            <div className="flex items-center gap-4 pt-4">
-              <div className="flex -space-x-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-300 to-teal-400 border-2 border-white dark:border-gray-950"
-                  />
-                ))}
-              </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">100+</span> early adopters joined
-              </p>
-            </div>
-          </div>
-          <div className="hidden lg:flex justify-center">
-            <div className="w-full max-w-md aspect-[4/3] bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-2xl shadow-emerald-500/10 p-8 flex flex-col gap-4">
-              <div className="flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-gray-700">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="ml-2 text-xs text-slate-400 font-mono">editor.useaiwriter.com</span>
-              </div>
-              <div className="flex-1 space-y-3">
-                <div className="h-3 bg-slate-100 dark:bg-gray-700 rounded w-3/4" />
-                <div className="h-3 bg-slate-100 dark:bg-gray-700 rounded w-full" />
-                <div className="h-3 bg-slate-100 dark:bg-gray-700 rounded w-5/6" />
-                <div className="h-3 bg-emerald-100 dark:bg-emerald-900/40 rounded w-full" />
-                <div className="h-3 bg-emerald-100 dark:bg-emerald-900/40 rounded w-2/3" />
-                <div className="h-3 bg-slate-100 dark:bg-gray-700 rounded w-4/5" />
-              </div>
-              <div className="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-gray-700">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span className="text-xs text-emerald-600 font-medium">AI generating...</span>
-              </div>
-            </div>
-          </div>
+      <section className="w-full min-h-screen flex items-center justify-center bg-white">
+        <div className="w-full max-w-3xl mx-auto px-6 py-32 text-center hero-fade-in">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-extrabold text-slate-900 leading-none tracking-tight mb-8">
+            Write Like You,
+            <br />
+            <span className="text-slate-500">Only Faster.</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-16 leading-relaxed">
+            The AI writing tool that learns your voice, not just your prompts.
+          </p>
+          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
+            Start Writing Free
+          </Link>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="w-full bg-slate-50 dark:bg-gray-900 py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 dark:text-white">
-              Why Creators Love Us
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 mt-4 max-w-[500px] mx-auto">
-              Built for speed, privacy, and quality &mdash; not compromises.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div key={feature.title} className="card-hover group">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-6 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/50 transition-colors">
-                    <Icon className="w-8 h-8 text-emerald-600" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {feature.description}
+      <section className="w-full py-16 md:py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          {featureStories.map((story, index) => (
+            <ScrollReveal key={story.title} delay={index * 100}>
+              <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 py-16 md:py-32`}>
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6 leading-tight">
+                    {story.title}
+                  </h2>
+                  <p className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-md">
+                    {story.description}
                   </p>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison */}
-      <section className="w-full py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 dark:text-white">
-              Why Choose Us?
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 mt-4 max-w-[500px] mx-auto">
-              See how we stack up against the competition.
-            </p>
-          </div>
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-gray-800 shadow-sm">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-slate-50 dark:bg-gray-800">
-                  <th className="p-5 font-semibold text-slate-700 dark:text-slate-300">Feature</th>
-                  <th className="p-5 font-semibold text-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/10">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4" />
-                      Use AI Writer
-                    </div>
-                  </th>
-                  <th className="p-5 font-semibold text-slate-500">Jasper</th>
-                  <th className="p-5 font-semibold text-slate-500">Copy.ai</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-gray-800">
-                {comparisonData.map((row) => (
-                  <tr key={row.feature}>
-                    <td className="p-5 text-slate-700 dark:text-slate-300 font-medium">{row.feature}</td>
-                    <td className="p-5 font-bold text-emerald-600 bg-emerald-50/50 dark:bg-emerald-900/10">
-                      {typeof row.ours === "boolean" ? (
-                        <Check className="w-5 h-5 text-emerald-600" />
-                      ) : (
-                        row.ours
-                      )}
-                    </td>
-                    <td className="p-5 text-slate-500">
-                      {typeof row.jasper === "boolean" ? (
-                        row.jasper ? <Check className="w-5 h-5 text-emerald-600" /> : <X className="w-5 h-5 text-red-500" />
-                      ) : (
-                        row.jasper
-                      )}
-                    </td>
-                    <td className="p-5 text-slate-500">
-                      {typeof row.copyai === "boolean" ? (
-                        row.copyai ? <Check className="w-5 h-5 text-emerald-600" /> : <X className="w-5 h-5 text-red-500" />
-                      ) : (
-                        row.copyai
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="w-full bg-slate-50 dark:bg-gray-900 py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 dark:text-white">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 mt-4 max-w-[500px] mx-auto">
-              Start free. Upgrade when you need more power.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`card flex flex-col relative ${
-                  plan.popular
-                    ? "ring-2 ring-emerald-500 border-emerald-500 shadow-lg shadow-emerald-500/10"
-                    : ""
-                }`}
-              >
-                {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
-                    Most Popular
-                  </span>
-                )}
-                <div className="mb-6">
-                  <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mb-1">{plan.name}</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">{plan.description}</p>
+                <div className="flex-1 w-full">
+                  <VisualElement type={story.visual} />
                 </div>
-                <p className="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-6">
-                  {plan.price}
-                  <span className="text-lg font-normal text-slate-500 font-sans">/mo</span>
-                </p>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3">
-                      <Check size={18} className="text-emerald-600 flex-shrink-0" />
-                      <span className="text-slate-700 dark:text-slate-300 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/login"
-                  className={plan.popular ? "btn-primary w-full text-center" : "btn-outline w-full text-center"}
-                >
-                  {plan.cta}
-                </Link>
               </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="w-full py-16 md:py-32 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <ScrollReveal>
+            <div className="text-center mb-20 md:mb-32">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6">
+                Simple Pricing.
+              </h2>
+              <p className="text-xl md:text-2xl text-slate-500">
+                Start free. Upgrade when you need more.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="flex flex-col md:flex-row">
+            {plans.map((plan, index) => (
+              <ScrollReveal key={plan.name} delay={index * 100}>
+                <div className={`flex-1 px-8 md:px-12 py-12 ${index < plans.length - 1 ? 'md:border-r md:border-slate-200' : ''}`}>
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">{plan.name}</h3>
+                    <p className="text-sm text-slate-500">{plan.description}</p>
+                  </div>
+                  <p className={`text-5xl font-display mb-2 ${plan.recommended ? 'font-extrabold text-slate-900' : 'font-bold text-slate-700'}`}>
+                    {plan.price}
+                  </p>
+                  <p className="text-sm text-slate-400 mb-10">{plan.period}</p>
+                  <ul className="space-y-4 mb-12">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <Check size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-slate-600 text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/login"
+                    className={plan.recommended ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}
+                  >
+                    {plan.cta}
+                  </Link>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Extra Features Row */}
-      <section className="w-full py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <PenTool className="w-10 h-10 text-emerald-600 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">Multiple Writing Modes</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">Blog posts, emails, social media, and custom prompts.</p>
-            </div>
-            <div className="text-center">
-              <Users className="w-10 h-10 text-emerald-600 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">Team Collaboration</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">Share brand kits and templates across your team.</p>
-            </div>
-            <div className="text-center">
-              <Shield className="w-10 h-10 text-emerald-600 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">Enterprise Security</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">SOC 2 compliant with end-to-end encryption.</p>
-            </div>
+      <section className="w-full py-24 md:py-40 bg-white">
+        <ScrollReveal>
+          <div className="max-w-2xl mx-auto px-6 text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-10 leading-tight">
+              Ready to write differently?
+            </h2>
+            <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
+              Start Writing Free
+            </Link>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
-      {/* CTA */}
-      <section className="w-full bg-gray-950 py-20 md:py-28">
-        <div className="max-w-2xl mx-auto text-center px-4 space-y-6">
-          <h2 className="text-3xl md:text-4xl font-display font-extrabold text-white">
-            Ready to write 3x faster?
-          </h2>
-          <p className="text-lg md:text-xl text-slate-300">
-            Join 100+ creators already using Use AI Writer.
-          </p>
-          <Link href="/login" className="btn-primary text-lg px-10 py-4 inline-block">
-            Start Writing Free
-          </Link>
+      <footer className="w-full py-12 bg-white border-t border-slate-100">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-sm text-slate-400">© 2026 Use AI Writer.</p>
         </div>
-      </section>
+      </footer>
     </main>
   );
 }
