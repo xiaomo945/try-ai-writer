@@ -40,6 +40,21 @@ const blogPosts = [
   { slug: "ai-writing-privacy-security", title: "AI Writing and Privacy: What Happens to Your Data?", date: "2026-05-25" },
   { slug: "ai-writing-for-bloggers", title: "AI Writing for Bloggers: How to Scale Without Losing Your Voice", date: "2026-05-25" },
   { slug: "ai-writing-future-2027-predictions", title: "AI Writing in 2027: 10 Predictions That Will Surprise You", date: "2026-05-25" },
+  { slug: "ai-writing-for-real-estate-agents", title: "AI Writing for Real Estate Agents: Property Descriptions That Sell", date: "2026-05-25" },
+  { slug: "ai-writing-for-lawyers", title: "AI Writing for Lawyers: Drafting Briefs and Client Communications", date: "2026-05-25" },
+  { slug: "ai-writing-for-medical-professionals", title: "AI Writing for Medical Professionals: Patient Communication Made Clear", date: "2026-05-25" },
+  { slug: "ai-writing-for-coaches", title: "AI Writing for Coaches: How to Scale Your Content Without Losing Authenticity", date: "2026-05-25" },
+  { slug: "ai-writing-tools-open-source", title: "Open Source AI Writing Tools vs. Paid: Which Should You Choose?", date: "2026-05-25" },
+  { slug: "ai-writing-for-podcasters", title: "AI Writing for Podcasters: Show Notes, Scripts, and Social Posts", date: "2026-05-25" },
+  { slug: "deepseek-v3-vs-claude-sonnet-4", title: "DeepSeek V3.2 vs Claude Sonnet 4.6: Honest Writing Quality Comparison", date: "2026-05-25" },
+  { slug: "ai-writing-for-e-learning", title: "AI Writing for E-Learning: Creating Course Content That Engages", date: "2026-05-25" },
+  { slug: "ai-writing-for-nonprofits", title: "AI Writing for Nonprofits: Crafting Compelling Grant Proposals", date: "2026-05-25" },
+  { slug: "ai-writing-for-technical-documentation", title: "AI Writing for Technical Documentation: Clarity Meets Accuracy", date: "2026-05-25" },
+  { slug: "ai-writing-for-video-marketing", title: "AI Writing for Video Marketing: Scripts, Descriptions, and Captions", date: "2026-05-25" },
+  { slug: "how-to-spot-ai-generated-text", title: "How to Spot AI-Generated Text: A Guide for Editors and Teachers", date: "2026-05-25" },
+  { slug: "ai-writing-for-customer-support", title: "AI Writing for Customer Support: Templates That Sound Human", date: "2026-05-25" },
+  { slug: "ai-writing-for-internal-comms", title: "AI Writing for Internal Communications: Memos, Updates, and Reports", date: "2026-05-25" },
+  { slug: "ai-writing-tools-enterprise", title: "AI Writing Tools for Enterprise: Security, Compliance, and Scale", date: "2026-05-25" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
