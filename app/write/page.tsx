@@ -14,6 +14,7 @@ import { buildEnhancedPrompt } from "@/lib/prompt-builder";
 import { useMemoryBank } from "@/lib/memory-bank";
 import { fileProcessor, ProcessedFile } from "@/lib/file-processor";
 import { DigitalTwinAvatar } from "@/app/components/DigitalTwinAvatar";
+import { TwinIntroBubble } from "@/app/components/TwinIntroBubble";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -256,6 +257,14 @@ export default function WriteEditor() {
   const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening'>('idle');
   const [avatarVisible, setAvatarVisible] = useState(false);
   const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
+  // Digital twin intro bubble state
+  const [showTwinIntro, setShowTwinIntro] = useState(false);
+  const [introShown, setIntroShown] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('twin_intro_shown') === 'true';
+    }
+    return false;
+  });
 
   // Noise input state
   const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
@@ -433,11 +442,14 @@ export default function WriteEditor() {
       setViewState("interview");
       setAvatarVisible(true);
       setAvatarState('thinking');
+      if (!introShown) {
+        setShowTwinIntro(true);
+      }
     } else {
       const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
       handleGenerate(undefined, memoriesText ? [memoriesText] : []);
     }
-  }, [creativeAssistantEnabled, prompt, mode, profile, getRelevantMemories, handleGenerate]);
+  }, [creativeAssistantEnabled, prompt, mode, profile, getRelevantMemories, handleGenerate, introShown]);
 
   const handleContinueWriting = useCallback(() => {
     if (!interviewResult) return;
@@ -654,19 +666,39 @@ export default function WriteEditor() {
 
               <div className="flex flex-col lg:flex-row gap-6 items-start">
                 {/* Digital Twin Avatar - Desktop left, Mobile center top */}
-                <div className="hidden lg:flex flex-col items-center justify-start pt-4">
+                <div className="hidden lg:flex flex-col items-center justify-start pt-4 relative">
                   <DigitalTwinAvatar 
                     isVisible={avatarVisible} 
                     state={avatarState} 
                     onSound={handleSound}
                   />
+                  {showTwinIntro && (
+                    <TwinIntroBubble 
+                      isVisible={showTwinIntro}
+                      onClose={() => {
+                        setShowTwinIntro(false);
+                        setIntroShown(true);
+                      }}
+                    />
+                  )}
                 </div>
-                <div className="flex lg:hidden justify-center w-full">
+                <div className="flex lg:hidden justify-center w-full relative">
                   <DigitalTwinAvatar 
                     isVisible={avatarVisible} 
                     state={avatarState} 
                     onSound={handleSound}
                   />
+                  {showTwinIntro && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2">
+                      <TwinIntroBubble 
+                        isVisible={showTwinIntro}
+                        onClose={() => {
+                          setShowTwinIntro(false);
+                          setIntroShown(true);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex-1 flex flex-col gap-4">

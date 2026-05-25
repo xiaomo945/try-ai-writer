@@ -164,11 +164,33 @@ export default function DashboardPage() {
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
+  const [userStage, setUserStage] = useState(0); // Default to stage 0
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
 
   const totalWords = records.reduce((sum, r) => sum + getWordCount(r.result), 0);
   const avgWords = records.length > 0 ? Math.round(totalWords / records.length) : 0;
+
+  // Set registration time and calculate user stage in useEffect
+  useEffect(() => {
+    // Set registration time if not exists
+    if (!localStorage.getItem('registered_at')) {
+      localStorage.setItem('registered_at', Date.now().toString());
+    }
+    // Calculate user stage
+    const registeredAt = localStorage.getItem('registered_at');
+    const now = Date.now();
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    const isNewUser = !registeredAt || (now - parseInt(registeredAt, 10)) < oneDayMs;
+
+    let stage = 0;
+    if (isNewUser && records.length === 0) stage = 0;
+    else if (records.length >= 1 && records.length < 10) stage = 1;
+    else if (records.length >= 10 && records.length < 50) stage = 2;
+    else stage = 3;
+
+    setUserStage(stage);
+  }, [records.length]);
 
   useEffect(() => {
     // Load demo data
@@ -210,24 +232,111 @@ export default function DashboardPage() {
 
       {/* Dashboard Content */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-4 py-12 space-y-8">
-        {/* Welcome */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">Dashboard</h1>
-            <p className="text-slate-600 dark:text-slate-400 mt-2">
-              {hasRealData ? "Welcome back! Here's your usage overview." : "Welcome! Here's a preview of what you can achieve."}
-            </p>
+        {/* Personalized Welcome Card */}
+        <div className="rounded-2xl bg-gradient-to-r from-emerald-50 to-white dark:from-emerald-950/20 dark:to-gray-950 border border-emerald-100 dark:border-emerald-900 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              {userStage === 0 && (
+                <>
+                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">欢迎来到你的写作空间 🎉</h1>
+                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                    让我们一起开始吧！先完成入门设置，然后开始你的第一次创作。
+                  </p>
+                </>
+              )}
+              {userStage === 1 && (
+                <>
+                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">你的数字分身正在学习你的风格 📚</h1>
+                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                    继续使用吧！使用得越多，它就越了解你。
+                  </p>
+                </>
+              )}
+              {userStage === 2 && (
+                <>
+                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">分身已经很了解你了 ✨</h1>
+                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                    看看升级 Pro 能为你带来什么！
+                  </p>
+                </>
+              )}
+              {userStage === 3 && (
+                <>
+                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">你们已经是创作搭档了 🚀</h1>
+                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                    做得太棒了！要不要考虑团队版？
+                  </p>
+                </>
+              )}
+            </div>
+            {hasRealData && (
+              <button
+                onClick={clearAll}
+                className="btn-outline text-sm gap-2 min-h-[40px]"
+                aria-label="Clear all history"
+              >
+                <Trash2 className="w-4 h-4" /> Clear History
+              </button>
+            )}
           </div>
-          {hasRealData && (
-            <button
-              onClick={clearAll}
-              className="btn-outline text-sm gap-2 min-h-[40px]"
-              aria-label="Clear all history"
-            >
-              <Trash2 className="w-4 h-4" /> Clear History
-            </button>
-          )}
         </div>
+
+        {/* Quick Start Cards */}
+        {userStage === 0 ? (
+          <div className="grid md:grid-cols-3 gap-4">
+            <Link href="/onboarding" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
+                <Sparkles className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-slate-900 mb-1">完成入门设置</h3>
+              <p className="text-sm text-slate-600">只需 1 分钟！</p>
+            </Link>
+            <Link href="/write" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
+                <Zap className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-slate-900 mb-1">📝 开始写作</h3>
+              <p className="text-sm text-slate-600">立即尝试 AI！</p>
+            </Link>
+            <Link href="/" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
+                <BookOpen className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-slate-900 mb-1">浏览博客</h3>
+              <p className="text-sm text-slate-600">获取灵感和技巧！</p>
+            </Link>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-4">
+            <Link href="/write" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <Zap className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900">📝 开始写作</h3>
+                <p className="text-sm text-slate-600">立即开始创作！</p>
+              </div>
+            </Link>
+            <Link href="#history" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <FileText className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900">📊 查看历史</h3>
+                <p className="text-sm text-slate-600">回顾你的创作</p>
+              </div>
+            </Link>
+            <Link href="#brand-voice" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <Brain className="w-6 h-6 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900">🎨 管理品牌声音</h3>
+                <p className="text-sm text-slate-600">调整和优化风格</p>
+              </div>
+            </Link>
+          </div>
+        )}
 
         {/* Stats Grid */}
         <div className="grid sm:grid-cols-3 gap-6">
@@ -284,7 +393,7 @@ export default function DashboardPage() {
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               {/* Recent History */}
-              <div className="card">
+              <div id="history" className="card">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white">
                     {hasRealData ? "Recent Generations" : "Your Generations"}

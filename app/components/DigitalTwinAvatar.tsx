@@ -179,7 +179,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
       >
         <svg
           viewBox="0 0 80 100"
-          className={`w-full h-full ${
+          className={`w-full h-full md:w-[80px] md:h-[100px] w-[60px] h-[75px] ${
             state === 'listening' ? 'tilt' : ''
           } ${isNodding ? 'nod' : ''}`}
           style={{ transformOrigin: 'center bottom' }}
