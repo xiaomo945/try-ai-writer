@@ -18,6 +18,8 @@ import { TwinIntroBubble } from "@/app/components/TwinIntroBubble";
 import { Skeleton } from "@/app/components/Skeleton";
 import { EmptyState } from "@/app/components/EmptyState";
 import { ErrorState } from "@/app/components/ErrorState";
+import { getEditSuggestions, type EditSuggestion } from "@/lib/edit-suggestions";
+import { Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Lightbulb, Sparkles, Undo2 } from "lucide-react";
 import { PenLine } from "lucide-react";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
@@ -236,6 +238,7 @@ export default function WriteEditor() {
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState("");
+  const [previousResult, setPreviousResult] = useState("");
   const [state, setState] = useState<GenerateState>("idle");
   const [error, setError] = useState<string | null>(null);
   const [copyState, setCopyState] = useState<CopyState>("idle");
@@ -243,6 +246,7 @@ export default function WriteEditor() {
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [styleScore, setStyleScore] = useState<StyleScore | null>(null);
   const [consistencyWarnings, setConsistencyWarnings] = useState<ConsistencyWarning[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   // Creative Assistant state
@@ -486,6 +490,39 @@ export default function WriteEditor() {
     // Placeholder for future sound integration
     console.log(`Sound effect triggered: ${type}`);
   }, []);
+
+  const handleEdit = useCallback(async (suggestion: EditSuggestion) => {
+    if (!result) return;
+    setPreviousResult(result);
+    setIsEditing(true);
+    try {
+      const response = await fetch("/api/edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          originalText: result,
+          editInstruction: suggestion.prompt,
+          mode
+        })
+      });
+      if (!response.ok) {
+        throw new Error("Failed to edit");
+      }
+      const data = await response.json();
+      setResult(data.editedText);
+    } catch {
+      setResult(previousResult);
+    } finally {
+      setIsEditing(false);
+    }
+  }, [result, previousResult, mode]);
+
+  const handleUndoEdit = useCallback(() => {
+    if (previousResult) {
+      setResult(previousResult);
+      setPreviousResult("");
+    }
+  }, [previousResult]);
 
   const handleOptimize = useCallback(async () => {
     if (!prompt.trim() || consistencyWarnings.length === 0) return;
@@ -944,29 +981,66 @@ export default function WriteEditor() {
               {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
             </h2>
             {result && (
-              <div className="flex gap-2">
-                <button
-                  onClick={handleCopy}
-                  className="btn-outline text-sm gap-2 min-h-[44px]"
-                  aria-label="Copy result"
-                >
-                  {copyState === "copied" ? (
-                    <>
-                      <Check className="w-4 h-4 text-emerald-600" /> Copied
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" /> Copy
-                    </>
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCopy}
+                    className="btn-outline text-sm gap-2 min-h-[44px]"
+                    aria-label="Copy result"
+                  >
+                    {copyState === "copied" ? (
+                      <>
+                        <Check className="w-4 h-4 text-emerald-600" /> Copied
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" /> Copy
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={handleDownload}
+                    className="btn-outline text-sm gap-2 min-h-[44px]"
+                    aria-label="Download result"
+                  >
+                    <Download className="w-4 h-4" /> Download
+                  </button>
+                  {previousResult && (
+                    <button
+                      onClick={handleUndoEdit}
+                      className="btn-outline text-sm gap-2 min-h-[44px]"
+                    >
+                      <Undo2 className="w-4 h-4" /> Undo
+                    </button>
                   )}
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="btn-outline text-sm gap-2 min-h-[44px]"
-                  aria-label="Download result"
-                >
-                  <Download className="w-4 h-4" /> Download
-                </button>
+                </div>
+                <div className="flex items-center gap-2">
+                  {getEditSuggestions(result, profile).map((suggestion) => {
+                    const IconComponent = (() => {
+                      switch(suggestion.iconName) {
+                        case "Scissors": return Scissors;
+                        case "Plus": return Plus;
+                        case "Briefcase": return Briefcase;
+                        case "MessageCircle": return MessageCircle;
+                        case "CheckCircle2": return CheckCircle2;
+                        case "Lightbulb": return Lightbulb;
+                        case "Sparkles": return Sparkles;
+                        default: return Sparkles;
+                      }
+                    })();
+                    return (
+                      <button
+                        key={suggestion.id}
+                        onClick={() => handleEdit(suggestion)}
+                        disabled={isEditing}
+                        className="flex items-center gap-1 px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                      >
+                        <IconComponent className="w-4 h-4" />
+                        {suggestion.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

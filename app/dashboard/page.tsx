@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
@@ -121,7 +121,7 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
         <div>
           <div className="text-xs font-medium text-slate-500 mb-2">Common Phrases</div>
           <div className="flex flex-wrap gap-1">
-            {profile.commonPhrases.slice(0, 6).map((phrase, i) => (
+            {profile.commonPhrases.slice(0,6).map((phrase, i) => (
               <span key={i} className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
                 {phrase}
               </span>
@@ -133,7 +133,7 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
         <div>
           <div className="text-xs font-medium text-slate-500 mb-2">Sample Articles</div>
           <div className="space-y-2">
-            {demoData.samples.slice(0, 3).map((sample) => (
+            {demoData.samples.slice(0,3).map((sample) => (
               <div key={sample.id} className="flex items-center gap-2 text-sm">
                 <BookOpen className="w-4 h-4 text-slate-400" />
                 <span className="text-slate-700 truncate flex-1">{sample.title}</span>
@@ -152,6 +152,119 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
             Start Writing
           </Link>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function BrandVoiceCard() {
+  const { profile, updateProfile } = useBrandVoice();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [error, setError] = useState<string>('');
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadState('uploading');
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userType', 'free');
+    try {
+      const res = await fetch('/api/brand-voice/upload-document', { method: 'POST', body: formData });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error);
+      }
+      const data = await res.json();
+      updateProfile(data.profile);
+      setUploadState('success');
+      setTimeout(() => setUploadState('idle'), 2000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed');
+      setUploadState('error');
+    } finally {
+      e.target.value = '';
+    }
+  };
+
+  if (!profile) {
+    return (
+      <div className="card">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-emerald-600" />
+          </div>
+          <div>
+            <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
+            <p className="text-xs text-slate-500">Start writing to build your brand voice profile!</p>
+          </div>
+        </div>
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          className="border-2 border-dashed border-emerald-300 bg-emerald-50/30 rounded-xl p-4 text-center cursor-pointer hover:border-emerald-400 transition-all"
+        >
+          <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
+          <Upload className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+          <p className="text-sm text-emerald-700 font-medium">Upload to build profile quickly</p>
+          <p className="text-xs text-slate-500">Or write a few articles</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div id="brand-voice" className="card border-l-4 border-emerald-600">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+          <Sparkles className="w-5 h-5 text-emerald-600" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
+          <p className="text-xs text-slate-500">Built from your writing style</p>
+        </div>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="btn-outline text-xs px-3 py-2 min-h-[40px]"
+        >
+          <Upload className="w-4 h-4" /> Upload
+        </button>
+        <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
+      </div>
+      {uploadState === 'success' && (
+        <div className="text-emerald-700 text-sm bg-emerald-100 rounded px-3 py-2 mb-4">
+          ✨ Updated your brand voice!
+        </div>
+      )}
+      {uploadState === 'error' && (
+        <div className="text-red-700 text-sm bg-red-100 rounded px-3 py-2 mb-4">
+          ❌ {error}
+        </div>
+      )}
+      <div className="space-y-3">
+        <div className="flex flex-wrap gap-2">
+          <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-700 border border-slate-200">
+            {profile.industry}
+          </span>
+          <span className="px-3 py-1 bg-emerald-100 rounded-full text-xs font-medium text-emerald-700 border border-emerald-200">
+            {profile.tone} tone
+          </span>
+          <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-700 border border-slate-200">
+            {profile.audience} audience
+          </span>
+        </div>
+        {profile.commonPhrases.length > 0 && (
+          <div>
+            <p className="text-xs text-slate-500 mb-2">Common Phrases</p>
+            <div className="flex flex-wrap gap-1">
+              {profile.commonPhrases.slice(0, 8).map((phrase, i) => (
+                <span key={i} className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full border border-slate-200">
+                  {phrase}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -496,8 +609,12 @@ export default function DashboardPage() {
             </div>
 
             <div className="lg:col-span-1 space-y-6">
-              {/* Brand Voice Demo Card */}
-              {!hasRealData && demoData && <BrandVoiceDemoCard demoData={demoData} />}
+              {/* Brand Voice Card */}
+              {hasRealData || hasProfile ? (
+                <BrandVoiceCard />
+              ) : (
+                demoData && <BrandVoiceDemoCard demoData={demoData} />
+              )}
               
               {/* Memory Bank Card */}
               <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">

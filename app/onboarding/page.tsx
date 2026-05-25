@@ -2,8 +2,11 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useBrandVoice } from "@/lib/brand-voice";
+import { Upload } from "lucide-react";
+
+type AnalysisState = "idle" | "uploading" | "analyzing" | "complete" | "error";
 
 const INDUSTRIES = [
   "Technology & SaaS",
@@ -41,6 +44,9 @@ export default function OnboardingPage() {
   const [industry, setIndustry] = useState("");
   const [useCase, setUseCase] = useState("");
   const [tone, setTone] = useState("");
+  const [analysisState, setAnalysisState] = useState<AnalysisState>("idle");
+  const [analysisError, setAnalysisError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!session) {
@@ -73,6 +79,46 @@ export default function OnboardingPage() {
     router.push("/dashboard");
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAnalysisState("uploading");
+    setAnalysisError("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userType", "free");
+
+    try {
+      const res = await fetch("/api/brand-voice/upload-document", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to process document");
+      }
+
+      const data = await res.json();
+      setAnalysisState("complete");
+      
+      // Auto-fill form
+      setIndustry(data.profile.industry);
+      setTone(data.profile.tone);
+      setUseCase(data.profile.audience);
+      updateProfile(data.profile);
+      
+      setTimeout(() => setAnalysisState("idle"), 2000);
+    } catch (err) {
+      setAnalysisState("error");
+      setAnalysisError(err instanceof Error ? err.message : "Failed to process document");
+    } finally {
+      e.target.value = "";
+    }
+  };
+
   const isFormValid = industry && tone;
 
   return (
@@ -88,6 +134,48 @@ export default function OnboardingPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-10">
+          {/* Quick Style Upload */}
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-slate-700">
+              📄 Quick Style Setup
+            </label>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-emerald-400 transition-all duration-200 cursor-pointer"
+            >
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept=".txt,.md"
+                onChange={handleFileUpload}
+              />
+              {analysisState === "uploading" || analysisState === "analyzing" ? (
+                <div className="text-slate-500">
+                  <div className="animate-pulse mb-2">Processing...</div>
+                </div>
+              ) : analysisState === "complete" ? (
+                <div className="text-emerald-600">
+                  ✨ Style analysis complete! Form auto‑filled!
+                </div>
+              ) : analysisState === "error" ? (
+                <div className="text-red-500">
+                  {analysisError}
+                </div>
+              ) : (
+                <>
+                  <Upload className="w-10 h-10 text-slate-400 mx-auto mb-2" />
+                  <p className="text-slate-600">
+                    Upload an article you wrote
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    AI will analyze your style and auto‑fill the form!
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+
           {/* Industry */}
           <div className="space-y-3">
             <label className="block text-sm font-medium text-slate-700">
