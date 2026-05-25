@@ -13,6 +13,7 @@ import { interviewUser, InterviewResult } from "@/lib/creative-interview";
 import { buildEnhancedPrompt } from "@/lib/prompt-builder";
 import { useMemoryBank } from "@/lib/memory-bank";
 import { fileProcessor, ProcessedFile } from "@/lib/file-processor";
+import { DigitalTwinAvatar } from "@/app/components/DigitalTwinAvatar";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -251,6 +252,11 @@ export default function WriteEditor() {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Digital twin avatar state
+  const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening'>('idle');
+  const [avatarVisible, setAvatarVisible] = useState(false);
+  const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
+
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("creative-assistant-enabled");
@@ -413,6 +419,8 @@ export default function WriteEditor() {
       setInterviewResult(interview);
       setInterviewAnswers(new Array(interview.questions.length).fill(""));
       setViewState("interview");
+      setAvatarVisible(true);
+      setAvatarState('thinking');
     } else {
       const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
       handleGenerate(undefined, memoriesText ? [memoriesText] : []);
@@ -422,6 +430,9 @@ export default function WriteEditor() {
   const handleContinueWriting = useCallback(() => {
     if (!interviewResult) return;
 
+    setAvatarState('expecting');
+    setTimeout(() => setAvatarVisible(false), 300);
+    
     const relevantMemories = getRelevantMemories(prompt);
     const enhancedPrompt = buildEnhancedPrompt(
       uploadedFile ? `${prompt}\n\n附加上传文件内容：\n${uploadedFile.text}` : prompt,
@@ -436,10 +447,17 @@ export default function WriteEditor() {
   }, [prompt, interviewAnswers, interviewResult, mode, profile, uploadedFile, getRelevantMemories, handleGenerate]);
 
   const handleSkipInterview = useCallback(() => {
+    setAvatarVisible(false);
     const relevantMemories = getRelevantMemories(prompt);
     const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
     handleGenerate(undefined, memoriesText ? [memoriesText] : []);
   }, [prompt, getRelevantMemories, handleGenerate]);
+
+  // Sound effect placeholder function
+  const handleSound = useCallback((type: 'pop' | 'question' | 'approve') => {
+    // Placeholder for future sound integration
+    console.log(`Sound effect triggered: ${type}`);
+  }, []);
 
   const handleOptimize = useCallback(async () => {
     if (!prompt.trim() || consistencyWarnings.length === 0) return;
@@ -607,40 +625,71 @@ export default function WriteEditor() {
                 </h3>
               </div>
 
-              {/* Digital Twin Greeting Bubble */}
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-emerald-600 font-bold">🧠</span>
+              <div className="flex flex-col lg:flex-row gap-6 items-start">
+                {/* Digital Twin Avatar - Desktop left, Mobile center top */}
+                <div className="hidden lg:flex flex-col items-center justify-start pt-4">
+                  <DigitalTwinAvatar 
+                    isVisible={avatarVisible} 
+                    state={avatarState} 
+                    onSound={handleSound}
+                  />
                 </div>
-                <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
-                  <p className="text-slate-900 dark:text-white">{interviewResult.greeting}</p>
+                <div className="flex lg:hidden justify-center w-full">
+                  <DigitalTwinAvatar 
+                    isVisible={avatarVisible} 
+                    state={avatarState} 
+                    onSound={handleSound}
+                  />
                 </div>
-              </div>
 
-              {/* Interview Questions */}
-              <div className="flex-1 overflow-y-auto space-y-4">
-                {interviewResult.questions.map((question, index) => (
-                  <div key={index} className="flex flex-col gap-2">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                        <span className="text-emerald-600 font-bold">🧠</span>
-                      </div>
-                      <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
-                        <p className="text-slate-900 dark:text-white">{question}</p>
-                      </div>
+                <div className="flex-1 flex flex-col gap-4">
+                  {/* Digital Twin Greeting Bubble */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <span className="text-emerald-600 font-bold">🧠</span>
                     </div>
-                    <textarea
-                      value={interviewAnswers[index]}
-                      onChange={(e) => {
-                        const newAnswers = [...interviewAnswers];
-                        newAnswers[index] = e.target.value;
-                        setInterviewAnswers(newAnswers);
-                      }}
-                      placeholder="你的回答..."
-                      className="ml-13 w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
-                    />
+                    <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                      <p className="text-slate-900 dark:text-white">{interviewResult.greeting}</p>
+                    </div>
                   </div>
-                ))}
+
+                  {/* Interview Questions */}
+                  <div className="flex-1 overflow-y-auto space-y-4">
+                    {interviewResult.questions.map((question, index) => (
+                      <div key={index} className="flex flex-col gap-2">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                            <span className="text-emerald-600 font-bold">🧠</span>
+                          </div>
+                          <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                            <p className="text-slate-900 dark:text-white">{question}</p>
+                          </div>
+                        </div>
+                        <textarea
+                          value={interviewAnswers[index]}
+                          onChange={(e) => {
+                            const newAnswers = [...interviewAnswers];
+                            newAnswers[index] = e.target.value;
+                            setInterviewAnswers(newAnswers);
+                          }}
+                          onFocus={() => {
+                            setFocusedQuestionIndex(index);
+                            setAvatarState('listening');
+                          }}
+                          onBlur={() => {
+                            if (interviewAnswers[index]) {
+                              setAvatarState('approving');
+                            } else {
+                              setAvatarState('thinking');
+                            }
+                          }}
+                          placeholder="你的回答..."
+                          className="ml-13 w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div className="flex gap-3">
