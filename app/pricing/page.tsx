@@ -1,131 +1,222 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ChevronDown } from "lucide-react";
+import { Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pricing — Use AI Writer | Plans from $0 to $15/mo",
-  description: "Choose the perfect plan for your needs. Free tier available with 10 generations per day. No credit card required.",
+  title: "Pricing | Use AI Writer",
+  description: "Simple, transparent pricing. Start free with 10 generations per day. Upgrade to Pro for $5/month or Team for $15/month. No credit card required.",
+  openGraph: {
+    title: "Pricing | Use AI Writer",
+    description: "Simple, transparent pricing. Start free with 10 generations per day. Upgrade to Pro for $5/month or Team for $15/month.",
+    url: "https://tryaiwriter.com/pricing",
+    siteName: "Use AI Writer",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pricing | Use AI Writer",
+    description: "Simple, transparent pricing. Start free with 10 generations per day.",
+    images: ["/og-image.png"],
+  },
 };
 
-type Plan = {
-  name: string;
-  price: string;
-  description: string;
-  features: string[];
-  cta: string;
-  popular?: boolean;
-};
-
-type FAQ = {
-  question: string;
-  answer: string;
-};
-
-const plans: Plan[] = [
+const plans = [
   {
     name: "Free",
     price: "$0",
+    period: "forever",
     description: "For casual writers",
-    features: ["10 generations/day", "Basic templates", "Email support"],
-    cta: "Get Started",
+    features: ["10 generations per day", "Basic templates", "Standard support"],
+    cta: "Start Free",
+    recommended: false,
   },
   {
     name: "Pro",
     price: "$5",
+    period: "per month",
     description: "For serious creators",
-    features: ["100 generations/day", "All templates", "API access", "Priority support", "Custom tone"],
+    features: ["100 generations per day", "All templates", "API access", "Priority support", "Custom tone learning"],
     cta: "Start Pro",
-    popular: true,
+    recommended: true,
   },
   {
     name: "Team",
     price: "$15",
+    period: "per month",
     description: "For small teams",
-    features: ["Unlimited generations", "5 members", "Priority support", "API access", "Brand kit", "Analytics"],
+    features: ["Unlimited generations", "5 team members", "API access", "Brand kit", "Analytics dashboard"],
     cta: "Start Team",
+    recommended: false,
   },
 ];
 
-const faqs: FAQ[] = [
-  { question: "Can I cancel anytime?", answer: "Yes, you can cancel your subscription at any time. No hidden fees, no contracts." },
-  { question: "What counts as a generation?", answer: "Each time you click Generate and receive AI output counts as one generation. Drafts you don't use still count." },
-  { question: "Do unused generations roll over?", answer: "No, generations reset daily. Unused ones do not carry over to the next day." },
-  { question: "Is my data safe?", answer: "Your data is encrypted and never used for training our AI models. We respect your privacy." },
-];
+// Product structured data for pricing page
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Use AI Writer",
+  "description": "AI writing tool that learns your voice",
+  "brand": {
+    "@type": "Brand",
+    "name": "Use AI Writer"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Free Plan",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "description": "10 generations per day"
+    },
+    {
+      "@type": "Offer",
+      "name": "Pro Plan",
+      "price": "5",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "description": "100 generations per day",
+      "priceValidUntil": "2027-12-31"
+    },
+    {
+      "@type": "Offer",
+      "name": "Team Plan",
+      "price": "15",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "description": "Unlimited generations for 5 team members",
+      "priceValidUntil": "2027-12-31"
+    }
+  ]
+};
+
+// BreadcrumbList structured data
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://tryaiwriter.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Pricing",
+      "item": "https://tryaiwriter.com/pricing"
+    }
+  ]
+};
 
 export default function PricingPage() {
   return (
-    <main className="flex flex-col items-center w-full">
-      {/* Header */}
-      <section className="w-full max-w-7xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-5xl lg:text-6xl text-slate-900 dark:text-white mb-6">Simple, Transparent Pricing</h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Start free. Upgrade when you need more power.</p>
-      </section>
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      
+      <main className="min-h-screen flex flex-col">
+        {/* Header */}
+        <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <Link href="/" className="text-emerald-600 font-display text-xl font-extrabold">
+              Use AI Writer
+            </Link>
+            <div className="flex items-center gap-4">
+              <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
+                Start Writing
+              </Link>
+            </div>
+          </div>
+        </header>
 
-      {/* Pricing Cards */}
-      <section className="w-full bg-slate-50 dark:bg-gray-900 py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {plans.map((plan) => (
+        {/* Pricing Content */}
+        <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white mb-6">
+              Simple Pricing.
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto">
+              Start free. Upgrade when you need more.
+            </p>
+          </div>
+
+          {/* Pricing Cards */}
+          <div className="flex flex-col md:flex-row">
+            {plans.map((plan, index) => (
               <div
                 key={plan.name}
-                className={`card flex flex-col ${plan.popular ? "border-2 border-emerald-600 relative" : ""}`}
+                className={`flex-1 px-8 md:px-12 py-12 ${index < plans.length - 1 ? 'md:border-r md:border-slate-200' : ''}`}
               >
-                {plan.popular && (
-                  <span className="absolute top-0 right-6 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Popular
-                  </span>
-                )}
-                <h3 className="text-2xl font-display font-extrabold mb-2">{plan.name}</h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">{plan.description}</p>
-                <p className="text-4xl font-bold mb-6">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">{plan.name}</h2>
+                  <p className="text-sm text-slate-500">{plan.description}</p>
+                </div>
+                <p className={`text-5xl font-display mb-2 ${plan.recommended ? 'font-extrabold text-slate-900' : 'font-bold text-slate-700'}`}>
                   {plan.price}
-                  <span className="text-lg font-normal text-slate-500">/mo</span>
                 </p>
-                <ul className="space-y-3 mb-8 flex-1">
+                <p className="text-sm text-slate-400 mb-10">{plan.period}</p>
+                <ul className="space-y-4 mb-12">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <Check size={18} className="text-emerald-600 flex-shrink-0" />
-                      <span className="text-slate-700 dark:text-slate-300">{feature}</span>
+                    <li key={feature} className="flex items-start gap-3">
+                      <Check size={18} className="text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-slate-600 text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                <Link href="/login" className={plan.popular ? "btn-primary w-full" : "btn-outline w-full"}>
+                <Link
+                  href="/login"
+                  className={plan.recommended ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}
+                >
                   {plan.cta}
                 </Link>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* FAQ */}
-      <section className="w-full max-w-3xl mx-auto px-4 py-24">
-        <h2 className="text-4xl text-center mb-12 font-display font-extrabold">Frequently Asked Questions</h2>
-        <div className="space-y-4">
-          {faqs.map((faq) => (
-            <details
-              key={faq.question}
-              className="card group cursor-pointer"
-            >
-              <summary className="flex items-center justify-between list-none text-lg font-semibold text-slate-900 dark:text-white">
-                {faq.question}
-                <ChevronDown className="w-5 h-5 text-slate-400 transition-transform group-open:rotate-180" />
-              </summary>
-              <p className="text-slate-600 dark:text-slate-400 mt-4">{faq.answer}</p>
-            </details>
-          ))}
+          {/* FAQ Section */}
+          <div className="mt-20 md:mt-32">
+            <h2 className="text-3xl font-display font-bold text-slate-900 dark:text-white text-center mb-12">
+              Frequently Asked Questions
+            </h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Can I cancel anytime?</h3>
+                <p className="text-slate-600 text-sm">Yes, you can cancel your subscription at any time. Your access will continue until the end of your billing period.</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">What payment methods do you accept?</h3>
+                <p className="text-slate-600 text-sm">We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Is there a free trial?</h3>
+                <p className="text-slate-600 text-sm">Our Free plan is essentially an unlimited trial. Use 10 generations per day forever, no credit card required.</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Can I switch plans?</h3>
+                <p className="text-slate-600 text-sm">Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="w-full bg-slate-900 dark:bg-gray-950 py-24">
-        <div className="max-w-2xl mx-auto text-center px-4 space-y-6">
-          <h2 className="text-4xl text-white">Ready to write 3x faster?</h2>
-          <p className="text-xl text-slate-300">Join 100+ creators already using Use AI Writer.</p>
-          <Link href="/login" className="btn-primary text-lg px-10 py-4">Start Writing Free</Link>
-        </div>
-      </section>
-    </main>
+        {/* Footer */}
+        <footer className="py-12 bg-white border-t border-slate-100">
+          <div className="max-w-6xl mx-auto px-6 text-center">
+            <p className="text-sm text-slate-400">© 2026 Use AI Writer.</p>
+          </div>
+        </footer>
+      </main>
+    </>
   );
 }

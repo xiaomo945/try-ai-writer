@@ -1,0 +1,100 @@
+{
+  "generatedAt": "2026-05-25T12:14:21.225Z",
+  "source": "data/blog-posts/",
+  "profile": {
+    "tone": {
+      "formality": 40,
+      "sentiment": "positive",
+      "pace": "moderate"
+    },
+    "industry": "Content Marketing & AI Technology",
+    "commonPhrases": [
+      "content creation",
+      "brand voice",
+      "ai writing",
+      "artificial intelligence",
+      "content strategy",
+      "writing tools",
+      "productivity",
+      "workflow",
+      "consistency",
+      "authenticity"
+    ],
+    "avgSentenceLength": 24,
+    "avgParagraphLength": 14,
+    "vocabularyStyle": [
+      "Professional yet approachable",
+      "Action-oriented",
+      "Educational",
+      "Conversational"
+    ]
+  },
+  "samples": [
+    {
+      "id": "demo-1",
+      "title": "The Complete AI Content Strategy for 2026",
+      "excerpt": "The Complete AI Content Strategy for 2026 In today's rapidly evolving digital landscape, artificial intelligence has become an indispensable tool for...",
+      "tags": [
+        "AI",
+        "Content Strategy",
+        "Marketing"
+      ],
+      "date": "2026-01-15",
+      "wordCount": 381
+    },
+    {
+      "id": "demo-2",
+      "title": "Maintaining Brand Voice Consistency Across All Channels",
+      "excerpt": "Maintaining Brand Voice Consistency Across All Channels Your brand voice is the personality of your business expressed through words. It's what makes...",
+      "tags": [
+        "Brand Voice",
+        "Consistency",
+        "Content Marketing"
+      ],
+      "date": "2026-01-22",
+      "wordCount": 527
+    },
+    {
+      "id": "demo-3",
+      "title": "10 Productivity Hacks for Content Creators in 2026",
+      "excerpt": "10 Productivity Hacks for Content Creators in 2026 Content creation is both an art and a science. While creativity can't be forced, the processes...",
+      "tags": [
+        "Productivity",
+        "Content Creation",
+        "Workflow"
+      ],
+      "date": "2026-02-01",
+      "wordCount": 593
+    },
+    {
+      "id": "demo-4",
+      "title": "SEO Fundamentals That Still Matter in 2026",
+      "excerpt": "SEO Fundamentals That Still Matter in 2026 Search engine optimization continues to evolve, but certain fundamentals remain timeless. This guide...",
+      "tags": [
+        "SEO",
+        "Search Engine Optimization",
+        "Content Strategy"
+      ],
+      "date": "2026-02-10",
+      "wordCount": 597
+    },
+    {
+      "id": "demo-5",
+      "title": "The Future of Writing: Human-AI Collaboration",
+      "excerpt": "The Future of Writing: Human-AI Collaboration The relationship between writers and artificial intelligence is evolving rapidly. Rather than replacing...",
+      "tags": [
+        "AI",
+        "Future of Work",
+        "Writing"
+      ],
+      "date": "2026-02-20",
+      "wordCount": 609
+    }
+  ],
+  "styleMatchScore": {
+    "overall": 81,
+    "tone": 81,
+    "vocabulary": 83,
+    "structure": 85
+  }
+}
