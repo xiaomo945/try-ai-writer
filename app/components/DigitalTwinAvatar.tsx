@@ -11,10 +11,37 @@ interface DigitalTwinAvatarProps {
 }
 
 export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvatarProps) {
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isWaving, setIsWaving] = useState(false);
   const [isNodding, setIsNodding] = useState(false);
+  const [blinkType, setBlinkType] = useState<'single' | 'double'>('single');
+  const [headTilt, setHeadTilt] = useState(0);
   const prevStateRef = useRef<AvatarState>(state);
+
+  // Random tiny head tilt for listening
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (state === 'listening') {
+      interval = setInterval(() => {
+        setHeadTilt((Math.random() - 0.5) * 4);
+      }, 800);
+    } else {
+      setHeadTilt(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [state]);
+
+  // Random double blinks
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() > 0.7) {
+        setBlinkType('double');
+        setTimeout(() => setBlinkType('single'), 1000);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Handle state changes and trigger animations/sounds
   useEffect(() => {
@@ -100,12 +127,24 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
           }
         }
 
-        @keyframes blink {
+        @keyframes blinkSingle {
           0%, 95%, 100% {
             transform: scaleY(1);
           }
           97% {
             transform: scaleY(0.1);
+          }
+        }
+
+        @keyframes blinkDouble {
+          0%, 90%, 100% {
+            transform: scaleY(1);
+          }
+          92%, 96% {
+            transform: scaleY(0.1);
+          }
+          94% {
+            transform: scaleY(1);
           }
         }
 
@@ -130,15 +169,6 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
           }
         }
 
-        @keyframes tilt {
-          0%, 100% {
-            transform: rotate(0deg);
-          }
-          50% {
-            transform: rotate(3deg);
-          }
-        }
-
         .avatar-container {
           width: 80px;
           height: 100px;
@@ -155,7 +185,14 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
 
         .eye {
           transform-origin: center;
-          animation: blink 4s infinite;
+        }
+
+        .eye-blink-single {
+          animation: blinkSingle 4s infinite;
+        }
+
+        .eye-blink-double {
+          animation: blinkDouble 4.2s infinite;
         }
 
         .wave {
@@ -166,10 +203,6 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
         .nod {
           animation: nod 0.3s ease-in-out 3;
         }
-
-        .tilt {
-          animation: tilt 1s ease-in-out infinite;
-        }
       `}</style>
 
       <div
@@ -179,10 +212,11 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
       >
         <svg
           viewBox="0 0 80 100"
-          className={`w-full h-full md:w-[80px] md:h-[100px] w-[60px] h-[75px] ${
-            state === 'listening' ? 'tilt' : ''
-          } ${isNodding ? 'nod' : ''}`}
-          style={{ transformOrigin: 'center bottom' }}
+          className="w-full h-full md:w-[80px] md:h-[100px] w-[60px] h-[75px] ${isNodding ? 'nod' : ''}"
+          style={{ 
+            transformOrigin: 'center bottom',
+            transform: `rotate(${headTilt}deg)`
+          }}
         >
           {/* Body - simple rounded rectangle */}
           <rect
@@ -230,7 +264,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
           />
 
           {/* Left eye */}
-          <g className="eye">
+          <g className={`eye ${blinkType === 'double' ? 'eye-blink-double' : 'eye-blink-single'}`}>
             <ellipse
               cx="32"
               cy="32"
@@ -247,7 +281,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
           </g>
 
           {/* Right eye */}
-          <g className="eye" style={{ animationDelay: '0.1s' }}>
+          <g className={`eye ${blinkType === 'double' ? 'eye-blink-double' : 'eye-blink-single'}`} style={{ animationDelay: '0.1s' }}>
             <ellipse
               cx="48"
               cy="32"

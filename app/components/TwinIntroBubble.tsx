@@ -30,7 +30,7 @@ export function TwinIntroBubble({ onClose, isVisible }: TwinIntroBubbleProps) {
       setShowing(false);
       onClose?.();
       localStorage.setItem('twin_intro_shown', 'true');
-    }, 300);
+    }, 400);
   };
 
   const handleClick = () => {
@@ -43,8 +43,10 @@ export function TwinIntroBubble({ onClose, isVisible }: TwinIntroBubbleProps) {
   return (
     <div
       onClick={handleClick}
-      className={`absolute z-50 transition-all duration-300 ease-out cursor-pointer ${
-        closing ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
+      className={`absolute z-50 transition-all duration-400 ease-out cursor-pointer ${
+        closing 
+          ? 'opacity-0 md:translate-x-[-20px] md:translate-y-0 translate-y-[-10px]' 
+          : 'opacity-100 md:translate-x-0 md:translate-y-0 translate-y-0'
       }`}
       style={{
         top: '0',

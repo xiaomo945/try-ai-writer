@@ -106,7 +106,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen">
         <SessionProvider>
-          {children}
+          <div className="page-transition">
+            {children}
+          </div>
         </SessionProvider>
         <Analytics />
       </body>
