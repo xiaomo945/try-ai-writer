@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
+import { useMemoryBank } from "@/lib/memory-bank";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
@@ -158,6 +159,7 @@ export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
   const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName } = useUsage();
   const { hasProfile, isLoaded } = useBrandVoice();
+  const { memories, deleteMemory } = useMemoryBank();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -277,7 +279,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Brand Voice Section */}
+        {/* Brand Voice & Memory Bank Section */}
         {demoData && (
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
@@ -360,9 +362,69 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Brand Voice Demo Card */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-6">
+              {/* Brand Voice Demo Card */}
               {!hasRealData && demoData && <BrandVoiceDemoCard demoData={demoData} />}
+              
+              {/* Memory Bank Card */}
+              <div className="card">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                    <Brain className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-slate-900">Your Memory Bank</h3>
+                    <p className="text-xs text-slate-500">Saving your ideas and preferences</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-slate-600">Total Memories</span>
+                    <span className="text-2xl font-bold text-emerald-600">{memories.length}</span>
+                  </div>
+                  
+                  {memories.length === 0 ? (
+                    <div className="bg-slate-50 dark:bg-gray-800 rounded-xl p-4 text-center">
+                      <p className="text-sm text-slate-500">
+                        你还没有告诉分身任何想法。去写作页面开始对话吧。
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {memories.slice(0, 5).map((memory) => (
+                        <div key={memory.id} className="group flex items-start justify-between gap-2 p-3 bg-slate-50 dark:bg-gray-800 rounded-lg border border-slate-100 dark:border-gray-700">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs rounded-full capitalize">
+                                {memory.type}
+                              </span>
+                              <span className="text-xs text-slate-400">
+                                {new Date(memory.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-3">
+                              {memory.content}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => deleteMemory(memory.id)}
+                            className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-500 transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center"
+                            aria-label="Delete memory"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                      {memories.length > 5 && (
+                        <p className="text-xs text-slate-500 text-center">
+                          And {memories.length - 5} more...
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}

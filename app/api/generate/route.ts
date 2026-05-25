@@ -97,6 +97,7 @@ export async function POST(request: NextRequest) {
     const prompt: string | undefined = body.prompt;
     const mode: string | undefined = body.mode;
     const enhancedPrompt: string | undefined = body.enhancedPrompt;
+    const relevantMemories: string[] | undefined = body.relevantMemories;
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Prompt is required" }, { status: 400 });
@@ -108,6 +109,12 @@ export async function POST(request: NextRequest) {
     } else {
       const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
       systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
+    }
+
+    // Inject relevant memories into the system prompt
+    if (relevantMemories && relevantMemories.length > 0) {
+      const memoriesText = relevantMemories.join("\n\n");
+      systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
     const apiKey = process.env.CLAUDE_API_KEY;

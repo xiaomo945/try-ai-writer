@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash } from "lucide-react";
 import Link from "next/link";
 import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
@@ -11,6 +11,8 @@ import { checkStyleConsistency, ConsistencyWarning } from "@/lib/style-checker";
 import { searchHistory, SearchResult } from "@/lib/history-search";
 import { interviewUser, InterviewResult } from "@/lib/creative-interview";
 import { buildEnhancedPrompt } from "@/lib/prompt-builder";
+import { useMemoryBank } from "@/lib/memory-bank";
+import { fileProcessor, ProcessedFile } from "@/lib/file-processor";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -223,6 +225,7 @@ export default function WriteEditor() {
   const { used, limit, canGenerate, increment } = useUsage();
   const { records, addRecord } = useHistory();
   const { profile } = useBrandVoice();
+  const { addMemory, getRelevantMemories } = useMemoryBank();
 
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -239,8 +242,14 @@ export default function WriteEditor() {
   // Creative Assistant state
   const [creativeAssistantEnabled, setCreativeAssistantEnabled] = useState(true);
   const [viewState, setViewState] = useState<ViewState>("input");
-  const [interviewQuestions, setInterviewQuestions] = useState<string[]>([]);
+  const [interviewResult, setInterviewResult] = useState<InterviewResult | null>(null);
   const [interviewAnswers, setInterviewAnswers] = useState<string[]>([]);
+
+  // File upload state
+  const [uploadedFile, setUploadedFile] = useState<ProcessedFile | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
@@ -309,7 +318,7 @@ export default function WriteEditor() {
     setConsistencyWarnings(consistency.warnings);
   }, [records]);
 
-  const handleGenerate = useCallback(async (enhancedPrompt?: string) => {
+  const handleGenerate = useCallback(async (enhancedPrompt?: string, relevantMemories?: string[]) => {
     const promptToUse = enhancedPrompt || prompt;
     if (!promptToUse.trim()) return;
     if (!canGenerate) return;
@@ -332,10 +341,11 @@ export default function WriteEditor() {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          prompt: enhancedPrompt ? prompt : prompt, 
-          mode, 
-          enhancedPrompt 
+        body: JSON.stringify({
+          prompt: enhancedPrompt ? prompt : prompt,
+          mode,
+          enhancedPrompt,
+          relevantMemories
         }),
       });
 
@@ -368,6 +378,17 @@ export default function WriteEditor() {
         result: accumulated,
       });
 
+      // Save user's initial prompt to memory
+      addMemory(prompt, 'idea');
+      // Also save any interview answers if available
+      if (interviewAnswers.length > 0) {
+        interviewAnswers.forEach(answer => {
+          if (answer.trim()) {
+            addMemory(answer, 'preference');
+          }
+        });
+      }
+
       setSavedToast(true);
       setTimeout(() => setSavedToast(false), 2000);
 
@@ -377,7 +398,7 @@ export default function WriteEditor() {
       setError(message);
       setState("error");
     }
-  }, [prompt, mode, canGenerate, increment, addRecord, calculateStyleScore]);
+  }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore]);
 
   const handleGenerateClick = useCallback(() => {
     if (!creativeAssistantEnabled) {
@@ -385,24 +406,40 @@ export default function WriteEditor() {
       return;
     }
 
-    const interviewResult: InterviewResult = interviewUser(prompt, mode, profile ?? undefined);
-    if (interviewResult.needsInterview) {
-      setInterviewQuestions(interviewResult.questions);
-      setInterviewAnswers(new Array(interviewResult.questions.length).fill(""));
+    const relevantMemories = getRelevantMemories(prompt);
+    const historicalViews = relevantMemories.map(m => m.content);
+    const interview = interviewUser(prompt, mode, profile ?? undefined, historicalViews);
+    if (interview.needsInterview) {
+      setInterviewResult(interview);
+      setInterviewAnswers(new Array(interview.questions.length).fill(""));
       setViewState("interview");
     } else {
-      handleGenerate();
+      const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
+      handleGenerate(undefined, memoriesText ? [memoriesText] : []);
     }
-  }, [creativeAssistantEnabled, prompt, mode, profile, handleGenerate]);
+  }, [creativeAssistantEnabled, prompt, mode, profile, getRelevantMemories, handleGenerate]);
 
   const handleContinueWriting = useCallback(() => {
-    const enhancedPrompt = buildEnhancedPrompt(prompt, interviewAnswers, interviewQuestions, mode, profile ?? undefined);
-    handleGenerate(enhancedPrompt);
-  }, [prompt, interviewAnswers, interviewQuestions, mode, profile, handleGenerate]);
+    if (!interviewResult) return;
+
+    const relevantMemories = getRelevantMemories(prompt);
+    const enhancedPrompt = buildEnhancedPrompt(
+      uploadedFile ? `${prompt}\n\n附加上传文件内容：\n${uploadedFile.text}` : prompt,
+      interviewAnswers,
+      interviewResult.questions,
+      mode,
+      profile ?? undefined
+    );
+    const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
+
+    handleGenerate(enhancedPrompt, memoriesText ? [memoriesText] : []);
+  }, [prompt, interviewAnswers, interviewResult, mode, profile, uploadedFile, getRelevantMemories, handleGenerate]);
 
   const handleSkipInterview = useCallback(() => {
-    handleGenerate();
-  }, [handleGenerate]);
+    const relevantMemories = getRelevantMemories(prompt);
+    const memoriesText = relevantMemories.map(m => m.content).join("\n\n");
+    handleGenerate(undefined, memoriesText ? [memoriesText] : []);
+  }, [prompt, getRelevantMemories, handleGenerate]);
 
   const handleOptimize = useCallback(async () => {
     if (!prompt.trim() || consistencyWarnings.length === 0) return;
@@ -451,12 +488,43 @@ export default function WriteEditor() {
     setError(null);
     setStyleScore(null);
     setConsistencyWarnings([]);
-    setInterviewQuestions([]);
+    setInterviewResult(null);
     setInterviewAnswers([]);
+    setUploadedFile(null);
+    setUploadError(null);
   }, []);
 
   const handleQuoteFromHistory = useCallback((text: string) => {
     setPrompt((prev) => (prev ? `${prev}\n\n${text}` : text));
+  }, []);
+
+  const handleFileUploadClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadError(null);
+    setUploading(true);
+
+    try {
+      // Assume free user for now (add user type logic later)
+      const processed = await fileProcessor.processFile(file, 'free');
+      setUploadedFile(processed);
+      setPrompt(prev => prev ? `${prev}\n\n${processed.text}` : processed.text);
+      setUploading(false);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : '文件上传失败';
+      setUploadError(message);
+      setUploading(false);
+    }
+  }, []);
+
+  const handleRemoveFile = useCallback(() => {
+    setUploadedFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }, []);
 
   const modes: { key: WritingMode; label: string }[] = [
@@ -510,7 +578,7 @@ export default function WriteEditor() {
                 </button>
               ))}
             </div>
-            
+
             {/* Creative Assistant Toggle */}
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-600 dark:text-slate-400">
@@ -531,23 +599,36 @@ export default function WriteEditor() {
             </div>
           </div>
 
-          {viewState === "interview" ? (
-            <div className="flex-1 flex flex-col gap-4">
+          {viewState === "interview" && interviewResult ? (
+            <div className="flex-1 flex flex-col gap-4 overflow-hidden">
               <div className="text-center py-4">
                 <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">
-                  Let's personalize your writing
+                  🧠 你的数字分身正在帮你理清思路…
                 </h3>
-                <p className="text-sm text-slate-500">
-                  Answer a few quick questions to get better results
-                </p>
               </div>
 
+              {/* Digital Twin Greeting Bubble */}
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-emerald-600 font-bold">🧠</span>
+                </div>
+                <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                  <p className="text-slate-900 dark:text-white">{interviewResult.greeting}</p>
+                </div>
+              </div>
+
+              {/* Interview Questions */}
               <div className="flex-1 overflow-y-auto space-y-4">
-                {interviewQuestions.map((question, index) => (
-                  <div key={index} className="p-4 rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-                    <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                      {question}
-                    </p>
+                {interviewResult.questions.map((question, index) => (
+                  <div key={index} className="flex flex-col gap-2">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                        <span className="text-emerald-600 font-bold">🧠</span>
+                      </div>
+                      <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                        <p className="text-slate-900 dark:text-white">{question}</p>
+                      </div>
+                    </div>
                     <textarea
                       value={interviewAnswers[index]}
                       onChange={(e) => {
@@ -555,8 +636,8 @@ export default function WriteEditor() {
                         newAnswers[index] = e.target.value;
                         setInterviewAnswers(newAnswers);
                       }}
-                      placeholder="Your answer..."
-                      className="w-full rounded-lg border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                      placeholder="你的回答..."
+                      className="ml-13 w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
                     />
                   </div>
                 ))}
@@ -573,7 +654,7 @@ export default function WriteEditor() {
                   onClick={handleContinueWriting}
                   className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors min-h-[44px] shadow-lg shadow-emerald-500/25"
                 >
-                  Continue writing
+                  继续写作
                 </button>
               </div>
             </div>
@@ -583,8 +664,53 @@ export default function WriteEditor() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={`Describe what you want to write in ${mode} mode...`}
-                className="flex-1 min-h-[300px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="flex-1 min-h-[200px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               />
+
+              {/* File Upload */}
+              <div>
+                {uploadedFile ? (
+                  <div className="flex items-center justify-between bg-slate-50 dark:bg-gray-800 p-3 rounded-xl border border-slate-200 dark:border-gray-700">
+                    <div className="flex items-center gap-2">
+                      <Upload className="w-4 h-4 text-emerald-600" />
+                      <span className="text-sm text-slate-700 dark:text-slate-300">文件已上传 ({uploadedFile.type}, ~{uploadedFile.tokenCount} tokens)</span>
+                    </div>
+                    <button
+                      onClick={handleRemoveFile}
+                      className="p-1 hover:bg-slate-200 dark:hover:bg-gray-700 rounded transition-colors"
+                    >
+                      <Trash className="w-4 h-4 text-slate-500" />
+                    </button>
+                  </div>
+                ) : uploadError ? (
+                  <div className="flex items-center justify-between bg-red-50 dark:bg-red-950 p-3 rounded-xl border border-red-200 dark:border-red-800">
+                    <span className="text-sm text-red-700 dark:text-red-300">{uploadError}</span>
+                    <Link href="/pricing" className="text-sm text-emerald-600 hover:underline font-medium">
+                      升级
+                    </Link>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleFileUploadClick}
+                    disabled={uploading}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-slate-50 hover:bg-slate-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                  >
+                    {uploading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Upload className="w-4 h-4" />
+                    )}
+                    📎 上传文件（Pro/Max）
+                  </button>
+                )}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept=".txt,.md"
+                  onChange={handleFileSelect}
+                />
+              </div>
 
               {/* Empty State Prompt Suggestions */}
               {!prompt && !result && state === "idle" && (
@@ -644,7 +770,7 @@ export default function WriteEditor() {
                   className="btn-primary flex-1 gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Generate content"
                 >
-                  {state === "loading" ? (
+                  {state === "loading" || viewState === "generating" ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       Generating...
@@ -667,7 +793,7 @@ export default function WriteEditor() {
         <section className="p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900">
           <div className="flex items-center justify-between">
             <h2 className="font-display font-extrabold text-xl text-slate-900 dark:text-white">
-              {state === "done" ? "Generated" : state === "loading" ? "Generating..." : "Your Result"}
+              {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
             </h2>
             {result && (
               <div className="flex gap-2">
@@ -726,7 +852,7 @@ export default function WriteEditor() {
               <p className="text-slate-400 dark:text-slate-500">Your AI-generated content will appear here...</p>
             </div>
           )}
-          {(result || state === "loading") && (
+          {(result || state === "loading" || viewState === "generating") && (
             <div
               ref={resultRef}
               className="flex-1 rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none"
