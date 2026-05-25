@@ -711,7 +711,7 @@ export default function WriteEditor() {
                     <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                       <span className="text-emerald-600 font-bold">🧠</span>
                     </div>
-                    <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                    <div className="flex-1 bg-white border border-emerald-200 rounded-2xl rounded-tl-none p-4 shadow-sm">
                       <p className="text-slate-900 dark:text-white">{interviewResult.greeting}</p>
                     </div>
                   </div>
@@ -739,7 +739,7 @@ export default function WriteEditor() {
                           <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
                             <span className="text-emerald-600 font-bold">🧠</span>
                           </div>
-                          <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                          <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
                             <p className="text-slate-900 dark:text-white">{question}</p>
                           </div>
                         </div>
@@ -762,7 +762,7 @@ export default function WriteEditor() {
                             }
                           }}
                           placeholder="你的回答..."
-                          className="ml-13 w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                          className="ml-13 w-full rounded-xl border border-emerald-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
                         />
                       </div>
                     ))}

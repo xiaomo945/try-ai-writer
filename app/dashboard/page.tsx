@@ -359,20 +359,22 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid sm:grid-cols-3 gap-6">
           {/* Daily Usage */}
-          <div className="card">
+          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
             <div className="flex items-center gap-3 mb-4">
-              <Zap className="w-6 h-6 text-emerald-600" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <Zap className="w-6 h-6 text-emerald-600" />
+              </div>
               <h3 className="font-semibold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
               <span className="ml-auto px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
                 {planName}
               </span>
             </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white mb-2">
               {used}/{limit}
             </p>
             <div className="w-full bg-slate-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
               <div
-                className="h-full bg-emerald-600 rounded-full transition-all duration-500"
+                className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
                 style={{ width: `${Math.min(percentage, 100)}%` }}
               />
             </div>
@@ -386,22 +388,26 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Generations */}
-          <div className="card">
+          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
             <div className="flex items-center gap-3 mb-4">
-              <FileText className="w-6 h-6 text-emerald-600" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-emerald-600" />
+              </div>
               <h3 className="font-semibold text-slate-900 dark:text-white">Total History</h3>
             </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white">{records.length}</p>
+            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white">{records.length}</p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Saved generations</p>
           </div>
 
           {/* Avg Word Count */}
-          <div className="card">
+          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
             <div className="flex items-center gap-3 mb-4">
-              <Clock className="w-6 h-6 text-emerald-600" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <Clock className="w-6 h-6 text-emerald-600" />
+              </div>
               <h3 className="font-semibold text-slate-900 dark:text-white">Avg. Word Count</h3>
             </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white">{avgWords}</p>
+            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white">{avgWords}</p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
           </div>
         </div>
@@ -494,7 +500,7 @@ export default function DashboardPage() {
               {!hasRealData && demoData && <BrandVoiceDemoCard demoData={demoData} />}
               
               {/* Memory Bank Card */}
-              <div className="card">
+              <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
                     <Brain className="w-5 h-5 text-emerald-600" />
@@ -508,19 +514,20 @@ export default function DashboardPage() {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-slate-600">Total Memories</span>
-                    <span className="text-2xl font-bold text-emerald-600">{memories.length}</span>
+                    <span className="text-2xl font-display font-bold text-emerald-600">{memories.length}</span>
                   </div>
                   
                   {memories.length === 0 ? (
-                    <div className="bg-slate-50 dark:bg-gray-800 rounded-xl p-4 text-center">
+                    <div className="bg-slate-100 dark:bg-gray-800 rounded-xl p-4 text-center">
                       <p className="text-sm text-slate-500">
                         你还没有告诉分身任何想法。去写作页面开始对话吧。
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-64 overflow-y-auto">
-                      {memories.slice(0, 5).map((memory) => (
-                        <div key={memory.id} className="group flex items-start justify-between gap-2 p-3 bg-slate-50 dark:bg-gray-800 rounded-lg border border-slate-100 dark:border-gray-700">
+                      {memories.slice(0, 5).map((memory, index) => (
+                        <div key={memory.id} className="group flex items-start justify-between gap-2 p-3 bg-white dark:bg-gray-900 rounded-lg border border-slate-200 dark:border-gray-700">
+                          {index < 2 && <div className="w-2 h-2 bg-amber-400 rounded-full mt-1 flex-shrink-0" />}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                               <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs rounded-full capitalize">

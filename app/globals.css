@@ -1,11 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #059669;
-  --color-primary-light: #14b8a6;
+  /* Brand core colors */
+  --color-brand: #059669;
+  --color-brand-light: #34d399;
+  --color-brand-dark: #065f46;
+  
+  /* Full emerald color scale */
   --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
   --color-emerald-600: #059669;
   --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+  
+  /* Accent amber colors */
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  
+  /* Surface slate colors */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  
+  /* Semantic colors */
+  --color-accent: #fbbf24;
+  --color-surface: #f8fafc;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  
+  --color-primary: #059669;
+  --color-primary-light: #14b8a6;
   --color-teal-500: #14b8a6;
   --font-display: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;

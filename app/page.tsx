@@ -133,15 +133,15 @@ export default function LandingPage() {
   return (
     <main className="flex flex-col items-center w-full">
       <section className="w-full min-h-screen flex items-center justify-center bg-white">
-        <div className="w-full max-w-3xl mx-auto px-6 py-32 text-center hero-fade-in">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-extrabold text-slate-900 leading-none tracking-tight mb-8">
+        <div className="w-full max-w-3xl mx-auto px-6 py-16 md:py-32 text-center hero-fade-in">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-display font-extrabold text-slate-900 leading-none tracking-tight mb-8">
             Write Like You,
             <br />
             <span className="text-slate-500">Only Faster.</span>
             <br />
-            <span className="text-3xl md:text-4xl text-emerald-600">Now Claude-Powered.</span>
+            <span className="text-2xl md:text-4xl text-emerald-600">Now Claude-Powered.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base md:text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-8 leading-relaxed">
             The AI writing tool that learns your voice, powered by Claude.
           </p>
           
@@ -169,54 +169,73 @@ export default function LandingPage() {
 
       {/* Social Proof Wall */}
       <SocialProofWall />
+      
+      {/* Divider */}
+      <div className="w-full h-px bg-slate-100" />
 
       {/* Feature Highlights Bar */}
-      <section className="w-full py-16 bg-slate-50 border-y border-slate-100">
+      <section className="w-full py-16 bg-slate-50/50 border-y border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
             <ScrollReveal>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <FileText className="w-5 h-5 text-emerald-600" />
-                  <span className="text-4xl font-bold text-emerald-600">
-                    <AnimatedCounter end={10} suffix="+" />
-                  </span>
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <FileText className="w-8 h-8 text-emerald-600" />
+                  </div>
                 </div>
+                <span className="text-4xl font-display font-bold text-emerald-600 block mb-2">
+                  <AnimatedCounter end={10} suffix="+" />
+                </span>
+                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
                 <p className="text-sm text-slate-600">Writing Templates</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <Clock className="w-5 h-5 text-emerald-600" />
-                  <span className="text-4xl font-bold text-emerald-600">&lt; 30s</span>
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <Clock className="w-8 h-8 text-emerald-600" />
+                  </div>
                 </div>
+                <span className="text-4xl font-display font-bold text-emerald-600 block mb-2">&lt; 30s</span>
+                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
                 <p className="text-sm text-slate-600">To First Draft</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={200}>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-3">
-                  <Sparkles className="w-5 h-5 text-emerald-600" />
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 text-emerald-600" />
+                  </div>
                 </div>
                 <AnimatedProgressBar className="max-w-[120px] mx-auto mb-2" duration={2500} />
+                <div className="h-1 w-10 bg-emerald-100 mx-auto mb-2" />
                 <p className="text-sm text-slate-600">Your Brand Voice, Learned</p>
               </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
+      
+      {/* Divider */}
+      <div className="w-full h-px bg-slate-100" />
 
-      <section className="w-full py-16 md:py-32 bg-white">
+      <section className="w-full py-16 md:py-32 bg-slate-50/50">
         <div className="max-w-6xl mx-auto px-6">
           {featureStories.map((story, index) => (
-            <ScrollReveal key={story.title} delay={index * 100}>
-              <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 py-16 md:py-32`}>
+            <ScrollReveal key={story.title} delay={index * 100} direction={index % 2 === 0 ? "left" : "right"}>
+              <div className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-24 py-16 md:py-24`}>
                 <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6 leading-tight">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto md:mx-0 mb-6">
+                    <story.icon className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-4 leading-tight">
                     {story.title}
                   </h2>
-                  <p className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-md">
+                  <div className="h-1 w-10 bg-emerald-500 mx-auto md:mx-0 mb-4" />
+                  <p className="text-base md:text-xl text-slate-500 leading-relaxed max-w-md">
                     {story.description}
                   </p>
                 </div>
@@ -228,29 +247,42 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+      
+      {/* Divider */}
+      <div className="w-full h-px bg-slate-100" />
 
       <section className="w-full py-16 md:py-32 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-20 md:mb-32">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6">
+              <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-6">
                 Simple Pricing.
               </h2>
-              <p className="text-xl md:text-2xl text-slate-500">
+              <p className="text-lg md:text-2xl text-slate-500">
                 Start free. Upgrade when you need more.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row gap-8">
             {plans.map((plan, index) => (
-              <ScrollReveal key={plan.name} delay={index * 100}>
-                <div className={`flex-1 px-8 md:px-12 py-12 ${index < plans.length - 1 ? 'md:border-r md:border-slate-200' : ''}`}>
+              <ScrollReveal key={plan.name} delay={index * 100} direction="scale">
+                <div className={`
+                  flex-1 px-6 md:px-10 py-10 rounded-2xl
+                  ${plan.recommended 
+                    ? 'shadow-md shadow-emerald-500/10 border-2 border-emerald-400/50' 
+                    : 'shadow-sm border border-slate-200'}
+                `}>
                   <div className="mb-8">
-                    <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">{plan.name}</h3>
+                    <h3 className="text-xl md:text-2xl font-display font-bold text-slate-900 mb-2">{plan.name}</h3>
                     <p className="text-sm text-slate-500">{plan.description}</p>
                   </div>
-                  <p className={`text-5xl font-display mb-2 ${plan.recommended ? 'font-extrabold text-slate-900' : 'font-bold text-slate-700'}`}>
+                  <p className={`
+                    text-4xl md:text-5xl font-display mb-2
+                    ${plan.recommended 
+                      ? 'font-extrabold text-emerald-700' 
+                      : 'font-bold text-emerald-600'}
+                  `}>
                     {plan.price}
                   </p>
                   <p className="text-sm text-slate-400 mb-10">{plan.period}</p>
@@ -274,11 +306,14 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      
+      {/* Divider */}
+      <div className="w-full h-px bg-slate-100" />
 
-      <section className="w-full py-24 md:py-40 bg-white">
+      <section className="w-full py-20 md:py-40 bg-emerald-50/30">
         <ScrollReveal>
           <div className="max-w-2xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 mb-10 leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-6xl font-display font-extrabold text-slate-900 mb-10 leading-tight">
               Ready to write differently?
             </h2>
             <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
