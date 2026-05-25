@@ -30,6 +30,16 @@ const blogPosts = [
   { slug: "personal-brand-building-with-ai", title: "Building a Personal Brand with AI", date: "2026-05-25" },
   { slug: "ai-writing-for-newsletters", title: "How to Write Newsletters with AI", date: "2026-05-25" },
   { slug: "ai-writing-trends-to-watch", title: "7 AI Writing Trends to Watch in 2026", date: "2026-05-25" },
+  { slug: "ai-writing-for-freelancers", title: "AI Writing for Freelancers: How to 10x Your Output Without Burning Out", date: "2026-05-25" },
+  { slug: "claude-sonnet-4-writing-quality", title: "Claude Sonnet 4.6 for Writing: An Honest Quality Review", date: "2026-05-25" },
+  { slug: "ai-writing-tools-comparison-2026", title: "The Ultimate AI Writing Tools Comparison: Jasper vs Copy.ai vs Use AI Writer (2026)", date: "2026-05-25" },
+  { slug: "ai-writing-for-linkedin", title: "How to Use AI for LinkedIn Posts That Actually Get Engagement", date: "2026-05-25" },
+  { slug: "ai-writing-seo-mistakes", title: "7 Common AI Writing SEO Mistakes and How to Avoid Them", date: "2026-05-25" },
+  { slug: "ai-writing-for-youtube-scripts", title: "Writing YouTube Scripts with AI: From Outline to Final Draft", date: "2026-05-25" },
+  { slug: "ai-writing-tools-for-teams", title: "Best AI Writing Tools for Teams: Collaboration Features That Matter", date: "2026-05-25" },
+  { slug: "ai-writing-privacy-security", title: "AI Writing and Privacy: What Happens to Your Data?", date: "2026-05-25" },
+  { slug: "ai-writing-for-bloggers", title: "AI Writing for Bloggers: How to Scale Without Losing Your Voice", date: "2026-05-25" },
+  { slug: "ai-writing-future-2027-predictions", title: "AI Writing in 2027: 10 Predictions That Will Surprise You", date: "2026-05-25" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
