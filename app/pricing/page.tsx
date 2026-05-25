@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { plans } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Pricing | Use AI Writer",
-  description: "Simple, transparent pricing. Start free with 10 generations per day. Upgrade to Pro for $5/month or Team for $15/month. No credit card required.",
+  description: "Simple, transparent pricing. Start free with 10 Claude + 10 DeepSeek generations per day. Upgrade to Pro for $9/month or Max for $25/month. No credit card required.",
   openGraph: {
     title: "Pricing | Use AI Writer",
-    description: "Simple, transparent pricing. Start free with 10 generations per day. Upgrade to Pro for $5/month or Team for $15/month.",
+    description: "Start free with 10 generations per day. Pro $9/month, Max $25/month.",
     url: "https://tryaiwriter.com/pricing",
     siteName: "Use AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -16,42 +17,12 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Pricing | Use AI Writer",
-    description: "Simple, transparent pricing. Start free with 10 generations per day.",
+    description: "Start free with 10 generations per day. Pro $9/month, Max $25/month.",
     images: ["/og-image.png"],
   },
 };
 
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "For casual writers",
-    features: ["10 generations per day", "Basic templates", "Standard support"],
-    cta: "Start Free",
-    recommended: false,
-  },
-  {
-    name: "Pro",
-    price: "$5",
-    period: "per month",
-    description: "For serious creators",
-    features: ["100 generations per day", "All templates", "API access", "Priority support", "Custom tone learning"],
-    cta: "Start Pro",
-    recommended: true,
-  },
-  {
-    name: "Team",
-    price: "$15",
-    period: "per month",
-    description: "For small teams",
-    features: ["Unlimited generations", "5 team members", "API access", "Brand kit", "Analytics dashboard"],
-    cta: "Start Team",
-    recommended: false,
-  },
-];
-
-// Product structured data for pricing page
+// Product structured data — derived from shared pricing module
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -59,36 +30,17 @@ const productSchema = {
   "description": "AI writing tool that learns your voice",
   "brand": {
     "@type": "Brand",
-    "name": "Use AI Writer"
+    "name": "Use AI Writer",
   },
-  "offers": [
-    {
-      "@type": "Offer",
-      "name": "Free Plan",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "description": "10 generations per day"
-    },
-    {
-      "@type": "Offer",
-      "name": "Pro Plan",
-      "price": "5",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "description": "100 generations per day",
-      "priceValidUntil": "2027-12-31"
-    },
-    {
-      "@type": "Offer",
-      "name": "Team Plan",
-      "price": "15",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "description": "Unlimited generations for 5 team members",
-      "priceValidUntil": "2027-12-31"
-    }
-  ]
+  "offers": plans.map((plan) => ({
+    "@type": "Offer",
+    "name": `${plan.name} Plan`,
+    "price": plan.price.replace("$", ""),
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "description": plan.features.slice(0, 2).join(", "),
+    ...(plan.price !== "$0" ? { "priceValidUntil": "2027-12-31" } : {}),
+  })),
 };
 
 // BreadcrumbList structured data
@@ -100,15 +52,15 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://tryaiwriter.com/"
+      "item": "https://tryaiwriter.com/",
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Pricing",
-      "item": "https://tryaiwriter.com/pricing"
-    }
-  ]
+      "item": "https://tryaiwriter.com/pricing",
+    },
+  ],
 };
 
 export default function PricingPage() {
@@ -123,7 +75,7 @@ export default function PricingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      
+
       <main className="min-h-screen flex flex-col">
         {/* Header */}
         <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
@@ -156,13 +108,17 @@ export default function PricingPage() {
             {plans.map((plan, index) => (
               <div
                 key={plan.name}
-                className={`flex-1 px-8 md:px-12 py-12 ${index < plans.length - 1 ? 'md:border-r md:border-slate-200' : ''}`}
+                className={`flex-1 px-8 md:px-12 py-12 ${index < plans.length - 1 ? "md:border-r md:border-slate-200" : ""}`}
               >
                 <div className="mb-8">
-                  <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">{plan.name}</h2>
+                  <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">
+                    {plan.name}
+                  </h2>
                   <p className="text-sm text-slate-500">{plan.description}</p>
                 </div>
-                <p className={`text-5xl font-display mb-2 ${plan.recommended ? 'font-extrabold text-slate-900' : 'font-bold text-slate-700'}`}>
+                <p
+                  className={`text-5xl font-display mb-2 ${plan.recommended ? "font-extrabold text-slate-900" : "font-bold text-slate-700"}`}
+                >
                   {plan.price}
                 </p>
                 <p className="text-sm text-slate-400 mb-10">{plan.period}</p>
@@ -192,19 +148,31 @@ export default function PricingPage() {
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Can I cancel anytime?</h3>
-                <p className="text-slate-600 text-sm">Yes, you can cancel your subscription at any time. Your access will continue until the end of your billing period.</p>
+                <p className="text-slate-600 text-sm">
+                  Yes, you can cancel your subscription at any time. Your access will continue until the end of your
+                  billing period.
+                </p>
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">What payment methods do you accept?</h3>
-                <p className="text-slate-600 text-sm">We accept all major credit cards, PayPal, and bank transfers for annual plans.</p>
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+                  What payment methods do you accept?
+                </h3>
+                <p className="text-slate-600 text-sm">
+                  We accept all major credit cards, PayPal, and bank transfers for annual plans.
+                </p>
               </div>
               <div>
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Is there a free trial?</h3>
-                <p className="text-slate-600 text-sm">Our Free plan is essentially an unlimited trial. Use 10 generations per day forever, no credit card required.</p>
+                <p className="text-slate-600 text-sm">
+                  Our Free plan is essentially an unlimited trial. Use 10 Claude + 10 DeepSeek generations per day
+                  forever, no credit card required.
+                </p>
               </div>
               <div>
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Can I switch plans?</h3>
-                <p className="text-slate-600 text-sm">Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.</p>
+                <p className="text-slate-600 text-sm">
+                  Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.
+                </p>
               </div>
             </div>
           </div>
@@ -213,7 +181,7 @@ export default function PricingPage() {
         {/* Footer */}
         <footer className="py-12 bg-white border-t border-slate-100">
           <div className="max-w-6xl mx-auto px-6 text-center">
-            <p className="text-sm text-slate-400">© 2026 Use AI Writer.</p>
+            <p className="text-sm text-slate-400">&copy; 2026 Use AI Writer.</p>
           </div>
         </footer>
       </main>

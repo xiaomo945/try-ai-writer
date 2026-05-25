@@ -154,10 +154,10 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
 
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
-  const { used, limit } = useUsage();
+  const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName } = useUsage();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
-  const percentage = (used / limit) * 100;
+  const percentage = limit > 0 ? (used / limit) * 100 : 0;
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
 
@@ -218,7 +218,10 @@ export default function DashboardPage() {
           <div className="card">
             <div className="flex items-center gap-3 mb-4">
               <Zap className="w-6 h-6 text-emerald-600" />
-              <h3 className="font-semibold text-slate-900 dark:text-white">Today's Usage</h3>
+              <h3 className="font-semibold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
+              <span className="ml-auto px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+                {planName}
+              </span>
             </div>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
               {used}/{limit}
@@ -226,11 +229,15 @@ export default function DashboardPage() {
             <div className="w-full bg-slate-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
               <div
                 className="h-full bg-emerald-600 rounded-full transition-all duration-500"
-                style={{ width: `${percentage}%` }}
+                style={{ width: `${Math.min(percentage, 100)}%` }}
               />
             </div>
+            <div className="flex justify-between mt-3 text-xs text-slate-500 dark:text-slate-400">
+              <span>Claude: {claudeUsed}/{claudeLimit}</span>
+              <span>DeepSeek: {deepseekUsed}/{deepseekLimit}</span>
+            </div>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-              {limit - used} generations remaining today
+              {limit - used > 0 ? `${limit - used} generations remaining today` : "Daily limit reached"}
             </p>
           </div>
 

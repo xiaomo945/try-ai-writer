@@ -1,6 +1,7 @@
 import { Check, PenTool, Zap, Brain } from "lucide-react";
 import Link from "next/link";
 import { ScrollReveal } from "./components/ScrollReveal";
+import { plans } from "@/lib/pricing";
 
 const featureStories = [
   {
@@ -20,36 +21,6 @@ const featureStories = [
     title: "Write Like You.",
     description: "Not generic AI. Your words, amplified. The tool learns your tone, not just your prompts.",
     visual: "voice",
-  },
-];
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "For casual writers",
-    features: ["10 generations per day", "Basic templates", "Standard support"],
-    cta: "Start Free",
-    recommended: false,
-  },
-  {
-    name: "Pro",
-    price: "$5",
-    period: "per month",
-    description: "For serious creators",
-    features: ["100 generations per day", "All templates", "API access", "Priority support", "Custom tone learning"],
-    cta: "Start Pro",
-    recommended: true,
-  },
-  {
-    name: "Team",
-    price: "$15",
-    period: "per month",
-    description: "For small teams",
-    features: ["Unlimited generations", "5 team members", "API access", "Brand kit", "Analytics dashboard"],
-    cta: "Start Team",
-    recommended: false,
   },
 ];
 
