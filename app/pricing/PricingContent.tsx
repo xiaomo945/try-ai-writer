@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Check, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { plans } from "@/lib/pricing";
 
 // Product structured data — derived from shared pricing module
@@ -95,15 +95,15 @@ export default function PricingContent() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="min-h-screen flex flex-col bg-white">
+      <main className="min-h-screen flex flex-col">
         {/* Header */}
-        <header className="border-b border-slate-100 bg-white">
+        <header className="border-b border-glass-border">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/" className="text-emerald-600 font-display text-xl font-extrabold">
+            <Link href="/" className="bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent font-display text-xl font-extrabold">
               Use AI Writer
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/write" className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold min-h-[40px] px-4 rounded-lg transition-all duration-200">
+              <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
                 Start Writing
               </Link>
             </div>
@@ -114,10 +114,10 @@ export default function PricingContent() {
         <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
               Simple, Transparent Pricing
             </h1>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
               Start free, upgrade when you need more.
             </p>
           </div>
@@ -127,26 +127,21 @@ export default function PricingContent() {
             {plans.map((plan, index) => (
               <div
                 key={plan.name}
-                className={`bg-white rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-1 ${
-                  plan.recommended
-                    ? "border-slate-100 shadow-md hover:shadow-xl"
-                    : "border-slate-100 shadow-sm hover:shadow-xl"
-                }`}
+                className={`glass-card p-8 ${plan.recommended ? "border-[rgba(168,85,247,0.2)]" : ""}`}
+                style={plan.recommended ? { boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" } : {}}
               >
                 <div>
                   {/* Plan Name */}
-                  <h2 className="text-xl font-display font-bold text-slate-900">
+                  <h2 className="text-xl font-display font-bold text-white">
                     {plan.name}
                   </h2>
-                  <p className="text-sm text-slate-500 mt-1">
+                  <p className="text-sm text-slate-400 mt-1">
                     {plan.description}
                   </p>
 
                   {/* Price */}
                   <div className="mt-6">
-                    <p className={`text-5xl font-display font-extrabold ${
-                      plan.recommended ? "text-emerald-600" : "text-slate-900"
-                    }`}>
+                    <p className="text-5xl font-display font-extrabold text-white">
                       {plan.price}
                     </p>
                     <p className="text-sm text-slate-400">
@@ -158,8 +153,8 @@ export default function PricingContent() {
                   <ul className="mt-8 space-y-3">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
-                        <Check size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-slate-700">{feature}</span>
+                        <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
+                        <span className="text-slate-400">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -170,8 +165,8 @@ export default function PricingContent() {
                     disabled={loadingPlan === plan.name}
                     className={`w-full mt-8 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
                       plan.recommended || isPaidPlan(plan.name)
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                        : "border border-slate-300 text-slate-900 hover:border-emerald-600 hover:text-emerald-600 bg-white"
+                        ? "btn-primary"
+                        : "btn-outline"
                     }`}
                   >
                     {loadingPlan === plan.name ? (
@@ -190,7 +185,7 @@ export default function PricingContent() {
 
           {/* FAQ Section */}
           <div className="mt-20 md:mt-32">
-            <h2 className="text-3xl font-display font-bold text-slate-900 text-center mb-12">
+            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
               Frequently Asked Questions
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -212,9 +207,9 @@ export default function PricingContent() {
                   answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
                 }
               ].map((faq, index) => (
-                <div key={index} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                  <h3 className="font-semibold text-slate-900 mb-2">{faq.question}</h3>
-                  <p className="text-slate-600">
+                <div key={index} className="glass-card p-6">
+                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                  <p className="text-slate-400">
                     {faq.answer}
                   </p>
                 </div>
@@ -224,7 +219,7 @@ export default function PricingContent() {
         </div>
 
         {/* Footer */}
-        <footer className="py-12 bg-white border-t border-slate-100">
+        <footer className="py-12 border-t border-glass-border">
           <div className="max-w-6xl mx-auto px-6 text-center">
             <p className="text-sm text-slate-500">&copy; 2026 Use AI Writer. All rights reserved.</p>
           </div>
