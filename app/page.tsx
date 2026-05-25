@@ -1,7 +1,16 @@
-import { Check, PenTool, Zap, Brain } from "lucide-react";
+import { Check, PenTool, Zap, Brain, FileText, Clock, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { ScrollReveal } from "./components/ScrollReveal";
+import { TypewriterEffect } from "./components/TypewriterEffect";
+import { AnimatedCounter, AnimatedProgressBar } from "./components/AnimatedCounter";
 import { plans } from "@/lib/pricing";
+
+const typewriterTexts = [
+  "Generating a blog post about sustainable tech...",
+  "Drafting an email with a professional yet friendly tone...",
+  "Creating social media captions that match your brand voice...",
+  "Writing a LinkedIn article on leadership insights...",
+];
 
 const featureStories = [
   {
@@ -128,12 +137,61 @@ export default function LandingPage() {
             <br />
             <span className="text-slate-500">Only Faster.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-16 leading-relaxed">
+          <p className="text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-8 leading-relaxed">
             The AI writing tool that learns your voice, not just your prompts.
           </p>
+          
+          {/* Typewriter Effect */}
+          <div className="mb-12 h-8 flex items-center justify-center">
+            <TypewriterEffect 
+              texts={typewriterTexts} 
+              typingSpeed={40}
+              deletingSpeed={25}
+              pauseDuration={2000}
+              className="text-sm md:text-base"
+            />
+          </div>
+          
           <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
             Start Writing Free
           </Link>
+        </div>
+      </section>
+
+      {/* Feature Highlights Bar */}
+      <section className="w-full py-16 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <ScrollReveal>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <FileText className="w-5 h-5 text-emerald-600" />
+                  <span className="text-4xl font-bold text-emerald-600">
+                    <AnimatedCounter end={10} suffix="+" />
+                  </span>
+                </div>
+                <p className="text-sm text-slate-600">Writing Templates</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={100}>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Clock className="w-5 h-5 text-emerald-600" />
+                  <span className="text-4xl font-bold text-emerald-600">&lt; 30s</span>
+                </div>
+                <p className="text-sm text-slate-600">To First Draft</p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={200}>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <Sparkles className="w-5 h-5 text-emerald-600" />
+                </div>
+                <AnimatedProgressBar className="max-w-[120px] mx-auto mb-2" duration={2500} />
+                <p className="text-sm text-slate-600">Your Brand Voice, Learned</p>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 

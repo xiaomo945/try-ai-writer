@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2 } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import { useUsage } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
@@ -12,6 +12,13 @@ import { searchHistory, SearchResult } from "@/lib/history-search";
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
 type CopyState = "idle" | "copied";
+
+const examplePrompts = [
+  { text: "Write a blog post about AI trends in 2026", icon: "📝" },
+  { text: "Draft a professional email to a client", icon: "📧" },
+  { text: "Create a social media post for a product launch", icon: "📱" },
+  { text: "Write a LinkedIn article about leadership", icon: "💼" },
+];
 
 interface StyleScore {
   score: number;
@@ -447,6 +454,30 @@ export default function WriteEditor() {
             placeholder={`Describe what you want to write in ${mode} mode...`}
             className="flex-1 min-h-[300px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
           />
+
+          {/* Empty State Prompt Suggestions */}
+          {!prompt && !result && state === "idle" && (
+            <div className="bg-slate-50 dark:bg-gray-800/50 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 mb-3">
+                <Lightbulb className="w-4 h-4 text-emerald-600" />
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Describe what you want to write, or choose a template below
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {examplePrompts.map((example) => (
+                  <button
+                    key={example.text}
+                    onClick={() => setPrompt(example.text)}
+                    className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                  >
+                    <span>{example.icon}</span>
+                    <span className="truncate max-w-[200px]">{example.text}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <button
             onClick={() => setShowHistoryModal(true)}

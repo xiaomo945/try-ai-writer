@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
+import { OnboardingWizard, hasCompletedOnboarding } from "@/app/components/OnboardingWizard";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -157,6 +158,7 @@ export default function DashboardPage() {
   const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName } = useUsage();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
@@ -170,12 +172,22 @@ export default function DashboardPage() {
       .then(res => res.json())
       .then(data => setDemoData(data))
       .catch(() => setDemoData(null));
+    
+    // Check onboarding status
+    const completed = hasCompletedOnboarding();
+    setShowOnboarding(!completed);
   }, []);
 
   const hasRealData = records.length > 0;
 
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+  };
+
   return (
     <main className="min-h-screen flex flex-col">
+      {/* Onboarding Wizard */}
+      {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
