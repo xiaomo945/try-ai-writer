@@ -272,7 +272,18 @@ function BrandVoiceCard() {
 
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
-  const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName, getWeeklyStats } = useUsage();
+  const { 
+    used, 
+    limit, 
+    claudeUsed, 
+    claudeLimit, 
+    deepseekUsed, 
+    deepseekLimit, 
+    planName, 
+    getWeeklyStats, 
+    selectedModel, 
+    isProUser 
+  } = useUsage();
   const { hasProfile, isLoaded } = useBrandVoice();
   const { memories, deleteMemory } = useMemoryBank();
   const [expanded, setExpanded] = useState(false);
@@ -498,6 +509,14 @@ export default function DashboardPage() {
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
               {limit - used > 0 ? `${limit - used} generations remaining today` : "Daily limit reached"}
             </p>
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-gray-700">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                当前模型：
+                <span className="font-medium">
+                  {isProUser ? 'Claude + DeepSeek (可切换)' : 'DeepSeek (免费)'}
+                </span>
+              </p>
+            </div>
           </div>
 
           {/* Total Generations */}

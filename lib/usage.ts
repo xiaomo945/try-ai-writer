@@ -12,6 +12,8 @@ type AllUsageData = {
 };
 
 const STORAGE_KEY = "use-ai-writer-usage";
+const SELECTED_MODEL_KEY = "use-ai-writer-selected-model";
+const USER_PLAN_KEY = "use-ai-writer-user-plan";
 const FREE_PLAN = plans[0]; // Free plan is always first
 
 function getToday(): string {
@@ -64,7 +66,8 @@ function writeUsage(data: DailyUsageData): void {
   }
 }
 
-export type ModelType = "claude" | "deepseek";
+export type ModelType = "claude" | "deepseek" | "mock";
+export type UserPlan = "free" | "pro" | "max";
 
 // Noise input detection
 const GREETING_PATTERNS = [
@@ -158,12 +161,64 @@ export function isNoiseInput(input: string): NoiseCheckResult {
   return { isNoise: false };
 }
 
+function readSelectedModel(): ModelType {
+  if (typeof window === "undefined") return "deepseek";
+  try {
+    const saved = localStorage.getItem(SELECTED_MODEL_KEY);
+    return (saved as ModelType) || "deepseek";
+  } catch {
+    return "deepseek";
+  }
+}
+
+function writeSelectedModel(model: ModelType): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(SELECTED_MODEL_KEY, model);
+  } catch {
+    // storage full or unavailable
+  }
+}
+
+function readUserPlan(): UserPlan {
+  if (typeof window === "undefined") return "free";
+  try {
+    const saved = localStorage.getItem(USER_PLAN_KEY);
+    return (saved as UserPlan) || "free";
+  } catch {
+    return "free";
+  }
+}
+
+function writeUserPlan(plan: UserPlan): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(USER_PLAN_KEY, plan);
+  } catch {
+    // storage full or unavailable
+  }
+}
+
 export function useUsage() {
   const [usage, setUsage] = useState<DailyUsageData>(readTodayUsage);
+  const [selectedModel, setSelectedModelState] = useState<ModelType>(readSelectedModel);
+  const [userPlan, setUserPlanState] = useState<UserPlan>(readUserPlan);
 
   useEffect(() => {
     const data = readTodayUsage();
     setUsage(data);
+    setSelectedModelState(readSelectedModel());
+    setUserPlanState(readUserPlan());
+  }, []);
+
+  const setSelectedModel = useCallback((model: ModelType) => {
+    setSelectedModelState(model);
+    writeSelectedModel(model);
+  }, []);
+
+  const setUserPlan = useCallback((plan: UserPlan) => {
+    setUserPlanState(plan);
+    writeUserPlan(plan);
   }, []);
 
   const increment = useCallback((model: ModelType = "claude"): boolean => {
@@ -207,6 +262,9 @@ export function useUsage() {
   const limit = CLAUDE_DAILY_LIMIT + DEEPSEEK_DAILY_LIMIT;
   const canGenerate = used < limit;
 
+  const isProUser = userPlan === "pro" || userPlan === "max";
+  const displayPlanName = userPlan === "free" ? "Free" : userPlan === "pro" ? "Pro" : "Max";
+
   return {
     used,
     limit,
@@ -216,7 +274,12 @@ export function useUsage() {
     deepseekLimit: DEEPSEEK_DAILY_LIMIT,
     canGenerate,
     increment,
-    planName: FREE_PLAN?.name ?? "Free",
+    planName: displayPlanName,
     getWeeklyStats,
+    selectedModel,
+    setSelectedModel,
+    userPlan,
+    setUserPlan,
+    isProUser,
   };
 }

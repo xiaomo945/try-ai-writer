@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash, Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Undo2, PenLine } from "lucide-react";
 import Link from "next/link";
 import { useUsage, isNoiseInput } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
@@ -19,8 +19,7 @@ import { Skeleton } from "@/app/components/Skeleton";
 import { EmptyState } from "@/app/components/EmptyState";
 import { ErrorState } from "@/app/components/ErrorState";
 import { getEditSuggestions, type EditSuggestion } from "@/lib/edit-suggestions";
-import { Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Lightbulb, Sparkles, Undo2 } from "lucide-react";
-import { PenLine } from "lucide-react";
+import { ModelSwitcher } from '@/app/components/ModelSwitcher';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -661,7 +660,7 @@ export default function WriteEditor() {
       <div className="flex-1 grid lg:grid-cols-[40%_60%]">
         <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
           <div className="flex flex-wrap gap-2 items-center justify-between">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
               {modes.map(({ key, label }) => (
                 <button
                   key={key}
@@ -675,6 +674,7 @@ export default function WriteEditor() {
                   {label}
                 </button>
               ))}
+              <ModelSwitcher />
             </div>
 
             {/* Creative Assistant Toggle */}
