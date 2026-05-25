@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash } from "lucide-react";
 import Link from "next/link";
-import { useUsage } from "@/lib/usage";
+import { useUsage, isNoiseInput } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, hasBrandProfile, getBrandProfile } from "@/lib/style-matcher";
@@ -257,6 +257,9 @@ export default function WriteEditor() {
   const [avatarVisible, setAvatarVisible] = useState(false);
   const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
 
+  // Noise input state
+  const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
+
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("creative-assistant-enabled");
@@ -407,6 +410,15 @@ export default function WriteEditor() {
   }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore]);
 
   const handleGenerateClick = useCallback(() => {
+    // Check for noise input first
+    const noiseCheck = isNoiseInput(prompt);
+    if (noiseCheck.isNoise) {
+      setNoiseMessage(noiseCheck.message || '请提供更详细的内容描述。');
+      return;
+    }
+    
+    setNoiseMessage(null);
+
     if (!creativeAssistantEnabled) {
       handleGenerate();
       return;
@@ -509,6 +521,7 @@ export default function WriteEditor() {
     setInterviewResult(null);
     setInterviewAnswers([]);
     setUploadedFile(null);
+    setNoiseMessage(null);
     setUploadError(null);
   }, []);
 
@@ -555,6 +568,7 @@ export default function WriteEditor() {
 
   const handleRemoveFile = useCallback(() => {
     setUploadedFile(null);
+    setNoiseMessage(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   }, []);
 
@@ -728,6 +742,13 @@ export default function WriteEditor() {
                 placeholder={`Describe what you want to write in ${mode} mode...`}
                 className="flex-1 min-h-[200px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               />
+
+              {/* Noise Input Message */}
+              {noiseMessage && (
+                <div className="rounded-xl bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 p-4 text-sm text-blue-700 dark:text-blue-300">
+                  💡 {noiseMessage}
+                </div>
+              )}
 
               {/* File Upload */}
               <div>
