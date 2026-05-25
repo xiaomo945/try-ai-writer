@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ScrollReveal } from "./components/ScrollReveal";
 import { TypewriterEffect } from "./components/TypewriterEffect";
 import { AnimatedCounter, AnimatedProgressBar } from "./components/AnimatedCounter";
+import { SocialProofWall } from "./components/SocialProofWall";
 import { plans } from "@/lib/pricing";
 
 const typewriterTexts = [
@@ -136,9 +137,11 @@ export default function LandingPage() {
             Write Like You,
             <br />
             <span className="text-slate-500">Only Faster.</span>
+            <br />
+            <span className="text-3xl md:text-4xl text-emerald-600">Now Claude-Powered.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-500 font-normal max-w-xl mx-auto mb-8 leading-relaxed">
-            The AI writing tool that learns your voice, not just your prompts.
+            The AI writing tool that learns your voice, powered by Claude.
           </p>
           
           {/* Typewriter Effect */}
@@ -157,6 +160,9 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
+
+      {/* Social Proof Wall */}
+      <SocialProofWall />
 
       {/* Feature Highlights Bar */}
       <section className="w-full py-16 bg-slate-50 border-y border-slate-100">

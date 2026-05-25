@@ -20,6 +20,16 @@ const blogPosts = [
   { slug: "claude-vs-deepseek-for-writing", title: "Claude vs DeepSeek for Content Writing: Which Should You Use?", date: "2026-05-25" },
   { slug: "ai-writing-tools-affordable", title: "Affordable AI Writing Tools That Don't Suck (2026 Edition)", date: "2026-05-25" },
   { slug: "brand-voice-ai-writing", title: "Brand Voice AI Writing: How to Create Your Digital Twin", date: "2026-05-25" },
+  { slug: "ai-writing-for-startup-founders", title: "AI Writing for Startup Founders", date: "2026-05-25" },
+  { slug: "ai-writing-ethics-transparency", title: "The Ethics of AI Writing", date: "2026-05-25" },
+  { slug: "ai-writing-tools-for-non-native-speakers", title: "Best AI Writing Tools for Non-Native Speakers", date: "2026-05-25" },
+  { slug: "how-to-choose-ai-writing-tool", title: "How to Choose the Right AI Writing Tool", date: "2026-05-25" },
+  { slug: "ai-writing-for-ecommerce", title: "AI Writing for E-commerce", date: "2026-05-25" },
+  { slug: "ai-writing-myths-debunked", title: "5 AI Writing Myths Debunked", date: "2026-05-25" },
+  { slug: "ai-writing-for-academic-research", title: "AI Writing Tools for Academic Research", date: "2026-05-25" },
+  { slug: "personal-brand-building-with-ai", title: "Building a Personal Brand with AI", date: "2026-05-25" },
+  { slug: "ai-writing-for-newsletters", title: "How to Write Newsletters with AI", date: "2026-05-25" },
+  { slug: "ai-writing-trends-to-watch", title: "7 AI Writing Trends to Watch in 2026", date: "2026-05-25" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tryaiwriter.com"),
-  title: "Use AI Writer — Affordable AI Writing Tool | Try Free",
-  description: "Write blog posts, emails, and social media content 3x faster. The most affordable AI writer with deep context awareness. Start free — no credit card required.",
+  title: "Use AI Writer — Claude-Powered AI Writing Tool | Try Free",
+  description: "Write blog posts, emails, and social media content 3x faster. Claude-powered AI writer that learns your brand voice. Start free — no credit card required.",
   openGraph: {
-    title: "Use AI Writer — Affordable AI Writing Tool",
-    description: "Write blog posts, emails, and social media content 3x faster.",
+    title: "Use AI Writer — Claude-Powered AI Writing Tool",
+    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI.",
     url: "https://tryaiwriter.com",
     siteName: "Use AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Use AI Writer",
-    description: "Write blog posts, emails, and social media content 3x faster.",
+    title: "Use AI Writer — Claude-Powered",
+    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI.",
     images: ["/og-image.png"],
   },
 };
