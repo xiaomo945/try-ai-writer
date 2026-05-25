@@ -1,81 +1,82 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, Star } from "lucide-react";
-import { plans } from "@/lib/pricing";
+
+// 中文版本的定价计划
+const chinesePlans = [
+  {
+    name: "免费版",
+    description: "适合刚开始使用的用户",
+    price: "$0",
+    period: "永久免费",
+    features: [
+      "每天 10 次 Claude 生成",
+      "每天 10 次 DeepSeek 生成",
+      "基础品牌声音学习",
+      "标准编辑建议",
+      "社区支持"
+    ],
+    cta: "免费开始",
+    recommended: false
+  },
+  {
+    name: "专业版",
+    description: "适合专业写作者和内容创作者",
+    price: "$9",
+    period: "/月",
+    features: [
+      "无限 Claude + DeepSeek 生成",
+      "高级品牌声音分析",
+      "完整编辑建议",
+      "文件上传 (50MB)",
+      "优先支持",
+      "记忆银行功能",
+      "数字分身助手"
+    ],
+    cta: "立即升级",
+    recommended: true
+  },
+  {
+    name: "旗舰版",
+    description: "适合团队和高频用户",
+    price: "$25",
+    period: "/月",
+    features: [
+      "专业版所有功能",
+      "团队协作功能",
+      "无限文件上传",
+      "API 访问",
+      "专属客户经理",
+      "高级分析报告",
+      "自定义品牌声音模型"
+    ],
+    cta: "选择旗舰版",
+    recommended: false
+  }
+];
 
 export const metadata: Metadata = {
-  title: "Pricing | Use AI Writer",
-  description: "Simple, transparent pricing. Start free with 10 Claude + 10 DeepSeek generations per day. Upgrade to Pro for $9/month or Max for $25/month. No credit card required.",
+  title: "定价 | Use AI Writer",
+  description: "简单透明的定价。免费版每天 10 次 Claude + 10 次 DeepSeek 生成。专业版 $9/月，旗舰版 $25/月。无需信用卡。",
   openGraph: {
-    title: "Pricing | Use AI Writer",
-    description: "Start free with 10 generations per day. Pro $9/month, Max $25/month.",
-    url: "https://tryaiwriter.com/pricing",
+    title: "定价 | Use AI Writer",
+    description: "免费版每天 10 次生成。专业版 $9/月，旗舰版 $25/月。",
+    url: "https://tryaiwriter.com/pricing/zh",
     siteName: "Use AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing | Use AI Writer",
-    description: "Start free with 10 generations per day. Pro $9/month, Max $25/month.",
+    title: "定价 | Use AI Writer",
+    description: "免费版每天 10 次生成。专业版 $9/月，旗舰版 $25/月。",
     images: ["/og-image.png"],
   },
 };
 
-// Product structured data — derived from shared pricing module
-const productSchema = {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Use AI Writer",
-  "description": "AI writing tool that learns your voice",
-  "brand": {
-    "@type": "Brand",
-    "name": "Use AI Writer",
-  },
-  "offers": plans.map((plan) => ({
-    "@type": "Offer",
-    "name": `${plan.name} Plan`,
-    "price": plan.price.replace("$", ""),
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "description": plan.features.slice(0, 2).join(", "),
-    ...(plan.price !== "$0" ? { "priceValidUntil": "2027-12-31" } : {}),
-  })),
-};
-
-// BreadcrumbList structured data
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://tryaiwriter.com/",
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Pricing",
-      "item": "https://tryaiwriter.com/pricing",
-    },
-  ],
-};
-
-export default function PricingPage() {
+export default function PricingPageZh() {
   return (
     <>
-      {/* Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-
       <main className="min-h-screen flex flex-col bg-slate-50 dark:bg-gray-900">
         {/* Header */}
         <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
@@ -85,7 +86,7 @@ export default function PricingPage() {
             </Link>
             <div className="flex items-center gap-4">
               <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
-                Start Writing
+                开始写作
               </Link>
             </div>
           </div>
@@ -96,16 +97,16 @@ export default function PricingPage() {
           {/* Header */}
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-slate-900 dark:text-white mb-6">
-              Simple, Transparent Pricing
+              简单透明的定价
             </h1>
             <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto">
-              Start free. Upgrade when you need more power for your writing.
+              免费开始。需要更多功能时再升级。
             </p>
           </div>
 
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
-            {plans.map((plan, index) => (
+            {chinesePlans.map((plan, index) => (
               <div
                 key={plan.name}
                 className={`relative bg-white dark:bg-gray-950 rounded-2xl shadow-lg border-2 transition-all duration-300 hover:shadow-xl ${
@@ -118,7 +119,7 @@ export default function PricingPage() {
                 {plan.recommended && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg">
                     <Star className="w-4 h-4" />
-                    Most Popular
+                    最受欢迎
                   </div>
                 )}
 
@@ -168,25 +169,25 @@ export default function PricingPage() {
           {/* FAQ Section */}
           <div className="mt-20 md:mt-32">
             <h2 className="text-3xl font-display font-bold text-slate-900 dark:text-white text-center mb-12">
-              Frequently Asked Questions
+              常见问题
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
-                  question: "Can I cancel anytime?",
-                  answer: "Yes, you can cancel your subscription at any time. Your access will continue until the end of your billing period."
+                  question: "我可以随时取消吗？",
+                  answer: "是的，您可以随时取消订阅。您的访问权限将持续到计费周期结束。"
                 },
                 {
-                  question: "What payment methods do you accept?",
-                  answer: "We accept all major credit cards, PayPal, and bank transfers for annual plans."
+                  question: "你们接受哪些支付方式？",
+                  answer: "我们接受所有主要信用卡、PayPal，以及年度计划的银行转账。"
                 },
                 {
-                  question: "Is there a free trial?",
-                  answer: "Our Free plan is essentially an unlimited trial. Use 10 Claude + 10 DeepSeek generations per day forever, no credit card required."
+                  question: "有免费试用吗？",
+                  answer: "我们的免费版实际上就是无限试用。每天可以使用 10 次 Claude + 10 次 DeepSeek 生成，无需信用卡。"
                 },
                 {
-                  question: "Can I switch plans?",
-                  answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
+                  question: "我可以切换套餐吗？",
+                  answer: "是的，您可以随时升级或降级套餐。更改将立即生效。"
                 }
               ].map((faq, index) => (
                 <div key={index} className="bg-white dark:bg-gray-950 p-6 rounded-xl border border-slate-200 dark:border-gray-700">
@@ -203,7 +204,7 @@ export default function PricingPage() {
         {/* Footer */}
         <footer className="py-12 bg-white dark:bg-gray-950 border-t border-slate-200 dark:border-gray-800">
           <div className="max-w-6xl mx-auto px-6 text-center">
-            <p className="text-sm text-slate-500">&copy; 2026 Use AI Writer. All rights reserved.</p>
+            <p className="text-sm text-slate-500">&copy; 2026 Use AI Writer. 保留所有权利。</p>
           </div>
         </footer>
       </main>
