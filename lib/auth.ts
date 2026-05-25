@@ -8,7 +8,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  pages: { signIn: "/login" },
+  pages: {
+    signIn: "/login",
+    error: "/auth/error",
+  },
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
   useSecureCookies: process.env.NODE_ENV === "production",

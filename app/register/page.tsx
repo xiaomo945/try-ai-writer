@@ -26,14 +26,14 @@ export default function RegisterPage() {
               Use AI Writer
             </Link>
             <h1 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mt-6">
-              Create your account
+              Start Your AI Writing Journey
             </h1>
             <p className="text-slate-600 dark:text-slate-400 mt-2">
-              Don&apos;t have an account yet? Sign up with Google — it only takes a second.
+              Create your account and train AI on your brand voice.
             </p>
           </div>
           <button
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={() => signIn("google", { callbackUrl: "/onboarding" })}
             className="w-full btn-outline flex items-center justify-center gap-3 py-4 text-lg"
           >
             <svg className="w-6 h-6" viewBox="0 0 24 24">
