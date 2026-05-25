@@ -1,0 +1,19 @@
+{
+  "product_name": "Use AI Writer",
+  "tagline": "Write like you, only faster. AI that learns your voice.",
+  "description": "Use AI Writer is a Claude-powered AI writing tool that learns your unique brand voice, personalizes content for your audience, and creates high-quality blog posts, emails, social media, and more — all at an affordable price.",
+  "website": "https://useaiwriter.com",
+  "topics": [
+    "Artificial Intelligence",
+    "Writing",
+    "Content Creation",
+    "Productivity",
+    "SaaS"
+  ],
+  "makers": [
+    {
+      "name": "Xiaomo",
+      "twitter_handle": "@xiaomo945"
+    }
+  ]
+}
