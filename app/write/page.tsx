@@ -14,10 +14,10 @@ type GenerateState = "idle" | "loading" | "done" | "error";
 type CopyState = "idle" | "copied";
 
 const examplePrompts = [
-  { text: "Write a blog post about AI trends in 2026", icon: "📝" },
-  { text: "Draft a professional email to a client", icon: "📧" },
-  { text: "Create a social media post for a product launch", icon: "📱" },
-  { text: "Write a LinkedIn article about leadership", icon: "💼" },
+  { text: "How to write blog posts with AI that actually sound like you", icon: "📝" },
+  { text: "Building an AI-powered content strategy that scales", icon: "📊" },
+  { text: "Your brand voice AI writing: create your digital twin", icon: "🧬" },
+  { text: "Affordable AI writing tools that don't suck in 2026", icon: "💸" },
 ];
 
 interface StyleScore {

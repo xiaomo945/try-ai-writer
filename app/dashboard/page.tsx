@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
-import { OnboardingWizard, hasCompletedOnboarding } from "@/app/components/OnboardingWizard";
+import { useBrandVoice } from "@/lib/brand-voice";
+import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -156,6 +157,7 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
   const { used, limit, claudeUsed, claudeLimit, deepseekUsed, deepseekLimit, planName } = useUsage();
+  const { hasProfile, isLoaded } = useBrandVoice();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -173,10 +175,11 @@ export default function DashboardPage() {
       .then(data => setDemoData(data))
       .catch(() => setDemoData(null));
     
-    // Check onboarding status
-    const completed = hasCompletedOnboarding();
-    setShowOnboarding(!completed);
-  }, []);
+    // Check onboarding status based on whether user has a brand voice profile
+    if (isLoaded) {
+      setShowOnboarding(!hasProfile);
+    }
+  }, [isLoaded, hasProfile]);
 
   const hasRealData = records.length > 0;
 
