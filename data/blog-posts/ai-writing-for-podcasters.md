@@ -72,6 +72,6 @@ AI won't replace your unique voice as a podcaster, but it will save you time and
 
 ## Related Articles
 
-- [Writing YouTube Scripts with AI: From Outline to Final Draft](/blog/ai-writing-for-youtube-scripts)
-- [How to Write Newsletters with AI That People Actually Read](/blog/ai-writing-for-newsletters)
-- [How to Use AI for LinkedIn Posts That Actually Get Engagement](/blog/ai-writing-for-linkedin)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

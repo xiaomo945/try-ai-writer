@@ -113,6 +113,6 @@ This is just a taste—Use AI Writer can help you write the entire script from s
 
 ## Related Articles
 
-- [AI Writing for Social Media Managers: 10 Productivity Hacks](/blog/12-ai-writing-for-social-media-managers)
-- [How to Use AI for LinkedIn Posts That Actually Get Engagement](/blog/ai-writing-for-linkedin)
-- [Building a Personal Brand with AI Writing: A Step-by-Step Guide](/blog/personal-brand-building-with-ai)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

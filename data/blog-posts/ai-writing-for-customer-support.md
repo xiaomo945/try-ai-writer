@@ -80,6 +80,6 @@ If you're a support team looking to try AI, start with Use AI Writer. It's great
 
 ## Related Articles
 
-- [AI Writing for E-commerce: Product Descriptions That Convert](/blog/ai-writing-for-ecommerce)
-- [AI Writing and Privacy: What Happens to Your Data?](/blog/ai-writing-privacy-security)
-- [AI Writing Tools for Enterprise: Security, Compliance, and Scale](/blog/ai-writing-tools-enterprise)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

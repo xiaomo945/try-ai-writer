@@ -102,7 +102,6 @@ Use AI Writer offers features useful for academics:
 
 ## Related Articles
 
-Check out these related resources:
-- [The Ethics of AI Writing: Why Transparency Matters](/blog/ai-writing-ethics-transparency)
-- [AI Writing Myths Debunked](/blog/ai-writing-myths-debunked)
-- [How to Train AI on Your Writing Style](/blog/13-how-to-train-ai-on-your-writing-style)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

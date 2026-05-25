@@ -75,6 +75,6 @@ We'll see AI that can help with storyboarding, shot lists, and even video editin
 
 ## Related Articles
 
-- [Writing YouTube Scripts with AI: From Outline to Final Draft](/blog/ai-writing-for-youtube-scripts)
-- [AI Writing for Social Media Managers: 10 Productivity Hacks](/blog/12-ai-writing-for-social-media-managers)
-- [7 Common AI Writing SEO Mistakes and How to Avoid Them](/blog/ai-writing-seo-mistakes)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

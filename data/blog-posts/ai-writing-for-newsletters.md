@@ -106,7 +106,6 @@ Once you have a solid foundation:
 
 ## Related Articles
 
-Check out these related resources:
-- [AI Writing for Email Marketing](/blog/06-ai-writing-for-email-marketing)
-- [How to Overcome Writer's Block with AI](/blog/07-overcoming-writers-block-with-ai)
-- [Building an AI-Powered Content Strategy in 2026](/blog/08-ai-content-strategy-2026)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

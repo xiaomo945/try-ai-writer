@@ -4,6 +4,7 @@ import { ScrollReveal } from "./components/ScrollReveal";
 import { TypewriterEffect } from "./components/TypewriterEffect";
 import { AnimatedCounter, AnimatedProgressBar } from "./components/AnimatedCounter";
 import { SocialProofWall } from "./components/SocialProofWall";
+import { LaunchCountdown } from "./components/LaunchCountdown";
 import { plans } from "@/lib/pricing";
 
 const typewriterTexts = [
@@ -155,7 +156,12 @@ export default function LandingPage() {
             />
           </div>
           
-          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
+          {/* Launch Countdown */}
+          <ScrollReveal>
+            <LaunchCountdown />
+          </ScrollReveal>
+          
+          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block mt-8">
             Start Writing Free
           </Link>
         </div>

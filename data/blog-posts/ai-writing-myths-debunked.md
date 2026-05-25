@@ -83,7 +83,6 @@ Used wisely, it makes human writers more effective, not obsolete.
 
 ## Related Articles
 
-Check out these related resources:
-- [AI vs. Human Writers: Why the Future is Collaborative](/blog/09-ai-vs-human-writers)
-- [The Future of Content Creation: Why AI Is the New Normal](/blog/15-future-of-content-creation-ai)
-- [The Ethics of AI Writing: Why Transparency Matters](/blog/ai-writing-ethics-transparency)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

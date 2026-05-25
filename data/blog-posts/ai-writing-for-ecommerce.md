@@ -70,7 +70,6 @@ Use AI Writer can:
 
 ## Related Articles
 
-Check out these related resources:
-- [How to Choose the Right AI Writing Tool](/blog/how-to-choose-ai-writing-tool)
-- [AI Writing for Email Marketing](/blog/06-ai-writing-for-email-marketing)
-- [Building an AI-Powered Content Strategy in 2026](/blog/08-ai-content-strategy-2026)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

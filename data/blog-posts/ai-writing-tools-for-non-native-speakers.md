@@ -74,7 +74,6 @@ The more you write with AI assistance, the more you learn naturally.
 
 ## Related Articles
 
-Check out these related resources:
-- [Breaking Language Barriers: Multilingual AI Writing](/blog/10-multilingual-ai-writing)
-- [Claude vs DeepSeek for Content Writing](/blog/claude-vs-deepseek-for-writing)
-- [How to Train AI on Your Writing Style](/blog/13-how-to-train-ai-on-your-writing-style)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

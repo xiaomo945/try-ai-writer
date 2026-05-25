@@ -92,6 +92,6 @@ Sarah, an agent in Austin, was spending 2 hours per listing on descriptions. She
 
 ## Related Articles
 
-- [AI Writing for E-commerce: Product Descriptions That Convert](/blog/ai-writing-for-ecommerce)
-- [How to Write Blog Posts with AI: The Complete Guide](/blog/how-to-write-blog-posts-with-ai)
-- [AI Writing for Freelancers: How to 10x Your Output Without Burning Out](/blog/ai-writing-for-freelancers)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

@@ -101,6 +101,6 @@ Her secret? She still edits every post, and she uses the time she saves to write
 
 ## Related Articles
 
-- [How to Write Blog Posts with AI: The Complete Guide](/blog/how-to-write-blog-posts-with-ai)
-- [Brand Voice AI Writing: How to Create Your Digital Twin](/blog/brand-voice-ai-writing)
-- [AI Writing for Freelancers: How to 10x Your Output Without Burning Out](/blog/ai-writing-for-freelancers)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

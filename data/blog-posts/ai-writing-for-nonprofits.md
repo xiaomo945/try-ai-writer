@@ -80,6 +80,6 @@ A small animal shelter was spending 40 hours per grant proposal and winning abou
 
 ## Related Articles
 
-- [AI Writing for Email Marketing: Boost Open Rates with Better Copy](/blog/06-ai-writing-for-email-marketing)
-- [How to Use AI for LinkedIn Posts That Actually Get Engagement](/blog/ai-writing-for-linkedin)
-- [The Ethics of AI Writing: Why Transparency Matters More Than Ever](/blog/ai-writing-ethics-transparency)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

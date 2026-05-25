@@ -88,6 +88,6 @@ If you're a coach looking to try AI, start with Use AI Writer. It's built to hel
 
 ## Related Articles
 
-- [Building a Personal Brand with AI Writing: A Step-by-Step Guide](/blog/personal-brand-building-with-ai)
-- [AI Writing for Bloggers: How to Scale Without Losing Your Voice](/blog/ai-writing-for-bloggers)
-- [How to Write Newsletters with AI That People Actually Read](/blog/ai-writing-for-newsletters)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

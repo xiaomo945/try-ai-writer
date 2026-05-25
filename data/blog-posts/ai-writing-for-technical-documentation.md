@@ -75,6 +75,6 @@ We'll see AI tools specifically designed for technical documentation, better int
 
 ## Related Articles
 
-- [AI Writing Tools for Enterprise: Security, Compliance, and Scale](/blog/ai-writing-tools-enterprise)
-- [AI Writing for E-Learning: Creating Course Content That Engages](/blog/ai-writing-for-e-learning)
-- [AI Writing and Privacy: What Happens to Your Data?](/blog/ai-writing-privacy-security)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

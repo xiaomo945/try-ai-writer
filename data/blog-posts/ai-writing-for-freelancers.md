@@ -54,6 +54,6 @@ Burnout is a real risk for freelancers. AI can help by:
 
 ## Related Articles
 
-- [How to Write Blog Posts with AI: The Complete Guide](/blog/how-to-write-blog-posts-with-ai)
-- [The Future of Writing: Human-AI Collaboration](/blog/05-future-of-writing)
-- [Brand Voice AI Writing: How to Create Your Digital Twin](/blog/brand-voice-ai-writing)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

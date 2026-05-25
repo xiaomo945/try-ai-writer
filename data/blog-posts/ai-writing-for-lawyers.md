@@ -74,6 +74,6 @@ If you're a lawyer looking to try AI, start with Use AI Writer. It's built for p
 
 ## Related Articles
 
-- [AI Writing and Privacy: What Happens to Your Data?](/blog/ai-writing-privacy-security)
-- [AI Writing Tools for Enterprise: Security, Compliance, and Scale](/blog/ai-writing-tools-enterprise)
-- [The Ethics of AI Writing: Why Transparency Matters More Than Ever](/blog/ai-writing-ethics-transparency)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)

@@ -76,7 +76,6 @@ Don't get distracted by vanity metrics early on.
 
 ## Related Articles
 
-Check out these related resources:
-- [Building an AI-Powered Content Strategy in 2026](/blog/08-ai-content-strategy-2026)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
 - [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
-- [Affordable AI Writing Tools That Don't Suck](/blog/ai-writing-tools-affordable)
+- [The Future of Writing](/blog/05-future-of-writing)

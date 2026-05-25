@@ -79,6 +79,6 @@ We'll see more AI tools for internal comms, but human communicators will always 
 
 ## Related Articles
 
-- [AI Writing Tools for Enterprise: Security, Compliance, and Scale](/blog/ai-writing-tools-enterprise)
-- [Brand Voice AI Writing: How to Create Your Digital Twin](/blog/brand-voice-ai-writing)
-- [AI Writing for Technical Documentation: Clarity Meets Accuracy](/blog/ai-writing-for-technical-documentation)
+- [AI Writing for Freelancers](/blog/ai-writing-for-freelancers)
+- [How to Write Blog Posts with AI](/blog/how-to-write-blog-posts-with-ai)
+- [The Future of Writing](/blog/05-future-of-writing)
