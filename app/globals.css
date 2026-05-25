@@ -1,21 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* === 深色背景系统 === */
   --color-obsidian-950: #0A0A0C;
   --color-obsidian-900: #111113;
   --color-obsidian-800: #1A1A1D;
-  
-  /* === 液态玻璃表面 === */
   --color-glass-surface: rgba(255, 255, 255, 0.03);
   --color-glass-border: rgba(255, 255, 255, 0.06);
   --color-glass-hover: rgba(255, 255, 255, 0.06);
-  
-  /* === 品牌强调色 === */
   --color-accent-iridescent-start: #4A90E2;
   --color-accent-iridescent-end: #A855F7;
-  
-  /* === 字体系统 === */
   --font-display: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -26,13 +19,9 @@
     @apply bg-obsidian-950 text-slate-100 font-sans antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
   }
-  
-  h1, h2, h3 {
-    @apply font-display font-extrabold tracking-tight text-white;
-  }
-  
-  /* === 自定义滚动条 === */
+  h1, h2, h3 { @apply font-display font-extrabold tracking-tight text-white; }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
@@ -40,9 +29,9 @@
 }
 
 @layer components {
-  /* === 液态玻璃卡片 === */
   .glass-card {
-    @apply relative rounded-2xl border border-glass-border;
+    @apply relative rounded-2xl border;
+    border-color: rgba(255, 255, 255, 0.06);
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -51,11 +40,9 @@
   .glass-card:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05) inset;
     transform: translateY(-2px);
   }
-  
-  /* === 主要CTA按钮 === */
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 min-h-[48px];
     background: linear-gradient(135deg, #4A90E2, #A855F7);
@@ -65,8 +52,6 @@
     box-shadow: 0 8px 32px rgba(74, 144, 226, 0.4);
     transform: translateY(-1px);
   }
-  
-  /* === 次要CTA按钮 === */
   .btn-outline {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold transition-all duration-300 min-h-[48px];
     border: 1px solid rgba(255, 255, 255, 0.15);
