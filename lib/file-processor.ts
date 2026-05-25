@@ -33,16 +33,18 @@ export class DefaultFileProcessor implements FileProcessor {
       throw new Error('Max用户单文件最大20MB');
     }
 
-    const fileType = file.type;
+    const fileName = file.name.toLowerCase();
     let text = '';
     let type = 'unknown';
 
     try {
-      if (fileType === 'text/plain' || file.name.endsWith('.md')) {
+      if (file.type === 'text/plain' || fileName.endsWith('.md')) {
+        text = await file.text();
+        type = 'text';
+      } else if (fileName.endsWith('.txt')) {
         text = await file.text();
         type = 'text';
       } else {
-        // For now, we'll skip PDF/Word until we add dependencies
         throw new Error('暂时只支持TXT/MD文件，更多格式即将上线');
       }
     } catch (err) {

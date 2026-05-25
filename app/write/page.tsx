@@ -528,8 +528,21 @@ export default function WriteEditor() {
     setUploading(true);
 
     try {
-      // Assume free user for now (add user type logic later)
-      const processed = await fileProcessor.processFile(file, 'free');
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('userType', 'free'); // Default to free, can be updated later with user plan info
+
+      const response = await fetch('/api/file/process', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || '文件上传失败');
+      }
+
+      const processed = await response.json();
       setUploadedFile(processed);
       setPrompt(prev => prev ? `${prev}\n\n${processed.text}` : processed.text);
       setUploading(false);
