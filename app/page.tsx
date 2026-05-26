@@ -4,6 +4,7 @@ import { Check, PenTool, Zap, Brain, FileText, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { plans } from "@/lib/pricing";
+import { Testimonials } from "./components/Testimonials";
 
 const bentoFeatures = [
   {
@@ -176,6 +177,9 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* CTA Bottom Banner */}
       <section className="w-full py-20 md:py-40 px-6 relative overflow-hidden">
