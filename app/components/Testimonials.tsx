@@ -48,9 +48,9 @@ function StarRating() {
       {[1,2,3,4,5].map((star) => (
         <svg
           key={star}
-          className="w-5 h-5 text-amber-400"
+          className="w-5 h-5"
           viewBox="0 0 24 24"
-          fill="currentColor"
+          fill="#fbbf24"
         >
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
@@ -62,13 +62,13 @@ function StarRating() {
 export function Testimonials() {
   return (
     <ScrollReveal>
-      <section className="w-full py-16 bg-white">
+      <section className="w-full py-16 md:py-32">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 mb-2 text-center">
+          <h2 className="text-3xl md:text-4xl font-display font-extrabold mb-2 text-center">
             Loved by Creators Worldwide
           </h2>
-          <p className="text-center text-slate-500 mb-10 max-w-xl mx-auto">
-            Join thousands of creators who are already scaling their content with AI
+          <p className="text-center text-slate-400 mb-10 max-w-xl mx-auto">
+            Join 500+ writers who already use Use AI Writer
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
@@ -77,28 +77,28 @@ export function Testimonials() {
                 className="glass-card p-6"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <StarRating />
-                <p className="mt-4 text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div className="mt-6 flex items-center gap-3">
+                {/* Top: Avatar + Name/Role */}
+                <div className="flex items-center gap-3 mb-4">
                   <div
                     className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold"
-                    style={{
-                      background: `linear-gradient(135deg, hsl(${(index * 70) % 360}, 70%, 60%), hsl(${(index * 70 + 60) % 360}, 70%, 60%))`
-                    }}
                   >
                     {testimonial.name.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                    <p className="font-semibold text-white">
                       {testimonial.name}
                     </p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                    <p className="text-sm text-slate-400">
                       {testimonial.role}
                     </p>
                   </div>
                 </div>
+                {/* Middle: Quote */}
+                <p className="text-slate-300 text-lg leading-relaxed italic mb-4">
+                  "{testimonial.quote}"
+                </p>
+                {/* Bottom: Stars */}
+                <StarRating />
               </div>
             ))}
           </div>
