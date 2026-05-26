@@ -23,6 +23,7 @@ import { ModelSwitcher } from '@/app/components/ModelSwitcher';
 import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
+import { useAvatarVariant } from '@/lib/avatar-variant';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -264,6 +265,7 @@ export default function WriteEditor() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Digital twin avatar state
+  const { variant } = useAvatarVariant();
   const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing'>('idle');
   const [avatarVisible, setAvatarVisible] = useState(false);
   const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
@@ -741,6 +743,7 @@ export default function WriteEditor() {
                     state={avatarState} 
                     onSound={handleSound}
                     onQuestionAppear={handleQuestionAppeared}
+                    variant={variant}
                   />
                   {showTwinIntro && (
                     <TwinIntroBubble 
@@ -758,6 +761,7 @@ export default function WriteEditor() {
                     state={avatarState} 
                     onSound={handleSound}
                     onQuestionAppear={handleQuestionAppeared}
+                    variant={variant}
                   />
                   {showTwinIntro && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2">

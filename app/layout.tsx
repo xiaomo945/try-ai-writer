@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SessionProvider } from "@/components/SessionProvider";
+import { Providers } from "@/app/components/Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -106,9 +107,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen">
         <SessionProvider>
-          <div className="page-transition">
-            {children}
-          </div>
+          <Providers>
+            <div className="page-transition">
+              {children}
+            </div>
+          </Providers>
         </SessionProvider>
         <Analytics />
       </body>

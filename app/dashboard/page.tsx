@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
@@ -10,6 +10,8 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
 import { getWeeklyInsights } from "@/lib/weekly-insights";
+import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
+import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -159,9 +161,12 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
 
 function BrandVoiceCard() {
   const { profile, updateProfile } = useBrandVoice();
+  const { variant, setVariant } = useAvatarVariant();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const [error, setError] = useState<string>('');
+  const [showCustomizationModal, setShowCustomizationModal] = useState(false);
+  const [avatarDescription, setAvatarDescription] = useState('');
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -216,21 +221,97 @@ function BrandVoiceCard() {
   return (
     <div id="brand-voice" className="card border-l-4 border-emerald-600">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-emerald-600" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-emerald-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
+            <p className="text-xs text-slate-500">Built from your writing style</p>
+          </div>
+          <button
+            onClick={() => setShowCustomizationModal(true)}
+            className="btn-outline text-xs px-3 py-2 min-h-[40px]"
+          >
+            <Palette className="w-4 h-4" /> Customize
+          </button>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="btn-outline text-xs px-3 py-2 min-h-[40px]"
+          >
+            <Upload className="w-4 h-4" /> Upload
+          </button>
+          <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
         </div>
-        <div className="flex-1">
-          <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
-          <p className="text-xs text-slate-500">Built from your writing style</p>
-        </div>
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="btn-outline text-xs px-3 py-2 min-h-[40px]"
-        >
-          <Upload className="w-4 h-4" /> Upload
-        </button>
-        <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
-      </div>
+        {/* Customization Modal */}
+        {showCustomizationModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
+              <button 
+                onClick={() => setShowCustomizationModal(false)} 
+                className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6">
+                🎨 Customize Your Digital Twin
+              </h2>
+
+              {/* AI Generation Section (Coming Soon) */}
+              <div className="mb-6 p-4 bg-slate-50 dark:bg-gray-800 rounded-xl">
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">
+                  Generate with AI (Coming Soon)
+                </h3>
+                <textarea
+                  value={avatarDescription}
+                  onChange={(e) => setAvatarDescription(e.target.value)}
+                  placeholder="Describe how you want your digital twin to look..."
+                  className="w-full p-3 border border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white resize-none"
+                  disabled
+                />
+                <button
+                  disabled
+                  className="mt-2 w-full btn-primary opacity-50 cursor-not-allowed"
+                >
+                  🔮 Generate Avatar
+                </button>
+                <p className="text-xs text-slate-500 mt-2 text-center">
+                  AI-powered avatar generation is coming soon!
+                </p>
+              </div>
+
+              {/* Preset Selection */}
+              <div>
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-4">
+                  Choose a Preset
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {(['default', 'minimal', 'cute'] as AvatarVariant[]).map((preset) => (
+                    <button
+                      key={preset}
+                      onClick={() => setVariant(preset)}
+                      className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${
+                        variant === preset
+                          ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
+                          : 'border-slate-200 dark:border-gray-700 hover:border-emerald-300'
+                      }`}
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center">
+                        <DigitalTwinAvatar 
+                          isVisible={true} 
+                          state="idle"
+                          variant={preset} 
+                        />
+                      </div>
+                      <span className="text-sm capitalize font-medium text-slate-700 dark:text-slate-300">
+                        {preset}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       {uploadState === 'success' && (
         <div className="text-emerald-700 text-sm bg-emerald-100 rounded px-3 py-2 mb-4">
           ✨ Updated your brand voice!
