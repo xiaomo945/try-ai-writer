@@ -21,6 +21,8 @@ import { ErrorState } from "@/app/components/ErrorState";
 import { getEditSuggestions, type EditSuggestion } from "@/lib/edit-suggestions";
 import { ModelSwitcher } from '@/app/components/ModelSwitcher';
 import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
+import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
+import { PromptSuggestion } from '@/app/components/PromptSuggestion';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -857,11 +859,22 @@ export default function WriteEditor() {
             </div>
           ) : (
             <>
+              <MemoryRecommendation
+                memories={memories}
+                onSelectMemory={handleSelectMemory}
+              />
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={`Describe what you want to write in ${mode} mode...`}
                 className="flex-1 min-h-[200px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+
+              <PromptSuggestion
+                prompt={prompt}
+                mode={mode}
+                isInterviewMode={viewState === "interview"}
+                onSelectSuggestion={setPrompt}
               />
 
               {/* Noise Input Message */}
