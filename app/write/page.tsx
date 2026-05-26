@@ -262,9 +262,10 @@ export default function WriteEditor() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Digital twin avatar state
-  const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening'>('idle');
+  const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing'>('idle');
   const [avatarVisible, setAvatarVisible] = useState(false);
   const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
+  const [questionsAppeared, setQuestionsAppeared] = useState(false);
   // Digital twin intro bubble state
   const [showTwinIntro, setShowTwinIntro] = useState(false);
   const [introShown, setIntroShown] = useState(() => {
@@ -452,7 +453,8 @@ export default function WriteEditor() {
       setInterviewAnswers(new Array(interview.questions.length).fill(""));
       setViewState("interview");
       setAvatarVisible(true);
-      setAvatarState('thinking');
+      setQuestionsAppeared(false);
+      setAvatarState('questionAppearing');
       if (!introShown) {
         setShowTwinIntro(true);
       }
@@ -462,11 +464,19 @@ export default function WriteEditor() {
     }
   }, [creativeAssistantEnabled, prompt, mode, profile, getRelevantMemories, handleGenerate, introShown]);
 
+  const handleQuestionAppeared = useCallback(() => {
+    setQuestionsAppeared(true);
+    setAvatarState('thinking');
+  }, []);
+
   const handleContinueWriting = useCallback(() => {
     if (!interviewResult) return;
 
-    setAvatarState('expecting');
-    setTimeout(() => setAvatarVisible(false), 300);
+    setAvatarState('nodding');
+    setTimeout(() => {
+      setAvatarState('expecting');
+      setTimeout(() => setAvatarVisible(false), 300);
+    }, 600);
     
     const relevantMemories = getRelevantMemories(prompt);
     const enhancedPrompt = buildEnhancedPrompt(
@@ -489,7 +499,7 @@ export default function WriteEditor() {
   }, [prompt, getRelevantMemories, handleGenerate]);
 
   // Sound effect placeholder function
-  const handleSound = useCallback((type: 'pop' | 'question' | 'approve') => {
+  const handleSound = useCallback((type: 'pop' | 'question' | 'approve' | 'nod') => {
     // Placeholder for future sound integration
     console.log(`Sound effect triggered: ${type}`);
   }, []);
@@ -579,6 +589,7 @@ export default function WriteEditor() {
     setUploadedFile(null);
     setNoiseMessage(null);
     setUploadError(null);
+    setQuestionsAppeared(false);
   }, []);
 
   const handleQuoteFromHistory = useCallback((text: string) => {
@@ -727,6 +738,7 @@ export default function WriteEditor() {
                     isVisible={avatarVisible} 
                     state={avatarState} 
                     onSound={handleSound}
+                    onQuestionAppear={handleQuestionAppeared}
                   />
                   {showTwinIntro && (
                     <TwinIntroBubble 
@@ -743,6 +755,7 @@ export default function WriteEditor() {
                     isVisible={avatarVisible} 
                     state={avatarState} 
                     onSound={handleSound}
+                    onQuestionAppear={handleQuestionAppeared}
                   />
                   {showTwinIntro && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2">
@@ -808,7 +821,12 @@ export default function WriteEditor() {
                           }}
                           onBlur={() => {
                             if (interviewAnswers[index]) {
-                              setAvatarState('approving');
+                              setAvatarState('nodding');
+                              setTimeout(() => {
+                                if (focusedQuestionIndex === index) {
+                                  setAvatarState('thinking');
+                                }
+                              }, 600);
                             } else {
                               setAvatarState('thinking');
                             }

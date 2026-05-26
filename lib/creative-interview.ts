@@ -10,6 +10,8 @@ export interface InterviewResult {
   triggerReason?: string;
   questionCount?: number;
   contextualHints?: Record<number, string>;
+  transitionPhrases?: string[];
+  isFollowUp?: boolean;
 }
 
 interface TransitionPhrase {
@@ -23,17 +25,52 @@ const TRANSITION_PHRASES: TransitionPhrase[] = [
   { prefix: "有意思！让我深入了解一下...", followUp: "接着这个话题" },
   { prefix: "让我帮你理清思路...", followUp: "关于这一点" },
   { prefix: "了解了，那关于...", followUp: "让我再问一下" },
+  { prefix: "让我想想...", followUp: "关于这一点" },
+  { prefix: "嗯，很好的方向...", followUp: "让我确认一下" },
+];
+
+const GREETING_TRANSITIONS = [
+  "让我来帮你理清思路...",
+  "好，让我们聊聊你的想法...",
+  "很高兴帮你思考这个话题...",
+  "让我先了解一下你的需求...",
+  "我们来深入聊聊..."
+];
+
+const ANSWER_REACTION_PHRASES = [
+  "了解了！",
+  "明白了！",
+  "很好！",
+  "原来如此！",
+  "有意思！"
 ];
 
 const FOLLOW_UP_PHRASES = [
   "关于这一点，你还有什么想补充的吗？",
   "那这个细节能再展开说说吗？",
   "还有哪些方面需要考虑？",
+  "这个角度很有意思，还有补充吗？",
+  "好的，还有什么我应该知道的吗？"
 ];
 
 function getRandomTransition(index: number): TransitionPhrase {
   const phraseIndex = index % TRANSITION_PHRASES.length;
-  return TRANSITION_PHRASES[phraseIndex] as TransitionPhrase;
+  return TRANSITION_PHRASES[phraseIndex] ?? { prefix: "让我想想..." };
+}
+
+function getRandomGreetingTransition(): string {
+  const index = Math.floor(Math.random() * GREETING_TRANSITIONS.length);
+  return GREETING_TRANSITIONS[index] ?? "让我来帮你理清思路...";
+}
+
+function getRandomAnswerReaction(): string {
+  const index = Math.floor(Math.random() * ANSWER_REACTION_PHRASES.length);
+  return ANSWER_REACTION_PHRASES[index] ?? "了解了！";
+}
+
+function getRandomFollowUp(): string {
+  const index = Math.floor(Math.random() * FOLLOW_UP_PHRASES.length);
+  return FOLLOW_UP_PHRASES[index] ?? "关于这一点，你还有什么想补充的吗？";
 }
 
 function hasKeyElements(prompt: string): boolean {
@@ -72,6 +109,38 @@ function countRelevantMemories(topic: string, memories: MemoryItem[]): number {
   ).length;
 }
 
+function calculateDynamicQuestionCount(
+  prompt: string,
+  hasUserContext: boolean,
+  hasBrandProfile: boolean,
+  relevantMemoryCount: number
+): number {
+  const promptLength = prompt.trim().length;
+  const hasDetailedPrompt = promptLength > 80 && hasKeyElements(prompt) && hasDetailedDescription(prompt);
+  
+  if (hasDetailedPrompt) {
+    return 0;
+  }
+  
+  if (relevantMemoryCount > 0) {
+    return 2;
+  }
+  
+  if (hasUserContext) {
+    return 2;
+  }
+  
+  if (!hasKeyElements(prompt)) {
+    return hasBrandProfile ? 3 : 4;
+  }
+  
+  if (!hasDetailedDescription(prompt)) {
+    return hasBrandProfile ? 2 : 3;
+  }
+  
+  return 2;
+}
+
 function enrichQuestionsWithContext(
   questions: string[],
   previousAnswers: string[],
@@ -82,7 +151,8 @@ function enrichQuestionsWithContext(
   
   questions.forEach((question, index) => {
     if (index === 0) {
-      enrichedQuestions.push(question);
+      const greetingTransition = getRandomGreetingTransition();
+      enrichedQuestions.push(`${greetingTransition} ${question}`);
       return;
     }
     
@@ -90,15 +160,18 @@ function enrichQuestionsWithContext(
     const prevAnswer = previousAnswers[index - 1];
     
     if (prevAnswer && prevAnswer.trim()) {
+      const reaction = getRandomAnswerReaction();
       const extractedKeyword = extractKeywordFromAnswer(prevAnswer);
       if (extractedKeyword) {
         contextualHints[index] = `基于你刚才提到的"${extractedKeyword}"`;
-        enrichedQuestions.push(`${transition.followUp || transition.prefix}... ${question}`);
+        const followUp = getRandomFollowUp();
+        enrichedQuestions.push(`${reaction} ${transition.followUp || transition.prefix}，${followUp} ${question}`);
       } else {
-        enrichedQuestions.push(`${transition.prefix} ${question}`);
+        const followUp = getRandomFollowUp();
+        enrichedQuestions.push(`${reaction} ${followUp} ${question}`);
       }
     } else {
-      enrichedQuestions.push(question);
+      enrichedQuestions.push(`${transition.prefix} ${question}`);
     }
   });
   
@@ -129,82 +202,45 @@ export function interviewUser(
   const greeting = getPersonaGreeting(brandProfile);
   const relevantMemoryCount = countRelevantMemories(trimmedPrompt, memories || []);
   
-  const hasUserContext = relevantMemoryCount > 0 || (memories && memories.length >= 3);
+  const hasUserContext = relevantMemoryCount > 0 || (memories !== undefined && memories.length >= 3);
   const hasBrandProfile = !!brandProfile;
-  const userContextScore = (hasUserContext ? 1 : 0) + (hasBrandProfile ? 1 : 0);
+  const dynamicQuestionCount = calculateDynamicQuestionCount(
+    trimmedPrompt,
+    hasUserContext,
+    hasBrandProfile,
+    relevantMemoryCount
+  );
 
-  if (trimmedPrompt.length < 30) {
-    const baseQuestions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
-    const questionCount = hasUserContext ? 2 : 4;
-    const questions = baseQuestions.slice(0, questionCount);
-    
-    return {
-      needsInterview: true,
-      greeting,
-      questions,
-      triggerReason: 'very_short',
-      questionCount: questions.length
-    };
-  }
-
-  if (trimmedPrompt.length >= 30 && trimmedPrompt.length <= 80) {
-    if (!hasKeyElements(trimmedPrompt)) {
-      const baseQuestions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
-      const questionCount = hasUserContext ? 2 : 3;
-      const questions = baseQuestions.slice(0, questionCount);
-      
-      return {
-        needsInterview: true,
-        greeting,
-        questions,
-        triggerReason: 'missing_elements',
-        questionCount: questions.length
-      };
-    }
-  }
-
-  if (trimmedPrompt.length > 80 && hasKeyElements(trimmedPrompt)) {
+  if (dynamicQuestionCount === 0) {
     return {
       needsInterview: false,
       greeting,
       questions: [],
-      triggerReason: 'detailed_prompt'
-    };
-  }
-
-  if (trimmedPrompt.length >= 30 && trimmedPrompt.length <= 80 && hasKeyElements(trimmedPrompt)) {
-    if (!hasDetailedDescription(trimmedPrompt)) {
-      const baseQuestions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
-      const questionCount = hasUserContext ? 2 : 2;
-      const questions = baseQuestions.slice(0, questionCount);
-      
-      return {
-        needsInterview: true,
-        greeting,
-        questions,
-        triggerReason: 'light_interview',
-        questionCount: questions.length
-      };
-    }
-  }
-
-  if (hasDetailedDescription(trimmedPrompt)) {
-    return {
-      needsInterview: false,
-      greeting,
-      questions: [],
-      triggerReason: 'detailed_description'
+      triggerReason: 'detailed_prompt',
+      questionCount: 0
     };
   }
 
   const baseQuestions = getPersonaQuestions(brandProfile, trimmedPrompt, historicalViews, memories);
-  const questionCount = hasUserContext ? 2 : 2;
+  const { questions: enrichedQuestions, hints } = enrichQuestionsWithContext(
+    baseQuestions.slice(0, dynamicQuestionCount),
+    [],
+    memories || []
+  );
+  
+  const transitionPhrases = enrichedQuestions.map((_, index) => {
+    if (index === 0) return getRandomGreetingTransition();
+    return getRandomTransition(index).prefix;
+  });
+
   return {
     needsInterview: true,
-    greeting,
-    questions: baseQuestions.slice(0, questionCount),
-    triggerReason: 'default',
-    questionCount: questionCount
+    greeting: `${greeting} ${getRandomGreetingTransition()}`,
+    questions: enrichedQuestions,
+    triggerReason: 'dynamic_interview',
+    questionCount: enrichedQuestions.length,
+    contextualHints: hints,
+    transitionPhrases
   };
 }
 

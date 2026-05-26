@@ -2,21 +2,24 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-type AvatarState = 'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding';
+type AvatarState = 'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing';
 
 interface DigitalTwinAvatarProps {
   isVisible: boolean;
   state: AvatarState;
-  onSound?: (type: 'pop' | 'question' | 'approve') => void;
+  onSound?: (type: 'pop' | 'question' | 'approve' | 'nod') => void;
+  onQuestionAppear?: () => void;
 }
 
-export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvatarProps) {
+export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear }: DigitalTwinAvatarProps) {
   const [isWaving, setIsWaving] = useState(false);
   const [isNodding, setIsNodding] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [blinkType, setBlinkType] = useState<'single' | 'double'>('single');
   const [headTilt, setHeadTilt] = useState(0);
+  const [browRaise, setBrowRaise] = useState(false);
   const prevStateRef = useRef<AvatarState>(state);
+  const questionAppearedRef = useRef(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -48,25 +51,28 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
         setIsWaving(true);
         setTimeout(() => setIsWaving(false), 1000);
         if (onSound) onSound('question');
-      } else if (state === 'approving') {
+      } else if (state === 'approving' || state === 'nodding') {
         setIsNodding(true);
         setTimeout(() => setIsNodding(false), 600);
-        if (onSound) onSound('approve');
-      } else if (state === 'nodding') {
-        setIsNodding(true);
+        if (onSound) onSound('nod');
+      } else if (state === 'questionAppearing') {
+        setBrowRaise(true);
+        setIsThinking(true);
         setTimeout(() => {
-          setIsNodding(false);
-          setIsThinking(true);
-          setTimeout(() => setIsThinking(false), 800);
-        }, 600);
-        if (onSound) onSound('approve');
+          setBrowRaise(false);
+          setIsThinking(false);
+        }, 800);
+        if (onQuestionAppear) {
+          setTimeout(() => onQuestionAppear(), 300);
+        }
+        if (onSound) onSound('question');
       } else if (state === 'expecting') {
         setIsThinking(true);
         setTimeout(() => setIsThinking(false), 1200);
       }
     }
     prevStateRef.current = state;
-  }, [state, onSound]);
+  }, [state, onSound, onQuestionAppear]);
 
   useEffect(() => {
     if (isVisible && onSound) {
@@ -81,6 +87,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
       case 'listening':
         return '7';
       case 'thinking':
+      case 'questionAppearing':
         return '6';
       default:
         return '8';
@@ -90,6 +97,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
   const getMouthPath = () => {
     switch (state) {
       case 'thinking':
+      case 'questionAppearing':
         return 'M 30 60 Q 40 55 50 60';
       case 'approving':
       case 'expecting':
@@ -105,11 +113,13 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
     if (state === 'listening') {
       return { x: '2', y: '0' };
     }
-    if (state === 'thinking') {
+    if (state === 'thinking' || state === 'questionAppearing') {
       return { x: '-1', y: '1' };
     }
     return { x: '0', y: '0' };
   };
+
+  const showThinkingBrow = state === 'thinking' || state === 'questionAppearing' || state === 'expecting' || browRaise;
 
   return (
     <div className="relative">
@@ -302,8 +312,8 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
             fill="#059669"
           />
 
-          {(state === 'thinking' || state === 'expecting') && (
-            <g className="brow-raise">
+          {showThinkingBrow && (
+            <g className={browRaise ? 'brow-raise' : ''}>
               <path
                 d="M 24 26 Q 32 22 38 26"
                 stroke="white"
@@ -363,7 +373,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound }: DigitalTwinAvat
             strokeLinecap="round"
           />
 
-          {state === 'thinking' && (
+          {(state === 'thinking' || state === 'questionAppearing') && (
             <g>
               <rect
                 x="32"
