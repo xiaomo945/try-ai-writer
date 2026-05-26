@@ -23,6 +23,14 @@ function extractKeywords(text: string): string[] {
   return [...new Set(words.map(w => w.toLowerCase()))];
 }
 
+export function searchMemory(memories: MemoryItem[], keyword: string): MemoryItem[] {
+  const lowerKeyword = keyword.toLowerCase();
+  return memories.filter(m =>
+    m.keywords.some(k => k.includes(lowerKeyword)) ||
+    m.content.toLowerCase().includes(lowerKeyword)
+  );
+}
+
 export function useMemoryBank() {
   const [memories, setMemories] = useState<MemoryItem[]>([]);
 

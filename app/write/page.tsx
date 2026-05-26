@@ -20,6 +20,7 @@ import { EmptyState } from "@/app/components/EmptyState";
 import { ErrorState } from "@/app/components/ErrorState";
 import { getEditSuggestions, type EditSuggestion } from "@/lib/edit-suggestions";
 import { ModelSwitcher } from '@/app/components/ModelSwitcher';
+import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -272,6 +273,9 @@ export default function WriteEditor() {
     }
     return false;
   });
+
+  // Memory search panel state
+  const [showMemoryPanel, setShowMemoryPanel] = useState(false);
 
   // Noise input state
   const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
@@ -581,6 +585,10 @@ export default function WriteEditor() {
     setPrompt((prev) => (prev ? `${prev}\n\n${text}` : text));
   }, []);
 
+  const handleSelectMemory = useCallback((formattedText: string) => {
+    setPrompt((prev) => (prev ? `${prev}\n\n${formattedText}` : formattedText));
+  }, []);
+
   const handleFileUploadClick = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
@@ -638,6 +646,13 @@ export default function WriteEditor() {
         onClose={() => setShowHistoryModal(false)}
         records={records}
         onSelect={handleQuoteFromHistory}
+      />
+
+      <MemorySearchPanel
+        isOpen={showMemoryPanel}
+        onClose={() => setShowMemoryPanel(false)}
+        onSelectMemory={handleSelectMemory}
+        memories={memories}
       />
 
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
@@ -907,13 +922,31 @@ export default function WriteEditor() {
                 </div>
               )}
 
-              <button
-                onClick={() => setShowHistoryModal(true)}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors"
-              >
-                <MessageSquare className="w-4 h-4" />
-                Quote from History
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowMemoryPanel(true)}
+                  disabled={memories.length === 0}
+                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
+                    memories.length === 0
+                      ? 'bg-slate-100 dark:bg-gray-800 text-slate-400 cursor-not-allowed'
+                      : 'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                  }`}
+                  title={memories.length === 0 ? "去写作页面和分身聊天，它会记住你的想法" : "搜索并引用历史想法"}
+                >
+                  <span>💾</span>
+                  <span>我的想法</span>
+                  {memories.length > 0 && (
+                    <span className="text-xs opacity-70">({memories.length})</span>
+                  )}
+                </button>
+                <button
+                  onClick={() => setShowHistoryModal(true)}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Quote from History
+                </button>
+              </div>
 
               {!canGenerate && state !== "loading" && (
                 <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4 space-y-3">
