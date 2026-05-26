@@ -24,6 +24,7 @@ import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
 import { useAvatarVariant } from '@/lib/avatar-variant';
+import Logo from '@/app/components/Logo';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -672,8 +673,9 @@ export default function WriteEditor() {
 
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="text-emerald-600 font-display text-xl font-extrabold">
-            Use AI Writer
+          <Link href="/" className="flex items-center gap-2 text-emerald-600 font-display text-xl">
+            <Logo size={32} />
+            Use <span className="font-extrabold">AI Writer</span>
           </Link>
           <div className="flex items-center gap-4">
             <span className="text-sm text-slate-500 dark:text-slate-400">

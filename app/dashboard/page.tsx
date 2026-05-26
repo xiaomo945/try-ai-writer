@@ -12,6 +12,7 @@ import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
 import { getWeeklyInsights } from "@/lib/weekly-insights";
 import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
+import Logo from "@/app/components/Logo";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -436,8 +437,9 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="text-emerald-600 font-display text-xl font-extrabold">
-            Use AI Writer
+          <Link href="/" className="flex items-center gap-2 text-emerald-600 font-display text-xl">
+            <Logo size={32} />
+            Use <span className="font-extrabold">AI Writer</span>
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">

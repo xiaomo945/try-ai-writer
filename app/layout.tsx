@@ -66,8 +66,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           as="style"
         />
         <link 
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700&family=Playfair+Display:wght=700;800&family=JetBrains+Mono:wght=400;500&display=swap" 
           rel="stylesheet"
+        />
+
+        {/* Favicon */}
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='none' stroke='url(#g)' stroke-width='2' opacity='0.3'/><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%235b9cf5'/><stop offset='100%25' style='stop-color:%239b6dff'/></linearGradient></defs><circle cx='50' cy='50' r='44' fill='rgba(255,255,255,0.04)'/><path d='M50 30 L55 20 L58 25 L53 32 Z' fill='%235b9cf5'/><path d='M55 20 Q62 25 65 35 Q60 30 55 25 Z' fill='%239b6dff' opacity='0.6'/><path d='M55 20 Q58 15 60 10 Q58 18 55 20 Z' fill='%239b6dff' opacity='0.4'/><circle cx='53' cy='35' r='2' fill='%239b6dff'><animate attributeName='opacity' values='0.5;1;0.5' dur='2s' repeatCount='indefinite'/></circle></svg>"
         />
         
         {/* Structured Data */}
