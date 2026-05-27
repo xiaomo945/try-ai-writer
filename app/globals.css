@@ -19,65 +19,14 @@
     @apply bg-obsidian-950 text-slate-100 font-sans antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
-  :root {
     background-image:
       linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
       radial-gradient(ellipse 60% 40% at 30% 0%, rgba(91, 156, 245, 0.06), transparent),
       radial-gradient(ellipse 50% 30% at 70% 100%, rgba(155, 109, 255, 0.05), transparent);
     background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%;
-    background-position: center center, center center, 0 0, 0 0;
   }
-  
-  .dark body, body.dark {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      radial-gradient(ellipse 60% 40% at 30% 0%, rgba(91, 156, 245, 0.06), transparent),
-      radial-gradient(ellipse 50% 30% at 70% 100%, rgba(155, 109, 255, 0.05), transparent);
-    background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%;
-    background-position: center center, center center, 0 0, 0 0;
-  }
-  
-  .light body, body.light {
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      radial-gradient(ellipse 60% 40% at 30% 0%, rgba(91, 156, 245, 0.03), transparent),
-      radial-gradient(ellipse 50% 30% at 70% 100%, rgba(155, 109, 255, 0.02), transparent);
-    background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%;
-    background-position: center center, center center, 0 0, 0 0;
-  }
-  
-  html {
-    @apply scroll-smooth;
-  }
-  
-  h1, h2, h3 { 
-    @apply font-display font-extrabold tracking-tight;
-  }
-  
-  .dark h1, .dark h2, .dark h3, body.dark h1, body.dark h2, body.dark h3 {
-    @apply text-white;
-  }
-  
-  .light h1, .light h2, .light h3, body.light h1, body.light h2, body.light h3 {
-    @apply text-slate-900;
-  }
-  
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
-  
-  .light ::-webkit-scrollbar-thumb, body.light ::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.12);
-  }
-  
-  ::selection {
-    @apply bg-accent-blue/30;
-  }
+  h1, h2, h3 { @apply font-display font-extrabold tracking-tight text-white; }
 }
 
 @layer components {
@@ -89,117 +38,39 @@
     -webkit-backdrop-filter: blur(24px);
     transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
-  
-  .light .glass-card, body.light .glass-card {
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(0, 0, 0, 0.12);
-  }
-  
   .glass-card:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.16);
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
     transform: translateY(-3px);
   }
-  
-  .light .glass-card:hover, body.light .glass-card:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
-  }
-  
   .glass-card-blue { @apply glass-card; box-shadow: 0 0 32px rgba(91,156,245,0.06); }
   .glass-card-purple { @apply glass-card; box-shadow: 0 0 32px rgba(155,109,255,0.06); }
   .glass-card-emerald { @apply glass-card; box-shadow: 0 0 32px rgba(16,185,129,0.06); }
-  
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-semibold text-white transition-all duration-300;
-    min-height: 48px;
-    font-size: 1rem;
+    min-height: 56px;
+    font-size: 1.05rem;
     background: linear-gradient(135deg, #5b9cf5, #9b6dff);
     box-shadow: 0 4px 24px rgba(91, 156, 245, 0.3);
   }
   .btn-primary:hover {
-    box-shadow: 0 8px 40px rgba(155, 109, 255, 0.45), 0 0 60px rgba(91, 156, 245, 0.15);
+    box-shadow: 0 8px 40px rgba(155, 109, 255, 0.45);
     transform: translateY(-2px);
-  }
-  .btn-primary:active {
-    transform: scale(0.96);
   }
   .btn-outline {
     @apply inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-semibold transition-all duration-300;
-    min-height: 48px;
-    font-size: 1rem;
+    min-height: 56px;
+    font-size: 1.05rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #e2e8f0;
     background: rgba(255, 255, 255, 0.02);
-  }
-  .light .btn-outline, body.light .btn-outline {
-    color: #334155;
-    border-color: rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.8);
   }
   .btn-outline:hover {
     border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.06);
     transform: translateY(-2px);
   }
-  .light .btn-outline:hover, body.light .btn-outline:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 1);
-  }
-  .btn-outline:active {
-    transform: scale(0.96);
-  }
-  .section-container {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-  .section-spacing {
-    @apply py-16 sm:py-24 md:py-32;
-  }
-  
-  .card {
-    @apply rounded-2xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 transition-all duration-300;
-  }
-  .card:hover {
-    @apply shadow-lg border-blue-300 dark:border-blue-700;
-    box-shadow: 0 0 32px rgba(91, 156, 245, 0.08);
-  }
-  
-  .dark .card {
-    @apply bg-gray-900 border-gray-800;
-  }
-  .dark .card:hover {
-    @apply border-blue-700;
-    box-shadow: 0 0 32px rgba(91, 156, 245, 0.08);
-  }
-  
-  .light .card {
-    @apply bg-white border-slate-200;
-  }
-  .light .card:hover {
-    @apply border-blue-400;
-    box-shadow: 0 0 32px rgba(91, 156, 245, 0.06);
-  }
-}
-
-@layer utilities {
-  .page-transition {
-    animation: fadeSlideIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-  }
-  
-  @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .duration-400 {
-    transition-duration: 400ms;
-  }
+  .section-container { @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .section-spacing { @apply py-16 sm:py-24 md:py-32; }
 }
