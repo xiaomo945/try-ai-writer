@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash, Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Undo2, PenLine } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash, Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Undo2, PenLine, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { useUsage, isNoiseInput } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
@@ -24,6 +24,7 @@ import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
 import { WritingExamples } from '@/app/components/WritingExamples';
+import { OnboardingTooltip } from '@/app/components/OnboardingTooltip';
 import { useAvatarVariant } from '@/lib/avatar-variant';
 import Logo from '@/app/components/Logo';
 
@@ -300,19 +301,12 @@ export default function WriteEditor() {
     }
   }, []);
   
-  // Close modals with Esc key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setShowUpgradeModal(false);
-        setShowHistoryModal(false);
-        setShowMemoryPanel(false);
-        setShowTwinIntro(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  // Keyboard shortcuts
+  const promptRef = useRef<HTMLTextAreaElement>(null);
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  // Check if user is on mobile
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleCreativeAssistantToggle = (enabled: boolean) => {
     setCreativeAssistantEnabled(enabled);
@@ -682,6 +676,63 @@ export default function WriteEditor() {
     { key: "custom", label: "Custom" },
   ];
 
+  // Mobile check effect
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Keyboard shortcuts effect
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const cmdKey = isMac ? e.metaKey : e.ctrlKey;
+      
+      // Ctrl/Cmd + Enter: Generate
+      if (cmdKey && e.key === 'Enter') {
+        e.preventDefault();
+        handleGenerateClick();
+      }
+      
+      // Ctrl/Cmd + K: Focus prompt
+      if (cmdKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        promptRef.current?.focus();
+      }
+      
+      // Ctrl/Cmd + Shift + C: Copy result
+      if (cmdKey && e.shiftKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        handleCopy();
+      }
+      
+      // Ctrl/Cmd + Shift + D: Download result
+      if (cmdKey && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        handleDownload();
+      }
+      
+      // Escape: Clear content if result exists, else close modals
+      if (e.key === 'Escape') {
+        if (result) {
+          handleClear();
+        } else {
+          setShowUpgradeModal(false);
+          setShowHistoryModal(false);
+          setShowMemoryPanel(false);
+          setShowTwinIntro(false);
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [result, handleGenerateClick, handleCopy, handleDownload, handleClear]);
+
   return (
     <main className="min-h-screen flex flex-col">
       <HistorySearchModal
@@ -719,7 +770,7 @@ export default function WriteEditor() {
       <div className="flex-1 grid lg:grid-cols-[40%_60%]">
         <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
           <div className="flex flex-wrap gap-2 items-center justify-between">
-            <div className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1">
+            <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1">
               {modes.map(({ key, label }) => (
                 <button
                   key={key}
@@ -739,7 +790,7 @@ export default function WriteEditor() {
             </div>
 
             {/* Creative Assistant Toggle */}
-            <div className="flex items-center gap-2">
+            <div data-onboarding="creative-assistant" className="flex items-center gap-2">
               <span className="text-sm text-slate-600 dark:text-slate-400">
                 🧠 Creative Assistant
               </span>
@@ -909,6 +960,7 @@ export default function WriteEditor() {
               )}
               
               <textarea
+                ref={promptRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={`Describe what you want to write in ${mode} mode...`}
@@ -1045,6 +1097,7 @@ export default function WriteEditor() {
 
               <div className="flex gap-3 flex-col">
                 <button
+                  data-onboarding="generate-button"
                   onClick={handleGenerateClick}
                   disabled={state === "loading" || !prompt.trim() || !canGenerate}
                   className="btn-primary flex-1 gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -1238,6 +1291,78 @@ export default function WriteEditor() {
           )}
         </section>
       </div>
+      
+      {/* Keyboard Shortcuts Panel */}
+      {!isMobile && (
+        <div className="fixed bottom-4 right-4 z-40">
+          {showShortcuts ? (
+            <div className="glass-card p-4 w-80 max-w-[90vw] shadow-2xl">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-display font-bold text-white">⌨️ 键盘快捷键</h3>
+                <button 
+                  onClick={() => setShowShortcuts(false)}
+                  className="text-slate-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                >
+                  <ChevronUp className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-slate-300">生成内容</span>
+                  <div className="flex gap-1">
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Enter</kbd>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-slate-300">聚焦到输入框</span>
+                  <div className="flex gap-1">
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">K</kbd>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-slate-300">复制结果</span>
+                  <div className="flex gap-1">
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Shift</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">C</kbd>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-slate-300">下载结果</span>
+                  <div className="flex gap-1">
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Shift</kbd>
+                    <span className="text-slate-400">+</span>
+                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">D</kbd>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-slate-300">清空内容</span>
+                  <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Esc</kbd>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowShortcuts(true)}
+              className="glass-card px-4 py-3 flex items-center gap-2 hover:bg-opacity-20 transition-all min-h-[44px]"
+            >
+              <span className="text-white text-sm">⌨️ 快捷键</span>
+              <ChevronDown className="w-4 h-4 text-slate-400" />
+            </button>
+          )}
+        </div>
+      )}
+      
+      {/* Onboarding Tooltip */}
+      <OnboardingTooltip />
       
       {showUpgradeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">

@@ -115,6 +115,16 @@ const blogPosts = [
   { slug: "ai-writing-for-annual-reports", title: "Streamlining Annual Reports with AI Writing", date: "2026-05-26" },
   { slug: "ai-writing-localization", title: "AI Writing for Localization: Adapting Content Across Cultures", date: "2026-05-26" },
   { slug: "ai-writing-tools-roadmap-2027", title: "AI Writing Tools in 2027: A Look Ahead", date: "2026-05-26" },
+  { slug: "ai-writing-amazon-bullet-points-tutorial", title: "How to Write Amazon Bullet Points That Convert: AI-Powered Tutorial (2026)", date: "2026-05-27" },
+  { slug: "ai-writing-shopify-product-descriptions", title: "Shopify Product Descriptions with AI: A Step-by-Step Optimization Guide", date: "2026-05-27" },
+  { slug: "ai-writing-etsy-seo-tutorial", title: "Etsy SEO Writing with AI: Tags, Titles, and Descriptions That Rank", date: "2026-05-27" },
+  { slug: "ai-writing-google-ads-headlines-tutorial", title: "Writing Google Ads Headlines with AI: A/B Testing Results Inside", date: "2026-05-27" },
+  { slug: "ai-writing-blog-outline-tutorial", title: "How to Create Perfect Blog Outlines with AI: From Keyword to Structure", date: "2026-05-27" },
+  { slug: "ai-writing-email-sequences-tutorial", title: "AI-Powered Email Sequences: Welcome, Nurture, Convert — Full Tutorial", date: "2026-05-27" },
+  { slug: "ai-writing-social-media-calendar", title: "Build a Month of Social Media Content with AI: Complete Calendar Guide", date: "2026-05-27" },
+  { slug: "ai-writing-press-release-tutorial", title: "How to Write a Press Release with AI: Format, Quotes, and Distribution", date: "2026-05-27" },
+  { slug: "ai-writing-product-review-tutorial", title: "Writing Trustworthy Product Reviews with AI: Ethical Guidelines and Templates", date: "2026-05-27" },
+  { slug: "ai-writing-local-seo-tutorial", title: "Local SEO Writing with AI: Google Business Profile Posts and Local Pages", date: "2026-05-27" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
