@@ -24,6 +24,7 @@ import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
 import { WritingExamples } from '@/app/components/WritingExamples';
+import { QuickTemplates } from '@/app/components/QuickTemplates';
 import { OnboardingTooltip } from '@/app/components/OnboardingTooltip';
 import { ThemeToggle } from '@/app/components/ThemeToggle';
 import { useAvatarVariant } from '@/lib/avatar-variant';
@@ -291,6 +292,7 @@ export default function WriteEditor() {
   const [comparisonResult, setComparisonResult] = useState<string | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [currentResultModel, setCurrentResultModel] = useState<"claude" | "deepseek">("deepseek");
+  const [modelSwitchToast, setModelSwitchToast] = useState<string | null>(null);
 
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
@@ -787,7 +789,11 @@ export default function WriteEditor() {
                 </button>
               ))}
               <div className="flex-shrink-0">
-                <ModelSwitcher />
+                <ModelSwitcher onModelSwitch={(model) => {
+                  const modelName = model === 'claude' ? 'Claude' : 'DeepSeek';
+                  setModelSwitchToast(`Switched to ${modelName}`);
+                  setTimeout(() => setModelSwitchToast(null), 2000);
+                }} />
               </div>
             </div>
 
@@ -873,59 +879,96 @@ export default function WriteEditor() {
 
                   {/* Interview Questions */}
                   <div className="flex-1 overflow-y-auto space-y-4">
-                    {interviewResult.questions.map((question, index) => (
-                      <div 
-                        key={index} 
-                        className="flex flex-col gap-2 opacity-0 transform -translate-x-2.5"
-                        style={{
-                          animation: `fadeInFromLeft 0.3s ease-out forwards`,
-                          animationDelay: `${index * 0.3}s`
-                        }}
-                      >
-                        <style jsx global>{`
-                          @keyframes fadeInFromLeft {
-                            to {
-                              opacity: 1;
-                              transform: translateX(0);
-                            }
+                    {interviewResult.questions.map((question, index) => {
+                      const [displayedText, setDisplayedText] = useState('');
+                      const [isTyping, setIsTyping] = useState(false);
+                      const [showTypingBubble, setShowTypingBubble] = useState(false);
+                      const textRef = useRef('');
+                      
+                      useEffect(() => {
+                        if (!questionsAppeared) return;
+                        if (index > 0 && !interviewAnswers[index - 1]) return;
+                        
+                        setShowTypingBubble(true);
+                        setIsTyping(true);
+                        setDisplayedText('');
+                        textRef.current = '';
+                        
+                        const typeInterval = setInterval(() => {
+                          if (textRef.current.length < question.length) {
+                            textRef.current += question[textRef.current.length];
+                            setDisplayedText(textRef.current);
+                          } else {
+                            clearInterval(typeInterval);
+                            setIsTyping(false);
+                            setShowTypingBubble(false);
                           }
-                        `}</style>
-                        <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                            <span className="text-emerald-600 font-bold">🧠</span>
+                        }, 30);
+                        
+                        return () => clearInterval(typeInterval);
+                      }, [questionsAppeared, question, index]);
+                      
+                      useEffect(() => {
+                        if (index > 0 && interviewAnswers[index - 1]?.trim()) {
+                          setAvatarState('nodding');
+                          setTimeout(() => {
+                            setAvatarState('questionAppearing');
+                          }, 600);
+                        }
+                      }, [interviewAnswers]);
+                      
+                      return (
+                        <div 
+                          key={index} 
+                          className="flex flex-col gap-2"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 relative">
+                              <span className="text-emerald-600 font-bold">🧠</span>
+                              {showTypingBubble && (
+                                <span className="absolute -top-1 -right-1 flex gap-0.5">
+                                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0ms'}} />
+                                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '150ms'}} />
+                                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '300ms'}} />
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
+                              <p className="text-slate-900 dark:text-white">
+                                {displayedText}
+                                {isTyping && <span className="animate-pulse">|</span>}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
-                            <p className="text-slate-900 dark:text-white">{question}</p>
-                          </div>
+                          <textarea
+                            value={interviewAnswers[index]}
+                            onChange={(e) => {
+                              const newAnswers = [...interviewAnswers];
+                              newAnswers[index] = e.target.value;
+                              setInterviewAnswers(newAnswers);
+                            }}
+                            onFocus={() => {
+                              setFocusedQuestionIndex(index);
+                              setAvatarState('listening');
+                            }}
+                            onBlur={() => {
+                              if (interviewAnswers[index]) {
+                                setAvatarState('nodding');
+                                setTimeout(() => {
+                                  if (focusedQuestionIndex === index) {
+                                    setAvatarState('thinking');
+                                  }
+                                }, 600);
+                              } else {
+                                setAvatarState('thinking');
+                              }
+                            }}
+                            placeholder="你的回答..."
+                            className="ml-13 w-full rounded-xl border border-emerald-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                          />
                         </div>
-                        <textarea
-                          value={interviewAnswers[index]}
-                          onChange={(e) => {
-                            const newAnswers = [...interviewAnswers];
-                            newAnswers[index] = e.target.value;
-                            setInterviewAnswers(newAnswers);
-                          }}
-                          onFocus={() => {
-                            setFocusedQuestionIndex(index);
-                            setAvatarState('listening');
-                          }}
-                          onBlur={() => {
-                            if (interviewAnswers[index]) {
-                              setAvatarState('nodding');
-                              setTimeout(() => {
-                                if (focusedQuestionIndex === index) {
-                                  setAvatarState('thinking');
-                                }
-                              }, 600);
-                            } else {
-                              setAvatarState('thinking');
-                            }
-                          }}
-                          placeholder="你的回答..."
-                          className="ml-13 w-full rounded-xl border border-emerald-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
-                        />
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -958,6 +1001,12 @@ export default function WriteEditor() {
                     💡 写作示例
                   </h3>
                   <WritingExamples onSelectExample={setPrompt} />
+                  <div className="mt-4">
+                    <QuickTemplates onSelectTemplate={(template) => {
+                      setPrompt(template);
+                      setTimeout(() => promptRef.current?.focus(), 100);
+                    }} />
+                  </div>
                 </div>
               )}
               
@@ -1215,9 +1264,13 @@ export default function WriteEditor() {
                         key={suggestion.id}
                         onClick={() => handleEdit(suggestion)}
                         disabled={isEditing}
-                        className="flex items-center gap-1 px-2 sm:px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                        className="flex items-center gap-1 px-2 sm:px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <IconComponent className="w-4 h-4" />
+                        {isEditing ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <IconComponent className="w-4 h-4" />
+                        )}
                         {suggestion.label}
                       </button>
                     );
@@ -1231,6 +1284,13 @@ export default function WriteEditor() {
             <div className="rounded-lg bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 px-4 py-2 text-sm text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
               <Check className="w-4 h-4" />
               Saved to history
+            </div>
+          )}
+
+          {modelSwitchToast && (
+            <div className="rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 px-4 py-2 text-sm text-blue-700 dark:text-blue-300 flex items-center gap-2 animate-in slide-in-from-top-2 fade-in duration-300">
+              <Sparkles className="w-4 h-4" />
+              {modelSwitchToast}
             </div>
           )}
 

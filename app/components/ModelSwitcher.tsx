@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { useUsage, type ModelType, type UserPlan } from '@/lib/usage';
+import { ChevronDown, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { useUsage, type ModelType } from '@/lib/usage';
 
 const MODEL_INFO = {
   claude: { name: 'Claude', color: 'bg-orange-500', textColor: 'text-orange-700', bgColor: 'bg-orange-100' },
@@ -22,9 +23,15 @@ const MODEL_OPTIONS: ModelOption[] = [
   { model: 'mock', label: 'Mock' },
 ];
 
-export function ModelSwitcher() {
+interface ModelSwitcherProps {
+  onModelSwitch?: (model: ModelType) => void;
+}
+
+export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
   const { selectedModel, setSelectedModel, isProUser } = useUsage();
   const [isOpen, setIsOpen] = useState(false);
+  const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
+  const [upgradePromptShown, setUpgradePromptShown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,9 +46,20 @@ export function ModelSwitcher() {
   }, []);
 
   const handleSelectModel = (model: ModelType, isProOnly: boolean) => {
-    if (isProOnly && !isProUser) return;
+    if (isProOnly && !isProUser) {
+      if (!upgradePromptShown) {
+        setShowUpgradePrompt(true);
+        setUpgradePromptShown(true);
+        setIsOpen(false);
+        return;
+      }
+      return;
+    }
     setSelectedModel(model);
     setIsOpen(false);
+    if (onModelSwitch) {
+      onModelSwitch(model);
+    }
   };
 
   const currentModelInfo = MODEL_INFO[selectedModel];
@@ -91,6 +109,35 @@ export function ModelSwitcher() {
                 </button>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {showUpgradePrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowUpgradePrompt(false)}>
+          <div className="glass-card p-8 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-display font-extrabold text-white mb-2">
+                Unlock Claude-Powered Writing
+              </h2>
+              <p className="text-slate-400">
+                Claude Sonnet 4.6 delivers superior writing quality, especially for long-form content.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Link href="/pricing" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
+                🚀 Upgrade to Pro — $9/month
+              </Link>
+              <button
+                onClick={() => setShowUpgradePrompt(false)}
+                className="btn-outline text-center min-h-[44px] flex items-center justify-center"
+              >
+                Not now
+              </button>
+            </div>
           </div>
         </div>
       )}

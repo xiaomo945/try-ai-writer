@@ -53,6 +53,12 @@ const FOLLOW_UP_PHRASES = [
   "好的，还有什么我应该知道的吗？"
 ];
 
+const MEMORY_REFERENCE_TEMPLATES = [
+  "根据你之前关于\"{keyword}\"的想法，你这次想深入哪个方向？",
+  "我记得你对\"{keyword}\"有过思考，这次有什么新想法吗？",
+  "之前你提到过\"{keyword}\"，这次想怎么展开？"
+];
+
 function getRandomTransition(index: number): TransitionPhrase {
   const phraseIndex = index % TRANSITION_PHRASES.length;
   return TRANSITION_PHRASES[phraseIndex] ?? { prefix: "让我想想..." };
@@ -71,6 +77,37 @@ function getRandomAnswerReaction(): string {
 function getRandomFollowUp(): string {
   const index = Math.floor(Math.random() * FOLLOW_UP_PHRASES.length);
   return FOLLOW_UP_PHRASES[index] ?? "关于这一点，你还有什么想补充的吗？";
+}
+
+function getMemoryReference(keyword: string): string {
+  const templates = MEMORY_REFERENCE_TEMPLATES;
+  if (templates.length === 0) return `根据你之前关于"${keyword}"的想法，你这次想深入哪个方向？`;
+  const index = Math.floor(Math.random() * templates.length);
+  const template = templates[index]!;
+  return template.replace('{keyword}', keyword);
+}
+
+function findRelevantMemoryForQuestion(
+  questionIndex: number,
+  questions: string[],
+  memories: MemoryItem[]
+): { keyword: string; memory: MemoryItem } | null {
+  if (questionIndex === 0 || memories.length === 0) return null;
+  
+  const prevQuestion = questions[questionIndex - 1];
+  if (!prevQuestion) return null;
+  
+  const previousQuestion = prevQuestion.toLowerCase();
+  const relevantMemories = memories.filter(m => 
+    m.keywords.some(k => previousQuestion.includes(k.toLowerCase())) ||
+    m.content.toLowerCase().includes(previousQuestion.slice(0, 20))
+  );
+  
+  if (relevantMemories.length === 0) return null;
+  
+  const memory = relevantMemories[0]!;
+  const keyword = memory.keywords[0] || memory.content.slice(0, 10);
+  return { keyword, memory };
 }
 
 function hasKeyElements(prompt: string): boolean {
@@ -148,6 +185,7 @@ function enrichQuestionsWithContext(
 ): { questions: string[]; hints: Record<number, string> } {
   const enrichedQuestions: string[] = [];
   const contextualHints: Record<number, string> = {};
+  let memoryUsed = false;
   
   questions.forEach((question, index) => {
     if (index === 0) {
@@ -158,6 +196,18 @@ function enrichQuestionsWithContext(
     
     const transition = getRandomTransition(index);
     const prevAnswer = previousAnswers[index - 1];
+    
+    if (!memoryUsed && memories && memories.length > 0) {
+      const memoryRef = findRelevantMemoryForQuestion(index, questions, memories);
+      if (memoryRef) {
+        memoryUsed = true;
+        const memoryRefText = getMemoryReference(memoryRef.keyword);
+        const followUp = getRandomFollowUp();
+        enrichedQuestions.push(`${memoryRefText} ${followUp} ${question}`);
+        contextualHints[index] = `记忆引用："${memoryRef.memory.content.slice(0, 30)}..."`;
+        return;
+      }
+    }
     
     if (prevAnswer && prevAnswer.trim()) {
       const reaction = getRandomAnswerReaction();
