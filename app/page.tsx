@@ -1,261 +1,226 @@
 "use client";
-
-import { Check, PenTool, Zap, Brain, FileText, Sparkles, Menu, X } from "lucide-react";
+import { Zap, Brain, Shield, Sparkles, ArrowRight, ChevronDown, Check, Star, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { plans } from "@/lib/pricing";
-import { Testimonials } from "./components/Testimonials";
-import Logo from './components/Logo';
-
-const bentoFeatures = [
-  {
-    icon: Brain,
-    title: "Brand Memory",
-    description: "Your voice, style, and audience remembered across every session.",
-    size: "large",
-    delay: 0,
-  },
-  {
-    icon: Zap,
-    title: "Instant Drafts",
-    description: "Idea to polished draft in 30 seconds flat.",
-    size: "small",
-    delay: 100,
-  },
-  {
-    icon: PenTool,
-    title: "Your Voice",
-    description: "Not generic AI. Your words, amplified.",
-    size: "small",
-    delay: 200,
-  },
-  {
-    icon: Sparkles,
-    title: "Creative Assistant",
-    description: "AI that understands your creative vision perfectly.",
-    size: "large",
-    delay: 300,
-  },
-];
-
-const loadingTexts = [
-  "> Learning your brand voice...",
-  "> Analyzing writing patterns...",
-  "> Generating creative content...",
-  "> Polishing final output...",
-];
+import { useState } from "react";
+import Logo from "@/app/components/Logo";
+import DemoAnimation from "@/app/components/DemoAnimation";
+import { Testimonials } from "@/app/components/Testimonials";
 
 export default function LandingPage() {
-  const [loadingTextIndex, setLoadingTextIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadingTextIndex((prev) => (prev + 1) % loadingTexts.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <main className="flex flex-col items-center w-full">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-glass-border">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-white font-display text-lg">
+    <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
+      {/* 导航栏 */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="hidden sm:inline">Use AI Writer</span>
+            <span className="text-lg font-display font-extrabold text-white">Use AI<span className="text-blue-400">Writer</span></span>
           </Link>
-          
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* 桌面端导航 */}
+          <div className="hidden md:flex items-center gap-8 text-sm">
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/login" className="btn-primary">Sign In</Link>
-          </nav>
-          
-          {/* Mobile Menu Button */}
+            <Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link>
+            <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Writing</Link>
+          </div>
+          {/* 移动端汉堡菜单 */}
           <button 
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            className="md:hidden text-white p-2"
+            className="md:hidden text-slate-300 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-        
-        {/* Mobile Menu */}
+        {/* 移动端下拉菜单 */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-glass-border">
-            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
-              <Link 
-                href="/write" 
-                onClick={() => setMobileMenuOpen(false)} 
-                className="text-slate-300 hover:text-white transition-colors py-2"
-              >
-                Write
-              </Link>
-              <Link 
-                href="/pricing" 
-                onClick={() => setMobileMenuOpen(false)} 
-                className="text-slate-300 hover:text-white transition-colors py-2"
-              >
-                Pricing
-              </Link>
-              <Link 
-                href="/login" 
-                onClick={() => setMobileMenuOpen(false)} 
-                className="btn-primary text-center"
-              >
-                Sign In
-              </Link>
+          <div className="md:hidden bg-obsidian-950/95 backdrop-blur-2xl border-b border-white/5">
+            <div className="flex flex-col gap-4 px-6 py-6">
+              <Link href="/write" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Write</Link>
+              <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+              <Link href="/blog" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              <Link href="/login" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Start Writing Free</Link>
             </div>
           </div>
         )}
-      </header>
-      
-      {/* Hero Section */}
-      <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-        {/* Abstract flowing light band */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-40 bg-gradient-to-r from-transparent via-[#4A90E2]/15 to-transparent blur-3xl animate-pulse" />
-        </div>
+      </nav>
 
-        <div className="w-full max-w-5xl mx-auto px-6 py-16 md:py-32 text-center relative z-10">
-          {/* Kinetic Typography Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-extrabold leading-none tracking-tight mb-8" style={{ textShadow: "0 0 80px rgba(74,144,226,0.3)" }}>
-            Write Like You,
-            <br />
-            <span className="text-slate-400">Only Faster.</span>
-            <br />
-            <span className="text-3xl md:text-4xl lg:text-5xl bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent">
-              Claude-Powered.
-            </span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-slate-400 font-normal max-w-xl mx-auto mb-12 leading-relaxed">
-            The AI writing tool that learns your voice, powered by Claude.
-          </p>
-
-          {/* Typewriter Effect with JetBrains Mono */}
-          <div className="mb-12 h-10 flex items-center justify-center">
-            <code className="font-mono text-sm md:text-base text-slate-400 relative">
-              {loadingTexts[loadingTextIndex]}
-              <span className="inline-block w-3 h-5 bg-white ml-1 align-middle animate-pulse" />
-            </code>
-          </div>
-
-          <Link href="/login" className="btn-primary text-lg px-12 py-5 inline-block">
-            Start Writing Free
-          </Link>
-        </div>
-      </section>
-
-      {/* Bento Grid Features */}
-      <section className="w-full py-16 md:py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-4">Features That Matter</h2>
-            <p className="text-slate-400 text-lg">Designed for professional writers who care about quality.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Row 1: Large + Small */}
-            {bentoFeatures.slice(0, 2).map((feature, index) => (
-              <div key={feature.title} className={`glass-card p-8 ${feature.size === "large" ? "md:col-span-1" : "md:col-span-1"}`} style={{ animationDelay: `${feature.delay}ms` }}>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#4A90E2]/20 to-[#A855F7]/20 flex items-center justify-center mb-6">
-                  <feature.icon className="w-6 h-6 text-[#4A90E2]" />
-                </div>
-
-                <h3 className="text-xl font-display font-bold mb-3">{feature.title}</h3>
-                <p className="text-slate-400 mb-6">{feature.description}</p>
-
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#4A90E2] animate-pulse" />
-                  <span className="text-xs text-slate-500 font-mono">active</span>
-                </div>
+      {/* Hero区 — 左右分栏 */}
+      <section className="section-container section-spacing pt-32 md:pt-40">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="flex flex-col items-start">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{textShadow: "0 0 100px rgba(91,156,245,0.3)"}}>
+              Your Thoughts,<br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                Amplified.
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg lg:text-xl text-slate-400 mt-6 max-w-lg leading-relaxed">
+              The AI that learns your brand voice, not just your prompts. Write better, faster, cheaper — meet Use AI Writer.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
+              <Link href="/login" className="btn-primary text-base sm:text-lg w-full sm:w-auto text-center">
+                Start Writing Free <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+              <Link href="/pricing" className="btn-outline text-base sm:text-lg w-full sm:w-auto text-center">
+                See Pricing
+              </Link>
+            </div>
+            <div className="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
+              <div className="flex -space-x-2">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 border-2 border-obsidian-950" />
+                ))}
               </div>
-            ))}
+              <p className="text-sm text-slate-400"><span className="text-white font-semibold">500+</span> creators already writing</p>
+            </div>
+          </div>
+          <div className="hidden lg:flex justify-center">
+            <div className="w-full max-w-lg glass-card p-6">
+              <DemoAnimation />
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center mt-16"><ChevronDown className="w-6 h-6 text-slate-600 animate-bounce" /></div>
+      </section>
 
-            {/* Row 2: Small + Large */}
-            {bentoFeatures.slice(2, 4).map((feature, index) => (
-              <div key={feature.title} className={`glass-card p-8 ${feature.size === "large" ? "md:col-span-1" : "md:col-span-1"}`} style={{ animationDelay: `${feature.delay}ms` }}>
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#4A90E2]/20 to-[#A855F7]/20 flex items-center justify-center mb-6">
-                  <feature.icon className="w-6 h-6 text-[#4A90E2]" />
-                </div>
+      {/* 社会证明条 */}
+      <section className="section-container py-12">
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16 text-slate-500 text-sm">
+          <span className="text-slate-400 font-medium">Trusted by creators from</span>
+          <span className="text-white font-semibold">Product Hunt</span>
+          <span className="text-white font-semibold">Reddit</span>
+          <span className="text-white font-semibold">Twitter/X</span>
+          <span className="text-white font-semibold">Indie Hackers</span>
+        </div>
+      </section>
 
-                <h3 className="text-xl font-display font-bold mb-3">{feature.title}</h3>
-                <p className="text-slate-400 mb-6">{feature.description}</p>
-
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#4A90E2] animate-pulse" />
-                  <span className="text-xs text-slate-500 font-mono">active</span>
-                </div>
-              </div>
-            ))}
+      {/* Bento Grid 功能展示 */}
+      <section className="section-container section-spacing">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
+            Everything you need to{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">write better.</span>
+          </h2>
+          <p className="text-base sm:text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Powerful features packed in a minimalist interface. No clutter, just results.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-min">
+          <div className="glass-card-blue md:col-span-2 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5"><Zap className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" /></div>
+              <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Generate in 30 Seconds</h3>
+              <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">From prompt to polished draft faster than brewing coffee. Claude-powered quality, DeepSeek speed.</p>
+            </div>
+            <div className="mt-6 flex items-center gap-4"><span className="text-4xl sm:text-5xl font-display font-extrabold text-blue-400">30s</span><span className="text-slate-500 text-sm">average time<br/>to first draft</span></div>
+          </div>
+          <div className="glass-card-purple flex flex-col">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4"><Brain className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" /></div>
+            <h3 className="text-lg sm:text-xl font-display font-bold mb-2">Brand Voice Learning</h3>
+            <p className="text-slate-400 leading-relaxed text-sm sm:text-base">Remembers your tone, style, and phrases. Writes like you, not a robot.</p>
+          </div>
+          <div className="glass-card-emerald flex flex-col">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4"><Shield className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" /></div>
+            <h3 className="text-lg sm:text-xl font-display font-bold mb-2">100% Private</h3>
+            <p className="text-slate-400 leading-relaxed text-sm sm:text-base">Your data is never used for training or sold. Enterprise-grade privacy.</p>
+          </div>
+          <div className="glass-card-blue md:col-span-2 flex flex-col justify-between">
+            <div>
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5"><Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" /></div>
+              <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Creative Interview Engine</h3>
+              <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">Tell your digital twin what you want — it asks the right questions, then assembles the perfect prompt for you.</p>
+            </div>
+            <div className="mt-6 font-mono text-sm text-slate-500">{">"} "What tone should it have? Who's your audience?"<br/>{">"} "Got it. Generating now..."</div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="w-full py-16 md:py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-4">Simple Pricing</h2>
-            <p className="text-slate-400 text-lg">Start free. Upgrade when you need more.</p>
-          </div>
+      {/* 定价区 — 3列水平对比 */}
+      <section className="section-container section-spacing">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
+            Simple,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Transparent</span>{" "}
+            Pricing
+          </h2>
+          <p className="text-base sm:text-lg text-slate-400 mt-4">Start free, upgrade when you need more. No hidden fees.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {[ 
+            { name: "Free", price: "$0", desc: "For casual writers", features: ["10 generations/day", "DeepSeek model", "Basic brand voice"], btn: "outline" },
+            { name: "Pro", price: "$9", desc: "For serious creators", features: ["100 generations/day", "Claude + DeepSeek", "Full brand voice", "Document upload"], btn: "primary", popular: true },
+            { name: "Max", price: "$25", desc: "For power users", features: ["Unlimited generations", "Claude + DeepSeek", "Advanced brand voice", "Document + image upload", "Priority support"], btn: "primary" }
+          ].map((plan) => (
+            <div key={plan.name} className={`glass-card flex flex-col relative ${plan.popular ? 'glass-card-purple' : ''}`} style={plan.popular ? {borderColor: "rgba(155,109,255,0.25)", boxShadow: "0 0 48px rgba(155,109,255,0.1)"} : {}}>
+              {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500">Most Popular</span>}
+              <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
+              <p className="text-slate-400 text-sm mb-6">{plan.desc}</p>
+              <p className="text-4xl sm:text-5xl font-display font-extrabold mb-8">{plan.price}<span className="text-base sm:text-lg font-normal text-slate-500">/mo</span></p>
+              <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
+                {plan.features.map((f, j) => <li key={j} className="flex items-center gap-2 sm:gap-3 text-sm text-slate-300"><Check className="w-4 h-4 text-blue-400 flex-shrink-0" />{f}</li>)}
+              </ul>
+              <Link href="/login" className={plan.btn === 'primary' ? 'btn-primary w-full text-center' : 'btn-outline w-full text-center'}>
+                {plan.name === 'Free' ? 'Get Started' : `Start ${plan.name}`}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <div key={plan.name} className={`glass-card p-8 transition-all duration-300 ${plan.recommended ? "border-[rgba(168,85,247,0.2)]" : ""}`} style={plan.recommended ? { boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" } : {}}>
-                <div className="mb-8">
-                  <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
-                  <p className="text-sm text-slate-400">{plan.description}</p>
-                </div>
+      {/* 用户评价区 */}
+      <section className="section-container section-spacing">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">Loved by Creators Worldwide</h2>
+          <p className="text-base sm:text-lg text-slate-400 mt-4">Join 500+ writers who already use Use AI Writer</p>
+        </div>
+        <Testimonials />
+      </section>
 
-                <div className="mb-8">
-                  <p className="text-5xl font-display font-extrabold text-white mb-2">{plan.price}</p>
-                  <p className="text-sm text-slate-400">{plan.period}</p>
-                </div>
+      {/* FAQ区 */}
+      <section className="section-container section-spacing max-w-3xl">
+        <h2 className="text-3xl font-display font-extrabold text-center mb-12">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {[
+            { q: "What's the difference between DeepSeek and Claude?", a: "DeepSeek is fast and affordable (great for drafts). Claude Sonnet 4.6 delivers premium writing quality (Pro/Max plans). You can switch anytime." },
+            { q: "Can I cancel anytime?", a: "Absolutely. No contracts, no cancellation fees. You can cancel or change your plan at any time." },
+            { q: "Is my data used to train AI?", a: "Never. Your content and brand voice data are 100% private. We do not use your data for model training." },
+            { q: "How does brand voice learning work?", a: "Upload a writing sample or let our Creative Interview Engine guide you. The AI learns your tone, vocabulary, and style preferences over time." },
+            { q: "Do I need a credit card to start?", a: "No! Start with the Free plan — no credit card required. Upgrade when you need more power." },
+          ].map((faq, i) => (
+            <details key={i} className="glass-card group cursor-pointer">
+              <summary className="flex items-center justify-between font-semibold text-white text-sm sm:text-base">{faq.q}<ChevronDown className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" /></summary>
+              <p className="mt-4 text-slate-400 leading-relaxed text-sm sm:text-base">{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
-                <ul className="space-y-3 mb-10">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3">
-                      <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
-                      <span className="text-slate-400 text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link href="/login" className={plan.recommended ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}>
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
+      {/* 底部CTA */}
+      <section className="w-full section-spacing">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)"}}>
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
+            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Use AI Writer. Start free, no credit card required.</p>
+            <Link href="/login" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Start Writing Free <ArrowRight className="ml-2 w-5 h-5" /></Link>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <Testimonials />
-
-      {/* CTA Bottom Banner */}
-      <section className="w-full py-20 md:py-40 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at center, rgba(74,144,226,0.15) 0%, rgba(168,85,247,0.08) 30%, transparent 70%)" }} />
-
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <div className="glass-card p-12 md:p-16">
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold mb-6">Ready to experience the future of writing?</h2>
-            <p className="text-slate-400 mb-10 text-lg">Join thousands of writers already creating better content.</p>
-            <Link href="/login" className="btn-primary text-lg px-16 py-5 inline-block">
-              Start Writing Free
-            </Link>
+      {/* Footer */}
+      <footer className="w-full border-t border-white/5 py-10 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            <Logo size={24} />
+            <p className="text-sm text-slate-500">© 2026 Use AI Writer. All rights reserved.</p>
           </div>
-        </div>
-      </section>
-
-      <footer className="w-full py-12 border-t border-glass-border">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-sm text-slate-500">© 2026 Use AI Writer.</p>
+          <div className="flex items-center gap-4 sm:gap-6 text-sm text-slate-400">
+            <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
+            <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+            <a href="https://useaitools.me" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Use AI Tools</a>
+            <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Free</Link>
+          </div>
         </div>
       </footer>
     </main>
