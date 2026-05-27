@@ -1,10 +1,11 @@
 "use client";
 
-import { Check, PenTool, Zap, Brain, FileText, Sparkles } from "lucide-react";
+import { Check, PenTool, Zap, Brain, FileText, Sparkles, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { plans } from "@/lib/pricing";
 import { Testimonials } from "./components/Testimonials";
+import Logo from './components/Logo';
 
 const bentoFeatures = [
   {
@@ -46,6 +47,7 @@ const loadingTexts = [
 
 export default function LandingPage() {
   const [loadingTextIndex, setLoadingTextIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,8 +58,63 @@ export default function LandingPage() {
 
   return (
     <main className="flex flex-col items-center w-full">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-glass-border">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 text-white font-display text-lg">
+            <Logo size={32} />
+            <span className="hidden sm:inline">Use AI Writer</span>
+          </Link>
+          
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
+            <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
+            <Link href="/login" className="btn-primary">Sign In</Link>
+          </nav>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            className="md:hidden text-white p-2"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-glass-border">
+            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
+              <Link 
+                href="/write" 
+                onClick={() => setMobileMenuOpen(false)} 
+                className="text-slate-300 hover:text-white transition-colors py-2"
+              >
+                Write
+              </Link>
+              <Link 
+                href="/pricing" 
+                onClick={() => setMobileMenuOpen(false)} 
+                className="text-slate-300 hover:text-white transition-colors py-2"
+              >
+                Pricing
+              </Link>
+              <Link 
+                href="/login" 
+                onClick={() => setMobileMenuOpen(false)} 
+                className="btn-primary text-center"
+              >
+                Sign In
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+      
       {/* Hero Section */}
-      <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden">
+      <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         {/* Abstract flowing light band */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-40 bg-gradient-to-r from-transparent via-[#4A90E2]/15 to-transparent blur-3xl animate-pulse" />

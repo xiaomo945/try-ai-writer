@@ -1,6 +1,6 @@
 # Product Hunt Launch: Use AI Writer
 
-Launch Date: May 26, 2026
+Launch Date: June 3, 2026
 
 ## Quick Links
 
@@ -51,7 +51,7 @@ Launch Date: May 26, 2026
 
 ## Post-Launch Follow-Up
 
-### Day 2 (27 May 2026)
+### Day 2 (June 4, 2026)
 - Send thank-you email to everyone who supported
 - Share post-launch stats on social
 - Analyze PH comments and product feedback
