@@ -23,6 +23,7 @@ import { ModelSwitcher } from '@/app/components/ModelSwitcher';
 import { MemorySearchPanel } from '@/app/components/MemorySearchPanel';
 import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
+import { WritingExamples } from '@/app/components/WritingExamples';
 import { useAvatarVariant } from '@/lib/avatar-variant';
 import Logo from '@/app/components/Logo';
 
@@ -234,7 +235,7 @@ function HistorySearchModal({
 }
 
 export default function WriteEditor() {
-  const { used, limit, canGenerate, increment } = useUsage();
+  const { used, limit, canGenerate, increment, selectedModel, isProUser } = useUsage();
   const { records, addRecord } = useHistory();
   const { profile } = useBrandVoice();
   const { memories, addMemory, getRelevantMemories } = useMemoryBank();
@@ -285,6 +286,9 @@ export default function WriteEditor() {
 
   // Noise input state
   const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
+  const [comparisonResult, setComparisonResult] = useState<string | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [currentResultModel, setCurrentResultModel] = useState<"claude" | "deepseek">("deepseek");
 
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
@@ -353,12 +357,13 @@ export default function WriteEditor() {
     setConsistencyWarnings(consistency.warnings);
   }, [records]);
 
-  const handleGenerate = useCallback(async (enhancedPrompt?: string, relevantMemories?: string[]) => {
+  const handleGenerate = useCallback(async (enhancedPrompt?: string, relevantMemories?: string[], useModel?: "claude" | "deepseek", isComparison?: boolean) => {
     const promptToUse = enhancedPrompt || prompt;
     if (!promptToUse.trim()) return;
     if (!canGenerate) return;
 
-    const allowed = increment();
+    const modelToUse = useModel || selectedModel;
+    const allowed = increment(modelToUse);
     if (!allowed) {
       setError("Daily limit reached");
       setState("error");
@@ -401,39 +406,47 @@ export default function WriteEditor() {
         done = streamDone;
         if (value) {
           accumulated += decoder.decode(value, { stream: !done });
-          setResult(accumulated);
+          if (isComparison) {
+            setComparisonResult(accumulated);
+          } else {
+            setResult(accumulated);
+          }
         }
       }
       setState("done");
       setViewState("result");
 
-      addRecord({
-        title: prompt.length > 50 ? `${prompt.slice(0, 50)}...` : prompt,
-        mode,
-        result: accumulated,
-      });
+      setCurrentResultModel((useModel || selectedModel) as "deepseek" | "claude");
 
-      // Save user's initial prompt to memory
-      addMemory(prompt, 'idea');
-      // Also save any interview answers if available
-      if (interviewAnswers.length > 0) {
-        interviewAnswers.forEach(answer => {
-          if (answer.trim()) {
-            addMemory(answer, 'preference');
-          }
+      if (!isComparison) {
+        addRecord({
+          title: prompt.length > 50 ? `${prompt.slice(0, 50)}...` : prompt,
+          mode,
+          result: accumulated,
         });
+
+        // Save user's initial prompt to memory
+        addMemory(prompt, 'idea');
+        // Also save any interview answers if available
+        if (interviewAnswers.length > 0) {
+          interviewAnswers.forEach(answer => {
+            if (answer.trim()) {
+              addMemory(answer, 'preference');
+            }
+          });
+        }
+
+        setSavedToast(true);
+        setTimeout(() => setSavedToast(false), 2000);
+
+        calculateStyleScore(accumulated);
       }
-
-      setSavedToast(true);
-      setTimeout(() => setSavedToast(false), 2000);
-
-      calculateStyleScore(accumulated);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);
       setState("error");
     }
-  }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore]);
+  }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore, selectedModel]);
 
   const handleGenerateClick = useCallback(() => {
     // Check for noise input first
@@ -869,6 +882,16 @@ export default function WriteEditor() {
                 memories={memories}
                 onSelectMemory={handleSelectMemory}
               />
+              
+              {!prompt && !result && (
+                <div className="mb-4">
+                  <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-3">
+                    💡 写作示例
+                  </h3>
+                  <WritingExamples onSelectExample={setPrompt} />
+                </div>
+              )}
+              
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -1083,6 +1106,19 @@ export default function WriteEditor() {
                       <Undo2 className="w-4 h-4" /> Undo
                     </button>
                   )}
+                  <button
+                    onClick={() => {
+                      if (!isProUser) {
+                        setShowUpgradeModal(true);
+                      } else {
+                        const otherModel = currentResultModel === "deepseek" ? "claude" : "deepseek";
+                        handleGenerate(undefined, undefined, otherModel, true);
+                      }
+                    }}
+                    className="flex items-center gap-1 px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                  >
+                    🔄 用{currentResultModel === "deepseek" ? "Claude" : "DeepSeek"}再生成
+                  </button>
                 </div>
                 <div className="flex items-center gap-2">
                   {getEditSuggestions(result, profile).map((suggestion) => {
@@ -1147,19 +1183,66 @@ export default function WriteEditor() {
             />
           )}
           {(result || state === "loading" || viewState === "generating") && (
-            <div
-              ref={resultRef}
-              className="flex-1 rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none"
-            >
-              {result ? (
-                <div className="whitespace-pre-wrap">{result}</div>
-              ) : (
-                <Skeleton variant="paragraph" />
-              )}
-            </div>
+            comparisonResult ? (
+              <div className="flex-1 grid lg:grid-cols-2 gap-6">
+                {/* Original Result */}
+                <div className="rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none">
+                  <div className="mb-4 font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                    {currentResultModel === "deepseek" ? "DeepSeek" : "Claude"}
+                  </div>
+                  <div className="whitespace-pre-wrap">{result}</div>
+                </div>
+                {/* Comparison Result */}
+                <div className="rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none">
+                  <div className="mb-4 font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-blue-500" />
+                    {currentResultModel === "deepseek" ? "Claude" : "DeepSeek"}
+                  </div>
+                  <div className="whitespace-pre-wrap">{comparisonResult}</div>
+                </div>
+              </div>
+            ) : (
+              <div
+                ref={resultRef}
+                className="flex-1 rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none"
+              >
+                {result ? (
+                  <div className="whitespace-pre-wrap">{result}</div>
+                ) : (
+                  <Skeleton variant="paragraph" />
+                )}
+              </div>
+            )
           )}
         </section>
       </div>
+      
+      {showUpgradeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-950 rounded-2xl p-8 max-w-md w-full mx-4 border border-slate-200 dark:border-gray-800 shadow-2xl">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white mb-2">
+                Upgrade to Pro
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400">
+                Claude provides higher quality writing! Upgrade to Pro to use it.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Link href="/pricing" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
+                🚀 Upgrade to Pro
+              </Link>
+              <button
+                onClick={() => setShowUpgradeModal(false)}
+                className="btn-outline text-center min-h-[44px] flex items-center justify-center"
+              >
+                Not Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

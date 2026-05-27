@@ -7,11 +7,13 @@ import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { useMemoryBank } from "@/lib/memory-bank";
+import { useCredits } from "@/lib/credits";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
 import { getWeeklyInsights } from "@/lib/weekly-insights";
 import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
+import { ReferralShare } from "@/app/components/ReferralShare";
 import Logo from "@/app/components/Logo";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
@@ -366,6 +368,7 @@ export default function DashboardPage() {
     selectedModel, 
     isProUser 
   } = useUsage();
+  const { balance } = useCredits();
   const { hasProfile, isLoaded } = useBrandVoice();
   const { memories, deleteMemory } = useMemoryBank();
   const [expanded, setExpanded] = useState(false);
@@ -564,7 +567,7 @@ export default function DashboardPage() {
         )}
 
         {/* Stats Grid */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Daily Usage */}
           <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
             <div className="flex items-center gap-3 mb-4">
@@ -624,6 +627,25 @@ export default function DashboardPage() {
             </div>
             <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white">{avgWords}</p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
+          </div>
+
+          {/* Credit Balance */}
+          <div className="card bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-purple-200 dark:border-purple-800">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+                💎
+              </div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">Credit Balance</h3>
+            </div>
+            <p className="text-3xl font-display font-bold text-purple-600 dark:text-purple-400 mb-2">
+              {balance}
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+              Credits remaining
+            </p>
+            <Link href="/pricing/credits" className="btn-primary text-sm text-center block min-h-[44px] flex items-center justify-center">
+              🛒 Buy Credits
+            </Link>
           </div>
         </div>
 
