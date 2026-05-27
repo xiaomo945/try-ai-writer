@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Use AI Writer — Affordable AI Writing Plans</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #080c14; color: #e2e8f0; min-height: 100vh; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 800; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(8, 12, 20, 0.8); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: white; }
+        .btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; border-radius: 16px; font-weight: 600; color: white; text-decoration: none; background: linear-gradient(135deg, #5b9cf5, #9b6dff); box-shadow: 0 4px 24px rgba(91, 156, 245, 0.3); transition: all 0.3s; min-height: 48px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(155, 109, 255, 0.45); }
+        .btn-outline { display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; border-radius: 16px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); color: #e2e8f0; background: rgba(255,255,255,0.02); transition: all 0.3s; min-height: 48px; }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+        .glass-card { position: relative; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); padding: 24px 32px; background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); transition: all 0.4s; }
+        .glass-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.16); box-shadow: 0 20px 48px rgba(0,0,0,0.5); transform: translateY(-3px); }
+        .content { padding-top: 128px; max-width: 1280px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+        .hero { text-align: center; margin-bottom: 64px; }
+        .hero h1 { font-size: 48px; margin-bottom: 16px; }
+        .hero h1 span { background: linear-gradient(135deg, #5b9cf5, #9b6dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { color: #94a3b8; font-size: 18px; max-width: 540px; margin: 0 auto; line-height: 1.6; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 80px; }
+        .pricing-grid .glass-card.popular { border-color: rgba(155,109,255,0.25); box-shadow: 0 0 48px rgba(155,109,255,0.1); }
+        .pricing-grid .popular-badge { position: absolute; top: -12px; right: 24px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); color: white; padding: 6px 12px; border-radius: 9999px; font-size: 12px; font-weight: 700; }
+        .pricing-grid h3 { font-size: 20px; margin-bottom: 8px; }
+        .pricing-grid .price { font-size: 40px; font-weight: 800; margin-bottom: 24px; }
+        .pricing-grid .price span { font-size: 16px; font-weight: 400; color: #94a3b8; }
+        .pricing-grid ul { list-style: none; margin-bottom: 32px; }
+        .pricing-grid ul li { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: #cbd5e1; }
+        .pricing-grid ul li::before { content: '✓'; color: #5b9cf5; }
+        .pricing-grid .btn-primary, .pricing-grid .btn-outline { width: 100%; }
+        footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 24px; }
+        .footer-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: white; }
+        @media (max-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 32px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); border-radius: 8px;"></div>
+                <span style="font-family: 'Playfair Display', serif; font-weight: 800; font-size: 18px;">Use AI<span style="color: #5b9cf5;">Writer</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="write.html">Write</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="index.html">Home</a>
+                <a href="login.html" class="btn-primary" style="padding: 8px 20px; min-height: 40px; font-size: 14px;">Start Writing</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="hero">
+            <h1>Simple, <span>Transparent</span> Pricing</h1>
+            <p>Start free, upgrade when you need more. No hidden fees.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h3>Free</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For casual writers</p>
+                <div class="price">$0<span>/mo</span></div>
+                <ul>
+                    <li>10 generations/day</li>
+                    <li>DeepSeek model</li>
+                    <li>Basic brand voice</li>
+                </ul>
+                <a href="login.html" class="btn-outline">Get Started</a>
+            </div>
+            <div class="glass-card popular" style="display: flex; flex-direction: column;">
+                <span class="popular-badge">Most Popular</span>
+                <h3>Pro</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For serious creators</p>
+                <div class="price">$9<span>/mo</span></div>
+                <ul>
+                    <li>100 generations/day</li>
+                    <li>Claude + DeepSeek</li>
+                    <li>Full brand voice</li>
+                    <li>Document upload</li>
+                </ul>
+                <a href="login.html" class="btn-primary">Start Pro</a>
+            </div>
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h3>Max</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For power users</p>
+                <div class="price">$25<span>/mo</span></div>
+                <ul>
+                    <li>Unlimited generations</li>
+                    <li>Claude + DeepSeek</li>
+                    <li>Advanced brand voice</li>
+                    <li>Document + image upload</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="login.html" class="btn-primary">Start Max</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); border-radius: 4px;"></div>
+                <span style="color: #64748b; font-size: 14px;">© 2026 Use AI Writer. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="pricing.html">Pricing</a>
+                <a href="index.html">Home</a>
+                <a href="login.html">Start Free</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

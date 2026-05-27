@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use AI Writer — Claude-Powered AI Writing Tool</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080c14;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(8, 12, 20, 0.8);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: white;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(135deg, #5b9cf5, #9b6dff);
+            box-shadow: 0 4px 24px rgba(91, 156, 245, 0.3);
+            transition: all 0.3s;
+            min-height: 48px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(155, 109, 255, 0.45);
+        }
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s;
+            min-height: 48px;
+        }
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+        }
+        .glass-card {
+            position: relative;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 80px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #5b9cf5, #9b6dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #94a3b8;
+            max-width: 540px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+        }
+        .features {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        .features h2 span {
+            background: linear-gradient(135deg, #5b9cf5, #9b6dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .features p.subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 48px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .features-grid .glass-card.blue {
+            box-shadow: 0 0 32px rgba(91,156,245,0.06);
+        }
+        .features-grid .glass-card.purple {
+            box-shadow: 0 0 32px rgba(155,109,255,0.06);
+        }
+        .features-grid .glass-card.emerald {
+            box-shadow: 0 0 32px rgba(16,185,129,0.06);
+        }
+        .features-grid h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .features-grid p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        .features-grid .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .features-grid .icon.blue { background: rgba(91,156,245,0.1); }
+        .features-grid .icon.purple { background: rgba(155,109,255,0.1); }
+        .features-grid .icon.emerald { background: rgba(16,185,129,0.1); }
+        .pricing {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .pricing h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        .pricing h2 span {
+            background: linear-gradient(135deg, #5b9cf5, #9b6dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pricing p.subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 48px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .pricing-grid .glass-card.popular {
+            border-color: rgba(155,109,255,0.25);
+            box-shadow: 0 0 48px rgba(155,109,255,0.1);
+        }
+        .pricing-grid .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: linear-gradient(135deg, #5b9cf5, #9b6dff);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .pricing-grid h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .pricing-grid .price {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+        .pricing-grid .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #94a3b8;
+        }
+        .pricing-grid ul {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+        .pricing-grid ul li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+        .pricing-grid ul li::before {
+            content: '✓';
+            color: #5b9cf5;
+        }
+        .pricing-grid .btn-primary, .pricing-grid .btn-outline {
+            width: 100%;
+        }
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .faq h2 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .faq details {
+            margin-bottom: 16px;
+        }
+        .faq summary {
+            cursor: pointer;
+            padding: 20px 0;
+            font-weight: 600;
+        }
+        .faq p {
+            color: #94a3b8;
+            line-height: 1.6;
+            padding-bottom: 20px;
+        }
+        .cta {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .cta .glass-card {
+            text-align: center;
+            padding: 64px;
+            background: radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent);
+        }
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+        .cta p {
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 24px;
+        }
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .hero-btns { flex-direction: column; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); border-radius: 8px;"></div>
+                <span style="font-family: 'Playfair Display', serif; font-weight: 800; font-size: 18px;">Use AI<span style="color: #5b9cf5;">Writer</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="write.html">Write</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="#">Blog</a>
+                <a href="login.html" class="btn-primary" style="padding: 8px 20px; min-height: 40px; font-size: 14px;">Start Writing</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Your Thoughts,<br><span>Amplified.</span></h1>
+        <p>Write blog posts, emails, and social media content 3x faster. Claude-powered AI writer that learns your brand voice. Start free — no credit card required.</p>
+        <div class="hero-btns">
+            <a href="login.html" class="btn-primary">Start Writing Free</a>
+            <a href="pricing.html" class="btn-outline">See Pricing</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Everything you need to <span>write better.</span></h2>
+        <p class="subtitle">Powerful features packed in a minimalist interface. No clutter, just results.</p>
+        <div class="features-grid">
+            <div class="glass-card blue" style="grid-column: span 2;">
+                <div class="icon blue">⚡</div>
+                <h3>Generate in 30 Seconds</h3>
+                <p>From prompt to polished draft faster than brewing coffee. Claude-powered quality, DeepSeek speed.</p>
+                <div style="margin-top: 24px; display: flex; align-items: center; gap: 16px;">
+                    <span style="font-size: 40px; font-family: 'Playfair Display', serif; font-weight: 800; color: #5b9cf5;">30s</span>
+                    <span style="color: #64748b;">average time<br>to first draft</span>
+                </div>
+            </div>
+            <div class="glass-card purple">
+                <div class="icon purple">🧠</div>
+                <h3>Brand Voice Learning</h3>
+                <p>Remembers your tone, style, and phrases. Writes like you, not a robot.</p>
+            </div>
+            <div class="glass-card emerald">
+                <div class="icon emerald">🛡️</div>
+                <h3>100% Private</h3>
+                <p>Your data is never used for training or sold. Enterprise-grade privacy.</p>
+            </div>
+            <div class="glass-card blue" style="grid-column: span 2;">
+                <div class="icon blue">✨</div>
+                <h3>Creative Interview Engine</h3>
+                <p>Tell your digital twin what you want — it asks the right questions, then assembles the perfect prompt for you.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <h2>Simple, <span>Transparent</span> Pricing</h2>
+        <p class="subtitle">Start free, upgrade when you need more. No hidden fees.</p>
+        <div class="pricing-grid">
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h3>Free</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For casual writers</p>
+                <div class="price">$0<span>/mo</span></div>
+                <ul>
+                    <li>10 generations/day</li>
+                    <li>DeepSeek model</li>
+                    <li>Basic brand voice</li>
+                </ul>
+                <a href="login.html" class="btn-outline">Get Started</a>
+            </div>
+            <div class="glass-card purple popular" style="display: flex; flex-direction: column;">
+                <span class="popular-badge">Most Popular</span>
+                <h3>Pro</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For serious creators</p>
+                <div class="price">$9<span>/mo</span></div>
+                <ul>
+                    <li>100 generations/day</li>
+                    <li>Claude + DeepSeek</li>
+                    <li>Full brand voice</li>
+                    <li>Document upload</li>
+                </ul>
+                <a href="login.html" class="btn-primary">Start Pro</a>
+            </div>
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h3>Max</h3>
+                <p style="color: #94a3b8; margin-bottom: 24px;">For power users</p>
+                <div class="price">$25<span>/mo</span></div>
+                <ul>
+                    <li>Unlimited generations</li>
+                    <li>Claude + DeepSeek</li>
+                    <li>Advanced brand voice</li>
+                    <li>Document + image upload</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="login.html" class="btn-primary">Start Max</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div>
+            <details class="glass-card">
+                <summary>What's the difference between DeepSeek and Claude?</summary>
+                <p>DeepSeek is fast and affordable (great for drafts). Claude Sonnet 4.6 delivers premium writing quality (Pro/Max plans). You can switch anytime.</p>
+            </details>
+            <details class="glass-card">
+                <summary>Can I cancel anytime?</summary>
+                <p>Absolutely. No contracts, no cancellation fees. You can cancel or change your plan at any time.</p>
+            </details>
+            <details class="glass-card">
+                <summary>Is my data used to train AI?</summary>
+                <p>Never. Your content and brand voice data are 100% private. We do not use your data for model training.</p>
+            </details>
+            <details class="glass-card">
+                <summary>How does brand voice learning work?</summary>
+                <p>Upload a writing sample or let our Creative Interview Engine guide you. The AI learns your tone, vocabulary, and style preferences over time.</p>
+            </details>
+            <details class="glass-card">
+                <summary>Do I need a credit card to start?</summary>
+                <p>No! Start with the Free plan — no credit card required. Upgrade when you need more power.</p>
+            </details>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="glass-card">
+            <div style="font-size: 40px; margin-bottom: 24px;">✨</div>
+            <h2>Ready to write 3x faster?</h2>
+            <p>Join creators already using Use AI Writer. Start free, no credit card required.</p>
+            <a href="login.html" class="btn-primary" style="padding: 20px 40px; font-size: 18px;">Start Writing Free</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); border-radius: 4px;"></div>
+                <span style="color: #64748b; font-size: 14px;">© 2026 Use AI Writer. All rights reserved.</span>
+            </div>
+            <div class="footer-links">
+                <a href="pricing.html">Pricing</a>
+                <a href="#">Blog</a>
+                <a href="login.html">Start Free</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

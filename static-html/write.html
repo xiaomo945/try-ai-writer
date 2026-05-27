@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write | Use AI Writer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #080c14; color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 800; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(8, 12, 20, 0.8); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: white; }
+        .btn-primary { display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; border-radius: 16px; font-weight: 600; color: white; text-decoration: none; background: linear-gradient(135deg, #5b9cf5, #9b6dff); box-shadow: 0 4px 24px rgba(91, 156, 245, 0.3); transition: all 0.3s; min-height: 48px; border: none; cursor: pointer; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(155, 109, 255, 0.45); }
+        .btn-outline { display: inline-flex; align-items: center; justify-content: center; padding: 12px 20px; border-radius: 12px; font-weight: 500; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); color: #e2e8f0; background: rgba(255,255,255,0.02); transition: all 0.3s; min-height: 44px; }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+        .glass-card { position: relative; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); padding: 20px; background: rgba(255,255,255,0.03); backdrop-filter: blur(24px); }
+        .container { flex: 1; display: grid; grid-template-columns: 40% 60%; gap: 0; padding-top: 64px; }
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; grid-template-rows: 50% 50%; }
+        }
+        .panel-left, .panel-right { display: flex; flex-direction: column; padding: 24px; }
+        .panel-left { border-right: 1px solid rgba(255,255,255,0.05); background: rgba(8,12,20,0.95); }
+        .panel-right { background: rgba(226,232,240,0.02); }
+        .mode-selector { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .mode-selector button { padding: 10px 16px; border-radius: 10px; border: none; background: rgba(255,255,255,0.06); color: #94a3b8; cursor: pointer; transition: all 0.3s; font-weight: 500; }
+        .mode-selector button.active { background: linear-gradient(135deg, #5b9cf5, #9b6dff); color: white; }
+        textarea { flex: 1; width: 100%; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; background: rgba(255,255,255,0.02); color: white; font-size: 16px; line-height: 1.6; outline: none; resize: none; margin-bottom: 16px; font-family: 'Inter', sans-serif; }
+        .result { flex: 1; overflow-y: auto; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.08); font-size: 16px; line-height: 1.8; color: #e2e8f0; }
+        .result h1, .result h2, .result h3 { margin-top: 24px; margin-bottom: 12px; }
+        .actions { display: flex; gap: 12px; justify-content: space-between; align-items: center; }
+        .actions-right { display: flex; gap: 8px; }
+        footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 24px; text-align: center; color: #64748b; font-size: 14px; }
+        .nav-links { display: none; }
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: white;">
+                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #5b9cf5, #9b6dff); border-radius: 8px;"></div>
+                <span style="font-family: 'Playfair Display', serif; font-weight: 800; font-size: 18px;">Use AI<span style="color: #5b9cf5;">Writer</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="write.html">Write</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="index.html">Home</a>
+                <a href="login.html" class="btn-primary" style="padding: 8px 20px; min-height: 40px; font-size: 14px;">Sign in</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="panel-left">
+            <div class="mode-selector">
+                <button class="active">Blog Post</button>
+                <button>Email</button>
+                <button>Social</button>
+                <button>Custom</button>
+            </div>
+            <textarea placeholder="Describe what you want to write..."></textarea>
+            <div class="actions">
+                <button class="btn-outline">📎 Upload</button>
+                <button class="btn-primary" style="flex: 1;">⚡ Generate</button>
+            </div>
+        </div>
+        <div class="panel-right">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="font-size: 20px;">Your Result</h3>
+                <div class="actions-right">
+                    <button class="btn-outline" style="padding: 8px 16px; font-size: 14px;">📋 Copy</button>
+                    <button class="btn-outline" style="padding: 8px 16px; font-size: 14px;">⬇️ Download</button>
+                </div>
+            </div>
+            <div class="result">
+                <h1>Getting Started with AI Writing</h1>
+                <p>AI writing tools are transforming how we create content. From blog posts to emails, these tools help us write faster, clearer, and more creatively.</p>
+                <h2>Why Use AI for Writing?</h2>
+                <p>There are many benefits:</p>
+                <ul>
+                    <li>Speed: Generate drafts in seconds</li>
+                    <li>Consistency: Maintain your brand voice</li>
+                    <li>Creativity: Overcome writer's block</li>
+                </ul>
+                <p>With the right tool, anyone can produce high-quality content that sounds authentic and engaging.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Use AI Writer. All rights reserved.
+    </footer>
+</body>
+</html>
