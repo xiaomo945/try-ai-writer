@@ -19,8 +19,12 @@ export default function LandingPage() {
 
   return (
     <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
-      {/* Launch Countdown Banner */}
-      {countdownVisible && (
+      {/* Debug Banner */}
+      <div style={{background: "red", color: "white", textAlign: "center", padding: "12px", fontWeight: "bold", fontSize: "16px"}}>
+        NEW VERSION DEPLOYED — Commit: FORCE-OVERRIDE-2026
+      </div>
+      {/* Launch Countdown Banner (disabled) */}
+      {false && countdownVisible && (
         <div className="w-full bg-emerald-600 text-white py-3 px-4 flex items-center justify-center gap-3 relative z-50">
           <span className="text-sm sm:text-base font-medium">
             🚀 Launching on Product Hunt in <span className="font-bold text-lg">{daysLeft}</span> days!
