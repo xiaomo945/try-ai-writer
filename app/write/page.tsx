@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash, Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Undo2, PenLine } from "lucide-react";
+import { Zap, Copy, Download, Trash2, Loader2, Check, Info, X, Search, Sparkles, MessageSquare, Wand2, Lightbulb, Upload, Trash, Scissors, Plus, Briefcase, MessageCircle, CheckCircle2, Undo2, PenLine, History } from "lucide-react";
 import Link from "next/link";
 import { useUsage, isNoiseInput } from "@/lib/usage";
 import { useHistory } from "@/lib/history";
@@ -20,6 +20,8 @@ import { EmptyState } from "@/app/components/EmptyState";
 import { ErrorState } from "@/app/components/ErrorState";
 import { getEditSuggestions, type EditSuggestion } from "@/lib/edit-suggestions";
 import { ModelSwitcher } from '@/app/components/ModelSwitcher';
+import MemorySearchPanel from "@/app/components/MemorySearchPanel";
+import type { MemoryItem } from "@/lib/memory-bank";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -275,6 +277,9 @@ export default function WriteEditor() {
 
   // Noise input state
   const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
+
+  // Memory search panel state
+  const [showMemoryPanel, setShowMemoryPanel] = useState(false);
 
   // Load Creative Assistant setting from localStorage
   useEffect(() => {
@@ -581,6 +586,12 @@ export default function WriteEditor() {
     setPrompt((prev) => (prev ? `${prev}\n\n${text}` : text));
   }, []);
 
+  const handleSelectMemory = useCallback((memory: MemoryItem) => {
+    const keywords = memory.keywords.length > 0 ? memory.keywords.slice(0, 3).join(', ') : 'this';
+    const formattedText = `Based on my previous thoughts about ${keywords}: ${memory.content}`;
+    setPrompt((prev) => (prev ? `${prev}\n\n${formattedText}` : formattedText));
+  }, []);
+
   const handleFileUploadClick = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
@@ -638,6 +649,13 @@ export default function WriteEditor() {
         onClose={() => setShowHistoryModal(false)}
         records={records}
         onSelect={handleQuoteFromHistory}
+      />
+
+      <MemorySearchPanel
+        isOpen={showMemoryPanel}
+        onClose={() => setShowMemoryPanel(false)}
+        memories={memories}
+        onSelectMemory={handleSelectMemory}
       />
 
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
@@ -777,7 +795,8 @@ export default function WriteEditor() {
                             <span className="text-emerald-600 font-bold">🧠</span>
                           </div>
                           <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
-                            <p className="text-slate-900 dark:text-white">{question}</p>
+                            <p className="text-slate-500 dark:text-slate-400 text-xs mb-2">{question.transition}</p>
+                            <p className="text-slate-900 dark:text-white">{question.question}</p>
                           </div>
                         </div>
                         <textarea
@@ -907,13 +926,28 @@ export default function WriteEditor() {
                 </div>
               )}
 
-              <button
-                onClick={() => setShowHistoryModal(true)}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors"
-              >
-                <MessageSquare className="w-4 h-4" />
-                Quote from History
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowHistoryModal(true)}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Quote from History
+                </button>
+                <button
+                  onClick={() => setShowMemoryPanel(true)}
+                  disabled={memories.length === 0}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
+                    memories.length > 0
+                      ? 'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300'
+                      : 'bg-slate-100 dark:bg-gray-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
+                  }`}
+                  title={memories.length === 0 ? 'Chat with your twin to build your memory bank' : undefined}
+                >
+                  <History className="w-4 h-4" />
+                  💾 My Memories ({memories.length})
+                </button>
+              </div>
 
               {!canGenerate && state !== "loading" && (
                 <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4 space-y-3">

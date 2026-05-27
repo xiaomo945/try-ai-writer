@@ -1,9 +1,10 @@
 import { BrandVoiceProfile } from './brand-voice';
+import type { InterviewQuestion } from './creative-interview';
 
 export function buildEnhancedPrompt(
   originalPrompt: string,
   answers: string[],
-  questions: string[],
+  questions: string[] | InterviewQuestion[],
   mode: string,
   brandProfile?: BrandVoiceProfile
 ): string {
@@ -22,14 +23,14 @@ ${originalPrompt}
 ## Additional Details:
 `;
 
-  // Add question and answer pairs
-  questions.forEach((question, index) => {
+  const questionTexts = questions.map(q => typeof q === 'string' ? q : q.question);
+
+  questionTexts.forEach((question, index) => {
     if (answers[index]?.trim()) {
       prompt += `${question}\n${answers[index]}\n\n`;
     }
   });
 
-  // Add brand voice instructions if available
   if (brandProfile) {
     prompt += "## Brand Voice Guidelines:\n";
     if (brandProfile.industry) {
