@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Use AI Writer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #0f1724; --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.08); --text: #e2e8f0; --text2: #94a3b8; --blue: #6ba3f8; --purple: #a878ff; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 800; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(15,23,36,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; }
+    .nav-links { display: flex; gap: 24px; align-items: center; font-size: 0.9rem; }
+    .nav-links a { color: var(--text2); text-decoration: none; }
+    .nav-links a:hover { color: #fff; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 14px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; min-height: 46px; border: none; cursor: pointer; }
+    .btn-primary { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; box-shadow: 0 4px 20px rgba(107,163,248,0.3); }
+    .btn-primary:hover { box-shadow: 0 8px 36px rgba(168,120,255,0.45); transform: translateY(-1px); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: #e2e8f0; background: transparent; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.04); }
+    .glass { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 36px; backdrop-filter: blur(20px); width: 100%; max-width: 420px; }
+    .container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 120px 24px 40px; }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #cbd5e1; font-size: 0.95rem; }
+    .form-group input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: white; font-size: 1rem; outline: none; transition: border 0.3s; }
+    .form-group input:focus { border-color: rgba(107, 163, 248, 0.5); }
+    .divider { display: flex; align-items: center; margin: 24px 0; color: #64748b; gap: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .footer { text-align: center; padding: 40px 24px; color: var(--text2); font-size: 0.85rem; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Use AI<span style="color:var(--blue)">Writer</span></a>
+    <div class="nav-links">
+      <a href="write.html">Write</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="index.html">Home</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="glass">
+      <h1 style="font-size: 1.8rem; margin-bottom: 8px;">Welcome back</h1>
+      <p style="color: var(--text2); margin-bottom: 28px;">Sign in to continue writing with AI</p>
+      <a href="#" class="btn btn-outline" style="width:100%;gap:10px">
+        <span style="font-size:1.1rem">🔵</span>
+        Continue with Google
+      </a>
+      <div class="divider">or</div>
+      <form>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:4px">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">© 2026 Use AI Writer. All rights reserved. · <a href="pricing.html" style="color:var(--text2)">Pricing</a> · <a href="index.html" style="color:var(--text2)">Home</a></footer>
+</body>
+</html>
