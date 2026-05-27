@@ -25,6 +25,7 @@ import { MemoryRecommendation } from '@/app/components/MemoryRecommendation';
 import { PromptSuggestion } from '@/app/components/PromptSuggestion';
 import { WritingExamples } from '@/app/components/WritingExamples';
 import { OnboardingTooltip } from '@/app/components/OnboardingTooltip';
+import { ThemeToggle } from '@/app/components/ThemeToggle';
 import { useAvatarVariant } from '@/lib/avatar-variant';
 import Logo from '@/app/components/Logo';
 
@@ -762,6 +763,7 @@ export default function WriteEditor() {
             <Link href="/dashboard" className="text-sm text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
               Dashboard
             </Link>
+            <ThemeToggle />
             <div className="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-800" />
           </div>
         </div>

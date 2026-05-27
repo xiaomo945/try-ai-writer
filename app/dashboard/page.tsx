@@ -15,6 +15,7 @@ import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalT
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 import { ReferralShare } from "@/app/components/ReferralShare";
 import Logo from "@/app/components/Logo";
+import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -448,6 +449,7 @@ export default function DashboardPage() {
             <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
               New Generation
             </Link>
+            <ThemeToggle />
             <div className="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-800" />
           </div>
         </div>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
+import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,6 +24,7 @@ export default function LandingPage() {
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
             <Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link>
+            <ThemeToggle />
             <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Writing</Link>
           </div>
           {/* 移动端汉堡菜单 */}
@@ -41,6 +43,9 @@ export default function LandingPage() {
               <Link href="/write" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Write</Link>
               <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
               <Link href="/blog" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              <div className="flex items-center justify-center py-2">
+                <ThemeToggle />
+              </div>
               <Link href="/login" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Start Writing Free</Link>
             </div>
           </div>
