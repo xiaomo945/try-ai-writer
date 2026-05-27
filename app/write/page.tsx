@@ -303,6 +303,21 @@ export default function WriteEditor() {
       setCreativeAssistantEnabled(stored === "true");
     }
   }, []);
+
+  // Avatar typing feedback
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    if (prompt.trim().length > 0) {
+      setAvatarState('listening');
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = setTimeout(() => {
+        setAvatarState('thinking');
+      }, 2000);
+    }
+    return () => {
+      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    };
+  }, [prompt]);
   
   // Keyboard shortcuts
   const promptRef = useRef<HTMLTextAreaElement>(null);
@@ -387,6 +402,7 @@ export default function WriteEditor() {
     setResult("");
     setStyleScore(null);
     setConsistencyWarnings([]);
+    setAvatarState('thinking'); // Set avatar to thinking while generating
 
     try {
       const response = await fetch("/api/generate", {
@@ -426,6 +442,8 @@ export default function WriteEditor() {
       }
       setState("done");
       setViewState("result");
+      setAvatarState('approving'); // Avatar approves when done
+      setTimeout(() => setAvatarState('idle'), 2000);
 
       setCurrentResultModel((useModel || selectedModel) as "deepseek" | "claude");
 
@@ -456,6 +474,7 @@ export default function WriteEditor() {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);
       setState("error");
+      setAvatarState('idle'); // Reset avatar on error
     }
   }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore, selectedModel]);
 
@@ -586,6 +605,8 @@ export default function WriteEditor() {
     if (result) {
       navigator.clipboard.writeText(result).catch(() => {});
       setCopyState("copied");
+      setAvatarState('approving'); // Happy avatar reacts to copy
+      setTimeout(() => setAvatarState('idle'), 2000);
       setTimeout(() => setCopyState("idle"), 2000);
     }
   }, [result]);
@@ -771,8 +792,8 @@ export default function WriteEditor() {
         </div>
       </header>
 
-      <div className="flex-1 grid lg:grid-cols-[40%_60%]">
-        <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+      <div className="flex-1 grid lg:grid-cols-[40%_60%] sm:flex-col sm:h-[calc(100vh-4rem)]">
+        <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 sm:h-1/2 sm:overflow-y-auto">
           <div className="flex flex-wrap gap-2 items-center justify-between">
             <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1">
               {modes.map(({ key, label }) => (
@@ -1188,7 +1209,7 @@ export default function WriteEditor() {
           )}
         </section>
 
-        <section className="p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900">
+        <section className="p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900 sm:h-1/2 sm:overflow-y-auto">
           <div className="flex items-center justify-between">
             <h2 className="font-display font-extrabold text-xl text-slate-900 dark:text-white">
               {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
