@@ -9,6 +9,7 @@ import { Testimonials } from "@/app/components/Testimonials";
 import { UseCases } from "@/app/components/UseCases";
 import { IridescentRibbon } from "@/app/components/IridescentRibbon";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
+import { WaitlistSignup } from "@/app/components/WaitlistSignup";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { LaunchCountdown } from "@/app/components/LaunchCountdown";
 
@@ -263,6 +264,13 @@ export default function LandingPage() {
             </details>
           ))}
         </div>
+      </section>
+
+      {/* Waitlist Signup */}
+      <section className="section-container section-spacing">
+        <ScrollReveal>
+          <WaitlistSignup />
+        </ScrollReveal>
       </section>
 
       {/* 底部CTA */}
