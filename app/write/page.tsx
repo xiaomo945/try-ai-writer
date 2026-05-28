@@ -762,7 +762,7 @@ export default function WriteEditor() {
   }, [result, handleGenerateClick, handleCopy, handleDownload, handleClear]);
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col bg-[#0A0A0C]">
       <HistorySearchModal
         isOpen={showHistoryModal}
         onClose={() => setShowHistoryModal(false)}
@@ -777,27 +777,27 @@ export default function WriteEditor() {
         memories={memories}
       />
 
-      <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+      <header className="border-b border-white/10 bg-[#0A0A0C]">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-emerald-600 font-display text-xl">
             <Logo size={32} />
             Use <span className="font-extrabold">AI Writer</span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-500 dark:text-slate-400">
+            <span className="text-sm text-slate-400">
               {used}/{limit} today
             </span>
-            <Link href="/dashboard" className="text-sm text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition-colors">
+            <Link href="/dashboard" className="text-sm text-slate-400 hover:text-emerald-600 transition-colors">
               Dashboard
             </Link>
             <ThemeToggle />
-            <div className="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-800" />
+            <div className="w-8 h-8 rounded-full bg-emerald-800" />
           </div>
         </div>
       </header>
 
       <div className="flex-1 grid lg:grid-cols-[40%_60%] sm:flex-col sm:h-[calc(100vh-4rem)]">
-        <section className="p-4 sm:p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 sm:h-1/2 sm:overflow-y-auto overflow-y-auto">
+        <section className="p-4 sm:p-6 flex flex-col gap-4 border-r border-white/10 bg-[#0A0A0C] sm:h-1/2 sm:overflow-y-auto overflow-y-auto">
           <div className="flex flex-wrap gap-2 items-center justify-between">
             <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1 -mx-1 px-1 scrollbar-hide">
               {modes.map(({ key, label }) => (
@@ -1236,7 +1236,7 @@ export default function WriteEditor() {
           )}
         </section>
 
-        <section className="p-4 sm:p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900 sm:h-1/2 sm:overflow-y-auto lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)]">
+        <section className="p-4 sm:p-6 flex flex-col gap-4 bg-[#0A0A0C] sm:h-1/2 sm:overflow-y-auto lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)]">
           <div className="flex items-center justify-between">
             <h2 className="font-display font-extrabold text-xl text-slate-900 dark:text-white">
               {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
