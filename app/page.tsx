@@ -77,8 +77,14 @@ export default function LandingPage() {
         )}
       </nav>
 
+      {/* 🔴 视觉验证标记 — 如果你看到这个，说明是最新版本已部署！
+          深色背景 #0A0A0C，玻璃卡片，蓝紫渐变按钮
+      */}
+      <div className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 text-center text-sm font-bold">
+        🎨 新版本已部署！(2026-05-28 视觉更新
+      </div>
       {/* Hero区 — 左右分栏 */}
-      <section className="section-container section-spacing pt-32 md:pt-40">
+      <section className="section-container section-spacing pt-24 md:pt-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="flex flex-col items-start">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{textShadow: "0 0 100px rgba(91,156,245,0.3)"}}>
