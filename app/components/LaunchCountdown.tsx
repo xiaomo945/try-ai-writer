@@ -1,85 +1,111 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Rocket, X } from "lucide-react";
 
 export function LaunchCountdown() {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  })
-  const [isVisible, setIsVisible] = useState(true)
-
-  // Calculate launch date: 7 days from now
-  const getLaunchDate = () => {
-    const now = new Date()
-    const launch = new Date(now)
-    launch.setDate(now.getDate() + 7)
-    return launch
-  }
-
-  const calculateTimeLeft = () => {
-    const difference = getLaunchDate().getTime() - new Date().getTime()
-    
-    if (difference <= 0) {
-      setIsVisible(false)
-      return
-    }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000)
-
-    setTimeLeft({ days, hours, minutes, seconds })
-  }
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
-    calculateTimeLeft()
-    const timer = setInterval(calculateTimeLeft, 1000)
-    return () => clearInterval(timer)
-  }, [])
+    // Check if already dismissed
+    const dismissed = localStorage.getItem("launch-countdown-dismissed");
+    if (dismissed) {
+      setIsDismissed(true);
+      return;
+    }
 
-  if (!isVisible) return null
+    // Set launch date to 7 days from now (or use stored date)
+    const storedDate = localStorage.getItem("launch-countdown-date");
+    let launchDate: Date;
+    
+    if (storedDate) {
+      launchDate = new Date(storedDate);
+    } else {
+      launchDate = new Date();
+      launchDate.setDate(launchDate.getDate() + 7);
+      localStorage.setItem("launch-countdown-date", launchDate.toISOString());
+    }
+
+    const calculateTimeLeft = () => {
+      const difference = launchDate.getTime() - new Date().getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    localStorage.setItem("launch-countdown-dismissed", "true");
+  };
+
+  if (isDismissed || !isVisible) return null;
 
   return (
-    <div className="w-full bg-emerald-600 text-white py-4 px-4">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold">🚀</span>
-          <span className="text-sm md:text-lg font-semibold">Product Hunt Launch in</span>
-        </div>
-
-        <div className="flex items-center gap-2 md:gap-3">
-          <div className="flex flex-col items-center bg-white/20 rounded-lg px-3 py-2 md:px-4 md:py-2">
-            <span className="text-xl md:text-3xl font-bold">{String(timeLeft.days).padStart(2, '0')}</span>
-            <span className="text-xs md:text-sm">Days</span>
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-center gap-4">
+        <Link 
+          href="https://www.producthunt.com" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 text-white hover:text-emerald-100 transition-colors"
+        >
+          <Rocket className="w-5 h-5 animate-bounce" />
+          <span className="font-semibold hidden sm:inline">
+            🚀 Launching on Product Hunt in
+          </span>
+          <span className="font-semibold sm:hidden">
+            🚀 Product Hunt in
+          </span>
+        </Link>
+        
+        <div className="flex items-center gap-2 font-mono text-white font-bold">
+          <div className="bg-white/20 rounded-lg px-3 py-1 min-w-[3rem] text-center">
+            <span className="text-lg sm:text-xl">{timeLeft.days}</span>
+            <span className="text-xs block opacity-80">days</span>
           </div>
-          <span className="text-xl md:text-2xl font-bold">:</span>
-          <div className="flex flex-col items-center bg-white/20 rounded-lg px-3 py-2 md:px-4 md:py-2">
-            <span className="text-xl md:text-3xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</span>
-            <span className="text-xs md:text-sm">Hours</span>
+          <span className="text-xl">:</span>
+          <div className="bg-white/20 rounded-lg px-3 py-1 min-w-[3rem] text-center">
+            <span className="text-lg sm:text-xl">{String(timeLeft.hours).padStart(2, '0')}</span>
+            <span className="text-xs block opacity-80">hrs</span>
           </div>
-          <span className="text-xl md:text-2xl font-bold">:</span>
-          <div className="flex flex-col items-center bg-white/20 rounded-lg px-3 py-2 md:px-4 md:py-2">
-            <span className="text-xl md:text-3xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</span>
-            <span className="text-xs md:text-sm">Minutes</span>
+          <span className="text-xl">:</span>
+          <div className="bg-white/20 rounded-lg px-3 py-1 min-w-[3rem] text-center">
+            <span className="text-lg sm:text-xl">{String(timeLeft.minutes).padStart(2, '0')}</span>
+            <span className="text-xs block opacity-80">min</span>
           </div>
-          <span className="text-xl md:text-2xl font-bold">:</span>
-          <div className="flex flex-col items-center bg-white/20 rounded-lg px-3 py-2 md:px-4 md:py-2">
-            <span className="text-xl md:text-3xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</span>
-            <span className="text-xs md:text-sm">Seconds</span>
+          <span className="text-xl hidden sm:inline">:</span>
+          <div className="bg-white/20 rounded-lg px-3 py-1 min-w-[3rem] text-center hidden sm:block">
+            <span className="text-lg sm:text-xl">{String(timeLeft.seconds).padStart(2, '0')}</span>
+            <span className="text-xs block opacity-80">sec</span>
           </div>
         </div>
 
         <button
-          onClick={() => console.log('Notify me clicked')}
-          className="bg-white text-emerald-700 hover:bg-emerald-50 px-4 py-2 md:px-6 md:py-2 rounded-lg font-semibold text-sm md:text-base transition-colors shadow-md"
+          onClick={handleDismiss}
+          className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+          aria-label="Dismiss countdown"
         >
-          Notify Me
+          <X className="w-5 h-5" />
         </button>
       </div>
     </div>
-  )
+  );
 }

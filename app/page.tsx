@@ -6,39 +6,17 @@ import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { LaunchCountdown } from "@/app/components/LaunchCountdown";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [countdownVisible, setCountdownVisible] = useState(true);
-
-  // Calculate days left until launch (current date +7 days)
-  const launchDate = new Date();
-  launchDate.setDate(launchDate.getDate() + 7);
-  const today = new Date();
-  const daysLeft = Math.max(0, Math.ceil((launchDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)));
 
   return (
     <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
-      {/* Launch Countdown Banner (disabled) */}
-      {false && countdownVisible && (
-        <div className="w-full bg-emerald-600 text-white py-3 px-4 flex items-center justify-center gap-3 relative z-50">
-          <span className="text-sm sm:text-base font-medium">
-            🚀 Launching on Product Hunt in <span className="font-bold text-lg">{daysLeft}</span> days!
-          </span>
-          <a href="https://www.producthunt.com/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold underline hover:text-emerald-100 transition-colors">
-            Join the waitlist →
-          </a>
-          <button
-            onClick={() => setCountdownVisible(false)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-            aria-label="Close countdown"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-      )}
+      <LaunchCountdown />
+      
       {/* 导航栏 */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/5 transition-all duration-300 ${countdownVisible ? 'mt-12' : ''}`}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
