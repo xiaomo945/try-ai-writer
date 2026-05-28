@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-export type AvatarState = 'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing';
+export type AvatarState = 'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing' | 'waiting' | 'error' | 'sorry';
 export type AvatarVariant = 'default' | 'minimal' | 'cute';
 
 interface DigitalTwinAvatarProps {
@@ -13,7 +13,7 @@ interface DigitalTwinAvatarProps {
   variant?: AvatarVariant;
 }
 
-const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow }: {
+const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow, isShaking }: {
   state: AvatarState;
   isBlinking: boolean;
   eyeHeight: number;
@@ -23,12 +23,17 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
   isThinkingAnim: boolean;
   headTilt: number;
   showGlow: boolean;
+  isShaking?: boolean;
 }) => (
-  <svg viewBox="0 0 80 80" className="w-full h-full">
+  <svg viewBox="0 0 80 80" className={`w-full h-full ${isShaking ? 'animate-[shake_0.5s_ease-in-out]' : ''}`}>
     <defs>
       <linearGradient id="defaultGlow" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#5b9cf5" />
         <stop offset="100%" stopColor="#9b6dff" />
+      </linearGradient>
+      <linearGradient id="errorGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#f87171" />
+        <stop offset="100%" stopColor="#ef4444" />
       </linearGradient>
     </defs>
     
@@ -39,7 +44,7 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
         cy="40"
         r="36"
         fill="none"
-        stroke="url(#defaultGlow)"
+        stroke={state === 'error' || state === 'sorry' ? "url(#errorGlow)" : "url(#defaultGlow)"}
         strokeWidth="3"
         opacity="0.3"
         className={
@@ -58,7 +63,7 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
       cy="65"
       rx="20"
       ry="8"
-      fill="url(#defaultGlow)"
+      fill={state === 'error' || state === 'sorry' ? "url(#errorGlow)" : "url(#defaultGlow)"}
       opacity="0.2"
     />
 
@@ -71,14 +76,14 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
         cx="40"
         cy="40"
         r="28"
-        fill="rgba(91, 156, 245, 0.2)"
+        fill={state === 'error' || state === 'sorry' ? "rgba(248, 113, 113, 0.2)" : "rgba(91, 156, 245, 0.2)"}
         stroke="rgba(255, 255, 255, 0.5)"
         strokeWidth="1"
       />
       
       {/* Eyes */}
       <g style={{ transformOrigin: 'center', transform: `scaleY(${isBlinking ? 0.1 : 1})` }}>
-        <circle cx="30" cy="38" r="5" fill="url(#defaultGlow)" />
+        <circle cx="30" cy="38" r="5" fill={state === 'error' || state === 'sorry' ? "url(#errorGlow)" : "url(#defaultGlow)"} />
         <circle cx="30" cy="38" r="3" fill="white" />
         <circle
           cx={30 + pupilOffset.x}
@@ -87,7 +92,7 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
           fill="#1f2937"
         />
         
-        <circle cx="50" cy="38" r="5" fill="url(#defaultGlow)" />
+        <circle cx="50" cy="38" r="5" fill={state === 'error' || state === 'sorry' ? "url(#errorGlow)" : "url(#defaultGlow)"} />
         <circle cx="50" cy="38" r="3" fill="white" />
         <circle
           cx={50 + pupilOffset.x}
@@ -95,12 +100,20 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
           r="1.5"
           fill="#1f2937"
         />
+        
+        {/* Eyebrows for error/sorry state */}
+        {(state === 'error' || state === 'sorry') && (
+          <>
+            <path d="M 24 32 Q 28 30 32 33" stroke="#ef4444" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+            <path d="M 48 33 Q 52 30 56 32" stroke="#ef4444" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+          </>
+        )}
       </g>
 
       {/* Mouth */}
       <path
         d={mouthPath}
-        stroke="url(#defaultGlow)"
+        stroke={state === 'error' || state === 'sorry' ? "url(#errorGlow)" : "url(#defaultGlow)"}
         strokeWidth="2"
         fill="none"
         strokeLinecap="round"
@@ -112,7 +125,7 @@ const AvatarDefault = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
   </svg>
 );
 
-const AvatarMinimal = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow }: {
+const AvatarMinimal = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow, isShaking }: {
   state: AvatarState;
   isBlinking: boolean;
   eyeHeight: number;
@@ -122,12 +135,13 @@ const AvatarMinimal = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
   isThinkingAnim: boolean;
   headTilt: number;
   showGlow: boolean;
+  isShaking?: boolean;
 }) => (
-  <svg viewBox="0 0 80 80" className="w-full h-full">
+  <svg viewBox="0 0 80 80" className={`w-full h-full ${isShaking ? 'animate-[shake_0.5s_ease-in-out]' : ''}`}>
     <defs>
       <linearGradient id="minimalGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#64748b" />
-        <stop offset="100%" stopColor="#475569" />
+        <stop offset="0%" stopColor={state === 'error' || state === 'sorry' ? "#f87171" : "#64748b"} />
+        <stop offset="100%" stopColor={state === 'error' || state === 'sorry' ? "#ef4444" : "#475569"} />
       </linearGradient>
     </defs>
 
@@ -161,20 +175,20 @@ const AvatarMinimal = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
         cy="40"
         r="25"
         fill="white"
-        stroke="#e2e8f0"
+        stroke={state === 'error' || state === 'sorry' ? "#f87171" : "#e2e8f0"}
         strokeWidth="2"
       />
 
       {/* Eyes */}
       <g style={{ transformOrigin: 'center', transform: `scaleY(${isBlinking ? 0.1 : 1})` }}>
-        <circle cx="32" cy="38" r="4" fill="#1e293b" />
-        <circle cx="48" cy="38" r="4" fill="#1e293b" />
+        <circle cx="32" cy="38" r="4" fill={state === 'error' || state === 'sorry' ? "#ef4444" : "#1e293b"} />
+        <circle cx="48" cy="38" r="4" fill={state === 'error' || state === 'sorry' ? "#ef4444" : "#1e293b"} />
       </g>
 
       {/* Mouth */}
       <path
         d={mouthPath}
-        stroke="#334155"
+        stroke={state === 'error' || state === 'sorry' ? "#ef4444" : "#334155"}
         strokeWidth="2"
         fill="none"
         strokeLinecap="round"
@@ -183,7 +197,7 @@ const AvatarMinimal = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, i
   </svg>
 );
 
-const AvatarCute = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow }: {
+const AvatarCute = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNodding, isThinkingAnim, headTilt, showGlow, isShaking }: {
   state: AvatarState;
   isBlinking: boolean;
   eyeHeight: number;
@@ -193,12 +207,13 @@ const AvatarCute = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNo
   isThinkingAnim: boolean;
   headTilt: number;
   showGlow: boolean;
+  isShaking?: boolean;
 }) => (
-  <svg viewBox="0 0 80 80" className="w-full h-full">
+  <svg viewBox="0 0 80 80" className={`w-full h-full ${isShaking ? 'animate-[shake_0.5s_ease-in-out]' : ''}`}>
     <defs>
       <linearGradient id="cuteGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#f472b6" />
-        <stop offset="100%" stopColor="#c084fc" />
+        <stop offset="0%" stopColor={state === 'error' || state === 'sorry' ? "#fda4af" : "#f472b6"} />
+        <stop offset="100%" stopColor={state === 'error' || state === 'sorry' ? "#f87171" : "#c084fc"} />
       </linearGradient>
     </defs>
 
@@ -237,8 +252,8 @@ const AvatarCute = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNo
       />
 
       {/* Cheeks */}
-      <circle cx="22" cy="48" r="4" fill="#fda4af" opacity="0.5" />
-      <circle cx="58" cy="48" r="4" fill="#fda4af" opacity="0.5" />
+      <circle cx="22" cy="48" r="4" fill={state === 'error' || state === 'sorry' ? "#fca5a5" : "#fda4af"} opacity="0.5" />
+      <circle cx="58" cy="48" r="4" fill={state === 'error' || state === 'sorry' ? "#fca5a5" : "#fda4af"} opacity="0.5" />
 
       {/* Eyes */}
       <g style={{ transformOrigin: 'center', transform: `scaleY(${isBlinking ? 0.1 : 1})` }}>
@@ -250,7 +265,7 @@ const AvatarCute = ({ state, isBlinking, eyeHeight, pupilOffset, mouthPath, isNo
 
       {/* Mouth */}
       <path
-        d={state === 'thinking' || state === 'questionAppearing' ? "M 32 48 Q 40 44 48 48" : state === 'approving' || state === 'nodding' ? "M 30 46 Q 40 56 50 46" : "M 32 48 Q 40 54 48 48"}
+        d={state === 'thinking' || state === 'questionAppearing' ? "M 32 48 Q 40 44 48 48" : state === 'approving' || state === 'nodding' ? "M 30 46 Q 40 56 50 46" : state === 'error' || state === 'sorry' ? "M 32 52 Q 40 48 48 52" : "M 32 48 Q 40 54 48 48"}
         stroke="url(#cuteGlow)"
         strokeWidth="3"
         fill="none"
@@ -273,6 +288,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
   const [isNodding, setIsNodding] = useState(false);
   const [isThinkingAnim, setIsThinkingAnim] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const [headTilt, setHeadTilt] = useState(0);
   const [browRaise, setBrowRaise] = useState(false);
   const prevStateRef = useRef<AvatarState>(state);
@@ -320,6 +336,9 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
       } else if (state === 'expecting') {
         setIsThinkingAnim(true);
         setTimeout(() => setIsThinkingAnim(false), 1200);
+      } else if (state === 'error' || state === 'sorry') {
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 500);
       }
     }
     prevStateRef.current = state;
@@ -355,6 +374,11 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
         return "M 30 48 Q 40 56 50 48";
       case 'expecting':
         return "M 32 50 Q 40 56 48 50";
+      case 'error':
+      case 'sorry':
+        return "M 30 52 Q 40 48 50 52";
+      case 'waiting':
+        return "M 32 50 Q 40 52 48 50";
       default:
         return "M 32 50 Q 40 54 48 50";
     }
@@ -366,6 +390,9 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
     }
     if (state === 'thinking' || state === 'questionAppearing') {
       return { x: -0.5, y: 0.5 };
+    }
+    if (state === 'error' || state === 'sorry') {
+      return { x: 0, y: -0.5 };
     }
     return { x: 0, y: 0 };
   };
@@ -382,7 +409,8 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
       isNodding,
       isThinkingAnim,
       headTilt,
-      showGlow
+      showGlow,
+      isShaking,
     };
 
     switch (variant) {
@@ -423,6 +451,11 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
         @keyframes thinking {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-2px); }
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0) rotate(0deg); }
+          25% { transform: translateX(-3px) rotate(-2deg); }
+          75% { transform: translateX(3px) rotate(2deg); }
         }
       `}</style>
 

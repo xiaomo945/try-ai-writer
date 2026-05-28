@@ -15,6 +15,8 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { fileProcessor, ProcessedFile } from "@/lib/file-processor";
 import { DigitalTwinAvatar } from "@/app/components/DigitalTwinAvatar";
 import { TwinIntroBubble } from "@/app/components/TwinIntroBubble";
+import { AIProgressIndicator } from "@/app/components/AIProgressIndicator";
+import { WriteTourGuide } from "@/app/components/WriteTourGuide";
 import { Skeleton } from "@/app/components/Skeleton";
 import { EmptyState } from "@/app/components/EmptyState";
 import { ErrorState } from "@/app/components/ErrorState";
@@ -271,7 +273,7 @@ export default function WriteEditor() {
 
   // Digital twin avatar state
   const { variant } = useAvatarVariant();
-  const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing'>('idle');
+  const [avatarState, setAvatarState] = useState<'idle' | 'thinking' | 'approving' | 'expecting' | 'listening' | 'nodding' | 'questionAppearing' | 'waiting' | 'error' | 'sorry'>('idle');
   const [avatarVisible, setAvatarVisible] = useState(false);
   const [focusedQuestionIndex, setFocusedQuestionIndex] = useState<number | null>(null);
   const [questionsAppeared, setQuestionsAppeared] = useState(false);
@@ -475,7 +477,8 @@ export default function WriteEditor() {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);
       setState("error");
-      setAvatarState('idle'); // Reset avatar on error
+      setAvatarState('sorry'); // Avatar shows sympathy on error
+      setTimeout(() => setAvatarState('idle'), 3000);
     }
   }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore, selectedModel]);
 
@@ -836,6 +839,7 @@ export default function WriteEditor() {
                   }`}
                 />
               </button>
+              <AIProgressIndicator />
             </div>
           </div>
 
@@ -1469,6 +1473,7 @@ export default function WriteEditor() {
       
       {/* Onboarding Tooltip */}
       <OnboardingTooltip />
+      <WriteTourGuide />
       
       {showUpgradeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">

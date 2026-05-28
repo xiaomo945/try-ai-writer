@@ -14,6 +14,7 @@ import { getWeeklyInsights } from "@/lib/weekly-insights";
 import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 import { ReferralShare } from "@/app/components/ReferralShare";
+import { LearningTimeline } from "@/app/components/LearningTimeline";
 import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
@@ -205,7 +206,7 @@ function LearningProgressRing({ progress }: { progress: number }) {
   );
 }
 
-function BrandVoiceCard() {
+function BrandVoiceCard({ records }: { records: Array<{ id: string; title: string; mode: string; result: string; createdAt: string }> }) {
   const { profile, updateProfile } = useBrandVoice();
   const { variant, setVariant } = useAvatarVariant();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -407,6 +408,12 @@ function BrandVoiceCard() {
           </div>
         )}
       </div>
+
+      {records.length > 0 && (
+        <div className="mt-4">
+          <LearningTimeline />
+        </div>
+      )}
     </div>
   );
 }
@@ -937,7 +944,7 @@ export default function DashboardPage() {
             <div className="lg:col-span-1 space-y-6">
               {/* Brand Voice Card */}
               {hasRealData || hasProfile ? (
-                <BrandVoiceCard />
+                <BrandVoiceCard records={records} />
               ) : (
                 demoData && <BrandVoiceDemoCard demoData={demoData} />
               )}
