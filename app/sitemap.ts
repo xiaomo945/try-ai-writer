@@ -281,6 +281,42 @@ const blogPosts = [
   { slug: "ai-writing-for-glossary-pages", title: "AI Writing for Glossary Pages: Define Your Industry Terms", date: "2026-05-28" },
   { slug: "ai-writing-for-testimonials-collection", title: "AI Writing for Testimonial Collection: Templates That Get Responses", date: "2026-05-28" },
   { slug: "ai-writing-for-survey-invitations", title: "AI Writing for Survey Invitations: Boost Response Rates", date: "2026-05-28" },
+  // New batch 1: AI Writing for Specific Professions (8 articles)
+  { slug: "ai-writing-for-recruiters-2026", title: "AI Writing for Recruiters: Job Descriptions, Outreach, and Offer Letters", date: "2026-05-28" },
+  { slug: "ai-writing-for-event-planners", title: "AI Writing for Event Planners: Invitations, Agendas, and Promotions", date: "2026-05-28" },
+  { slug: "ai-writing-for-photographers", title: "AI Writing for Photographers: Portfolio Descriptions and Client Galleries", date: "2026-05-28" },
+  { slug: "ai-writing-for-interior-designers", title: "AI Writing for Interior Designers: Project Descriptions and Client Proposals", date: "2026-05-28" },
+  { slug: "ai-writing-for-architects", title: "AI Writing for Architects: Project Briefs, Proposals, and Design Statements", date: "2026-05-28" },
+  { slug: "ai-writing-for-consultants-2026", title: "AI Writing for Consultants in 2026: Beyond Proposals to Thought Leadership", date: "2026-05-28" },
+  { slug: "ai-writing-for-coaches-2026", title: "AI Writing for Coaches in 2026: Session Notes, Programs, and Client Engagement", date: "2026-05-28" },
+  { slug: "ai-writing-for-therapists-2026", title: "AI Writing for Therapists in 2026: Resources, Marketing, and Practice Growth", date: "2026-05-28" },
+  // New batch 2: AI Writing for SaaS (8 articles)
+  { slug: "ai-writing-for-saas-landing-pages-2026", title: "AI Writing for SaaS Landing Pages 2026: Headlines, Features, and CTAs", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-email-onboarding", title: "AI Writing for SaaS Email Onboarding: Welcome Sequences That Drive Activation", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-product-updates", title: "AI Writing for SaaS Product Updates: Release Notes and Feature Announcements", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-help-center", title: "AI Writing for SaaS Help Centers: Documentation That Reduces Support Tickets", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-case-studies", title: "AI Writing for SaaS Case Studies: Customer Success Stories That Convert", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-blog-content", title: "AI Writing for SaaS Blog Content: Thought Leadership and SEO", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-social-proof", title: "AI Writing for SaaS Social Proof: Testimonials, Reviews, and Trust Signals", date: "2026-05-28" },
+  { slug: "ai-writing-for-saas-pricing-page", title: "AI Writing for SaaS Pricing Pages: Copy That Reduces Friction", date: "2026-05-28" },
+  // New batch 3: AI Writing for Ecommerce (8 articles)
+  { slug: "ai-writing-for-amazon-product-descriptions", title: "AI Writing for Amazon Product Descriptions: Bullet Points That Drive Sales", date: "2026-05-28" },
+  { slug: "ai-writing-for-shopify-collection-pages", title: "AI Writing for Shopify Collection Pages: SEO-Optimized Category Copy", date: "2026-05-28" },
+  { slug: "ai-writing-for-ecommerce-email-marketing", title: "AI Writing for Ecommerce Email Marketing: Cart Recovery and Nurture Sequences", date: "2026-05-28" },
+  { slug: "ai-writing-for-product-review-emails", title: "AI Writing for Product Review Emails: Get More Reviews with Better Copy", date: "2026-05-28" },
+  { slug: "ai-writing-for-seasonal-promotions", title: "AI Writing for Seasonal Promotions: Holiday Campaigns That Convert", date: "2026-05-28" },
+  { slug: "ai-writing-for-product-launch-copy", title: "AI Writing for Product Launch Copy: Pre-Launch Hype to Post-Launch Follow-Up", date: "2026-05-28" },
+  { slug: "ai-writing-for-customer-loyalty-content", title: "AI Writing for Customer Loyalty Content: Retention Emails and VIP Programs", date: "2026-05-28" },
+  { slug: "ai-writing-for-marketplace-seller-guides", title: "AI Writing for Marketplace Seller Guides: Amazon, Etsy, and eBay Optimization", date: "2026-05-28" },
+  // New batch 4: AI Writing for Content Creators (8 articles)
+  { slug: "ai-writing-for-youtube-creators", title: "AI Writing for YouTube Creators: Titles, Descriptions, and Scripts", date: "2026-05-28" },
+  { slug: "ai-writing-for-podcast-creators", title: "AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches", date: "2026-05-28" },
+  { slug: "ai-writing-for-newsletter-creators", title: "AI Writing for Newsletter Creators: Curated Content and Original Analysis", date: "2026-05-28" },
+  { slug: "ai-writing-for-course-creators", title: "AI Writing for Course Creators: Curriculum, Lessons, and Marketing", date: "2026-05-28" },
+  { slug: "ai-writing-for-freelance-writers", title: "AI Writing for Freelance Writers: Scale Your Services and Increase Rates", date: "2026-05-28" },
+  { slug: "ai-writing-for-bloggers-2026", title: "AI Writing for Bloggers in 2026: From First Draft to Published Post", date: "2026-05-28" },
+  { slug: "ai-writing-for-social-media-managers-2026", title: "AI Writing for Social Media Managers in 2026: Multi-Platform Content Strategy", date: "2026-05-28" },
+  { slug: "ai-writing-for-digital-product-creators", title: "AI Writing for Digital Product Creators: Templates, Guides, and Sales Pages", date: "2026-05-28" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
