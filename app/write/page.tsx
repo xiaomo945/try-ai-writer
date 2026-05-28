@@ -291,6 +291,7 @@ export default function WriteEditor() {
   const [noiseMessage, setNoiseMessage] = useState<string | null>(null);
   const [comparisonResult, setComparisonResult] = useState<string | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [upgradeModalReason, setUpgradeModalReason] = useState<'file-upload' | 'model-switch' | 'general'>('general');
   const [currentResultModel, setCurrentResultModel] = useState<"claude" | "deepseek">("deepseek");
   const [modelSwitchToast, setModelSwitchToast] = useState<string | null>(null);
 
@@ -793,9 +794,9 @@ export default function WriteEditor() {
       </header>
 
       <div className="flex-1 grid lg:grid-cols-[40%_60%] sm:flex-col sm:h-[calc(100vh-4rem)]">
-        <section className="p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 sm:h-1/2 sm:overflow-y-auto">
+        <section className="p-4 sm:p-6 flex flex-col gap-4 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 sm:h-1/2 sm:overflow-y-auto overflow-y-auto">
           <div className="flex flex-wrap gap-2 items-center justify-between">
-            <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1">
+            <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1 -mx-1 px-1 scrollbar-hide">
               {modes.map(({ key, label }) => (
                 <button
                   key={key}
@@ -887,19 +888,19 @@ export default function WriteEditor() {
                   )}
                 </div>
 
-                <div className="flex-1 flex flex-col gap-4">
+                <div className="flex-1 flex flex-col gap-3 sm:gap-4">
                   {/* Digital Twin Greeting Bubble */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                      <span className="text-emerald-600 font-bold">🧠</span>
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <span className="text-emerald-600 font-bold text-sm sm:text-base">🧠</span>
                     </div>
-                    <div className="flex-1 bg-white border border-emerald-200 rounded-2xl rounded-tl-none p-4 shadow-sm">
-                      <p className="text-slate-900 dark:text-white">{interviewResult.greeting}</p>
+                    <div className="flex-1 bg-white border border-emerald-200 rounded-2xl rounded-tl-none p-3 sm:p-4 shadow-sm">
+                      <p className="text-slate-900 dark:text-white text-sm sm:text-base">{interviewResult.greeting}</p>
                     </div>
                   </div>
 
                   {/* Interview Questions */}
-                  <div className="flex-1 overflow-y-auto space-y-4">
+                  <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4">
                     {interviewResult.questions.map((question, index) => {
                       const [displayedText, setDisplayedText] = useState('');
                       const [isTyping, setIsTyping] = useState(false);
@@ -943,9 +944,9 @@ export default function WriteEditor() {
                           key={index} 
                           className="flex flex-col gap-2"
                         >
-                          <div className="flex items-start gap-3">
-                            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 relative">
-                              <span className="text-emerald-600 font-bold">🧠</span>
+                          <div className="flex items-start gap-2 sm:gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 relative">
+                              <span className="text-emerald-600 font-bold text-sm sm:text-base">🧠</span>
                               {showTypingBubble && (
                                 <span className="absolute -top-1 -right-1 flex gap-0.5">
                                   <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce" style={{animationDelay: '0ms'}} />
@@ -954,8 +955,8 @@ export default function WriteEditor() {
                                 </span>
                               )}
                             </div>
-                            <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-4">
-                              <p className="text-slate-900 dark:text-white">
+                            <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 sm:p-4">
+                              <p className="text-slate-900 dark:text-white text-sm sm:text-base">
                                 {displayedText}
                                 {isTyping && <span className="animate-pulse">|</span>}
                               </p>
@@ -1034,9 +1035,15 @@ export default function WriteEditor() {
               <textarea
                 ref={promptRef}
                 value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
+                onChange={(e) => {
+                  setPrompt(e.target.value);
+                  // Auto-resize textarea
+                  const textarea = e.target;
+                  textarea.style.height = 'auto';
+                  textarea.style.height = Math.min(Math.max(textarea.scrollHeight, 200), window.innerHeight * 0.4) + 'px';
+                }}
                 placeholder={`Describe what you want to write in ${mode} mode...`}
-                className="flex-1 min-h-[200px] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="flex-1 min-h-[200px] max-h-[40vh] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent sm:min-h-[200px]"
               />
 
               <PromptSuggestion
@@ -1122,7 +1129,7 @@ export default function WriteEditor() {
                 </div>
               )}
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => setShowMemoryPanel(true)}
                   disabled={memories.length === 0}
@@ -1144,7 +1151,23 @@ export default function WriteEditor() {
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  Quote from History
+                  <span className="hidden sm:inline">Quote from History</span>
+                  <span className="sm:hidden">History</span>
+                </button>
+                <button
+                  onClick={() => {
+                    if (!isProUser) {
+                      setUpgradeModalReason('file-upload');
+                      setShowUpgradeModal(true);
+                    } else {
+                      handleFileUploadClick();
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                >
+                  <Upload className="w-4 h-4" />
+                  <span className="hidden sm:inline">📎 上传文件</span>
+                  <span className="sm:hidden">📎</span>
                 </button>
               </div>
 
@@ -1209,7 +1232,7 @@ export default function WriteEditor() {
           )}
         </section>
 
-        <section className="p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900 sm:h-1/2 sm:overflow-y-auto">
+        <section className="p-4 sm:p-6 flex flex-col gap-4 bg-slate-50 dark:bg-gray-900 sm:h-1/2 sm:overflow-y-auto lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)]">
           <div className="flex items-center justify-between">
             <h2 className="font-display font-extrabold text-xl text-slate-900 dark:text-white">
               {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
@@ -1452,18 +1475,23 @@ export default function WriteEditor() {
           <div className="bg-white dark:bg-gray-950 rounded-2xl p-8 max-w-md w-full mx-4 border border-slate-200 dark:border-gray-800 shadow-2xl">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white mb-2">
-                Upgrade to Pro
+                {upgradeModalReason === 'file-upload' ? '文件上传是 Pro 功能' : 'Upgrade to Pro'}
               </h2>
               <p className="text-slate-600 dark:text-slate-400">
-                Claude provides higher quality writing! Upgrade to Pro to use it.
+                {upgradeModalReason === 'file-upload' 
+                  ? '文件上传是Pro/Max专属功能，升级后可上传PDF/Word文档作为写作素材。' 
+                  : 'Claude provides higher quality writing! Upgrade to Pro to use it.'}
               </p>
             </div>
             <div className="flex flex-col gap-3">
               <Link href="/pricing" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
-                🚀 Upgrade to Pro
+                🚀 {upgradeModalReason === 'file-upload' ? '升级到 Pro' : 'Upgrade to Pro'}
               </Link>
               <button
-                onClick={() => setShowUpgradeModal(false)}
+                onClick={() => {
+                  setShowUpgradeModal(false);
+                  setUpgradeModalReason('general');
+                }}
                 className="btn-outline text-center min-h-[44px] flex items-center justify-center"
               >
                 Not Now

@@ -14,9 +14,10 @@ import { getWeeklyInsights } from "@/lib/weekly-insights";
 import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 import { ReferralShare } from "@/app/components/ReferralShare";
-import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { Gift } from "lucide-react";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -433,6 +434,7 @@ export default function DashboardPage() {
   const [showReferralPopup, setShowReferralPopup] = useState(false);
   const [referralData, setReferralData] = useState<any>(null);
   const [referralLinkCopied, setReferralLinkCopied] = useState(false);
+  const [referralRewardNotification, setReferralRewardNotification] = useState<{ type: 'referee'; extraGenerations: number } | { type: 'referrer'; proDays: number } | null>(null);
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
   const [userStage, setUserStage] = useState(0); // Default to stage 0
 
@@ -510,6 +512,24 @@ export default function DashboardPage() {
     if (!localStorage.getItem('referral_shown')) {
       setShowReferralPopup(true);
     }
+
+    // Check for pending referral rewards
+    const pendingRewards = checkPendingReferralRewards();
+    if (pendingRewards.hasRefereeReward && pendingRewards.refereeRewardData) {
+      setReferralRewardNotification({
+        type: 'referee',
+        extraGenerations: pendingRewards.refereeRewardData.extraGenerations,
+      });
+      // Clear after showing
+      clearPendingReferralRewards();
+    } else if (pendingRewards.hasReferrerReward && pendingRewards.referrerRewardData) {
+      setReferralRewardNotification({
+        type: 'referrer',
+        proDays: pendingRewards.referrerRewardData.proDays,
+      });
+      // Clear after showing
+      clearPendingReferralRewards();
+    }
   }, [isLoaded, hasProfile]);
 
   const hasRealData = records.length > 0;
@@ -569,6 +589,29 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+      {/* Referral Reward Notification */}
+      {referralRewardNotification && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce-once">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3">
+            <Gift className="w-6 h-6 flex-shrink-0" />
+            <div>
+              <p className="font-semibold">
+                {referralRewardNotification.type === 'referee'
+                  ? `🎉 邀请奖励到账！获得 ${referralRewardNotification.extraGenerations} 次额外生成`
+                  : `🎁 好友已加入！获得 ${referralRewardNotification.proDays} 天 Pro 试用`
+                }
+              </p>
+            </div>
+            <button
+              onClick={() => setReferralRewardNotification(null)}
+              className="p-1 hover:bg-white/20 rounded-full ml-2"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">

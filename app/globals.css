@@ -76,3 +76,22 @@
     @apply py-16 sm:py-24 md:py-32;
   }
 }
+
+@keyframes bounce-once {
+  0%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  25% {
+    transform: translateY(-10px) translateX(-50%);
+  }
+  50% {
+    transform: translateY(0) translateX(-50%);
+  }
+  75% {
+    transform: translateY(-5px) translateX(-50%);
+  }
+}
+
+.animate-bounce-once {
+  animation: bounce-once 1s ease-out;
+}
