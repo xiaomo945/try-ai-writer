@@ -163,6 +163,46 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
   );
 }
 
+function LearningProgressRing({ progress }: { progress: number }) {
+  const circumference = 2 * Math.PI * 40;
+  const offset = circumference - (progress / 20) * circumference;
+  const gradientColor = progress < 10 
+    ? `rgb(${100 + progress * 10}, ${115 + progress * 5}, ${128 + progress * 5})`
+    : `rgb(${16 + progress * 4}, ${150 + progress * 2}, ${105 + progress * 2})`;
+
+  return (
+    <div className="relative w-24 h-24">
+      <svg className="w-full h-full transform -rotate-90">
+        <circle
+          cx="48"
+          cy="48"
+          r="40"
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="none"
+          className="text-slate-200 dark:text-gray-700"
+        />
+        <circle
+          cx="48"
+          cy="48"
+          r="40"
+          stroke={gradientColor}
+          strokeWidth="6"
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="transition-all duration-500"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-2xl font-display font-bold text-slate-900 dark:text-white">{progress}</span>
+        <span className="text-xs text-slate-500">/20</span>
+      </div>
+    </div>
+  );
+}
+
 function BrandVoiceCard() {
   const { profile, updateProfile } = useBrandVoice();
   const { variant, setVariant } = useAvatarVariant();
@@ -171,6 +211,7 @@ function BrandVoiceCard() {
   const [error, setError] = useState<string>('');
   const [showCustomizationModal, setShowCustomizationModal] = useState(false);
   const [avatarDescription, setAvatarDescription] = useState('');
+  const learningProgress = profile?.learningSamples || 3;
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -199,24 +240,24 @@ function BrandVoiceCard() {
 
   if (!profile) {
     return (
-      <div className="card">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-emerald-600" />
+      <div className="card border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50/50 to-white dark:from-emerald-950/30 dark:to-gray-900">
+        <div className="flex flex-col items-center text-center p-6">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mb-4">
+            <Sparkles className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div>
-            <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
-            <p className="text-xs text-slate-500">Start writing to build your brand voice profile!</p>
+          <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white mb-2">打造你的数字分身</h3>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+            AI会学习你的写作风格，越用越懂你
+          </p>
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full border-2 border-dashed border-emerald-300 bg-emerald-50/30 dark:bg-emerald-900/20 rounded-xl p-4 cursor-pointer hover:border-emerald-400 hover:bg-emerald-50/50 transition-all"
+          >
+            <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
+            <Upload className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
+            <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">上传一篇你的文章</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">让AI学习你的风格 →</p>
           </div>
-        </div>
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-emerald-300 bg-emerald-50/30 rounded-xl p-4 text-center cursor-pointer hover:border-emerald-400 transition-all"
-        >
-          <input type="file" ref={fileInputRef} className="hidden" accept=".txt,.md" onChange={handleFileUpload} />
-          <Upload className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
-          <p className="text-sm text-emerald-700 font-medium">Upload to build profile quickly</p>
-          <p className="text-xs text-slate-500">Or write a few articles</p>
         </div>
       </div>
     );
@@ -326,6 +367,19 @@ function BrandVoiceCard() {
           ❌ {error}
         </div>
       )}
+      
+      <div className="flex items-center gap-4 mb-4 p-3 bg-slate-50 dark:bg-gray-800 rounded-xl">
+        <LearningProgressRing progress={learningProgress} />
+        <div>
+          <p className="text-sm font-medium text-slate-900 dark:text-white">
+            AI已学习你的 <span className="text-emerald-600 font-bold">{learningProgress}</span> 个写作习惯
+          </p>
+          <p className="text-xs text-slate-500">
+            继续写作，目标：20个样本
+          </p>
+        </div>
+      </div>
+
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
           <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-700 border border-slate-200">

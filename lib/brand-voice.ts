@@ -8,6 +8,7 @@ export interface BrandVoiceProfile {
   audience: string;
   commonPhrases: string[];
   createdAt: string;
+  learningSamples?: number;
 }
 
 const STORAGE_KEY = "use-ai-writer-brand-profile";
