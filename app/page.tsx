@@ -47,6 +47,8 @@ export default function LandingPage() {
           {/* 桌面端导航 */}
           <div className="hidden md:flex items-center gap-8 text-sm">
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
+            <Link href="/templates" className="text-slate-300 hover:text-white transition-colors">Templates</Link>
+            <Link href="/interview" className="text-slate-300 hover:text-white transition-colors">Interview</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
             <Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link>
             <ThemeToggle />
@@ -66,6 +68,8 @@ export default function LandingPage() {
           <div className="md:hidden bg-obsidian-950/95 backdrop-blur-2xl border-b border-white/5">
             <div className="flex flex-col gap-4 px-6 py-6">
               <Link href="/write" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Write</Link>
+              <Link href="/templates" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Templates</Link>
+              <Link href="/interview" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Interview</Link>
               <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
               <Link href="/blog" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
               <div className="flex items-center justify-center py-2">
@@ -95,6 +99,9 @@ export default function LandingPage() {
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-slate-400 mt-6 max-w-lg leading-relaxed">
               The AI that learns your brand voice, not just your prompts. Write better, faster, cheaper — meet Use AI Writer.
+            </p>
+            <p className="text-sm text-slate-500 mt-3">
+              Unlike static brand voices, our Digital Twin learns and evolves with every conversation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
               <Link href="/login" className="btn-primary text-base sm:text-lg w-full sm:w-auto text-center">

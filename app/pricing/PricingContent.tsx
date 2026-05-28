@@ -183,6 +183,70 @@ export default function PricingContent() {
             ))}
           </div>
 
+          {/* Compare with Alternatives */}
+          <div className="mt-20 md:mt-32">
+            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
+              Compare with Alternatives
+            </h2>
+            <div className="glass-card overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="text-left p-4 text-slate-400 font-semibold">Feature</th>
+                    <th className="text-center p-4 text-blue-400 font-semibold">Use AI Writer Pro</th>
+                    <th className="text-center p-4 text-slate-400 font-semibold">Jasper</th>
+                    <th className="text-center p-4 text-slate-400 font-semibold">Copy.ai</th>
+                    <th className="text-center p-4 text-slate-400 font-semibold">Writesonic</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-white/5">
+                    <td className="p-4 text-slate-300">Monthly Price</td>
+                    <td className="p-4 text-center text-white font-bold">$9</td>
+                    <td className="p-4 text-center text-slate-400">$49</td>
+                    <td className="p-4 text-center text-slate-400">$29</td>
+                    <td className="p-4 text-center text-slate-400">$39</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-4 text-slate-300">Free Tier</td>
+                    <td className="p-4 text-center text-emerald-400">✅ 10/day</td>
+                    <td className="p-4 text-center text-red-400">❌ 7-day trial</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-4 text-slate-300">Brand Voice Learning</td>
+                    <td className="p-4 text-center text-emerald-400">✅ Digital Twin</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-4 text-slate-300">Claude Model</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-4 text-slate-300">Creative Interview</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 text-slate-300">Chinese Optimization</td>
+                    <td className="p-4 text-center text-emerald-400">✅</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                    <td className="p-4 text-center text-red-400">❌</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           {/* FAQ Section */}
           <div className="mt-20 md:mt-32">
             <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
