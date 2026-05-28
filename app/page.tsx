@@ -2,6 +2,7 @@
 import { Zap, Brain, Shield, Sparkles, ArrowRight, ChevronDown, Check, Star, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
@@ -13,6 +14,7 @@ import { LaunchCountdown } from "@/app/components/LaunchCountdown";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
@@ -33,7 +35,17 @@ export default function LandingPage() {
             <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
             <Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link>
             <ThemeToggle />
-            <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Writing</Link>
+            {session ? (
+              <>
+                <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">Dashboard</Link>
+                <Link href="/write" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Write Now</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/write" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Try Free</Link>
+                <Link href="/login" className="btn-outline !min-h-[40px] !px-5 !py-2 !text-sm">Sign In</Link>
+              </>
+            )}
           </div>
           {/* 移动端汉堡菜单 */}
           <button 
@@ -56,7 +68,17 @@ export default function LandingPage() {
               <div className="flex items-center justify-center py-2">
                 <ThemeToggle />
               </div>
-              <Link href="/login" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Start Writing Free</Link>
+              {session ? (
+                <>
+                  <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                  <Link href="/write" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Write Now</Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/write" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Try Free</Link>
+                  <Link href="/login" className="btn-outline w-full text-center" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -88,8 +110,8 @@ export default function LandingPage() {
               Unlike static brand voices, our Digital Twin learns and evolves with every conversation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
-              <Link href="/login" className="btn-primary text-base sm:text-lg w-full sm:w-auto text-center">
-                Start Writing Free <ArrowRight className="ml-2 w-5 h-5" />
+              <Link href="/write" className="btn-primary text-base sm:text-lg w-full sm:w-auto text-center">
+                Try It Now — No Sign Up Required <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link href="/pricing" className="btn-outline text-base sm:text-lg w-full sm:w-auto text-center">
                 See Pricing
@@ -112,6 +134,23 @@ export default function LandingPage() {
         </div>
         <div className="flex justify-center mt-16"><ChevronDown className="w-6 h-6 text-slate-600 animate-bounce" /></div>
       </section>
+
+      {/* 快速试用入口 */}
+      {!session && (
+        <section className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-base sm:text-lg font-medium">
+              No sign-up required. Start writing in 10 seconds.
+            </p>
+            <Link
+              href="/write"
+              className="inline-flex items-center gap-2 bg-white text-emerald-600 font-semibold px-6 py-2.5 rounded-full hover:bg-emerald-50 transition-colors min-h-[44px]"
+            >
+              Try It Now <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* 社会证明条 */}
       <section className="section-container py-12">
@@ -233,7 +272,7 @@ export default function LandingPage() {
             <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
             <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Use AI Writer. Start free, no credit card required.</p>
-            <Link href="/login" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Start Writing Free <ArrowRight className="ml-2 w-5 h-5" /></Link>
+            <Link href="/write" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Try It Now — No Sign Up Required <ArrowRight className="ml-2 w-5 h-5" /></Link>
           </div>
         </div>
       </section>

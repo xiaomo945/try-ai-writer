@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Shield, Brain, Sparkles } from "lucide-react";
+import { Zap, Shield, Brain, Sparkles, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -63,8 +63,51 @@ export default function LoginPage() {
           </p>
           <p className="text-center text-sm text-slate-500 dark:text-slate-400">
             Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-emerald-600 hover:underline font-medium">Create one</Link>
+            <Link href="/register" className="text-emerald-600 hover:underline font-medium">Sign up free</Link>
           </p>
+          
+          {/* Why Register? Section */}
+          <div className="border-t border-slate-200 dark:border-slate-700 pt-6 mt-6">
+            <details className="group">
+              <summary className="flex items-center justify-between cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-emerald-600 transition-colors">
+                <span>Why register? →</span>
+                <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-slate-900 dark:text-slate-200">10 free generations per day</p>
+                    <p className="text-xs">No credit card required. Start using immediately.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-slate-900 dark:text-slate-200">AI learns your brand voice</p>
+                    <p className="text-xs">Upload your content and get personalized writing.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-slate-900 dark:text-slate-200">Save all your writing history</p>
+                    <p className="text-xs">Access past generations anytime, organized by date.</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+          
+          {/* Quick Try Link */}
+          <div className="text-center pt-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Just want to try?{" "}
+              <Link href="/write" className="text-emerald-600 hover:underline font-medium">
+                Start writing without account →
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
 

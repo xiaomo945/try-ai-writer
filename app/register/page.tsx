@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Shield, Brain, Sparkles } from "lucide-react";
+import { Zap, Shield, Brain, Sparkles, Check } from "lucide-react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -69,9 +69,49 @@ export default function RegisterPage() {
           <p className="text-center text-sm text-slate-500 dark:text-slate-400">
             Already have an account?{" "}
             <Link href="/login" className="text-emerald-600 hover:underline font-medium">
-              Sign in
+              Sign in →
             </Link>
           </p>
+          
+          {/* Benefits List */}
+          <div className="border-t border-slate-200 dark:border-slate-700 pt-6 mt-6">
+            <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-4">
+              After registering, you can:
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium text-sm text-slate-900 dark:text-slate-200">10 free generations per day</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">No credit card required</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium text-sm text-slate-900 dark:text-slate-200">AI learns your brand voice</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Upload content and get personalized writing</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium text-sm text-slate-900 dark:text-slate-200">Save all your writing history</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Access past generations anytime</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Quick Try Link */}
+          <div className="text-center pt-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Want to try first?{" "}
+              <Link href="/write" className="text-emerald-600 hover:underline font-medium">
+                Write without account →
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
 
