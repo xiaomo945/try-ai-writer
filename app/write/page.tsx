@@ -56,19 +56,19 @@ function StyleScoreCard({ score }: { score: StyleScore }) {
   const scoreColor = score.score >= 70 ? "emerald" : score.score >= 50 ? "amber" : "red";
 
   const colorMap = {
-    emerald: { stroke: "#059669", bg: "bg-emerald-50", text: "text-emerald-600", ring: "text-emerald-500" },
-    amber: { stroke: "#f59e0b", bg: "bg-amber-50", text: "text-amber-600", ring: "text-amber-500" },
-    red: { stroke: "#ef4444", bg: "bg-red-50", text: "text-red-600", ring: "text-red-500" },
+    emerald: { stroke: "#059669", bg: "bg-emerald-50 dark:bg-emerald-950", text: "text-emerald-600 dark:text-emerald-300", ring: "text-emerald-500" },
+    amber: { stroke: "#f59e0b", bg: "bg-amber-50 dark:bg-amber-950", text: "text-amber-600 dark:text-amber-300", ring: "text-amber-500" },
+    red: { stroke: "#ef4444", bg: "bg-red-50 dark:bg-red-950", text: "text-red-600 dark:text-red-300", ring: "text-red-500" },
   };
 
   const colors = colorMap[scoreColor];
 
   return (
-    <div className={`rounded-xl ${colors.bg} p-4 border border-slate-200`}>
+    <div className={`rounded-xl ${colors.bg} p-4 border border-white/10`}>
       <div className="flex items-center gap-4">
         <div className="relative w-20 h-20">
           <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" className="text-slate-200" />
+            <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="8" className="text-white/10" />
             <circle
               cx="50"
               cy="50"
@@ -87,27 +87,27 @@ function StyleScoreCard({ score }: { score: StyleScore }) {
           </div>
         </div>
         <div className="flex-1">
-          <div className="text-sm font-semibold text-slate-700 mb-2">Style Match</div>
+          <div className="text-sm font-semibold text-white mb-2">Style Match</div>
           <div className="space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Tone</span>
-              <span className="font-medium text-slate-700">{score.breakdown.tone}%</span>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Tone</span>
+              <span className="font-medium">{score.breakdown.tone}%</span>
             </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Vocabulary</span>
-              <span className="font-medium text-slate-700">{score.breakdown.vocabulary}%</span>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Vocabulary</span>
+              <span className="font-medium">{score.breakdown.vocabulary}%</span>
             </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-slate-500">Structure</span>
-              <span className="font-medium text-slate-700">{score.breakdown.structure}%</span>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Structure</span>
+              <span className="font-medium">{score.breakdown.structure}%</span>
             </div>
           </div>
         </div>
       </div>
       {score.suggestions.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-slate-200">
-          <div className="text-xs text-slate-500 mb-1">Suggestions:</div>
-          <ul className="text-xs text-slate-600 space-y-1">
+        <div className="mt-3 pt-3 border-t border-white/10">
+          <div className="text-xs text-slate-400 mb-1">Suggestions:</div>
+          <ul className="text-xs text-slate-300 space-y-1">
             {score.suggestions.slice(0, 2).map((s, i) => (
               <li key={i} className="flex items-start gap-1">
                 <span className="text-emerald-500">•</span>
@@ -123,16 +123,16 @@ function StyleScoreCard({ score }: { score: StyleScore }) {
 
 function ConsistencyWarningBox({ warnings, onOptimize }: { warnings: ConsistencyWarning[]; onOptimize: () => void }) {
   return (
-    <div className="rounded-xl bg-amber-50 border border-amber-200 p-4">
+    <div className="rounded-xl bg-amber-950/30 border border-amber-500/30 p-4">
       <div className="flex items-start gap-3">
-        <Sparkles className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+        <Sparkles className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
         <div className="flex-1">
-          <div className="font-semibold text-amber-800 text-sm mb-2">
+          <div className="font-semibold text-amber-300 text-sm mb-2">
             This text slightly deviates from your style
           </div>
           <ul className="space-y-1 mb-3">
             {warnings.map((w, i) => (
-              <li key={i} className="text-sm text-amber-700 flex items-start gap-2">
+              <li key={i} className="text-sm text-amber-200 flex items-start gap-2">
                 <span className="text-amber-500">•</span>
                 {w.message}
               </li>
@@ -140,7 +140,7 @@ function ConsistencyWarningBox({ warnings, onOptimize }: { warnings: Consistency
           </ul>
           <button
             onClick={onOptimize}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-amber-950 hover:bg-amber-900 text-amber-200 rounded-lg text-sm font-medium transition-colors"
           >
             <Wand2 className="w-4 h-4" />
             One-click Optimize
@@ -184,12 +184,12 @@ function HistorySearchModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
-        <div className="p-6 border-b border-slate-200">
+      <div className="relative bg-[#0A0A0C] border border-white/10 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden">
+        <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-display font-bold text-slate-900">Quote from History</h3>
-            <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-              <X className="w-5 h-5 text-slate-500" />
+            <h3 className="text-lg font-display font-bold text-white">Quote from History</h3>
+            <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-lg transition-colors">
+              <X className="w-5 h-5 text-slate-400" />
             </button>
           </div>
           <div className="relative">
@@ -199,14 +199,14 @@ function HistorySearchModal({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search your history..."
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
               autoFocus
             />
           </div>
         </div>
         <div className="p-6 overflow-y-auto max-h-[50vh]">
           {results.length === 0 ? (
-            <div className="text-center py-8 text-slate-500">
+            <div className="text-center py-8 text-slate-400">
               {records.length === 0 ? "No history records yet" : "No matching results"}
             </div>
           ) : (
@@ -218,13 +218,13 @@ function HistorySearchModal({
                     onSelect(`Based on my previous writing: "${result.snippet.replace(/\*\*/g, "")}"`);
                     onClose();
                   }}
-                  className="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 transition-colors"
+                  className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-emerald-500/30 hover:bg-emerald-950/20 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-slate-900 mb-1 truncate" dangerouslySetInnerHTML={{ __html: result.title }} />
-                      <p className="text-sm text-slate-500 line-clamp-2" dangerouslySetInnerHTML={{ __html: result.snippet }} />
-                      <div className="text-xs text-slate-400 mt-2">
+                      <div className="font-medium text-white mb-1 truncate" dangerouslySetInnerHTML={{ __html: result.title }} />
+                      <p className="text-sm text-slate-400 line-clamp-2" dangerouslySetInnerHTML={{ __html: result.snippet }} />
+                      <div className="text-xs text-slate-500 mt-2">
                         {new Date(result.createdAt).toLocaleDateString()}
                       </div>
                     </div>
@@ -335,6 +335,15 @@ export default function WriteEditor() {
   };
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const loadId = params.get("load");
     if (loadId) {
@@ -405,7 +414,7 @@ export default function WriteEditor() {
     setResult("");
     setStyleScore(null);
     setConsistencyWarnings([]);
-    setAvatarState('thinking'); // Set avatar to thinking while generating
+    setAvatarState('thinking');
 
     try {
       const response = await fetch("/api/generate", {
@@ -445,7 +454,7 @@ export default function WriteEditor() {
       }
       setState("done");
       setViewState("result");
-      setAvatarState('approving'); // Avatar approves when done
+      setAvatarState('approving');
       setTimeout(() => setAvatarState('idle'), 2000);
 
       setCurrentResultModel((useModel || selectedModel) as "deepseek" | "claude");
@@ -457,9 +466,7 @@ export default function WriteEditor() {
           result: accumulated,
         });
 
-        // Save user's initial prompt to memory
         addMemory(prompt, 'idea');
-        // Also save any interview answers if available
         if (interviewAnswers.length > 0) {
           interviewAnswers.forEach(answer => {
             if (answer.trim()) {
@@ -477,13 +484,12 @@ export default function WriteEditor() {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);
       setState("error");
-      setAvatarState('sorry'); // Avatar shows sympathy on error
+      setAvatarState('sorry');
       setTimeout(() => setAvatarState('idle'), 3000);
     }
   }, [prompt, mode, canGenerate, increment, addRecord, addMemory, interviewAnswers, calculateStyleScore, selectedModel]);
 
   const handleGenerateClick = useCallback(() => {
-    // Check for noise input first
     const noiseCheck = isNoiseInput(prompt);
     if (noiseCheck.isNoise) {
       setNoiseMessage(noiseCheck.message || '请提供更详细的内容描述。');
@@ -515,6 +521,8 @@ export default function WriteEditor() {
       handleGenerate(undefined, memoriesText ? [memoriesText] : []);
     }
   }, [creativeAssistantEnabled, prompt, mode, profile, getRelevantMemories, handleGenerate, introShown]);
+
+
 
   const handleQuestionAppeared = useCallback(() => {
     setQuestionsAppeared(true);
@@ -552,11 +560,10 @@ export default function WriteEditor() {
 
   // Sound effect placeholder function
   const handleSound = useCallback((type: 'pop' | 'question' | 'approve' | 'nod') => {
-    // Placeholder for future sound integration
     console.log(`Sound effect triggered: ${type}`);
   }, []);
 
-  const handleEdit = useCallback(async (suggestion: EditSuggestion) => {
+  const handleEdit = useCallback(async (editPrompt: string) => {
     if (!result) return;
     setPreviousResult(result);
     setIsEditing(true);
@@ -566,7 +573,7 @@ export default function WriteEditor() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           originalText: result,
-          editInstruction: suggestion.prompt,
+          editInstruction: editPrompt,
           mode
         })
       });
@@ -609,7 +616,7 @@ export default function WriteEditor() {
     if (result) {
       navigator.clipboard.writeText(result).catch(() => {});
       setCopyState("copied");
-      setAvatarState('approving'); // Happy avatar reacts to copy
+      setAvatarState('approving');
       setTimeout(() => setAvatarState('idle'), 2000);
       setTimeout(() => setCopyState("idle"), 2000);
     }
@@ -668,7 +675,7 @@ export default function WriteEditor() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('userType', 'free'); // Default to free, can be updated later with user plan info
+      formData.append('userType', 'free');
 
       const response = await fetch('/api/file/process', {
         method: 'POST',
@@ -703,16 +710,6 @@ export default function WriteEditor() {
     { key: "social", label: "Social Media" },
     { key: "custom", label: "Custom" },
   ];
-
-  // Mobile check effect
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // Keyboard shortcuts effect
   useEffect(() => {
@@ -796,10 +793,12 @@ export default function WriteEditor() {
         </div>
       </header>
 
-      <div className="flex-1 grid lg:grid-cols-[40%_60%] sm:flex-col sm:h-[calc(100vh-4rem)]">
-        <section className="p-4 sm:p-6 flex flex-col gap-4 border-r border-white/10 bg-[#0A0A0C] sm:h-1/2 sm:overflow-y-auto overflow-y-auto">
-          <div className="flex flex-wrap gap-2 items-center justify-between">
-            <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto w-full sm:w-auto pb-1 -mx-1 px-1 scrollbar-hide">
+      <div className="flex-1 grid lg:grid-cols-[55%_45%] sm:flex-col">
+        {/* Left Input Section */}
+        <section className="p-4 sm:p-6 flex flex-col gap-4 border-r border-white/10 bg-[#0A0A0C]">
+          {/* Row 1: Mode Selector */}
+          <div className="flex items-center justify-between gap-2">
+            <div data-onboarding="mode-selector" className="flex gap-2 items-center overflow-x-auto pb-1 flex-1">
               {modes.map(({ key, label }) => (
                 <button
                   key={key}
@@ -807,30 +806,25 @@ export default function WriteEditor() {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px] flex-shrink-0 ${
                     mode === key
                       ? "bg-emerald-600 text-white"
-                      : "bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-gray-700"
+                      : "bg-white/5 text-slate-300 hover:bg-white/10"
                   }`}
                 >
                   {label}
                 </button>
               ))}
-              <div className="flex-shrink-0">
-                <ModelSwitcher onModelSwitch={(model) => {
-                  const modelName = model === 'claude' ? 'Claude' : 'DeepSeek';
-                  setModelSwitchToast(`Switched to ${modelName}`);
-                  setTimeout(() => setModelSwitchToast(null), 2000);
-                }} />
-              </div>
             </div>
+          </div>
 
-            {/* Creative Assistant Toggle */}
+          {/* Row 2: Creative Assistant Toggle + AI Progress */}
+          <div className="flex items-center justify-between gap-4">
             <div data-onboarding="creative-assistant" className="flex items-center gap-2">
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-slate-400">
                 🧠 Creative Assistant
               </span>
               <button
                 onClick={() => handleCreativeAssistantToggle(!creativeAssistantEnabled)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  creativeAssistantEnabled ? "bg-emerald-600" : "bg-slate-300"
+                  creativeAssistantEnabled ? "bg-emerald-600" : "bg-white/20"
                 }`}
               >
                 <span
@@ -844,34 +838,15 @@ export default function WriteEditor() {
           </div>
 
           {viewState === "interview" && interviewResult ? (
-            <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+            <div className="flex-1 flex flex-col gap-4">
               <div className="text-center py-4">
-                <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">
+                <h3 className="text-lg font-display font-bold text-white mb-2">
                   🧠 你的数字分身正在帮你理清思路…
                 </h3>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-6 items-start">
-                {/* Digital Twin Avatar - Desktop left, Mobile center top */}
-                <div className="hidden lg:flex flex-col items-center justify-start pt-4 relative">
-                  <DigitalTwinAvatar 
-                    isVisible={avatarVisible} 
-                    state={avatarState} 
-                    onSound={handleSound}
-                    onQuestionAppear={handleQuestionAppeared}
-                    variant={variant}
-                  />
-                  {showTwinIntro && (
-                    <TwinIntroBubble 
-                      isVisible={showTwinIntro}
-                      onClose={() => {
-                        setShowTwinIntro(false);
-                        setIntroShown(true);
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="flex lg:hidden justify-center w-full relative">
+              <div className="flex flex-col gap-6 items-start">
+                <div className="flex justify-center w-full">
                   <DigitalTwinAvatar 
                     isVisible={avatarVisible} 
                     state={avatarState} 
@@ -892,19 +867,17 @@ export default function WriteEditor() {
                   )}
                 </div>
 
-                <div className="flex-1 flex flex-col gap-3 sm:gap-4">
-                  {/* Digital Twin Greeting Bubble */}
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                <div className="flex-1 flex flex-col gap-3 sm:gap-4 w-full">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-950/50 flex items-center justify-center flex-shrink-0">
                       <span className="text-emerald-600 font-bold text-sm sm:text-base">🧠</span>
                     </div>
-                    <div className="flex-1 bg-white border border-emerald-200 rounded-2xl rounded-tl-none p-3 sm:p-4 shadow-sm">
-                      <p className="text-slate-900 dark:text-white text-sm sm:text-base">{interviewResult.greeting}</p>
+                    <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl rounded-tl-none p-4">
+                      <p className="text-white text-sm sm:text-base">{interviewResult.greeting}</p>
                     </div>
                   </div>
 
-                  {/* Interview Questions */}
-                  <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4">
+                  <div className="flex-1 space-y-3 sm:space-y-4">
                     {interviewResult.questions.map((question, index) => {
                       const [displayedText, setDisplayedText] = useState('');
                       const [isTyping, setIsTyping] = useState(false);
@@ -948,8 +921,8 @@ export default function WriteEditor() {
                           key={index} 
                           className="flex flex-col gap-2"
                         >
-                          <div className="flex items-start gap-2 sm:gap-3">
-                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 relative">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-950/50 flex items-center justify-center flex-shrink-0 relative">
                               <span className="text-emerald-600 font-bold text-sm sm:text-base">🧠</span>
                               {showTypingBubble && (
                                 <span className="absolute -top-1 -right-1 flex gap-0.5">
@@ -959,8 +932,8 @@ export default function WriteEditor() {
                                 </span>
                               )}
                             </div>
-                            <div className="flex-1 bg-slate-50 dark:bg-gray-800 rounded-2xl rounded-tl-none p-3 sm:p-4">
-                              <p className="text-slate-900 dark:text-white text-sm sm:text-base">
+                            <div className="flex-1 bg-white/5 rounded-2xl rounded-tl-none p-4">
+                              <p className="text-white text-sm sm:text-base">
                                 {displayedText}
                                 {isTyping && <span className="animate-pulse">|</span>}
                               </p>
@@ -990,7 +963,7 @@ export default function WriteEditor() {
                               }
                             }}
                             placeholder="你的回答..."
-                            className="ml-13 w-full rounded-xl border border-emerald-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[80px]"
+                            className="w-full rounded-xl border border-white/10 bg-white/5 p-4 text-white placeholder-slate-500 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 min-h-[80px]"
                           />
                         </div>
                       );
@@ -1002,52 +975,33 @@ export default function WriteEditor() {
               <div className="flex gap-3">
                 <button
                   onClick={handleSkipInterview}
-                  className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                  className="flex-1 px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                 >
                   Skip for now
                 </button>
                 <button
                   onClick={handleContinueWriting}
-                  className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors min-h-[44px] shadow-lg shadow-emerald-500/25"
+                  className="flex-1 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                 >
                   继续写作
                 </button>
               </div>
             </div>
           ) : (
-            <>
+            <div className="flex flex-col gap-4 flex-1">
               <MemoryRecommendation
                 memories={memories}
                 onSelectMemory={handleSelectMemory}
               />
-              
-              {!prompt && !result && (
-                <div className="mb-4">
-                  <h3 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-3">
-                    💡 写作示例
-                  </h3>
-                  <WritingExamples onSelectExample={setPrompt} />
-                  <div className="mt-4">
-                    <QuickTemplates onSelectTemplate={(template) => {
-                      setPrompt(template);
-                      setTimeout(() => promptRef.current?.focus(), 100);
-                    }} />
-                  </div>
-                </div>
-              )}
               
               <textarea
                 ref={promptRef}
                 value={prompt}
                 onChange={(e) => {
                   setPrompt(e.target.value);
-                  // Auto-resize textarea
-                  const textarea = e.target;
-                  textarea.style.height = 'auto';
-                  textarea.style.height = Math.min(Math.max(textarea.scrollHeight, 200), window.innerHeight * 0.4) + 'px';
                 }}
                 placeholder={`Describe what you want to write in ${mode} mode...`}
-                className="flex-1 min-h-[200px] max-h-[40vh] w-full rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 text-slate-900 dark:text-white resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent sm:min-h-[200px]"
+                className="flex-1 min-h-[300px] w-full rounded-xl border border-white/10 bg-white/5 p-4 text-white placeholder-slate-500 resize-vertical focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
               />
 
               <PromptSuggestion
@@ -1059,7 +1013,7 @@ export default function WriteEditor() {
 
               {/* Noise Input Message */}
               {noiseMessage && (
-                <div className="rounded-xl bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 p-4 text-sm text-blue-700 dark:text-blue-300">
+                <div className="rounded-xl bg-blue-950/20 border border-blue-500/30 p-4 text-sm text-blue-200">
                   💡 {noiseMessage}
                 </div>
               )}
@@ -1067,22 +1021,22 @@ export default function WriteEditor() {
               {/* File Upload */}
               <div>
                 {uploadedFile ? (
-                  <div className="flex items-center justify-between bg-slate-50 dark:bg-gray-800 p-3 rounded-xl border border-slate-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl border border-white/10">
                     <div className="flex items-center gap-2">
-                      <Upload className="w-4 h-4 text-emerald-600" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">文件已上传 ({uploadedFile.type}, ~{uploadedFile.tokenCount} tokens)</span>
+                      <Upload className="w-4 h-4 text-emerald-500" />
+                      <span className="text-sm text-slate-300">文件已上传 ({uploadedFile.type}, ~{uploadedFile.tokenCount} tokens)</span>
                     </div>
                     <button
                       onClick={handleRemoveFile}
-                      className="p-1 hover:bg-slate-200 dark:hover:bg-gray-700 rounded transition-colors"
+                      className="p-1 hover:bg-white/10 rounded transition-colors"
                     >
-                      <Trash className="w-4 h-4 text-slate-500" />
+                      <Trash className="w-4 h-4 text-slate-400" />
                     </button>
                   </div>
                 ) : uploadError ? (
-                  <div className="flex items-center justify-between bg-red-50 dark:bg-red-950 p-3 rounded-xl border border-red-200 dark:border-red-800">
-                    <span className="text-sm text-red-700 dark:text-red-300">{uploadError}</span>
-                    <Link href="/pricing" className="text-sm text-emerald-600 hover:underline font-medium">
+                  <div className="flex items-center justify-between bg-red-950/20 border border-red-500/30 p-3 rounded-xl">
+                    <span className="text-sm text-red-200">{uploadError}</span>
+                    <Link href="/pricing" className="text-sm text-emerald-500 hover:underline font-medium">
                       升级
                     </Link>
                   </div>
@@ -1090,7 +1044,7 @@ export default function WriteEditor() {
                   <button
                     onClick={handleFileUploadClick}
                     disabled={uploading}
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-slate-50 hover:bg-slate-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                   >
                     {uploading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -1111,10 +1065,10 @@ export default function WriteEditor() {
 
               {/* Empty State Prompt Suggestions */}
               {!prompt && !result && state === "idle" && (
-                <div className="bg-slate-50 dark:bg-gray-800/50 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
+                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
                   <div className="flex items-center gap-2 mb-3">
-                    <Lightbulb className="w-4 h-4 text-emerald-600" />
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <Lightbulb className="w-4 h-4 text-emerald-500" />
+                    <span className="text-sm font-medium text-slate-300">
                       Describe what you want to write, or choose a template below
                     </span>
                   </div>
@@ -1123,7 +1077,7 @@ export default function WriteEditor() {
                       <button
                         key={example.text}
                         onClick={() => setPrompt(example.text)}
-                        className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                        className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-slate-300 hover:border-emerald-500/30 hover:bg-emerald-950/20 transition-colors"
                       >
                         <span>{example.icon}</span>
                         <span className="truncate max-w-[200px]">{example.text}</span>
@@ -1133,14 +1087,28 @@ export default function WriteEditor() {
                 </div>
               )}
 
+              {/* Quick Examples & Templates (visible when prompt/result is empty) */}
+              {!prompt && !result && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-display font-bold text-white">
+                    💡 写作示例
+                  </h3>
+                  <WritingExamples onSelectExample={setPrompt} />
+                  <QuickTemplates onSelectTemplate={(template) => {
+                    setPrompt(template);
+                    setTimeout(() => promptRef.current?.focus(), 100);
+                  }} />
+                </div>
+              )}
+
               <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => setShowMemoryPanel(true)}
                   disabled={memories.length === 0}
                   className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-colors min-h-[44px] ${
                     memories.length === 0
-                      ? 'bg-slate-100 dark:bg-gray-800 text-slate-400 cursor-not-allowed'
-                      : 'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                      ? 'bg-white/5 text-slate-500 cursor-not-allowed'
+                      : 'bg-emerald-950/30 hover:bg-emerald-950/50 text-emerald-300 border border-emerald-500/30'
                   }`}
                   title={memories.length === 0 ? "去写作页面和分身聊天，它会记住你的想法" : "搜索并引用历史想法"}
                 >
@@ -1152,7 +1120,7 @@ export default function WriteEditor() {
                 </button>
                 <button
                   onClick={() => setShowHistoryModal(true)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span className="hidden sm:inline">Quote from History</span>
@@ -1167,7 +1135,7 @@ export default function WriteEditor() {
                       handleFileUploadClick();
                     }
                   }}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
                 >
                   <Upload className="w-4 h-4" />
                   <span className="hidden sm:inline">📎 上传文件</span>
@@ -1176,14 +1144,14 @@ export default function WriteEditor() {
               </div>
 
               {!canGenerate && state !== "loading" && (
-                <div className="rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4 space-y-3">
+                <div className="rounded-xl border border-amber-500/30 bg-amber-950/20 p-4 space-y-3">
                   <div className="flex items-start gap-3">
-                    <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <Info className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-amber-800 dark:text-amber-200">
+                      <p className="font-semibold text-amber-200">
                         Daily limit reached
                       </p>
-                      <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
+                      <p className="text-sm text-amber-100 mt-1">
                         You have used all {limit} free generations today. Upgrade to Pro for unlimited access.
                       </p>
                     </div>
@@ -1194,317 +1162,189 @@ export default function WriteEditor() {
                 </div>
               )}
 
-              <div className="flex gap-3 flex-col">
+              {/* Bottom Row: Model Switcher + Generate Button */}
+              <div className="flex gap-3 items-center">
+                <div className="flex-shrink-0">
+                  <ModelSwitcher onModelSwitch={(model) => {
+                    const modelName = model === 'claude' ? 'Claude' : 'DeepSeek';
+                    setModelSwitchToast(`Switched to ${modelName}`);
+                    setTimeout(() => setModelSwitchToast(null), 2000);
+                  }} />
+                </div>
                 <button
                   data-onboarding="generate-button"
                   onClick={handleGenerateClick}
                   disabled={state === "loading" || !prompt.trim() || !canGenerate}
-                  className="btn-primary flex-1 gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="btn-primary flex-1 gap-2 disabled:opacity-70 disabled:cursor-not-allowed min-h-[48px]"
                   aria-label="Generate content"
                 >
-                  {state === "loading" || viewState === "generating" ? (
+                  {state === "loading" ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      生成中...
+                      Generating...
                     </>
                   ) : (
                     <>
-                      <Zap className="w-5 h-5" />
+                      <Sparkles className="w-5 h-5" />
                       Generate
                     </>
                   )}
                 </button>
-                {(state === "loading" || viewState === "generating") && (
-                  <div className="h-1 bg-slate-200 dark:bg-gray-800 rounded-full overflow-hidden">
-                    <div className="h-full w-1/3 bg-emerald-600 animate-pulse" style={{
-                      animation: 'progress 1.5s ease-in-out infinite'
-                    }} />
-                    <style jsx>{`
-                      @keyframes progress {
-                        0% { transform: translateX(-100%); }
-                        50% { transform: translateX(150%); }
-                        100% { transform: translateX(-100%); }
-                      }
-                    `}</style>
-                  </div>
+                {result && (
+                  <button
+                    onClick={handleClear}
+                    className="btn-outline min-h-[48px] px-4 py-2"
+                    aria-label="Clear"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
                 )}
-                <button onClick={handleClear} className="btn-outline min-w-[44px] w-full" aria-label="Clear all">
-                  <Trash2 className="w-5 h-5" />
-                </button>
               </div>
-            </>
+            </div>
           )}
         </section>
 
-        <section className="p-4 sm:p-6 flex flex-col gap-4 bg-[#0A0A0C] sm:h-1/2 sm:overflow-y-auto lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)]">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display font-extrabold text-xl text-slate-900 dark:text-white">
-              {state === "done" ? "Generated" : state === "loading" || viewState === "generating" ? "Generating..." : "Your Result"}
-            </h2>
-            {result && (
-              <div className="flex items-center justify-between gap-2 flex-wrap">
-                <div className="flex gap-1 sm:gap-2">
+        {/* Right Result Section */}
+        <section className="p-4 sm:p-6 flex flex-col bg-[#0A0A0C]">
+          {!result && state === "idle" ? (
+            <div className="flex flex-col items-center justify-center h-full gap-8">
+              <div className="text-center">
+                <div className="text-6xl mb-4">✨</div>
+                <h3 className="text-xl font-display font-bold text-white mb-2">
+                  Your AI Writing Assistant is Ready!
+                </h3>
+                <p className="text-slate-400 max-w-md mx-auto">
+                  Describe what you want to write on the left, and we'll generate high-quality content in your brand voice.
+                </p>
+              </div>
+              <div className="w-full max-w-2xl">
+                <div className="glass-card p-6">
+                  <h4 className="font-semibold text-white mb-4">💡 Quick Tips</h4>
+                  <ul className="space-y-2 text-slate-300 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500">✓</span>
+                      Be specific about the tone, audience, and key points
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500">✓</span>
+                      Try the Creative Assistant for more structured outputs
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-500">✓</span>
+                      Upload existing content to train your brand voice
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="w-full max-w-2xl">
+                <h3 className="text-lg font-display font-bold text-white mb-4">
+                  📝 Try These Examples
+                </h3>
+                <WritingExamples onSelectExample={setPrompt} />
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Result Top Toolbar */}
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  {styleScore && <StyleScoreCard score={styleScore} />}
+                </div>
+                <div className="flex items-center gap-2">
                   <button
-                    type="button"
                     onClick={handleCopy}
-                    className="btn-outline text-sm gap-1 sm:gap-2 min-h-[44px]"
-                    aria-label="Copy result"
+                    className="btn-outline min-h-[44px] px-4 py-2 flex items-center gap-2"
+                    aria-label="Copy"
                   >
                     {copyState === "copied" ? (
                       <>
-                        <Check className="w-4 h-4 text-emerald-600" /> <span className="hidden sm:inline">Copied</span>
+                        <CheckCircle2 className="w-5 h-5" />
+                        Copied
                       </>
                     ) : (
                       <>
-                        <Copy className="w-4 h-4" /> <span className="hidden sm:inline">Copy</span>
+                        <Copy className="w-5 h-5" />
+                        Copy
                       </>
                     )}
                   </button>
                   <button
-                    type="button"
                     onClick={handleDownload}
-                    className="btn-outline text-sm gap-1 sm:gap-2 min-h-[44px]"
-                    aria-label="Download result"
+                    className="btn-outline min-h-[44px] px-4 py-2 flex items-center gap-2"
+                    aria-label="Download"
                   >
-                    <Download className="w-4 h-4" /> <span className="hidden sm:inline">Download</span>
-                  </button>
-                  {previousResult && (
-                    <button
-                      type="button"
-                      onClick={handleUndoEdit}
-                      className="btn-outline text-sm gap-1 sm:gap-2 min-h-[44px]"
-                    >
-                      <Undo2 className="w-4 h-4" /> <span className="hidden sm:inline">Undo</span>
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!isProUser) {
-                        setShowUpgradeModal(true);
-                      } else {
-                        const otherModel = currentResultModel === "deepseek" ? "claude" : "deepseek";
-                        handleGenerate(undefined, undefined, otherModel, true);
-                      }
-                    }}
-                    className="flex items-center gap-1 px-2 sm:px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
-                  >
-                    🔄 <span className="hidden sm:inline">用{currentResultModel === "deepseek" ? "Claude" : "DeepSeek"}再生成</span>
+                    <Download className="w-5 h-5" />
+                    Download
                   </button>
                 </div>
-                <div className="flex items-center gap-2">
-                  {getEditSuggestions(result, profile).map((suggestion) => {
-                    const IconComponent = (() => {
-                      switch(suggestion.iconName) {
-                        case "Scissors": return Scissors;
-                        case "Plus": return Plus;
-                        case "Briefcase": return Briefcase;
-                        case "MessageCircle": return MessageCircle;
-                        case "CheckCircle2": return CheckCircle2;
-                        case "Lightbulb": return Lightbulb;
-                        case "Sparkles": return Sparkles;
-                        default: return Sparkles;
-                      }
-                    })();
-                    return (
-                      <button
-                        type="button"
-                        key={suggestion.id}
-                        onClick={() => handleEdit(suggestion)}
-                        disabled={isEditing}
-                        className="flex items-center gap-1 px-2 sm:px-3 py-2 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-xl text-sm font-medium transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isEditing ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <IconComponent className="w-4 h-4" />
-                        )}
-                        {suggestion.label}
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
-            )}
-          </div>
 
-          {savedToast && (
-            <div className="rounded-lg bg-emerald-50 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-800 px-4 py-2 text-sm text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
-              <Check className="w-4 h-4" />
-              Saved to history
-            </div>
-          )}
-
-          {modelSwitchToast && (
-            <div className="rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 px-4 py-2 text-sm text-blue-700 dark:text-blue-300 flex items-center gap-2 animate-in slide-in-from-top-2 fade-in duration-300">
-              <Sparkles className="w-4 h-4" />
-              {modelSwitchToast}
-            </div>
-          )}
-
-          {styleScore && (
-            <StyleScoreCard score={styleScore} />
-          )}
-
-          {consistencyWarnings.length > 0 && (
-            <ConsistencyWarningBox warnings={consistencyWarnings} onOptimize={handleOptimize} />
-          )}
-
-          {state === "error" && (
-            <ErrorState 
-              title="生成失败"
-              message={error || "发生了未知错误"}
-              onRetry={() => handleGenerate()}
-            />
-          )}
-          {(state === "idle" && viewState !== "interview" && !result) && (
-            <EmptyState
-              icon={PenLine}
-              title="还没有生成内容"
-              description="你的AI生成内容将在这里展示"
-              actionLabel="开始写作"
-              actionHref="/write"
-            />
-          )}
-          {(result || state === "loading" || viewState === "generating") && (
-            comparisonResult ? (
-              <div className="flex-1 grid lg:grid-cols-2 gap-6">
-                {/* Original Result */}
-                <div className="rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none">
-                  <div className="mb-4 font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                    {currentResultModel === "deepseek" ? "DeepSeek" : "Claude"}
-                  </div>
-                  <div className="whitespace-pre-wrap">{result}</div>
+              {consistencyWarnings.length > 0 && (
+                <div className="mb-4">
+                  <ConsistencyWarningBox warnings={consistencyWarnings} onOptimize={handleOptimize} />
                 </div>
-                {/* Comparison Result */}
-                <div className="rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none">
-                  <div className="mb-4 font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-blue-500" />
-                    {currentResultModel === "deepseek" ? "Claude" : "DeepSeek"}
+              )}
+
+              {/* Result Content Area */}
+              <div ref={resultRef} className="flex-1 overflow-y-auto">
+                {state === "loading" ? (
+                  <div className="space-y-4">
+                    <Skeleton variant="title" className="h-6 w-3/4" />
+                    <Skeleton variant="text" className="h-4 w-full" />
+                    <Skeleton variant="text" className="h-4 w-full" />
+                    <Skeleton variant="text" className="h-4 w-5/6" />
+                    <Skeleton variant="title" className="h-6 w-2/3" />
+                    <Skeleton variant="text" className="h-4 w-full" />
+                    <Skeleton variant="text" className="h-4 w-full" />
+                    <Skeleton variant="text" className="h-4 w-4/5" />
                   </div>
-                  <div className="whitespace-pre-wrap">{comparisonResult}</div>
-                </div>
-              </div>
-            ) : (
-              <div
-                ref={resultRef}
-                className="flex-1 rounded-xl border border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950 p-6 overflow-y-auto prose dark:prose-invert max-w-none"
-              >
-                {result ? (
-                  <div className="whitespace-pre-wrap">{result}</div>
+                ) : state === "error" ? (
+                  <ErrorState title="生成失败" message={error || "Something went wrong"} />
                 ) : (
-                  <Skeleton variant="paragraph" />
+                  <div className="prose prose-invert max-w-none">
+                    <div className="whitespace-pre-wrap text-slate-200 leading-relaxed">
+                      {result}
+                    </div>
+                  </div>
                 )}
               </div>
-            )
+
+              {/* Edit Suggestions (bottom) */}
+              {state === "done" && !isEditing && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <h4 className="text-sm font-semibold text-slate-300 mb-3">✨ Edit Suggestions</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => handleEdit("Make this more engaging and dynamic")}
+                      className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm text-slate-300 transition-colors"
+                    >
+                      Make more engaging
+                    </button>
+                    <button
+                      onClick={() => handleEdit("Simplify this and make it easier to understand")}
+                      className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm text-slate-300 transition-colors"
+                    >
+                      Simplify
+                    </button>
+                    <button
+                      onClick={() => handleEdit("Make this more professional and business-like")}
+                      className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm text-slate-300 transition-colors"
+                    >
+                      Make professional
+                    </button>
+                    <button
+                      onClick={() => handleEdit("Add more details and expand on the key points")}
+                      className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-sm text-slate-300 transition-colors"
+                    >
+                      Expand
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </section>
       </div>
-      
-      {/* Keyboard Shortcuts Panel */}
-      {!isMobile && (
-        <div className="fixed bottom-4 right-4 z-40">
-          {showShortcuts ? (
-            <div className="glass-card p-4 w-80 max-w-[90vw] shadow-2xl">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-display font-bold text-white">⌨️ 键盘快捷键</h3>
-                <button 
-                  onClick={() => setShowShortcuts(false)}
-                  className="text-slate-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                >
-                  <ChevronUp className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-300">生成内容</span>
-                  <div className="flex gap-1">
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Enter</kbd>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-300">聚焦到输入框</span>
-                  <div className="flex gap-1">
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">K</kbd>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-300">复制结果</span>
-                  <div className="flex gap-1">
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Shift</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">C</kbd>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-300">下载结果</span>
-                  <div className="flex gap-1">
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">⌘</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Shift</kbd>
-                    <span className="text-slate-400">+</span>
-                    <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">D</kbd>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span className="text-slate-300">清空内容</span>
-                  <kbd className="px-2 py-1 rounded bg-slate-700 text-slate-200 text-xs font-mono">Esc</kbd>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <button
-              onClick={() => setShowShortcuts(true)}
-              className="glass-card px-4 py-3 flex items-center gap-2 hover:bg-opacity-20 transition-all min-h-[44px]"
-            >
-              <span className="text-white text-sm">⌨️ 快捷键</span>
-              <ChevronDown className="w-4 h-4 text-slate-400" />
-            </button>
-          )}
-        </div>
-      )}
-      
-      {/* Onboarding Tooltip */}
-      <OnboardingTooltip />
-      <WriteTourGuide />
-      
-      {showUpgradeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-gray-950 rounded-2xl p-8 max-w-md w-full mx-4 border border-slate-200 dark:border-gray-800 shadow-2xl">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white mb-2">
-                {upgradeModalReason === 'file-upload' ? '文件上传是 Pro 功能' : 'Upgrade to Pro'}
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                {upgradeModalReason === 'file-upload' 
-                  ? '文件上传是Pro/Max专属功能，升级后可上传PDF/Word文档作为写作素材。' 
-                  : 'Claude provides higher quality writing! Upgrade to Pro to use it.'}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Link href="/pricing" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
-                🚀 {upgradeModalReason === 'file-upload' ? '升级到 Pro' : 'Upgrade to Pro'}
-              </Link>
-              <button
-                onClick={() => {
-                  setShowUpgradeModal(false);
-                  setUpgradeModalReason('general');
-                }}
-                className="btn-outline text-center min-h-[44px] flex items-center justify-center"
-              >
-                Not Now
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
