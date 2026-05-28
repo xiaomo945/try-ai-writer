@@ -5,6 +5,7 @@ import { useState } from "react";
 import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
+import { UseCases } from "@/app/components/UseCases";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { LaunchCountdown } from "@/app/components/LaunchCountdown";
 
@@ -188,6 +189,9 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+
+      {/* 使用案例展示 */}
+      <UseCases />
 
       {/* 用户评价区 */}
       <section className="section-container section-spacing">

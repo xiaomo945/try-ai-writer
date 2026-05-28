@@ -260,6 +260,27 @@ const blogPosts = [
   { slug: "ai-writing-for-video-marketing-2026", title: "AI Video Marketing Writing: Thumbnails, Descriptions, and CTAs", date: "2026-05-27" },
   { slug: "ai-writing-for-podcast-marketing", title: "AI Writing for Podcast Marketing: Show Notes and Promotion", date: "2026-05-27" },
   { slug: "ai-writing-for-event-marketing", title: "AI Writing for Event Marketing: Invites, Landing Pages, and Follow-ups", date: "2026-05-27" },
+  // Batch 7: New Expansion - Social & Growth
+  { slug: "ai-writing-for-linkedin-personal-branding", title: "AI Writing for LinkedIn: Build Your Personal Brand in 2026", date: "2026-05-28" },
+  { slug: "ai-writing-for-instagram-captions-2026", title: "AI Writing for Instagram Captions: Engage and Grow Your Audience", date: "2026-05-28" },
+  { slug: "ai-writing-for-facebook-ads-2026", title: "AI Writing for Facebook Ads: Copy That Lowers Cost Per Click", date: "2026-05-28" },
+  { slug: "ai-writing-for-tiktok-content", title: "AI Writing for TikTok: Scripts That Go Viral", date: "2026-05-28" },
+  { slug: "ai-writing-for-pinterest-descriptions-2026", title: "AI Writing for Pinterest: Descriptions That Drive Traffic", date: "2026-05-28" },
+  { slug: "ai-writing-for-youtube-thumbnails", title: "AI Writing for YouTube Thumbnails and Titles: Boost Click-Through Rate", date: "2026-05-28" },
+  { slug: "ai-writing-for-medium-articles-2026", title: "How to Use AI to Write Medium Articles That Get Curated", date: "2026-05-28" },
+  { slug: "ai-writing-for-substack-newsletters", title: "AI Writing for Substack: Grow Your Newsletter Audience", date: "2026-05-28" },
+  { slug: "ai-writing-for-ghostwriting-services", title: "AI Writing for Ghostwriting: How to Scale Your Services", date: "2026-05-28" },
+  { slug: "ai-writing-for-copywriting-freelancers", title: "AI Writing for Freelance Copywriters: Double Your Output", date: "2026-05-28" },
+  { slug: "ai-writing-for-agency-pitch-decks", title: "AI Writing for Agency Pitch Decks: Win More Clients", date: "2026-05-28" },
+  { slug: "ai-writing-for-client-proposals", title: "AI Writing for Client Proposals: Templates That Close Deals", date: "2026-05-28" },
+  { slug: "ai-writing-for-contracts-agreements", title: "AI Writing for Contracts: Clarity and Precision with AI", date: "2026-05-28" },
+  { slug: "ai-writing-for-sop-documentation", title: "AI Writing for Standard Operating Procedures: Consistency at Scale", date: "2026-05-28" },
+  { slug: "ai-writing-for-knowledge-base", title: "AI Writing for Knowledge Base Articles: Help Users Self-Serve", date: "2026-05-28" },
+  { slug: "ai-writing-for-troubleshooting-guides", title: "AI Writing for Troubleshooting Guides: Clear Step-by-Step Instructions", date: "2026-05-28" },
+  { slug: "ai-writing-for-faq-pages-2026", title: "AI Writing for FAQ Pages: Answer Questions Before They're Asked", date: "2026-05-28" },
+  { slug: "ai-writing-for-glossary-pages", title: "AI Writing for Glossary Pages: Define Your Industry Terms", date: "2026-05-28" },
+  { slug: "ai-writing-for-testimonials-collection", title: "AI Writing for Testimonial Collection: Templates That Get Responses", date: "2026-05-28" },
+  { slug: "ai-writing-for-survey-invitations", title: "AI Writing for Survey Invitations: Boost Response Rates", date: "2026-05-28" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
