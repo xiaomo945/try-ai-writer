@@ -433,23 +433,32 @@ export default function WriteEditor() {
         throw new Error(errData?.error || `HTTP ${response.status}`);
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error("No readable stream available");
+      if (!response.body) {
+        throw new Error("生成失败，请稍后重试");
+      }
 
+      const reader = response.body.getReader();
       const decoder = new TextDecoder();
-      let done = false;
       let accumulated = "";
 
-      while (!done) {
-        const { value, done: streamDone } = await reader.read();
-        done = streamDone;
-        if (value) {
-          accumulated += decoder.decode(value, { stream: !done });
-          if (isComparison) {
-            setComparisonResult(accumulated);
-          } else {
-            setResult(accumulated);
+      try {
+        while (true) {
+          const { value, done: streamDone } = await reader.read();
+          if (streamDone) break;
+          if (value) {
+            accumulated += decoder.decode(value, { stream: true });
+            if (isComparison) {
+              setComparisonResult(accumulated);
+            } else {
+              setResult(accumulated);
+            }
           }
+        }
+      } finally {
+        try {
+          reader.releaseLock();
+        } catch {
+          // ignore release errors
         }
       }
       setState("done");

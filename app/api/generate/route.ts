@@ -151,10 +151,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const reader = response.body?.getReader();
-    if (!reader) {
-      return Response.json({ error: "No stream available" }, { status: 500 });
+    if (!response.body) {
+      return Response.json({ error: "生成失败，请稍后重试" }, { status: 500 });
     }
+
+    const reader = response.body.getReader();
 
     const decoder = new TextDecoder();
     const encoder = new TextEncoder();
@@ -184,7 +185,17 @@ export async function POST(request: NextRequest) {
           }
           controller.close();
         } catch (error) {
-          controller.error(error);
+          try {
+            controller.error(error);
+          } catch {
+            // controller already closed or errored, ignore
+          }
+        } finally {
+          try {
+            reader.releaseLock();
+          } catch {
+            // ignore release errors
+          }
         }
       },
     });
