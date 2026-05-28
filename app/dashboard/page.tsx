@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette, Users, Copy, Share2 } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
 import { useBrandVoice } from "@/lib/brand-voice";
@@ -14,6 +14,7 @@ import { getWeeklyInsights } from "@/lib/weekly-insights";
 import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalTwinAvatar";
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 import { ReferralShare } from "@/app/components/ReferralShare";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
@@ -429,6 +430,9 @@ export default function DashboardPage() {
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showReferralPopup, setShowReferralPopup] = useState(false);
+  const [referralData, setReferralData] = useState<any>(null);
+  const [referralLinkCopied, setReferralLinkCopied] = useState(false);
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
   const [userStage, setUserStage] = useState(0); // Default to stage 0
 
@@ -447,6 +451,23 @@ export default function DashboardPage() {
   const insights = useMemo(() => {
     return getWeeklyInsights(records, memories, weeklyStats);
   }, [records, memories, weeklyStats]);
+
+  const referralsCount = referralData?.referrals?.length || 0;
+  const referralProgress = Math.min((referralsCount / REFERRAL_REWARDS.milestone.threshold) * 100, 100);
+
+  const copyReferralLink = async () => {
+    if (referralData) {
+      const link = getReferralLink(referralData.referralCode);
+      await navigator.clipboard.writeText(link);
+      setReferralLinkCopied(true);
+      setTimeout(() => setReferralLinkCopied(false), 1500);
+    }
+  };
+
+  const dismissReferralPopup = () => {
+    setShowReferralPopup(false);
+    localStorage.setItem('referral_shown', 'true');
+  };
 
   // Set registration time and calculate user stage in useEffect
   useEffect(() => {
@@ -480,6 +501,15 @@ export default function DashboardPage() {
     if (isLoaded) {
       setShowOnboarding(!hasProfile);
     }
+
+    // Load referral data
+    const data = initializeReferral();
+    setReferralData(data);
+
+    // Check if new user popup should be shown
+    if (!localStorage.getItem('referral_shown')) {
+      setShowReferralPopup(true);
+    }
   }, [isLoaded, hasProfile]);
 
   const hasRealData = records.length > 0;
@@ -492,6 +522,53 @@ export default function DashboardPage() {
     <main className="min-h-screen flex flex-col">
       {/* Onboarding Wizard */}
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
+      
+      {/* Referral Popup for New Users */}
+      {showReferralPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
+            <button 
+              onClick={dismissReferralPopup}
+              className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">
+                邀请好友一起写作
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400">
+                邀请好友，双方各得3天Pro体验
+              </p>
+            </div>
+            <div className="space-y-3">
+              <button
+                onClick={copyReferralLink}
+                className="w-full btn-primary min-h-[48px] flex items-center justify-center gap-2 text-base"
+              >
+                {referralLinkCopied ? (
+                  <>
+                    <Copy className="w-5 h-5" /> 已复制！
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-5 h-5" /> 复制邀请链接
+                  </>
+                )}
+              </button>
+              <button
+                onClick={dismissReferralPopup}
+                className="w-full text-center text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-2"
+              >
+                稍后再说
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -702,6 +779,32 @@ export default function DashboardPage() {
             <Link href="/pricing/credits" className="btn-primary text-sm text-center block min-h-[44px] flex items-center justify-center">
               🛒 Buy Credits
             </Link>
+          </div>
+
+          {/* Referral Progress */}
+          <div className="card bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/20 dark:to-gray-950 border-emerald-200 dark:border-emerald-800">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                <Share2 className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="font-semibold text-slate-900 dark:text-white">邀请好友</h3>
+            </div>
+            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-emerald-400 mb-1">
+              {referralsCount}/5
+            </p>
+            <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-2">
+              <div
+                className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
+                style={{ width: `${referralProgress}%` }}
+              />
+            </div>
+            {referralsCount >= 5 ? (
+              <p className="text-sm text-emerald-600 font-medium">🎉 恭喜！你已获得1个月Pro</p>
+            ) : (
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                再邀请{5 - referralsCount}人获得额外奖励
+              </p>
+            )}
           </div>
         </div>
 
