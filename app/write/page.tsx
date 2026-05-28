@@ -31,6 +31,7 @@ import { OnboardingTooltip } from '@/app/components/OnboardingTooltip';
 import { ThemeToggle } from '@/app/components/ThemeToggle';
 import { useAvatarVariant } from '@/lib/avatar-variant';
 import Logo from '@/app/components/Logo';
+import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -442,25 +443,29 @@ export default function WriteEditor() {
       let accumulated = "";
 
       try {
-        while (true) {
-          const { value, done: streamDone } = await reader.read();
-          if (streamDone) break;
-          if (value) {
-            accumulated += decoder.decode(value, { stream: true });
-            if (isComparison) {
-              setComparisonResult(accumulated);
-            } else {
-              setResult(accumulated);
+        try {
+          while (true) {
+            const { value, done: streamDone } = await reader.read();
+            if (streamDone) break;
+            if (value) {
+              accumulated += decoder.decode(value, { stream: true });
+              if (isComparison) {
+                setComparisonResult(accumulated);
+              } else {
+                setResult(accumulated);
+              }
             }
           }
+        } catch (streamErr: unknown) {
+          const streamMsg = streamErr instanceof Error ? streamErr.message : "Stream reading failed";
+          throw new Error(streamMsg);
+        } finally {
+          try {
+            reader.releaseLock();
+          } catch {
+            // ignore release errors
+          }
         }
-      } finally {
-        try {
-          reader.releaseLock();
-        } catch {
-          // ignore release errors
-        }
-      }
       setState("done");
       setViewState("result");
       setAvatarState('approving');
@@ -768,13 +773,14 @@ export default function WriteEditor() {
   }, [result, handleGenerateClick, handleCopy, handleDownload, handleClear]);
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#0A0A0C]">
-      <HistorySearchModal
-        isOpen={showHistoryModal}
-        onClose={() => setShowHistoryModal(false)}
-        records={records}
-        onSelect={handleQuoteFromHistory}
-      />
+    <ErrorBoundary>
+      <main className="min-h-screen flex flex-col bg-[#0A0A0C]">
+        <HistorySearchModal
+          isOpen={showHistoryModal}
+          onClose={() => setShowHistoryModal(false)}
+          records={records}
+          onSelect={handleQuoteFromHistory}
+        />
 
       <MemorySearchPanel
         isOpen={showMemoryPanel}
@@ -1355,5 +1361,6 @@ export default function WriteEditor() {
         </section>
       </div>
     </main>
+  </ErrorBoundary>
   );
 }
