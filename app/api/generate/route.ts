@@ -1,4 +1,6 @@
 import { NextRequest } from "next/server";
+import { generateClaudeStream } from "@/lib/ai-providers/claude";
+import { generateDeepSeekStream } from "@/lib/ai-providers/deepseek";
 
 type ModePrompt = {
   blog: string;
@@ -88,7 +90,7 @@ The best part? They learn your style and get better every time.
 Try it free today. Your future self will thank you. ✨
 
 #AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude API key in the environment variables.`,
+  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
 };
 
 export async function POST(request: NextRequest) {
@@ -117,88 +119,58 @@ export async function POST(request: NextRequest) {
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
-    const apiKey = process.env.CLAUDE_API_KEY;
-    const isMockMode = !apiKey || apiKey === "sk-ant-xxxxx" || apiKey.startsWith("your-");
-    if (isMockMode) {
+    const aiProvider = (process.env.AI_PROVIDER || "claude").toLowerCase();
+    console.log(`[Generate] Selected AI Provider: ${aiProvider}`);
+
+    let stream: ReadableStream<Uint8Array>;
+
+    try {
+      if (aiProvider === "deepseek") {
+        console.log("[Generate] Using DeepSeek provider...");
+        stream = await generateDeepSeekStream({
+          prompt,
+          systemPrompt,
+          model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+          maxTokens: 4096,
+          temperature: 0.7,
+        });
+      } else if (aiProvider === "claude") {
+        console.log("[Generate] Using Claude provider...");
+        stream = await generateClaudeStream({
+          prompt,
+          systemPrompt,
+          model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+          maxTokens: 4096,
+          temperature: 0.7,
+        });
+      } else {
+        console.warn(`[Generate] Unknown provider: ${aiProvider}, falling back to Claude`);
+        stream = await generateClaudeStream({
+          prompt,
+          systemPrompt,
+          model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+          maxTokens: 4096,
+          temperature: 0.7,
+        });
+      }
+    } catch (error) {
+      console.log(`[Generate] Falling back to mock mode due to: ${error}`);
       const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
-      return new Response(mockText, {
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8",
+      const encoder = new TextEncoder();
+      
+      // 模拟流式响应
+      stream = new ReadableStream({
+        async start(controller) {
+          const chunkSize = 50;
+          for (let i = 0; i < mockText.length; i += chunkSize) {
+            const chunk = mockText.substring(i, i + chunkSize);
+            controller.enqueue(encoder.encode(chunk));
+            await new Promise(resolve => setTimeout(resolve, 50));
+          }
+          controller.close();
         },
       });
     }
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4096,
-        stream: true,
-        messages: [{ role: "user", content: systemPrompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      const errBody = await response.text();
-      return Response.json(
-        { error: `Claude API error: ${response.status} - ${errBody}` },
-        { status: response.status }
-      );
-    }
-
-    if (!response.body) {
-      return Response.json({ error: "生成失败，请稍后重试" }, { status: 500 });
-    }
-
-    const reader = response.body.getReader();
-
-    const decoder = new TextDecoder();
-    const encoder = new TextEncoder();
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split("\n");
-            for (const line of lines) {
-              if (line.startsWith("data: ")) {
-                const data = line.slice(6);
-                if (data === "[DONE]") continue;
-                try {
-                  const parsed = JSON.parse(data);
-                  if (parsed.type === "content_block_delta" && parsed.delta?.text) {
-                    controller.enqueue(encoder.encode(parsed.delta.text));
-                  }
-                } catch {
-                  // ignore parse errors
-                }
-              }
-            }
-          }
-          controller.close();
-        } catch (error) {
-          try {
-            controller.error(error);
-          } catch {
-            // controller already closed or errored, ignore
-          }
-        } finally {
-          try {
-            reader.releaseLock();
-          } catch {
-            // ignore release errors
-          }
-        }
-      },
-    });
 
     return new Response(stream, {
       headers: {
@@ -209,6 +181,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Internal server error";
+    console.error("[Generate] Fatal error:", error);
     return Response.json({ error: message }, { status: 500 });
   }
 }

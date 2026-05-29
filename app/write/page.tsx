@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Zap, Copy, Download, Trash2, Loader2, Check } from "lucide-react";
+import { Zap, Copy, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
@@ -24,11 +24,41 @@ export default function WritePage() {
     if (!prompt.trim()) return;
     
     setState("loading");
+    setOutput("");
+    
     try {
-      // 模拟生成过程
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const mockText = "This is a sample generated text. In the full version, this will be replaced with real AI-generated content based on your prompt. The original page had many features that we'll restore step by step.";
-      setOutput(mockText);
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt,
+          mode,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate");
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error("No response body");
+      }
+
+      const decoder = new TextDecoder();
+      let fullText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value, { stream: true });
+        fullText += text;
+        setOutput(fullText);
+      }
+
       setState("done");
     } catch (error) {
       console.error("Generation failed:", error);
