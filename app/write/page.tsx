@@ -31,7 +31,6 @@ import { OnboardingTooltip } from '@/app/components/OnboardingTooltip';
 import { ThemeToggle } from '@/app/components/ThemeToggle';
 import { useAvatarVariant } from '@/lib/avatar-variant';
 import Logo from '@/app/components/Logo';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -769,8 +768,7 @@ export default function WriteEditor() {
   }, [result, handleGenerateClick, handleCopy, handleDownload, handleClear]);
 
   return (
-    <ErrorBoundary>
-      <main className="min-h-screen flex flex-col bg-[#0A0A0C]">
+    <main className="min-h-screen flex flex-col bg-[#0A0A0C]">
       <HistorySearchModal
         isOpen={showHistoryModal}
         onClose={() => setShowHistoryModal(false)}
@@ -1357,6 +1355,5 @@ export default function WriteEditor() {
         </section>
       </div>
     </main>
-  </ErrorBoundary>
   );
 }
