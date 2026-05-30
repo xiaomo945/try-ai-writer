@@ -326,6 +326,8 @@ export default function LandingPage() {
           <div className="flex items-center gap-4 sm:gap-6 text-sm text-slate-400">
             <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
             <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <a href="https://useaitools.me" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Use AI Tools</a>
             <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Free</Link>
           </div>
