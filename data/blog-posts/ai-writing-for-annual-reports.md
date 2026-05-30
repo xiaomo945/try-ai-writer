@@ -32,7 +32,7 @@ The narrative parts of an annual report take time. AI can help you:
 - Create management discussion sections
 - Draft the future outlook
 
-Use AI Writer to create first drafts, then refine with your specific information.
+Try AI Writer to create first drafts, then refine with your specific information.
 
 ### 2. Explain Financial Information Clearly
 
@@ -97,7 +97,7 @@ Have different people review the report before publishing.
 
 ## Case Study: AI Saves Weeks on Annual Report Creation
 
-A company's annual report was taking too long to create. They used Use AI Writer to:
+A company's annual report was taking too long to create. They used Try AI Writer to:
 - Draft narrative sections
 - Write financial explanations
 - Edit and refine

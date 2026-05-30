@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you create compelling investor upd
 
 Investor updates are one of the most important communications a company produces. They shape investor perception, influence funding decisions, and set the narrative for your company trajectory. Yet many founders and executives struggle to write investor updates that are informative, concise, and compelling. The result is updates that are either too brief to be useful or too detailed to be readable. AI writing tools are helping teams produce investor updates that hit the sweet spot: comprehensive enough to inform, concise enough to respect busy schedules, and clear enough to build confidence.
 
-When you Use AI Writer capabilities for stakeholder communication, you can transform raw business data into polished investor updates that tell a compelling story about your progress.
+When you Try AI Writer capabilities for stakeholder communication, you can transform raw business data into polished investor updates that tell a compelling story about your progress.
 
 ## Why Investor Updates Matter More Than You Think
 
@@ -73,7 +73,7 @@ Producing better investor updates with AI is a process that becomes faster with 
 
 1. **Define your update structure.** Establish a consistent format that covers highlights, key metrics, challenges, asks, and upcoming priorities. Share this structure with your investors so they know what to expect.
 2. **Collect data.** Gather your key metrics, milestones, and developments for the reporting period. Organize them by category.
-3. **Generate the draft.** Use AI Writer to transform your collected data into a structured investor update. Specify your preferred tone, length, and format.
+3. **Generate the draft.** Try AI Writer to transform your collected data into a structured investor update. Specify your preferred tone, length, and format.
 4. **Review for accuracy and strategy.** Verify all numbers and statements for accuracy. Ensure the narrative supports your strategic messaging and that your asks are specific and actionable.
 5. **Distribute and follow up.** Send the update to your investors on a consistent schedule. Follow up with any investors who respond with questions or offers to help.
 

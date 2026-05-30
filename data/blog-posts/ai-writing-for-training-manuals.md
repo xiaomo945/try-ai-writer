@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you create structured, easy-to-fol
 
 Training manuals are the backbone of consistent skill development in any organization. Whether you are training new hires, upskilling existing employees, or documenting standard operating procedures, the quality of your training materials directly affects learning outcomes. Yet writing effective training manuals is hard work that requires instructional design expertise, subject matter knowledge, and clear writing skills. AI writing tools are making it possible to produce professional training manuals faster and with less specialized expertise.
 
-When you Use AI Writer features for instructional content, you get structured, step-by-step training materials that are easy to follow, comprehensive, and consistent across your entire training program.
+When you Try AI Writer features for instructional content, you get structured, step-by-step training materials that are easy to follow, comprehensive, and consistent across your entire training program.
 
 ## Why Training Manual Quality Matters
 
@@ -72,7 +72,7 @@ Before deploying a training manual widely, test it with a small group of learner
 Creating training manuals with AI is a systematic process that produces consistent results.
 
 1. **Define learning objectives.** For each training module, specify what the learner should be able to do after completing it. Clear objectives guide the content generation process.
-2. **Outline the structure.** Use AI Writer to generate a structured outline that covers all necessary topics in a logical sequence. Review and adjust the outline before generating full content.
+2. **Outline the structure.** Try AI Writer to generate a structured outline that covers all necessary topics in a logical sequence. Review and adjust the outline before generating full content.
 3. **Generate content section by section.** Work through each section of the outline, generating step-by-step instructions, examples, and exercises. Review each section as it is generated.
 4. **Add assessments.** Generate quizzes and practical exercises for each module to verify learning.
 5. **Expert review.** Have subject matter experts review the complete manual for accuracy and completeness.

@@ -32,7 +32,7 @@ Getting investment starts with a great pitch. Use AI to:
 - Create elevator pitches
 - Refine your value proposition
 
-Use AI Writer can help you communicate your vision clearly and compellingly.
+Try AI Writer can help you communicate your vision clearly and compellingly.
 
 ### 2. Explain Your Product Simply
 
@@ -87,7 +87,7 @@ Always review and add your personal touch—your team needs to hear from you.
 
 ## Tools That Don't Require Technical Skills
 
-Use AI Writer is designed for non-technical users. You don't need to learn anything complicated—just describe what you want, and AI helps you write it.
+Try AI Writer is designed for non-technical users. You don't need to learn anything complicated—just describe what you want, and AI helps you write it.
 
 ## Common Concerns
 
@@ -102,7 +102,7 @@ Compared to hiring a full-time writer, AI tools are very affordable. Most have p
 
 ## Case Study: How a Non-Technical Founder Raised $2M
 
-Jessica had a great idea for a healthcare startup but struggled to communicate it clearly. She started using Use AI Writer to:
+Jessica had a great idea for a healthcare startup but struggled to communicate it clearly. She started using Try AI Writer to:
 - Draft her investor pitch
 - Write clear product descriptions
 - Create thought leadership content

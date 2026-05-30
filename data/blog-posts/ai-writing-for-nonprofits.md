@@ -29,7 +29,7 @@ Grant writing is one of the most important—and time-consuming—writing tasks 
 - Refine your budget narrative
 - Tailor proposals to different funders
 
-Use AI Writer is great for this. Just feed it your organization's mission, the program details, and the funder's priorities, and it will generate a first draft you can refine.
+Try AI Writer is great for this. Just feed it your organization's mission, the program details, and the funder's priorities, and it will generate a first draft you can refine.
 
 ### 2. Fundraising Emails and Appeals
 
@@ -58,7 +58,7 @@ Annual reports are a big project. AI can help you:
 
 ### Keep Your Voice Authentic
 
-Your donors support you because of who you are. Use AI to draft, but always add your authentic voice. Use AI Writer can learn your voice from your previous content.
+Your donors support you because of who you are. Use AI to draft, but always add your authentic voice. Try AI Writer can learn your voice from your previous content.
 
 ### Be Transparent
 
@@ -66,16 +66,16 @@ It's good to be open about using AI if you want to be. You don't have to adverti
 
 ### Protect Donor Privacy
 
-Choose AI tools that prioritize privacy. Use AI Writer is built for privacy—your data is never used for training.
+Choose AI tools that prioritize privacy. Try AI Writer is built for privacy—your data is never used for training.
 
 ## Case Study: How a Nonprofit Increased Grants Won
 
-A small animal shelter was spending 40 hours per grant proposal and winning about 1 in 4. They started using Use AI Writer to draft proposals and cut their time to 20 hours. They also won 1 in 2 grants because their proposals were more consistent and compelling.
+A small animal shelter was spending 40 hours per grant proposal and winning about 1 in 4. They started using Try AI Writer to draft proposals and cut their time to 20 hours. They also won 1 in 2 grants because their proposals were more consistent and compelling.
 
 ## Practical Tips
 
 - **Create templates**: Develop templates for common documents and use them with AI.
-- **Train the AI**: Give Use AI Writer your previous successful proposals so it learns your style.
+- **Train the AI**: Give Try AI Writer your previous successful proposals so it learns your style.
 - **Edit everything**: AI is a tool, not a replacement. Always edit what it generates.
 
 ## Related Articles

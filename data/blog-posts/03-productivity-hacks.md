@@ -3,7 +3,7 @@ title: "10 Productivity Hacks for Content Creators in 2026"
 date: "2026-02-01"
 tags: ["Productivity", "Content Creation", "Workflow"]
 description: "Ten proven productivity strategies to help content creators produce more high-quality content in less time in 2026."
-author: "Use AI Writer"
+author: "Try AI Writer"
 ---
 
 # 10 Productivity Hacks for Content Creators in 2026
@@ -23,7 +23,7 @@ Whether it's blog posts, newsletters, or social media updates, templates save ti
 - Checklists for required elements
 - Examples of successful past content
 
-Tools like [Use AI Writer](/) come with built-in templates for many content types.
+Tools like [Try AI Writer](/) come with built-in templates for many content types.
 
 ## 3. Use the Two-Minute Rule
 

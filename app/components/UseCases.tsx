@@ -52,7 +52,7 @@ export function UseCases() {
             Trusted by Creators Across Industries
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            See how Use AI Writer helps professionals in different fields
+            See how Try AI Writer helps professionals in different fields
           </p>
         </div>
 

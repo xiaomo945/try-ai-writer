@@ -13,7 +13,7 @@ Your resume gets an average of six seconds of attention from a recruiter before 
 
 Most resumes list responsibilities instead of achievements. "Managed a team of five" tells recruiters nothing about your impact. "Led a five-person team that increased quarterly revenue by 23% through process optimization" paints a picture of a results-driven professional. The difference is transformational.
 
-AI writing platforms like Use AI Writer can take your raw job duties and transform them into achievement-focused bullet points that quantify impact, highlight relevant skills, and use action-oriented language that resonates with hiring managers and applicant tracking systems.
+AI writing platforms like Try AI Writer can take your raw job duties and transform them into achievement-focused bullet points that quantify impact, highlight relevant skills, and use action-oriented language that resonates with hiring managers and applicant tracking systems.
 
 ### The Formula for Powerful Resume Bullets
 
@@ -21,7 +21,7 @@ Every strong resume bullet follows a proven formula: start with a powerful actio
 
 AI writing tools understand this formula and apply it systematically. Provide the tool with your job title, responsibilities, and any available metrics, and it generates bullet points that follow the achievement structure. If you do not have exact numbers, the AI can suggest placeholder metrics that you can fill in with your actual data.
 
-Use AI Writer to generate multiple versions of each bullet point. One version might emphasize leadership, another might focus on technical skills, and a third might highlight process improvement. This variety lets you choose the angle that best aligns with the job you are applying for.
+Try AI Writer to generate multiple versions of each bullet point. One version might emphasize leadership, another might focus on technical skills, and a third might highlight process improvement. This variety lets you choose the angle that best aligns with the job you are applying for.
 
 ### Tailoring Bullets for Specific Roles
 
@@ -63,7 +63,7 @@ Generate a comprehensive first draft. Use AI to create bullet points for every r
 
 Edit ruthlessly. Select the strongest bullets for each role, remove redundant or irrelevant achievements, and ensure every bullet demonstrates value. Your final resume should tell a cohesive story of growth and impact.
 
-Use AI Writer to transform your career history into a compelling narrative of achievement. The professionals who invest time in crafting powerful resume bullets consistently get more interviews, better offers, and faster career progression than those who settle for generic responsibility lists.
+Try AI Writer to transform your career history into a compelling narrative of achievement. The professionals who invest time in crafting powerful resume bullets consistently get more interviews, better offers, and faster career progression than those who settle for generic responsibility lists.
 
 ## Related Articles
 - [AI Writing for Cover Letters](/blog/ai-writing-for-cover-letter)

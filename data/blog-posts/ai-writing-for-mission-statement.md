@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you craft a compelling mission sta
 
 A mission statement is the single most important sentence your company will ever write. It defines why you exist, who you serve, and what value you deliver. Yet many companies struggle to distill their purpose into a clear, memorable statement. Hours of meetings produce vague, generic phrases that nobody remembers. AI writing tools are changing this by helping teams generate focused, authentic mission statements that capture the essence of their organization.
 
-When you Use AI Writer features for strategic messaging, you can transform scattered ideas about your company purpose into a polished, impactful mission statement that guides every decision you make.
+When you Try AI Writer features for strategic messaging, you can transform scattered ideas about your company purpose into a polished, impactful mission statement that guides every decision you make.
 
 ## Why a Strong Mission Statement Matters
 
@@ -68,7 +68,7 @@ Share your top mission statement candidates with people outside your company. As
 Creating a mission statement with AI is a focused process that can be completed in a single session.
 
 1. **Gather input.** Collect perspectives from founders, leadership, and key team members about the company purpose, target audience, and desired impact.
-2. **Run structured prompts.** Use AI Writer to process your collected inputs and generate multiple mission statement drafts. Request variations in length and tone.
+2. **Run structured prompts.** Try AI Writer to process your collected inputs and generate multiple mission statement drafts. Request variations in length and tone.
 3. **Review and shortlist.** Have your leadership team review all drafts and identify the top three to five options.
 4. **Refine.** Use AI to refine your shortlisted options based on team feedback. Focus on clarity, specificity, and memorability.
 5. **Test externally.** Share your top two options with trusted customers, advisors, or partners. Gather their reactions.

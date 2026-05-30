@@ -16,7 +16,7 @@ Before we dive in, a few things to keep in mind:
 - **Detection is hard**: Good AI writing can be very hard to spot.
 - **Context matters**: The question isn't just "was this written by AI?" but "how was AI used, and is this ethical for the context?"
 
-Use AI Writer is built to help writers create better content while keeping their voice—we think transparency is important.
+Try AI Writer is built to help writers create better content while keeping their voice—we think transparency is important.
 
 ## What to Look For
 
@@ -65,7 +65,7 @@ Instead of asking "was this written by AI?" ask:
 - Does the writing add value?
 - Is it original and high-quality?
 
-At Use AI Writer, we believe AI should be a tool to help writers, not replace them. That's why we focus on brand voice training—so AI helps writers sound more like themselves, not less.
+At Try AI Writer, we believe AI should be a tool to help writers, not replace them. That's why we focus on brand voice training—so AI helps writers sound more like themselves, not less.
 
 ## Related Articles
 

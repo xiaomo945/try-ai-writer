@@ -624,7 +624,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 transition-colors">
             <Logo size={32} />
-            <span className="font-display text-xl font-bold">Use AI Writer</span>
+            <span className="font-display text-xl font-bold">Try AI Writer</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-shadow">

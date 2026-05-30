@@ -30,7 +30,7 @@ Research is the foundation of a good whitepaper. AI can help you:
 - Gather case study examples
 - Compile research from multiple sources
 
-Use AI Writer to find information, but always verify facts from primary sources.
+Try AI Writer to find information, but always verify facts from primary sources.
 
 ### 2. Outline Your Whitepaper
 
@@ -96,7 +96,7 @@ Support your claims with data, but don't overwhelm readers.
 
 ## Case Study: AI Cuts Whitepaper Creation Time in Half
 
-A B2B company needed a whitepaper but was short on time. They used Use AI Writer to:
+A B2B company needed a whitepaper but was short on time. They used Try AI Writer to:
 - Research industry trends
 - Outline the whitepaper
 - Draft each section

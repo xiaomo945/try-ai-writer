@@ -30,7 +30,7 @@ Coming up with great billboard ideas is hard. AI can help you:
 - Play with words and puns
 - Find inspiration from different industries
 
-Use AI Writer to generate ideas, then pick the best ones to refine.
+Try AI Writer to generate ideas, then pick the best ones to refine.
 
 ### 2. Test Different Messaging Angles
 
@@ -95,7 +95,7 @@ Use humor, wordplay, or emotion to stick in people's minds.
 
 ## Case Study: AI-Generated Billboard Idea Increases Store Traffic 30%
 
-A local business was struggling to get people in the door. They used Use AI Writer to:
+A local business was struggling to get people in the door. They used Try AI Writer to:
 - Generate 50+ billboard ideas
 - Pick the funniest, most memorable one
 - Test it in a few locations

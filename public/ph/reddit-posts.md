@@ -6,13 +6,13 @@ Here are tailored post templates for different Reddit communities!
 
 ## r/SaaS Post
 
-**Title:** Use AI Writer: Affordable Claude-powered AI writing that learns YOUR brand voice
+**Title:** Try AI Writer: Affordable Claude-powered AI writing that learns YOUR brand voice
 
 **Body:**
 
 Hey r/SaaS! 👋
 
-Just launched Use AI Writer on Product Hunt—an AI writing tool that learns your unique brand voice instead of just giving generic content!
+Just launched Try AI Writer on Product Hunt—an AI writing tool that learns your unique brand voice instead of just giving generic content!
 
 **What makes us different:**
 - 🎯 Actually learns your writing style and brand voice
@@ -40,7 +40,7 @@ Would love to hear your thoughts!
 
 Hello r/artificial!
 
-My team has been working on Use AI Writer—an AI writing tool that actually learns and replicates your unique writing style/brand voice, rather than just using generic templates!
+My team has been working on Try AI Writer—an AI writing tool that actually learns and replicates your unique writing style/brand voice, rather than just using generic templates!
 
 **Key features:**
 - Claude + DeepSeek AI models
@@ -66,7 +66,7 @@ Hi fellow writers!
 
 Tired of AI writing that just sounds like... well, AI?
 
-We built Use AI Writer to change that—it actually analyzes your existing writing samples to learn and replicate your personal style and tone!
+We built Try AI Writer to change that—it actually analyzes your existing writing samples to learn and replicate your personal style and tone!
 
 Use it for:
 - Drafting faster first versions
@@ -83,13 +83,13 @@ https://producthunt.com/posts/use-ai-writer
 
 ## r/SideProject Post
 
-**Title:** Just launched Use AI Writer on Product Hunt! Would love your support
+**Title:** Just launched Try AI Writer on Product Hunt! Would love your support
 
 **Body:**
 
 Hey r/SideProject! 🚀
 
-After months of late nights and countless iterations, my team just launched Use AI Writer on Product Hunt! It's an AI writing tool that learns your brand voice and creates content that actually sounds like YOU.
+After months of late nights and countless iterations, my team just launched Try AI Writer on Product Hunt! It's an AI writing tool that learns your brand voice and creates content that actually sounds like YOU.
 
 **What we've built:**
 - ✅ Claude + DeepSeek dual AI models
@@ -114,7 +114,7 @@ Also, if you're launching something soon—hit me up! I love supporting other si
 
 Hey content creators!
 
-Big day—we just launched Use AI Writer on Product Hunt! It's designed specifically for content creators who want the speed of AI without sacrificing their unique brand voice.
+Big day—we just launched Try AI Writer on Product Hunt! It's designed specifically for content creators who want the speed of AI without sacrificing their unique brand voice.
 
 **Why you might care:**
 - 🚀 Write 3x faster without sounding generic

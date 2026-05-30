@@ -13,7 +13,7 @@ https://tryaiwriter.com/blog/ai-writing-tools-affordable
 **Thread Post 2**:
 One of the biggest myths: "More expensive = better quality"
 We've found this is usually not true. Most tools use similar AI models under the hood — they just charge more for a fancier UI.
-At Use AI Writer, Pro is just $9/mo (1/5th the price of competitors)
+At Try AI Writer, Pro is just $9/mo (1/5th the price of competitors)
 
 **Thread Post 3**:
 What do you look for in an AI writing tool?
@@ -33,7 +33,7 @@ https://tryaiwriter.com/blog/brand-voice-ai-writing
 Step 1: Share 5-10 samples of your writing
 Step 2: AI analyzes your style, tone, vocabulary
 Step 3: It generates content in *your* voice, not generic corporate speak
-This is what we've built at Use AI Writer
+This is what we've built at Try AI Writer
 
 **Thread Post 3**:
 Would you use a tool that writes in your unique voice?

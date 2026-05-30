@@ -32,7 +32,7 @@ Outlining a course takes time. AI can help you:
 - Identify key learning objectives
 - Structure your course logically
 
-Use AI Writer to create a first outline, then refine it with your expertise.
+Try AI Writer to create a first outline, then refine it with your expertise.
 
 ### 2. Draft Lesson Content
 
@@ -95,7 +95,7 @@ Keep your course content fresh and up-to-date.
 
 ## Case Study: AI Helps Launch Course in Half the Time
 
-A course creator was taking too long to launch. They used Use AI Writer to:
+A course creator was taking too long to launch. They used Try AI Writer to:
 - Create the course outline
 - Draft lesson content
 - Write quizzes

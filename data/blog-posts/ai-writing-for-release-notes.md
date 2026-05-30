@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you craft clear, user-friendly rel
 
 Release notes are one of the most important communication channels between your product team and your users. They inform customers about new features, improvements, bug fixes, and known issues. Yet many companies treat release notes as an afterthought, producing vague, technical documents that nobody reads. Well-written release notes drive feature adoption, reduce support inquiries, and build user trust. AI writing tools are helping product teams produce release notes that are clear, engaging, and tailored to their audience.
 
-When you Use AI Writer capabilities for product communication, you can transform technical changelogs into user-friendly release notes that actually get read and acted upon.
+When you Try AI Writer capabilities for product communication, you can transform technical changelogs into user-friendly release notes that actually get read and acted upon.
 
 ## Why Release Notes Deserve Your Best Writing
 
@@ -69,7 +69,7 @@ Improving your release notes with AI is a quick win for product communication.
 
 1. **Audit your current release notes.** Review your last few releases and evaluate clarity, completeness, and user engagement. Identify patterns in what works and what does not.
 2. **Gather technical input.** Collect the raw change data from your development team, including feature descriptions, bug fixes, and known issues.
-3. **Generate user-friendly notes.** Use AI Writer to transform the technical input into clear, categorized release notes. Specify your preferred format, tone, and audience.
+3. **Generate user-friendly notes.** Try AI Writer to transform the technical input into clear, categorized release notes. Specify your preferred format, tone, and audience.
 4. **Review and publish.** Have a product manager review the generated notes for accuracy and completeness, then publish across your chosen channels.
 5. **Track engagement.** Monitor metrics like page views, time on page, and feature adoption rates after each release. Use this data to refine your release notes over time.
 

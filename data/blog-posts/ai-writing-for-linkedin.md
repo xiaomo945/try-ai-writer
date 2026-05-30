@@ -31,7 +31,7 @@ Coming up with new post ideas every week is exhausting. Use AI to:
 - Find trending conversations you can add to
 - Repurpose your existing content into LinkedIn posts
 
-Use AI Writer's "LinkedIn Post" template is perfect for this—just tell it what you want to talk about, and it will generate several angles to choose from.
+Try AI Writer's "LinkedIn Post" template is perfect for this—just tell it what you want to talk about, and it will generate several angles to choose from.
 
 ### Drafting and Refining
 
@@ -94,7 +94,7 @@ The result? I'm getting more done in 6 hours than I used to in 10, and I'm less 
 
 What's your best productivity tip? Share in the comments!"
 
-See the difference? The second one is personal, engaging, and invites conversation. Use AI Writer can help you go from the first version to the second in minutes.
+See the difference? The second one is personal, engaging, and invites conversation. Try AI Writer can help you go from the first version to the second in minutes.
 
 ## Related Articles
 

@@ -3,7 +3,7 @@ title: "Maintaining Brand Voice Consistency Across All Channels"
 date: "2026-01-22"
 tags: ["Brand Voice", "Consistency", "Content Marketing"]
 description: "Learn how to maintain brand voice consistency across every channel using AI writing tools and clear guidelines."
-author: "Use AI Writer"
+author: "Try AI Writer"
 ---
 
 # Maintaining Brand Voice Consistency Across All Channels
@@ -67,7 +67,7 @@ Modern technology offers several solutions:
 - **Content calendars**: Planning tools that ensure strategic alignment
 - **Review processes**: Quality control checkpoints before publication
 
-[Use AI Writer](/) is designed to learn and maintain your brand voice across all your content.
+[Try AI Writer](/) is designed to learn and maintain your brand voice across all your content.
 
 ## Training Your Team
 

@@ -90,7 +90,7 @@ The best part? They learn your style and get better every time.
 Try it free today. Your future self will thank you. ✨
 
 #AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content:\n\nThank you for using Use AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
+  custom: `Here is your custom generated content:\n\nThank you for using Try AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
 };
 
 export async function POST(request: NextRequest) {

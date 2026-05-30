@@ -107,7 +107,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                   <span className="text-emerald-600">Trained on Your Voice</span>
                 </h1>
                 <p className="text-xl text-slate-500 max-w-lg mx-auto">
-                  Use AI Writer learns your style, tone, and preferences to help you write faster and better.
+                  Try AI Writer learns your style, tone, and preferences to help you write faster and better.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

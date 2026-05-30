@@ -16,7 +16,7 @@ AI tools sometimes overdo keywords, leading to awkward, unnatural content that s
 **How to avoid it:**
 - Focus on 1-2 primary keywords and a few secondary keywords
 - Use keywords naturally where they make sense
-- Let Use AI Writer's SEO assistant help you find the right balance
+- Let Try AI Writer's SEO assistant help you find the right balance
 - Read your content out loud—if it sounds forced, rewrite it
 
 ## Mistake 2: Generic, Superficial Content
@@ -27,7 +27,7 @@ AI can generate content quickly, but if you don't give it enough guidance, you'l
 - Give AI detailed prompts with your unique insights
 - Add personal anecdotes and case studies
 - Include original data or research
-- Use Use AI Writer's brand voice feature to add your unique perspective
+- Use Try AI Writer's brand voice feature to add your unique perspective
 
 ## Mistake 3: Ignoring Search Intent
 
@@ -79,9 +79,9 @@ AI makes it easy to create a lot of content quickly, but if you don't have a str
 - Interlink between related posts
 - Update old content regularly
 
-## How Use AI Writer Helps with SEO
+## How Try AI Writer Helps with SEO
 
-Use AI Writer is designed to help you avoid these mistakes. Our platform:
+Try AI Writer is designed to help you avoid these mistakes. Our platform:
 
 - Guides you through creating content that matches search intent
 - Helps you optimize for keywords without stuffing

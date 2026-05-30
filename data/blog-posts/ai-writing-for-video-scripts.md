@@ -30,7 +30,7 @@ Coming up with video ideas is hard. AI can help you:
 - Brainstorm different video formats (explainers, tutorials, testimonials)
 - Find trending topics in your industry
 
-Use AI Writer to generate ideas, then pick the best ones to develop.
+Try AI Writer to generate ideas, then pick the best ones to develop.
 
 ### 2. Draft Complete Scripts Efficiently
 
@@ -95,7 +95,7 @@ Scripts should sound natural when spoken—read them aloud to test.
 
 ## Case Study: AI Scripts Help Create 4x More Videos
 
-A content team was struggling to keep up with video demand. They used Use AI Writer to:
+A content team was struggling to keep up with video demand. They used Try AI Writer to:
 - Brainstorm video ideas
 - Draft scripts quickly
 - Create supporting content

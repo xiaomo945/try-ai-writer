@@ -53,7 +53,7 @@ ROI = (Net Profit from AI Writing / Cost of AI Writing) × 100
 ## Real-World Example
 
 Let's say:
-- You pay $100/month for Use AI Writer
+- You pay $100/month for Try AI Writer
 - Your team spends 5 hours/week less on writing
 - Your hourly rate is $100
 - You publish 2x more content, which increases traffic by 30%
@@ -108,7 +108,7 @@ Track what works and double down on it. Test different approaches and refine you
 
 ## Case Study: Agency Sees 5,000% ROI
 
-A marketing agency invested in Use AI Writer for their team of 10:
+A marketing agency invested in Try AI Writer for their team of 10:
 - Monthly cost: $500
 - Time saved per writer: 10 hours/week
 - Hourly rate: $150

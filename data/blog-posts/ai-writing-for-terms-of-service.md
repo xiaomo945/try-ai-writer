@@ -9,7 +9,7 @@ description: "Learn how AI writing tools can help you draft clear, readable term
 
 Terms of service documents have a reputation problem. They are notoriously long, dense with legal jargon, and almost nobody reads them. Yet they are one of the most important documents your company publishes. A well-written ToS protects your business from liability, sets clear expectations for users, and can even build trust when it is written in plain language. AI writing tools are making it possible to create legal copy that does both: protects your interests and respects your users' time.
 
-When you Use AI Writer capabilities for legal documentation, you get structured, comprehensive drafts that cover the essential bases while remaining readable. The key is knowing how to guide the AI toward clarity without sacrificing legal precision.
+When you Try AI Writer capabilities for legal documentation, you get structured, comprehensive drafts that cover the essential bases while remaining readable. The key is knowing how to guide the AI toward clarity without sacrificing legal precision.
 
 ## Why Readable Terms of Service Matter
 
@@ -68,7 +68,7 @@ Ambiguity is the enemy of good legal writing. Define important terms like "User,
 Writing or rewriting your terms of service with AI is a manageable process when you follow these steps.
 
 1. **Outline your requirements.** List the specific policies, rules, and legal protections your ToS needs to cover. Include any industry-specific requirements.
-2. **Generate the structure.** Use AI Writer to create a comprehensive ToS outline with all necessary sections for your business type.
+2. **Generate the structure.** Try AI Writer to create a comprehensive ToS outline with all necessary sections for your business type.
 3. **Draft section by section.** Work through each section, providing the AI with your specific details and preferences. Request plain-language drafts first.
 4. **Legal review.** Send the complete draft to your legal counsel for review and refinement. Incorporate their feedback into the document.
 5. **Create a summary version.** Use AI to generate a simplified, user-friendly summary of your terms for the top of the page.

@@ -29,7 +29,7 @@ You never know what will resonate. Use AI to:
 - Try different CTAs
 - Find what your users respond to
 
-Use AI Writer to generate ideas, then A/B test everything.
+Try AI Writer to generate ideas, then A/B test everything.
 
 ### 2. Personalize at Scale
 
@@ -94,7 +94,7 @@ A/B test copy, timing, and frequency.
 
 ## Case Study: AI-Written Push Notifications Increase Engagement 50%
 
-A mobile app was struggling with low push notification engagement. They used Use AI Writer to:
+A mobile app was struggling with low push notification engagement. They used Try AI Writer to:
 - Generate multiple variations for each notification
 - Personalize based on user behavior
 - Test different sending times

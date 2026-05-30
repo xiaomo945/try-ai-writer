@@ -27,7 +27,7 @@ Show notes are a huge amount of work, but they're valuable. AI can help you:
 - Write key takeaways
 - Add links to resources mentioned
 
-Use AI Writer can help you turn a rough outline or transcript into great show notes quickly.
+Try AI Writer can help you turn a rough outline or transcript into great show notes quickly.
 
 ### 2. Scripts and Outlines
 
@@ -52,19 +52,19 @@ Use AI to draft newsletters that highlight new episodes, share behind-the-scenes
 ## A Practical Workflow for Podcasters
 
 1. **Record your episode**: Make sure to get a transcript if possible.
-2. **Generate show notes**: Use Use AI Writer with the transcript and any notes to create show notes.
+2. **Generate show notes**: Use Try AI Writer with the transcript and any notes to create show notes.
 3. **Create social content**: Use AI to create social posts from the show notes.
 4. **Edit and add your voice**: Always add a personal touch to AI-generated content.
 
 ## Case Study: How a Podcast Grew Their Newsletter List
 
-A business podcast was spending 3 hours per episode on show notes and social promotion. They started using Use AI Writer and cut that time to 45 minutes. They used the extra time to improve their newsletter, and their list grew 25% in 3 months.
+A business podcast was spending 3 hours per episode on show notes and social promotion. They started using Try AI Writer and cut that time to 45 minutes. They used the extra time to improve their newsletter, and their list grew 25% in 3 months.
 
 ## Pro Tips
 
 - **Start with a transcript**: If you can get a transcript of your episode, it will make AI much more useful.
 - **Use templates**: Create templates for show notes, social posts, etc., and use them with AI.
-- **Keep your voice**: Train Use AI Writer on your previous content to keep your voice consistent.
+- **Keep your voice**: Train Try AI Writer on your previous content to keep your voice consistent.
 
 ## The Bottom Line
 

@@ -23,7 +23,7 @@ But writing clear, empathetic patient communications takes time. AI can help you
 
 ### 1. Patient Instructions and Aftercare Plans
 
-AI can help you create clear, easy-to-understand aftercare instructions. Just describe the treatment and what the patient needs to do, and Use AI Writer can generate instructions that are written at the right reading level.
+AI can help you create clear, easy-to-understand aftercare instructions. Just describe the treatment and what the patient needs to do, and Try AI Writer can generate instructions that are written at the right reading level.
 
 ### 2. Email and SMS Follow-Ups
 
@@ -41,7 +41,7 @@ AI can help you create friendly, helpful appointment reminders that reduce no-sh
 
 ### Privacy First
 
-Medical data is highly sensitive. Make sure any AI tool you use complies with HIPAA and other privacy regulations. Use AI Writer is built with privacy in mind.
+Medical data is highly sensitive. Make sure any AI tool you use complies with HIPAA and other privacy regulations. Try AI Writer is built with privacy in mind.
 
 ### Always Review
 
@@ -49,7 +49,7 @@ Never send an AI-generated message to a patient without reviewing it. AI can mak
 
 ### Keep Your Voice
 
-Your patients are used to hearing from you in a certain way. Use AI Writer can learn your voice so your communications still sound like you.
+Your patients are used to hearing from you in a certain way. Try AI Writer can learn your voice so your communications still sound like you.
 
 ### Don't Use AI for Diagnoses
 
@@ -57,14 +57,14 @@ AI is a tool for communication, not for making medical diagnoses. Always rely on
 
 ## A Practical Workflow
 
-1. **Generate a draft**: Use Use AI Writer to create a first draft of the communication.
+1. **Generate a draft**: Use Try AI Writer to create a first draft of the communication.
 2. **Review for accuracy**: Check for medical accuracy and make sure it's appropriate for the patient.
 3. **Add a personal touch**: Add a personal note or reference something specific to the patient.
 4. **Send it**: Once you're happy, send it to the patient.
 
 ## Case Study: How a Clinic Improved Patient Satisfaction
 
-A family medicine clinic was receiving complaints about unclear aftercare instructions. They started using Use AI Writer to generate instructions, and patient satisfaction scores related to communication went up 30%.
+A family medicine clinic was receiving complaints about unclear aftercare instructions. They started using Try AI Writer to generate instructions, and patient satisfaction scores related to communication went up 30%.
 
 ## The Future of AI in Medical Communication
 

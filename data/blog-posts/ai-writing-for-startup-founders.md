@@ -17,7 +17,7 @@ Most early-stage startups face the same content problem:
 - No time for extensive writing processes
 - Founder voice needs to come through authentically
 
-AI writing tools like Use AI Writer are specifically designed for this scenario—they learn your voice and help you produce more without sacrificing authenticity.
+AI writing tools like Try AI Writer are specifically designed for this scenario—they learn your voice and help you produce more without sacrificing authenticity.
 
 ## Budget-Friendly Content Strategy
 
@@ -58,7 +58,7 @@ Encourage customers to share their experiences. AI can help you:
 
 ## Recommended AI Tools
 
-For bootstrapped startups, Use AI Writer offers:
+For bootstrapped startups, Try AI Writer offers:
 - Generous free tier to start
 - Brand voice learning from your existing content
 - Multiple format support (blogs, emails, social)

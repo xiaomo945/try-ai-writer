@@ -34,7 +34,7 @@ Then A/B test to find what resonates with users.
 
 ### 2. Maintain Consistency Across Your Product
 
-Consistency makes your product feel polished. Use AI Writer to:
+Consistency makes your product feel polished. Try AI Writer to:
 - Create a UX copy style guide
 - Ensure consistent terminology
 - Maintain tone across all screens
@@ -97,7 +97,7 @@ AI makes mistakes. Always review and edit UX copy before shipping.
 
 ## Case Study: Better UX Copy Increases Sign-Ups 35%
 
-A SaaS company was struggling with low sign-up rates. They used Use AI Writer to:
+A SaaS company was struggling with low sign-up rates. They used Try AI Writer to:
 - Generate 20 variations of their sign-up button
 - Test different onboarding copy
 - Rewrite confusing error messages

@@ -28,7 +28,7 @@ Before you open your AI tool, know what you want to say. Ask yourself:
 - What problem am I solving?
 - What's the one thing I want viewers to remember?
 
-Use AI to brainstorm different angles on your topic. For example, with Use AI Writer:
+Use AI to brainstorm different angles on your topic. For example, with Try AI Writer:
 
 "Give me 5 different angles for a YouTube video about [your topic here."
 
@@ -42,7 +42,7 @@ Once you have your concept, create an outline. A typical YouTube video outline i
 4. Summary
 5. Call to action
 
-Use AI to expand your outline into sections with Use AI Writer's "YouTube Script Outline" template. It will help you structure your video for maximum engagement.
+Use AI to expand your outline into sections with Try AI Writer's "YouTube Script Outline" template. It will help you structure your video for maximum engagement.
 
 ## Step 3: Write the First Draft
 
@@ -53,7 +53,7 @@ Now it's time to write the actual script. When prompting AI for a YouTube script
 - Pauses for comedic timing or emphasis
 - Specific examples or stories to include
 
-Here's a good prompt template for Use AI Writer:
+Here's a good prompt template for Try AI Writer:
 
 "Write a YouTube script for a [length] video about [topic].
 Audience: [who you're talking to]
@@ -68,7 +68,7 @@ AI scripts often sound great on paper, but you need to read them aloud to catch 
 - Are there any tongue twisters?
 - Is the pacing right?
 
-Use Use AI Writer's brand voice feature to make the script sound more like you. Then read it aloud again and edit as needed.
+Use Try AI Writer's brand voice feature to make the script sound more like you. Then read it aloud again and edit as needed.
 
 ## Step 5: Add Visual Elements
 
@@ -109,7 +109,7 @@ Ask AI to include hooks at multiple points throughout the script to keep viewers
 **[INTRO (0:09-0:25)**
 "Hey, I'm [your name], and in this video, I'm sharing my exact process for writing YouTube hooks that keep people watching. I've used this to grow my channel from 0 to 100,000 subscribers, and it works for any niche."
 
-This is just a taste—Use AI Writer can help you write the entire script from start to finish.
+This is just a taste—Try AI Writer can help you write the entire script from start to finish.
 
 ## Related Articles
 

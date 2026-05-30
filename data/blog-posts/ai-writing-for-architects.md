@@ -223,7 +223,7 @@ Create AI-generated proposal templates for different project types—residential
 
 Architecture demands both creative vision and rigorous documentation. AI writing tools help architects handle the documentation burden efficiently so they can focus on what they do best—designing spaces that inspire, function beautifully, and endure. The firms that adopt these technologies deliver higher-quality proposals, clearer documentation, and more compelling project narratives.
 
-Transform your architectural practice documentation with [Use AI Writer](https://tryaiwriter.com) and focus more on design, less on drafting text.
+Transform your architectural practice documentation with [Try AI Writer](https://tryaiwriter.com) and focus more on design, less on drafting text.
 
 ---
 

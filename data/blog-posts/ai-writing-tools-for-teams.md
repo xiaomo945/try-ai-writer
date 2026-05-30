@@ -27,7 +27,7 @@ Without these, you end up with inconsistent content, duplicated work, and wasted
 
 This is the most important feature for teams. Everyone should be working from the same brand voice guidelines, so all content sounds like it's coming from the same brand.
 
-Look for tools like Use AI Writer that let you:
+Look for tools like Try AI Writer that let you:
 - Create and share brand voice profiles
 - Train the AI on existing brand content
 - Lock brand voice settings so everyone uses them
@@ -85,9 +85,9 @@ Hold a training session to show everyone how to use the tool effectively. Encour
 
 Track how AI's impact on your team's productivity and content quality. Gather feedback and make adjustments as needed.
 
-## Coming Soon: Use AI Writer for Teams
+## Coming Soon: Try AI Writer for Teams
 
-We're currently developing team features for Use AI Writer, including:
+We're currently developing team features for Try AI Writer, including:
 - Shared brand voice profiles
 - Real-time collaboration
 - Approval workflows

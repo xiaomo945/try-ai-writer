@@ -94,7 +94,7 @@ Use AI as a learning tool:
 
 ## Tools and Recommendations
 
-Use AI Writer offers features useful for academics:
+Try AI Writer offers features useful for academics:
 - Grammar and style checking
 - Outline generation
 - Citation formatting support

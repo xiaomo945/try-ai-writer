@@ -68,7 +68,7 @@ export function Testimonials() {
             Loved by Creators Worldwide
           </h2>
           <p className="text-center text-slate-400 mb-10 max-w-xl mx-auto">
-            Join 500+ writers who already use Use AI Writer
+            Join 500+ writers who already use Try AI Writer
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (

@@ -32,7 +32,7 @@ Coming up with great webinar topics is hard. AI can help you:
 - Identify trending topics
 - Brainstorm titles that grab attention
 
-Use AI Writer to generate ideas, then survey your audience to pick the best one.
+Try AI Writer to generate ideas, then survey your audience to pick the best one.
 
 ### 2. Write All Promotion Copy
 
@@ -96,7 +96,7 @@ Strike while the iron is hot—send follow-ups within 24 hours.
 
 ## Case Study: AI-Powered Webinar Doubles Registrations
 
-A company's webinars weren't getting many attendees. They used Use AI Writer to:
+A company's webinars weren't getting many attendees. They used Try AI Writer to:
 - Brainstorm better topics
 - Write more compelling promotion copy
 - Create better follow-up sequences

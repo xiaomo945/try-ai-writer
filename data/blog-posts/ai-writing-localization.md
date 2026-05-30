@@ -30,7 +30,7 @@ Translation is the foundation of localization. AI can help you:
 - Update translations when original content changes
 - Scale translation efforts efficiently
 
-Use AI Writer to translate, then have native speakers review.
+Try AI Writer to translate, then have native speakers review.
 
 ### 2. Adapt to Cultural Nuances
 
@@ -95,7 +95,7 @@ Test content in each market to make sure it works.
 
 ## Case Study: AI Helps Localize Content for 10 Markets
 
-A company wanted to expand to 10 new markets but didn't have the budget for a big localization team. They used Use AI Writer to:
+A company wanted to expand to 10 new markets but didn't have the budget for a big localization team. They used Try AI Writer to:
 - Translate all their content
 - Maintain brand voice
 - Adapt for cultural nuances

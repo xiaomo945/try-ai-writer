@@ -66,9 +66,9 @@ DeepSeek is a Chinese AI model that has gained popularity for its efficiency and
 
 **Winner**: Claude for emotional appeal, DeepSeek for conversion-focused copy.
 
-## Integration with Use AI Writer
+## Integration with Try AI Writer
 
-At [Use AI Writer](https://tryaiwriter.com), we offer both models:
+At [Try AI Writer](https://tryaiwriter.com), we offer both models:
 
 - **Free tier**: Access to DeepSeek for unlimited daily generations
 - **Pro tier**: Claude + DeepSeek with the ability to switch between models
@@ -98,10 +98,10 @@ Both Claude and DeepSeek are powerful AI writing tools with distinct strengths. 
 - Choose **Claude** for nuanced, brand-consistent content
 - Choose **DeepSeek** for speed and volume
 
-Why not use both? [Try Use AI Writer](https://tryaiwriter.com) today and experience the best of both models.
+Why not use both? [Try Try AI Writer](https://tryaiwriter.com) today and experience the best of both models.
 
 ## Related Articles
 
 - [DeepSeek V3.2 vs Claude Sonnet 4.6: Honest Writing Quality Comparison](https://tryaiwriter.com/blog/deepseek-v3-vs-claude-sonnet-4)
 - [Claude Sonnet 4.6 for Writing: An Honest Quality Review](https://tryaiwriter.com/blog/claude-sonnet-4-writing-quality)
-- [The Ultimate AI Writing Tools Comparison: Jasper vs Copy.ai vs Use AI Writer](https://tryaiwriter.com/blog/ai-writing-tools-comparison-2026)
+- [The Ultimate AI Writing Tools Comparison: Jasper vs Copy.ai vs Try AI Writer](https://tryaiwriter.com/blog/ai-writing-tools-comparison-2026)

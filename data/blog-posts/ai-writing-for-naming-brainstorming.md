@@ -9,7 +9,7 @@ description: "Discover how AI writing tools can supercharge your naming and brai
 
 Naming a product, service, feature, or campaign is one of the most challenging creative tasks any team faces. The right name communicates value, sticks in memory, and differentiates you from competitors. The wrong name confuses customers, gets lost in search results, or worse, has unintended negative connotations. Traditional brainstorming sessions can take days and still produce mediocre results. AI writing tools are transforming this process by generating hundreds of creative, relevant names and ideas in minutes.
 
-When you Use AI Writer capabilities for naming and brainstorming, you unlock a level of creative output that no human team could match on its own. The AI does not replace your creativity; it amplifies it by providing a rich starting point for your team to evaluate and refine.
+When you Try AI Writer capabilities for naming and brainstorming, you unlock a level of creative output that no human team could match on its own. The AI does not replace your creativity; it amplifies it by providing a rich starting point for your team to evaluate and refine.
 
 ## Why Brainstorming With AI Changes Everything
 

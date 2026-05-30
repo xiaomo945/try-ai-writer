@@ -30,7 +30,7 @@ A good outline makes writing easier. AI can help you:
 - Identify key points for each section
 - Structure your ebook logically
 
-Use AI Writer to create a first outline, then refine it with your expertise.
+Try AI Writer to create a first outline, then refine it with your expertise.
 
 ### 2. Draft Chapters Efficiently
 
@@ -95,7 +95,7 @@ A good design makes your ebook more professional and engaging.
 
 ## Case Study: AI Helps Create Ebook in 1 Week
 
-A business owner wanted to create a lead magnet but didn't have time. They used Use AI Writer to:
+A business owner wanted to create a lead magnet but didn't have time. They used Try AI Writer to:
 - Outline the ebook
 - Draft each chapter
 - Refine and edit

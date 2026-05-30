@@ -11,7 +11,7 @@ This guide will help you set up the Google Indexing API to automatically submit 
 ## Step 1: Create a Project in Google Cloud Platform
 1. Go to [https://console.cloud.google.com/](https://console.cloud.google.com/)
 2. Click on the project dropdown in the top left and click "New Project"
-3. Name your project (e.g., "Use AI Writer Indexing") and click "Create"
+3. Name your project (e.g., "Try AI Writer Indexing") and click "Create"
 
 ## Step 2: Enable the Indexing API
 1. In your new project, go to "APIs & Services" → "Library"

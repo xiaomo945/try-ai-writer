@@ -40,7 +40,7 @@ One of the hardest parts of writing is starting. AI tools can give you that init
 - Writing first paragraphs
 - Suggesting different angles
 
-For example, if you’re stuck on a blog post about productivity, you could use **Use AI Writer** to generate a list of 10 different angles to approach the topic.
+For example, if you’re stuck on a blog post about productivity, you could use **Try AI Writer** to generate a list of 10 different angles to approach the topic.
 
 ### 2. Use AI as a Creative Partner
 
@@ -70,7 +70,7 @@ Here are some actionable strategies you can use today.
 
 Ask your AI tool to write the *worst* possible version of your piece. This takes all pressure off—you’re not aiming for good, you’re aiming for done. Then go back and edit it into something usable.
 
-**Use AI Writer** is great for this because it can generate a draft quickly, giving you a starting point to work from.
+**Try AI Writer** is great for this because it can generate a draft quickly, giving you a starting point to work from.
 
 ### Exercise 2: Random Topic Generator
 
@@ -97,7 +97,7 @@ AI is changing the writing process, but it’s not replacing human creativity. I
 - Adding personal experiences
 - Building emotional connections with readers
 
-As AI tools get better at learning individual styles, like **Use AI Writer’s** brand voice feature, they’ll become even more seamless creative partners.
+As AI tools get better at learning individual styles, like **Try AI Writer’s** brand voice feature, they’ll become even more seamless creative partners.
 
 ## Final Thoughts
 
@@ -105,6 +105,6 @@ Writer’s block may never disappear entirely, but it doesn’t have to be the e
 
 ---
 
-Ready to beat writer’s block? Give **Use AI Writer** a try and experience how AI can unlock your creativity.
+Ready to beat writer’s block? Give **Try AI Writer** a try and experience how AI can unlock your creativity.
 
 Check out [how to train AI on your writing style](/blog/how-to-train-ai-on-your-writing-style) to make the partnership even more powerful.

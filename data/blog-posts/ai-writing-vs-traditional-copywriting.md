@@ -68,7 +68,7 @@ But it lacks human creativity and emotional depth on its own.
 - Generating ideas
 - SEO descriptions and metadata
 
-Use AI Writer excels at these tasks.
+Try AI Writer excels at these tasks.
 
 ### Use Traditional Copywriting For:
 - High-stakes landing pages
@@ -99,7 +99,7 @@ Traditional copywriting is better for some things, but AI is better for others. 
 ## Case Study: Hybrid Approach Increases Conversions 40%
 
 An e-commerce company was struggling with content production. They switched to a hybrid approach:
-- Used Use AI Writer to generate product descriptions and first drafts
+- Used Try AI Writer to generate product descriptions and first drafts
 - Hired a freelance copywriter to edit and add creativity
 - Tested variations to find what works best
 

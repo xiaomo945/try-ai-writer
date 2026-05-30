@@ -3,7 +3,7 @@ title: "The Complete AI Content Strategy for 2026"
 date: "2026-01-15"
 tags: ["AI", "Content Strategy", "Marketing"]
 description: "A comprehensive guide to building an AI-powered content strategy in 2026 that balances automation with authentic brand voice."
-author: "Use AI Writer"
+author: "Try AI Writer"
 ---
 
 # The Complete AI Content Strategy for 2026
@@ -37,7 +37,7 @@ Start by using AI to analyze trending topics in your industry. Tools can help yo
 
 Use AI to generate initial drafts based on your detailed briefs. The more specific your prompts, the better the output will align with your expectations.
 
-Tools like [Use AI Writer](/) can help you streamline this process by learning your voice and preferences over time.
+Tools like [Try AI Writer](/) can help you streamline this process by learning your voice and preferences over time.
 
 ### Phase 3: Human Refinement
 
@@ -71,4 +71,4 @@ AI is a powerful tool, but it's just that—a tool. The magic happens when you c
 
 - [Building an AI-Powered Content Strategy in 2026](/blog/08-ai-content-strategy-2026)
 - [The Future of Writing: Human-AI Collaboration](/blog/05-future-of-writing)
-- [AI Writing Tools Comparison: Jasper vs Copy.ai vs Use AI Writer (2026)](/blog/ai-writing-tools-comparison-2026)
+- [AI Writing Tools Comparison: Jasper vs Copy.ai vs Try AI Writer (2026)](/blog/ai-writing-tools-comparison-2026)

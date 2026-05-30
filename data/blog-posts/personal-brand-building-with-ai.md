@@ -27,7 +27,7 @@ AI writing tools help you:
 - Repurpose content efficiently
 - Generate ideas quickly
 
-Use AI Writer learns your unique voice and helps you create authentic content at scale.
+Try AI Writer learns your unique voice and helps you create authentic content at scale.
 
 ## Step-by-Step Personal Branding with AI
 
@@ -50,7 +50,7 @@ Organize your content around 3-5 pillars:
 
 ### Step 3: Train AI on Your Voice
 
-Use AI Writer to learn:
+Try AI Writer to learn:
 - Your writing style
 - Preferred vocabulary
 - Tone and personality

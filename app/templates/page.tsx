@@ -2,7 +2,7 @@ import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight } from "lucide-r
 import Link from "next/link";
 
 export const metadata = {
-  title: "Writing Templates | Use AI Writer",
+  title: "Writing Templates | Try AI Writer",
   description: "16+ professional writing templates for every use case. Amazon listings, Google Ads, blog posts, social media, and more.",
 };
 

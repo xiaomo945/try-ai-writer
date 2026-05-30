@@ -2,13 +2,13 @@
 
 ## Show HN Post
 
-**Title:** Show HN: Use AI Writer – AI writing that learns your brand voice, not just prompts
+**Title:** Show HN: Try AI Writer – AI writing that learns your brand voice, not just prompts
 
 **Body:**
 
 Hi HN!
 
-For the past 8 months, my team has been building Use AI Writer—an AI writing tool that actually learns and replicates your unique brand voice rather than just spitting out generic content!
+For the past 8 months, my team has been building Try AI Writer—an AI writing tool that actually learns and replicates your unique brand voice rather than just spitting out generic content!
 
 **How it works:**
 1. You provide samples of your writing (blog posts, emails, etc.)

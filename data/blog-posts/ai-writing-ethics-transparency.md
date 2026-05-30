@@ -25,7 +25,7 @@ When you use AI to assist with content creation, honesty matters:
 Consider adding disclosures like:
 - "This post was written with AI assistance"
 - "AI helped with drafting; human editing completed the final version"
-- "Generated using Use AI Writer with human review"
+- "Generated using Try AI Writer with human review"
 
 ### 2. Always Add Human Value
 
@@ -50,9 +50,9 @@ AI generates text based on training data. Be mindful of:
 - Providing proper attribution when referencing ideas
 - Understanding fair use principles
 
-## Why Use AI Writer Takes Ethics Seriously
+## Why Try AI Writer Takes Ethics Seriously
 
-Use AI Writer is designed with ethical considerations:
+Try AI Writer is designed with ethical considerations:
 - Built-in fact-checking suggestions
 - Encourages human review workflows
 - Provides transparency tools

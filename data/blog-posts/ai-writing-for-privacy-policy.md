@@ -9,7 +9,7 @@ description: "Learn how to write clear, GDPR-compliant privacy policies using AI
 
 Privacy policies are one of the few documents that businesses are legally required to publish, yet most people have no idea what theirs actually says. This readability gap undermines the entire purpose of privacy regulation. Laws like GDPR, CCPA, and emerging global privacy frameworks exist to give users control over their data. If your privacy policy is too complex to understand, you are not complying with the spirit of those laws. AI writing tools are helping companies bridge this gap by generating privacy policies that are both legally compliant and genuinely readable.
 
-When you Use AI Writer features for privacy documentation, you can produce policies that satisfy regulatory requirements while remaining accessible to the average user. The result is transparency that actually works.
+When you Try AI Writer features for privacy documentation, you can produce policies that satisfy regulatory requirements while remaining accessible to the average user. The result is transparency that actually works.
 
 ## Why Privacy Policy Readability Matters
 
@@ -69,7 +69,7 @@ Creating a clear, compliant privacy policy with AI follows a straightforward pro
 
 1. **Document your data practices.** Make a comprehensive list of what data you collect, why, where it is stored, who has access, and how long you keep it.
 2. **Identify applicable regulations.** Determine which privacy laws apply to your business based on your location and your users' locations.
-3. **Generate the draft.** Use AI Writer to create a privacy policy based on your data practices and applicable regulations. Request plain-language output.
+3. **Generate the draft.** Try AI Writer to create a privacy policy based on your data practices and applicable regulations. Request plain-language output.
 4. **Review for accuracy.** Verify that every statement in the policy accurately reflects your actual practices. Correct any discrepancies.
 5. **Legal review.** Have a privacy attorney review the document for compliance gaps or inaccuracies.
 6. **Publish and maintain.** Make the policy accessible from your website and set up reminders to review it whenever your data practices change.

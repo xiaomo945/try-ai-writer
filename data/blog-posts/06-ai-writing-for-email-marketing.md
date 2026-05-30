@@ -33,7 +33,7 @@ Subject lines are the gateway to your emails. If no one opens them, your great c
 - Use data-driven language
 - Test different emotional triggers
 
-For example, tools like **Use AI Writer** can analyze thousands of high-performing subject lines and suggest ones that are statistically more likely to resonate with your audience.
+For example, tools like **Try AI Writer** can analyze thousands of high-performing subject lines and suggest ones that are statistically more likely to resonate with your audience.
 
 ### 2. Personalization at Scale
 
@@ -48,7 +48,7 @@ AI can help you:
 
 Maintaining a consistent brand voice across all your email campaigns is crucial for building trust and recognition. But when multiple writers are involved, consistency can slip.
 
-AI writing tools that learn your brand voice, like **Use AI Writer**, can ensure every email sounds like it’s coming from the same brand—even when different team members are creating content.
+AI writing tools that learn your brand voice, like **Try AI Writer**, can ensure every email sounds like it’s coming from the same brand—even when different team members are creating content.
 
 ## Practical Examples of AI in Email Marketing
 
@@ -92,7 +92,7 @@ One of the biggest advantages of AI is the ability to generate multiple variatio
 
 The best AI writing tools learn from your feedback. As you review and edit AI-generated content, you’re teaching the tool what works best for your brand.
 
-Tools like **Use AI Writer** are designed to get better over time, learning your preferences and style to produce more accurate and effective copy with each use.
+Tools like **Try AI Writer** are designed to get better over time, learning your preferences and style to produce more accurate and effective copy with each use.
 
 ## The Future of AI in Email Marketing
 
@@ -105,6 +105,6 @@ But the core of great email marketing will remain the same: providing value to y
 
 ---
 
-Ready to supercharge your email marketing? Start writing with **Use AI Writer** today and see how AI can help you craft better emails in less time.
+Ready to supercharge your email marketing? Start writing with **Try AI Writer** today and see how AI can help you craft better emails in less time.
 
 Check out our [pricing](/pricing) page to find a plan that works for you.

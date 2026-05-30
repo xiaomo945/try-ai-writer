@@ -30,7 +30,7 @@ Use AI to:
 - Break lessons into manageable chunks
 - Align content with learning objectives
 
-Use AI Writer can help you turn a rough idea into a complete course outline in minutes.
+Try AI Writer can help you turn a rough idea into a complete course outline in minutes.
 
 ### 2. Lesson Content
 
@@ -61,14 +61,14 @@ AI can help with:
 ## A Practical Workflow
 
 1. **Plan your course**: Start with your learning objectives.
-2. **Generate an outline**: Use Use AI Writer to create a detailed outline.
+2. **Generate an outline**: Use Try AI Writer to create a detailed outline.
 3. **Draft content**: Use AI to draft lessons, scripts, and other materials.
 4. **Add your expertise**: This is the most important step—AI won't know your unique insights.
 5. **Test and refine**: Always test your content with real learners and make improvements.
 
 ## Case Study: How a Course Creator Doubled Their Output
 
-A course creator who taught personal finance was spending 2 months creating each course. They started using Use AI Writer to draft content and cut their time to 1 month. They were able to launch twice as many courses, and their revenue grew 80%.
+A course creator who taught personal finance was spending 2 months creating each course. They started using Try AI Writer to draft content and cut their time to 1 month. They were able to launch twice as many courses, and their revenue grew 80%.
 
 ## Best Practices
 

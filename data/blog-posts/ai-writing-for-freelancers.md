@@ -13,7 +13,7 @@ As a freelancer, your time is your most valuable asset. You're constantly juggli
 
 Freelancers face a unique challenge: the more clients you take on, the more writing you need to produce. But you only have 24 hours in a day. Many freelancers find themselves burning out trying to keep up with demand, sacrificing quality, or turning down work they could otherwise handle.
 
-This is where AI writing tools like Use AI Writer come in. They're not here to replace your creativity—they're here to amplify it.
+This is where AI writing tools like Try AI Writer come in. They're not here to replace your creativity—they're here to amplify it.
 
 ## How AI Writing Transforms Freelance Workflows
 
@@ -23,7 +23,7 @@ The biggest time sink for freelancers is often the first draft. With AI, you can
 
 ### 2. Consistent Tone Across All Clients
 
-Different clients have different brand voices. One might want professional and corporate, another casual and friendly. Use AI Writer learns each client's voice and adapts to it, ensuring consistency without you having to remember every detail.
+Different clients have different brand voices. One might want professional and corporate, another casual and friendly. Try AI Writer learns each client's voice and adapts to it, ensuring consistency without you having to remember every detail.
 
 ### 3. Research Assistant at Your Fingertips
 
@@ -33,7 +33,7 @@ AI tools can help you research topics, gather statistics, and find sources, savi
 
 ### Set Up Brand Voice Profiles for Each Client
 
-Create a separate brand voice profile for each client in Use AI Writer. This way, you can generate content that sounds like them from day one, without manual adjustments every time.
+Create a separate brand voice profile for each client in Try AI Writer. This way, you can generate content that sounds like them from day one, without manual adjustments every time.
 
 ### Use AI for First Drafts, Not Final Products
 

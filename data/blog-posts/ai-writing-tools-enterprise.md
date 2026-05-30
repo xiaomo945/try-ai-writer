@@ -18,7 +18,7 @@ Your data is valuable, and you need to keep it safe:
 - You should have control over where data is stored
 - Role-based access control is important
 
-Use AI Writer is built with these principles in mind. We never use customer content for training, and we prioritize security.
+Try AI Writer is built with these principles in mind. We never use customer content for training, and we prioritize security.
 
 ### Compliance
 Enterprises have to follow rules like GDPR, CCPA, HIPAA, and more. Your AI tool should:
@@ -50,9 +50,9 @@ Enterprises need consistent messaging across teams and regions:
 4. **Check integrations**: Does it work with the tools you already use?
 5. **Test the quality**: Is the writing good enough for your needs?
 
-## Why Use AI Writer for Enterprise
+## Why Try AI Writer for Enterprise
 
-We're building Use AI Writer for enterprises:
+We're building Try AI Writer for enterprises:
 - **Privacy first**: We never use your content for training.
 - **Brand voice training**: We excel at teaching AI to write like you.
 - **Enterprise features**: We're adding collaboration, admin controls, and more.

@@ -217,7 +217,7 @@ Instead of writing one piece at a time, batch your content production. Generate 
 
 Coaching will always be fundamentally about human connection, active listening, and transformative conversations. AI writing tools don't change that—they handle the administrative writing that currently consumes hours of your week, so you can be fully present with your clients. The coaches who adopt these technologies serve more clients, produce better program materials, and build stronger marketing presence without burning out.
 
-Ready to transform your coaching practice content? Start with [Use AI Writer](https://tryaiwriter.com) and reclaim hours every week for what matters most.
+Ready to transform your coaching practice content? Start with [Try AI Writer](https://tryaiwriter.com) and reclaim hours every week for what matters most.
 
 ---
 

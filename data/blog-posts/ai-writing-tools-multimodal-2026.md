@@ -9,7 +9,7 @@ description: "Explore how AI writing tools are evolving into multimodal platform
 
 For years, AI writing tools focused on one thing: generating text. They wrote blog posts, emails, product descriptions, and social media captions. But in 2026, the landscape has shifted dramatically. The newest generation of AI writing platforms is multimodal, meaning they can handle text, images, video scripts, audio transcripts, and even interactive content within a single workflow. This evolution is not just a feature upgrade. It is a fundamental change in how content is created, edited, and published.
 
-When you Use AI Writer platforms with multimodal capabilities, you can produce complete content assets rather than just text drafts. A single tool can now generate a blog post, create the accompanying images, draft the social media promotion, and write the video script for a YouTube companion piece.
+When you Try AI Writer platforms with multimodal capabilities, you can produce complete content assets rather than just text drafts. A single tool can now generate a blog post, create the accompanying images, draft the social media promotion, and write the video script for a YouTube companion piece.
 
 ## Why Multimodal AI Changes Everything
 

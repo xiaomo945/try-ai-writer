@@ -2,7 +2,7 @@
 title: "The Future of Writing: Human-AI Collaboration"
 date: "2026-02-20"
 tags: ["AI", "Future of Work", "Writing"]
-author: "Use AI Writer"
+author: "Try AI Writer"
 ---
 
 # The Future of Writing: Human-AI Collaboration

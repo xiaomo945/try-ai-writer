@@ -9,7 +9,7 @@ description: "Transform frustrating error messages into helpful, human-friendly 
 
 Error messages are one of the most overlooked elements of product design, yet they appear at the exact moment when users need help the most. A poorly written error message compounds frustration, leaves users confused, and often drives them to abandon the task entirely. A well-written error message, on the other hand, explains what went wrong, why it happened, and how to fix it. AI writing tools are helping product teams create error messages that are helpful, consistent, and aligned with their brand voice.
 
-When you Use AI Writer capabilities for UX copy, you can generate error messages that turn negative moments into opportunities to demonstrate care and competence.
+When you Try AI Writer capabilities for UX copy, you can generate error messages that turn negative moments into opportunities to demonstrate care and competence.
 
 ## Why Error Messages Deserve Your Attention
 
@@ -69,7 +69,7 @@ Improving your product's error messages with AI is a high-impact project you can
 
 1. **Audit your current error messages.** Go through your product and document every error message currently in use. Note which ones are vague, unhelpful, or inconsistent.
 2. **Prioritize high-impact errors.** Focus first on errors that appear in critical user flows: login, checkout, account creation, and payment processing.
-3. **Generate improved messages.** Use AI Writer to create better versions of your prioritized error messages. Specify the context, the desired action, and your brand tone.
+3. **Generate improved messages.** Try AI Writer to create better versions of your prioritized error messages. Specify the context, the desired action, and your brand tone.
 4. **Implement and test.** Replace the old messages with the new ones and monitor user behavior. Track metrics like error recovery rate, support tickets related to errors, and task completion rates.
 5. **Build an error message library.** Create a centralized repository of approved error messages that your development team can reference. Use AI to generate new messages as new error scenarios arise.
 

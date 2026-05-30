@@ -1,8 +1,8 @@
-# Product Hunt Launch Day Timeline — Use AI Writer
+# Product Hunt Launch Day Timeline — Try AI Writer
 
 > **Launch Date**: TBD (Target: Tuesday-Thursday for maximum traffic)
 > **Timezone**: All times in Pacific Time (PT)
-> **Product**: Use AI Writer — AI Writing Tool with Brand Voice Learning
+> **Product**: Try AI Writer — AI Writing Tool with Brand Voice Learning
 > **Product Hunt URL**: [TBD — to be added after submission]
 
 ---
@@ -28,7 +28,7 @@
 ## 🚀 Midnight — Submit to Product Hunt
 
 ### 12:01 AM PT
-- [ ] **SUBMIT** Use AI Writer to Product Hunt
+- [ ] **SUBMIT** Try AI Writer to Product Hunt
 - [ ] Verify submission goes through — confirm it appears on "Coming Soon" or "Today's Products"
 - [ ] Check that all assets display correctly (thumbnail, screenshots, tagline)
 - [ ] **Post Maker Comment immediately** (see [product-hunt-launch-checklist.md](./product-hunt-launch-checklist.md) for final version)
@@ -60,7 +60,7 @@
   ```
   🚀 We just launched on @ProductHunt!
 
-  Use AI Writer is an AI writing tool that learns YOUR brand voice.
+  Try AI Writer is an AI writing tool that learns YOUR brand voice.
 
   Upload your content → AI learns your style → Writes like you
 
@@ -105,7 +105,7 @@
 ### 9:00 AM PT — LinkedIn Launch Post
 - [ ] **Post on LinkedIn**:
   ```
-  🚀 Exciting news! We just launched Use AI Writer on Product Hunt.
+  🚀 Exciting news! We just launched Try AI Writer on Product Hunt.
 
   After months of building, we created something I truly believe in:
   An AI writing tool that doesn't just generate content — it learns YOUR voice.
@@ -146,9 +146,9 @@
 ## 🏆 Late Morning — Peak Hours
 
 ### 10:00 AM PT — Hacker News Show HN
-- [ ] **Post on Hacker News** as "Show HN: Use AI Writer — AI writing tool that learns your brand voice"
+- [ ] **Post on Hacker News** as "Show HN: Try AI Writer — AI writing tool that learns your brand voice"
 - [ ] **HN Post Format**:
-  - Title: "Show HN: Use AI Writer – Brand Voice AI Writing (tryaiwriter.com)"
+  - Title: "Show HN: Try AI Writer – Brand Voice AI Writing (tryaiwriter.com)"
   - First comment: Detailed technical explanation of how it works, tech stack, and challenges
   - Include: streaming implementation, prompt engineering approach, brand voice analysis methodology
 - [ ] **Be extremely active in HN comments** — the HN community values maker engagement
@@ -215,7 +215,7 @@
   ```
   What a day! 🎉
 
-  Use AI Writer just launched on Product Hunt and the response has been incredible:
+  Try AI Writer just launched on Product Hunt and the response has been incredible:
 
   🏆 Finished at #[X] of the day
   📈 [X] upvotes from amazing people

@@ -1,4 +1,4 @@
-# Product Hunt Launch Checklist — Use AI Writer
+# Product Hunt Launch Checklist — Try AI Writer
 
 ## Pre-Launch (7 Days Out)
 - [ ] Finalize Product Hunt page: tagline, description, screenshots, GIF, video
@@ -96,7 +96,7 @@
 
 Hey PH community! 👋
 
-I'm the maker of **Use AI Writer** — an AI writing assistant that learns your brand voice so every piece of content sounds like *you*, not a generic chatbot.
+I'm the maker of **Try AI Writer** — an AI writing assistant that learns your brand voice so every piece of content sounds like *you*, not a generic chatbot.
 
 **Why we built this:** Most AI writing tools produce content that sounds the same. We believe your brand deserves a unique voice. So we built a **Digital Twin** that analyzes your existing content — blog posts, emails, social media — and writes new content in *your* style, not someone else's.
 
@@ -149,4 +149,4 @@ Thank you so much! Means a lot coming from you. We put a lot of work into this a
 We're currently focused on the web app experience, but an API is on our roadmap! If you're interested in API access, drop your email at tryaiwriter.com and we'll notify you when it's available.
 
 ### 7. "What languages does it support?"
-Use AI Writer supports 50+ languages through our DeepSeek and Claude models. The brand voice learning works best in English currently, but we're actively expanding multi-language support. Try it in your language and let us know how it works!
+Try AI Writer supports 50+ languages through our DeepSeek and Claude models. The brand voice learning works best in English currently, but we're actively expanding multi-language support. Try it in your language and let us know how it works!

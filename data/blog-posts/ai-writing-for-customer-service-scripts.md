@@ -9,7 +9,7 @@ description: "Learn how AI writing tools can help you create customer service sc
 
 Customer service is the frontline of every business, and the quality of your scripts directly shapes how customers perceive your brand. In today's fast-paced environment, writing effective customer service responses manually for every scenario is simply not scalable. AI writing tools are changing that equation by helping teams produce consistent, empathetic responses at scale.
 
-When you Use AI Writer capabilities built into modern platforms, you get more than just generic templates. You get intelligent, context-aware scripts that match your brand voice and adapt to different customer situations in real time.
+When you Try AI Writer capabilities built into modern platforms, you get more than just generic templates. You get intelligent, context-aware scripts that match your brand voice and adapt to different customer situations in real time.
 
 ## Why Customer Service Scripts Matter
 
@@ -72,7 +72,7 @@ Ready to improve your customer service scripts with AI? Here is a practical plan
 
 1. **Audit your existing scripts.** Identify your top 20 most common customer inquiries and evaluate how well your current responses perform.
 2. **Define your brand voice.** Write down three to five adjectives that describe how your company should sound in customer interactions.
-3. **Generate your first batch.** Use AI Writer to draft responses for your most frequent scenarios. Start small and expand gradually.
+3. **Generate your first batch.** Try AI Writer to draft responses for your most frequent scenarios. Start small and expand gradually.
 4. **Review and refine.** Have your team lead review each generated script for accuracy and tone. Make edits where needed.
 5. **Deploy and measure.** Roll out the new scripts to your team and track metrics like first-contact resolution, customer satisfaction scores, and average handling time.
 

@@ -182,7 +182,7 @@ AI-generated content requires careful review. Verify all dates, times, locations
 
 Event planning will always require creative thinking, vendor coordination, and on-site problem-solving. But the writing component—invitations, agendas, promotions, follow-ups—can be dramatically accelerated with AI tools. The planners who adopt these technologies spend less time at their desks writing and more time creating memorable event experiences.
 
-If you're an event planner ready to streamline your content production, explore [Use AI Writer](https://tryaiwriter.com) for event-specific writing templates and strategies.
+If you're an event planner ready to streamline your content production, explore [Try AI Writer](https://tryaiwriter.com) for event-specific writing templates and strategies.
 
 ---
 

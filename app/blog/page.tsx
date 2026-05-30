@@ -5,20 +5,20 @@ import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Blog | Use AI Writer — AI Writing Tips & Tutorials",
+  title: "Blog | Try AI Writer — AI Writing Tips & Tutorials",
   description: "AI writing tips, SEO guides, and marketing content strategies to help you write better, faster. From blog posts to social media, we've got you covered.",
   keywords: ["AI writing tips", "SEO writing guides", "content marketing strategies", "AI writing tutorials"],
   openGraph: {
-    title: "Blog | Use AI Writer — AI Writing Tips & Tutorials",
+    title: "Blog | Try AI Writer — AI Writing Tips & Tutorials",
     description: "AI writing tips, SEO guides, and marketing content strategies to help you write better, faster.",
     url: "https://tryaiwriter.com/blog",
-    siteName: "Use AI Writer",
+    siteName: "Try AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog | Use AI Writer",
+    title: "Blog | Try AI Writer",
     description: "AI writing tips, SEO guides, and marketing content strategies.",
     images: ["/og-image.png"],
   },

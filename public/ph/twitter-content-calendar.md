@@ -140,7 +140,7 @@ Tomorrow. @ProductHunt. 👀
 ```
 🚀 WE'RE LIVE ON PRODUCT HUNT
 
-Use AI Writer — the writing tool that learns your voice.
+Try AI Writer — the writing tool that learns your voice.
 
 Stop fighting AI to sound like yourself.
 Start creating content 10x faster — in YOUR voice.
@@ -322,7 +322,7 @@ Every AI writing tool sounds the same. Generic. Corporate. Robotic.
 
 You spend more time editing than if you just wrote it yourself.
 
-We built Use AI Writer to fix this.
+We built Try AI Writer to fix this.
 
 2/ The Solution
 

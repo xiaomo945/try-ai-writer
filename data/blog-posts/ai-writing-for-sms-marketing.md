@@ -29,7 +29,7 @@ You don't have space for fluff. AI can help you:
 - Remove unnecessary words
 - Make every character count
 
-Use AI Writer to draft, then edit for maximum impact.
+Try AI Writer to draft, then edit for maximum impact.
 
 ### 2. Generate Multiple Variations for Testing
 
@@ -94,7 +94,7 @@ Stick to 160 characters if possible.
 
 ## Case Study: AI-Written SMS Campaign Increases Sales 45%
 
-A retail brand's SMS campaigns weren't performing well. They used Use AI Writer to:
+A retail brand's SMS campaigns weren't performing well. They used Try AI Writer to:
 - Generate multiple variations of each message
 - Personalize based on past purchases
 - Test different offers

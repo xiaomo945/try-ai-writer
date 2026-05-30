@@ -32,7 +32,7 @@ Proposals win clients, but writing them takes hours. Use AI to:
 - Highlight your unique value proposition
 - Edit and polish your drafts
 
-Use AI Writer can help you create professional proposals in minutes instead of hours.
+Try AI Writer can help you create professional proposals in minutes instead of hours.
 
 ### 2. Keep Your Marketing Consistent
 
@@ -89,7 +89,7 @@ Then design them with your branding and start collecting leads.
 
 ## Tools That Solopreneurs Love
 
-Use AI Writer is perfect for solopreneurs because it's affordable, easy to learn, and saves you hours every week. You don't need a big team to get big results.
+Try AI Writer is perfect for solopreneurs because it's affordable, easy to learn, and saves you hours every week. You don't need a big team to get big results.
 
 ## Common Pitfalls to Avoid
 
@@ -104,7 +104,7 @@ Some things—like important client calls—still need your personal touch. Use 
 
 ## Case Study: How a Solopreneur Doubled Revenue Without Working More
 
-Maria was a freelance designer working 60 hours a week. She started using Use AI Writer to:
+Maria was a freelance designer working 60 hours a week. She started using Try AI Writer to:
 - Write client proposals
 - Create monthly blog posts
 - Draft email newsletters

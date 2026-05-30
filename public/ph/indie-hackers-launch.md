@@ -1,12 +1,12 @@
 # Indie Hackers Launch Prep
 
 ## Post Title
-Show HN: Use AI Writer – AI Writing with Brand Voice Learning & Multiple Models
+Show HN: Try AI Writer – AI Writing with Brand Voice Learning & Multiple Models
 
 ## Post Body
 Hey Indie Hackers! 👋
 
-After 3 months of building, I'm excited to launch Use AI Writer — an AI writing tool that actually learns your brand voice.
+After 3 months of building, I'm excited to launch Try AI Writer — an AI writing tool that actually learns your brand voice.
 
 **What it does:**
 - 🧠 Brand Voice Learning: Upload your writing samples and the AI adapts to your tone

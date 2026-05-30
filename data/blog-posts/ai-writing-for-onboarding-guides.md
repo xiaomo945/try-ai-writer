@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you create comprehensive onboardin
 
 The first week at a new job sets the tone for an employee entire tenure. A chaotic, confusing onboarding experience creates anxiety and doubt. A well-structured, welcoming onboarding process builds confidence and accelerates productivity. Yet many companies still rely on outdated, manually maintained onboarding documents that quickly become stale. AI writing tools are transforming onboarding guide creation by generating comprehensive, personalized guides that scale across departments and roles.
 
-When you Use AI Writer capabilities for HR documentation, you can produce onboarding guides that are thorough, engaging, and consistently updated as your company evolves.
+When you Try AI Writer capabilities for HR documentation, you can produce onboarding guides that are thorough, engaging, and consistently updated as your company evolves.
 
 ## Why Onboarding Guides Deserve Your Best Writing
 
@@ -73,7 +73,7 @@ Creating better onboarding guides with AI is a project that pays off with every 
 
 1. **Map your current onboarding process.** Document every step a new hire takes from their first day through their first 90 days. Identify gaps, redundancies, and areas where information is inconsistent.
 2. **Define role categories.** Group roles into categories that share similar onboarding needs. This reduces the number of unique guides you need to create.
-3. **Generate the guides.** Use AI Writer to create onboarding guides for each role category. Provide company information, tool lists, team structures, and role-specific details.
+3. **Generate the guides.** Try AI Writer to create onboarding guides for each role category. Provide company information, tool lists, team structures, and role-specific details.
 4. **Review and personalize.** Have HR and hiring managers review each guide for accuracy. Add personal touches like manager welcome messages and buddy assignments.
 5. **Deploy and iterate.** Distribute the guides to new hires and collect feedback after their first month. Use this feedback to refine the guides continuously.
 

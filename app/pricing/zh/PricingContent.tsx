@@ -127,7 +127,7 @@ export default function PricingContentZh() {
         <header className="border-b border-glass-border">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <Link href="/" className="bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent font-display text-xl font-extrabold">
-              Use AI Writer
+              Try AI Writer
             </Link>
             <div className="flex items-center gap-4">
               <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
@@ -248,7 +248,7 @@ export default function PricingContentZh() {
         {/* Footer */}
         <footer className="py-12 border-t border-glass-border">
           <div className="max-w-6xl mx-auto px-6 text-center">
-            <p className="text-sm text-slate-500">&copy; 2026 Use AI Writer. 保留所有权利。</p>
+            <p className="text-sm text-slate-500">&copy; 2026 Try AI Writer. 保留所有权利。</p>
           </div>
         </footer>
       </main>

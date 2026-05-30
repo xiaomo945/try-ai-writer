@@ -23,7 +23,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md space-y-10">
           <div>
             <Link href="/" className="text-emerald-600 font-display text-2xl font-extrabold">
-              Use AI Writer
+              Try AI Writer
             </Link>
             <h1 className="text-3xl font-display font-extrabold text-slate-900 dark:text-white mt-6">
               Welcome Back

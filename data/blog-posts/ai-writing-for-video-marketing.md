@@ -29,7 +29,7 @@ AI can help you write:
 - Hook ideas for the first 3 seconds
 - Calls to action that convert
 
-Use AI Writer can help you turn your ideas into a complete script. Just tell it your topic, audience, and tone, and it will generate a first draft.
+Try AI Writer can help you turn your ideas into a complete script. Just tell it your topic, audience, and tone, and it will generate a first draft.
 
 ### 2. YouTube Descriptions and Titles
 
@@ -53,19 +53,19 @@ Use AI to:
 ## A Practical Workflow
 
 1. **Plan your video**: Know your audience, message, and goal.
-2. **Generate a script outline**: Use Use AI Writer to create an outline.
+2. **Generate a script outline**: Use Try AI Writer to create an outline.
 3. **Write the script**: Use AI to draft, then edit and add your voice.
 4. **Create supporting content**: Use AI to write titles, descriptions, captions, and social posts.
 5. **Review everything**: Always review and edit AI-generated content.
 
 ## Case Study: How a Brand Grew Their YouTube Channel
 
-A fitness brand was spending 8 hours per video on scripts and supporting content. They started using Use AI Writer and cut that time to 3 hours. They used the extra time to make more videos, and their channel grew 50% in 6 months.
+A fitness brand was spending 8 hours per video on scripts and supporting content. They started using Try AI Writer and cut that time to 3 hours. They used the extra time to make more videos, and their channel grew 50% in 6 months.
 
 ## Pro Tips
 
 - **Be specific with prompts**: Tell AI exactly what you need.
-- **Keep your voice consistent**: Train Use AI Writer on your previous content.
+- **Keep your voice consistent**: Train Try AI Writer on your previous content.
 - **Always edit**: AI is a tool, not a replacement.
 - **Test different versions**: Use AI to create variations and see what works best.
 

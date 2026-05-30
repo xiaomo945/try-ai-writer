@@ -32,7 +32,7 @@ Today's clients need content for:
 - Ads
 - Whitepapers
 
-Use AI Writer can help your team produce more content in less time while keeping each brand's voice consistent.
+Try AI Writer can help your team produce more content in less time while keeping each brand's voice consistent.
 
 ### 2. Maintain Brand Voice Consistently
 
@@ -90,7 +90,7 @@ Free up your team to focus on high-value creative work.
 
 ## Tools Built for Agencies
 
-Use AI Writer's team features let you:
+Try AI Writer's team features let you:
 - Manage multiple client brand voices
 - Collaborate seamlessly
 - Track productivity
@@ -110,7 +110,7 @@ Most clients care about results, not how content is created. Be transparent if y
 
 ## Case Study: How an Agency Scaled 3x Without Hiring More Writers
 
-A mid-sized digital agency was struggling to keep up with client demand. They started using Use AI Writer to:
+A mid-sized digital agency was struggling to keep up with client demand. They started using Try AI Writer to:
 - Train on each client's brand voice
 - Generate first drafts for all content
 - Let their creative team focus on strategy and polishing

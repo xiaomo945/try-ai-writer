@@ -7,20 +7,20 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tryaiwriter.com"),
-  title: "Use AI Writer — Claude-Powered AI Writing Tool | Affordable, Brand Voice Learning",
+  title: "Try AI Writer — Claude-Powered AI Writing Tool | Affordable, Brand Voice Learning",
   description: "Write blog posts, emails, and social media content 3x faster with this Claude-powered AI writing tool. Affordable, learns your brand voice, and starts free. Perfect for creators, solopreneurs, and small teams.",
   keywords: ["AI writing tool", "Claude-powered AI writer", "affordable AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer"],
   openGraph: {
-    title: "Use AI Writer — Claude-Powered AI Writing Tool",
+    title: "Try AI Writer — Claude-Powered AI Writing Tool",
     description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
     url: "https://tryaiwriter.com",
-    siteName: "Use AI Writer",
+    siteName: "Try AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Use AI Writer — Claude-Powered AI Writing",
+    title: "Try AI Writer — Claude-Powered AI Writing",
     description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
     images: ["/og-image.png"],
   },
@@ -44,7 +44,7 @@ const breadcrumbSchema = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Use AI Writer",
+  "name": "Try AI Writer",
   "url": "https://tryaiwriter.com",
   "logo": "https://tryaiwriter.com/logo.png",
   "sameAs": [

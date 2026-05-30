@@ -141,7 +141,7 @@ Over time, develop a library of AI-generated templates tailored to your organiza
 
 AI writing tools won't replace recruiters, but recruiters who use AI will outperform those who don't. The technology handles the writing volume that currently consumes half your week, freeing you to focus on what actually drives hiring outcomes: building relationships, assessing cultural fit, and guiding candidates through the process.
 
-Ready to transform your recruiting workflow? Try [Use AI Writer](https://tryaiwriter.com) to see how AI can streamline job descriptions, outreach, and candidate communications from day one.
+Ready to transform your recruiting workflow? Try [Try AI Writer](https://tryaiwriter.com) to see how AI can streamline job descriptions, outreach, and candidate communications from day one.
 
 ---
 

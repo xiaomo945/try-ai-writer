@@ -46,7 +46,7 @@ Good docs and developer support save you time.
 ### 5. Pricing
 Does the pricing model scale well for your use case?
 
-Tools like **Use AI Writer** offer robust APIs with great documentation and customization features.
+Tools like **Try AI Writer** offer robust APIs with great documentation and customization features.
 
 ## Key Integration Patterns
 
@@ -177,10 +177,10 @@ Looking ahead, we can expect:
 - Tighter integration with popular tools
 - Better support for long-form content
 
-And with APIs from tools like **Use AI Writer** getting more powerful and easier to use, there’s never been a better time to start integrating.
+And with APIs from tools like **Try AI Writer** getting more powerful and easier to use, there’s never been a better time to start integrating.
 
 ---
 
-Ready to integrate AI writing into your product or workflow? Check out **Use AI Writer’s** developer API documentation and get started today.
+Ready to integrate AI writing into your product or workflow? Check out **Try AI Writer’s** developer API documentation and get started today.
 
 For more on content strategy, read our article on [building an AI-powered content strategy in 2026](/blog/ai-content-strategy-2026).

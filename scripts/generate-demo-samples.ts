@@ -290,7 +290,7 @@ function main(): void {
       title: frontMatter.title as string || 'Untitled',
       date: ((frontMatter.date as string) || new Date().toISOString().split('T')[0]) ?? '',
       tags: (frontMatter.tags as string[]) || [],
-      author: frontMatter.author as string || 'Use AI Writer',
+      author: frontMatter.author as string || 'Try AI Writer',
       content: body,
       slug: file.replace('.md', ''),
     });

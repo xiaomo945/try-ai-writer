@@ -31,7 +31,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-display font-bold text-white mb-4">1. Information We Collect</h2>
               <div className="text-slate-300 space-y-4">
                 <p>
-                  At Use AI Writer, we collect information you provide directly to us, including:
+                  At Try AI Writer, we collect information you provide directly to us, including:
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li><strong className="text-white">Account Information:</strong> Name, email address, and authentication data when you create an account</li>
@@ -162,7 +162,7 @@ export default function PrivacyPage() {
       <footer className="py-8 border-t border-slate-200 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-sm text-slate-500">
-            &copy; 2026 Use AI Writer. All rights reserved.
+            &copy; 2026 Try AI Writer. All rights reserved.
           </p>
         </div>
       </footer>

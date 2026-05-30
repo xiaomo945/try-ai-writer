@@ -202,7 +202,7 @@ Your work is visual first. Use AI-generated text to complement and contextualize
 
 Interior design is a visual art, but the words you use to describe, sell, and market your work determine whether the right clients find you. AI writing tools help interior designers produce professional, persuasive content that communicates design vision clearly and attracts the clients who value your work.
 
-Start transforming your design business content with [Use AI Writer](https://tryaiwriter.com) and spend less time writing, more time designing.
+Start transforming your design business content with [Try AI Writer](https://tryaiwriter.com) and spend less time writing, more time designing.
 
 ---
 

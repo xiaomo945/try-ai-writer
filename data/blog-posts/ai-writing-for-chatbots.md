@@ -30,7 +30,7 @@ Writing chatbot flows takes time. AI can help you:
 - Create fallback messages
 - Anticipate user questions
 
-Use AI Writer to draft flows, then refine them with real user data.
+Try AI Writer to draft flows, then refine them with real user data.
 
 ### 2. Maintain Consistent Brand Voice
 
@@ -94,7 +94,7 @@ Use real user data to improve your chatbot over time.
 
 ## Case Study: AI-Written Chatbot Increases Satisfaction 40%
 
-An e-commerce company's chatbot was frustrating users. They used Use AI Writer to:
+An e-commerce company's chatbot was frustrating users. They used Try AI Writer to:
 - Rewrite all chatbot responses to sound more natural
 - Create better fallback messages
 - Add more helpful solutions

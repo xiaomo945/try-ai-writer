@@ -10,19 +10,19 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
-    title: `${params.slug.replaceAll("-", " ")} | Use AI Writer Blog`,
+    title: `${params.slug.replaceAll("-", " ")} | Try AI Writer Blog`,
     description: "AI writing tips and tutorials to help you write better content faster.",
     openGraph: {
-      title: `${params.slug.replaceAll("-", " ")} | Use AI Writer Blog`,
+      title: `${params.slug.replaceAll("-", " ")} | Try AI Writer Blog`,
       description: "AI writing tips and tutorials.",
       url: `https://tryaiwriter.com/blog/${params.slug}`,
-      siteName: "Use AI Writer",
+      siteName: "Try AI Writer",
       images: [{ url: "/og-image.png", width: 1200, height: 630 }],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${params.slug.replaceAll("-", " ")} | Use AI Writer`,
+      title: `${params.slug.replaceAll("-", " ")} | Try AI Writer`,
       description: "AI writing tips and tutorials.",
       images: ["/og-image.png"],
     },
@@ -62,11 +62,11 @@ export default function BlogPostPage({ params }: Props) {
             "description": "AI writing tips and tutorials to help you write better content faster.",
             "author": {
               "@type": "Organization",
-              "name": "Use AI Writer"
+              "name": "Try AI Writer"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Use AI Writer",
+              "name": "Try AI Writer",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://tryaiwriter.com/logo.png"

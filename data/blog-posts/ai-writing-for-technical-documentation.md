@@ -30,7 +30,7 @@ Use AI to draft:
 - Tutorials and how-tos
 - Release notes
 
-Start with a good outline and give AI clear instructions. Use AI Writer can help you turn technical notes into clear, readable documentation.
+Start with a good outline and give AI clear instructions. Try AI Writer can help you turn technical notes into clear, readable documentation.
 
 ### 2. Simplifying Complex Information
 
@@ -59,7 +59,7 @@ AI can make factual mistakes. Always have someone with technical knowledge revie
 
 ### Maintain a Style Guide
 
-Give AI your style guide so it follows your terminology, formatting, and tone. Use AI Writer can use your style guide to keep docs consistent.
+Give AI your style guide so it follows your terminology, formatting, and tone. Try AI Writer can use your style guide to keep docs consistent.
 
 ### Keep Humans in the Loop
 
@@ -67,7 +67,7 @@ AI is a tool, not a replacement for technical writers. You still need to plan, v
 
 ## Case Study: How a Dev Team Improved Documentation Speed
 
-A software company's technical writing team was taking 2 weeks to document each new feature. They started using Use AI Writer to draft documentation and cut their time to 3 days. The quality stayed high because they still did technical reviews.
+A software company's technical writing team was taking 2 weeks to document each new feature. They started using Try AI Writer to draft documentation and cut their time to 3 days. The quality stayed high because they still did technical reviews.
 
 ## The Future of AI in Technical Writing
 

@@ -11,7 +11,7 @@ Game development is a creative endeavor that requires immense storytelling skill
 
 ## Why AI Writing is a Game-Changer for Developers
 
-Game developers wear many hats, and writing often takes a backseat to coding and design. AI writing tools like **Use AI Writer** can help by:
+Game developers wear many hats, and writing often takes a backseat to coding and design. AI writing tools like **Try AI Writer** can help by:
 
 - Generating dialogue drafts quickly
 - Creating consistent lore across your game world

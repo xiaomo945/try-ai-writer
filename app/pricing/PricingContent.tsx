@@ -10,11 +10,11 @@ import { plans } from "@/lib/pricing";
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "Use AI Writer",
+  "name": "Try AI Writer",
   "description": "AI writing tool that learns your voice",
   "brand": {
     "@type": "Brand",
-    "name": "Use AI Writer",
+    "name": "Try AI Writer",
   },
   "offers": plans.map((plan) => ({
     "@type": "Offer",
@@ -125,7 +125,7 @@ export default function PricingContent() {
         <header className="border-b border-glass-border">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <Link href="/" className="bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent font-display text-xl font-extrabold">
-              Use AI Writer
+              Try AI Writer
             </Link>
             <div className="flex items-center gap-4">
               <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
@@ -218,7 +218,7 @@ export default function PricingContent() {
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left p-4 text-slate-400 font-semibold">Feature</th>
-                    <th className="text-center p-4 text-blue-400 font-semibold">Use AI Writer Pro</th>
+                    <th className="text-center p-4 text-blue-400 font-semibold">Try AI Writer Pro</th>
                     <th className="text-center p-4 text-slate-400 font-semibold">Jasper</th>
                     <th className="text-center p-4 text-slate-400 font-semibold">Copy.ai</th>
                     <th className="text-center p-4 text-slate-400 font-semibold">Writesonic</th>
@@ -310,7 +310,7 @@ export default function PricingContent() {
         {/* Footer */}
         <footer className="py-12 border-t border-glass-border">
           <div className="max-w-6xl mx-auto px-6 text-center">
-            <p className="text-sm text-slate-500">&copy; 2026 Use AI Writer. All rights reserved.</p>
+            <p className="text-sm text-slate-500">&copy; 2026 Try AI Writer. All rights reserved.</p>
           </div>
         </footer>
       </main>

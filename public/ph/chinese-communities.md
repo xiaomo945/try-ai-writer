@@ -6,13 +6,13 @@
 
 ## 即刻 (Jike)
 
-**标题:** 🚀 Use AI Writer 上线 Product Hunt 了！AI 写作工具，学习你的品牌声音
+**标题:** 🚀 Try AI Writer 上线 Product Hunt 了！AI 写作工具，学习你的品牌声音
 
 **内容:**
 
 各位即刻的朋友们好！👋
 
-今天我们的产品 Use AI Writer 在 Product Hunt 上线啦！🎉
+今天我们的产品 Try AI Writer 在 Product Hunt 上线啦！🎉
 
 这是一款真正学习你的品牌声音的 AI 写作工具——不再是千篇一律的通用内容，而是听起来像你写的，只是更快！
 
@@ -33,11 +33,11 @@ https://producthunt.com/posts/use-ai-writer
 
 ## 少数派 (Sspai)
 
-**标题:** Use AI Writer：学习你声音的 AI 写作工具，让效率与风格并存
+**标题:** Try AI Writer：学习你声音的 AI 写作工具，让效率与风格并存
 
 **内容:**
 
-大家好，我是 Use AI Writer 的创始人之一。今天我们的产品正式在 Product Hunt 发布了！
+大家好，我是 Try AI Writer 的创始人之一。今天我们的产品正式在 Product Hunt 发布了！
 
 ### 为什么我们要做这个
 
@@ -62,13 +62,13 @@ https://producthunt.com/posts/use-ai-writer
 
 ## V2EX
 
-**标题:** [Product Hunt Launch] Use AI Writer：学习你品牌声音的 AI 写作工具
+**标题:** [Product Hunt Launch] Try AI Writer：学习你品牌声音的 AI 写作工具
 
 **正文:**
 
 Hi V2EX 的朋友们，
 
-我们做了一款 AI 写作工具叫 Use AI Writer，今天正式在 Product Hunt 发布了！
+我们做了一款 AI 写作工具叫 Try AI Writer，今天正式在 Product Hunt 发布了！
 
 **主要特点：**
 - 学习你的品牌声音和写作风格
@@ -89,9 +89,9 @@ https://producthunt.com/posts/use-ai-writer
 
 **适合朋友圈:**
 
-🎉 大事件！Use AI Writer 今天正式在 Product Hunt 上线了！
+🎉 大事件！Try AI Writer 今天正式在 Product Hunt 上线了！
 
-🚀 什么是 Use AI Writer？
+🚀 什么是 Try AI Writer？
 AI 写作工具，但和别人不一样——它学习你的声音，而不是只写通用内容！
 
 ✅ 学习你的写作风格

@@ -27,7 +27,7 @@ Small teams don't have enterprise budgets. Look for tools with transparent prici
 
 ## Top AI Writing Tools for Small Teams
 
-### 1. Use AI Writer
+### 1. Try AI Writer
 - **Best For**: Small creative teams, solopreneurs, and small businesses
 - **Key Features**: Brand voice training, creative interview engine, digital twin, shared memory bank
 - **Price**: Free tier available, Pro at $5/month, Team plans coming soon
@@ -60,7 +60,7 @@ Small teams don't have enterprise budgets. Look for tools with transparent prici
 
 ## Case Study: How a 3-Person Team Scaled 5x
 
-A small e-commerce team was struggling to keep up with content demands. They started using Use AI Writer:
+A small e-commerce team was struggling to keep up with content demands. They started using Try AI Writer:
 
 - Trained the AI on their product descriptions and blog posts
 - Used the creative interview to generate new content ideas

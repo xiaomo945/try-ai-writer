@@ -136,7 +136,7 @@ export default function LandingPage() {
               </span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-slate-400 mt-6 max-w-lg leading-relaxed">
-              The AI that learns your brand voice, not just your prompts. Write better, faster, cheaper — meet Use AI Writer.
+              The AI that learns your brand voice, not just your prompts. Write better, faster, cheaper — meet Try AI Writer.
             </p>
             <p className="text-sm text-slate-500 mt-3">
               Unlike static brand voices, our Digital Twin learns and evolves with every conversation.
@@ -273,7 +273,7 @@ export default function LandingPage() {
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">Loved by Creators Worldwide</h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4">Join 500+ writers who already use Use AI Writer</p>
+          <p className="text-base sm:text-lg text-slate-400 mt-4">Join 500+ writers who already use Try AI Writer</p>
         </div>
         <Testimonials />
       </section>
@@ -310,7 +310,7 @@ export default function LandingPage() {
           <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)"}}>
             <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
-            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Use AI Writer. Start free, no credit card required.</p>
+            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Try AI Writer. Start free, no credit card required.</p>
             <Link href="/write" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Try It Now — No Sign Up Required <ArrowRight className="ml-2 w-5 h-5" /></Link>
           </div>
         </div>
@@ -321,7 +321,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <Logo size={24} />
-            <p className="text-sm text-slate-500">© 2026 Use AI Writer. All rights reserved.</p>
+            <p className="text-sm text-slate-500">© 2026 Try AI Writer. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4 sm:gap-6 text-sm text-slate-400">
             <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>

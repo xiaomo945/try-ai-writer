@@ -33,7 +33,7 @@ Your landing page is your first impression. Use AI to:
 - Create call-to-action copy
 - Draft value propositions
 
-Then test different versions to see what converts best. Use AI Writer can help you iterate quickly.
+Then test different versions to see what converts best. Try AI Writer can help you iterate quickly.
 
 ### 2. Write Documentation That Actually Helps
 
@@ -82,7 +82,7 @@ AI can draft responses to common support questions, but always review and person
 
 ## Tools That Fit the Indie Hacker Mindset
 
-Use AI Writer is perfect for indie hackers because it's affordable, easy to use, and integrates with the tools you already use. You don't need an enterprise budget to get enterprise-quality writing help.
+Try AI Writer is perfect for indie hackers because it's affordable, easy to use, and integrates with the tools you already use. You don't need an enterprise budget to get enterprise-quality writing help.
 
 ## Common Mistakes to Avoid
 
@@ -97,7 +97,7 @@ When building in public, people follow you, not generic content. Add your person
 
 ## Case Study: How One Indie Hacker Shipped 2x Faster
 
-Alex was building a SaaS product and spending 20 hours a week on writing. He started using Use AI Writer to:
+Alex was building a SaaS product and spending 20 hours a week on writing. He started using Try AI Writer to:
 - Generate landing page copy
 - Write documentation
 - Draft his weekly building-in-public posts

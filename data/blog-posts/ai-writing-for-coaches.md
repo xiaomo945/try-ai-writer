@@ -22,7 +22,7 @@ AI can help with all of these—if you use it the right way.
 
 ### 1. Train the AI on Your Content
 
-The best way to keep your voice is to train the AI on your existing content. Use AI Writer lets you upload your previous content, and it will learn to write like you.
+The best way to keep your voice is to train the AI on your existing content. Try AI Writer lets you upload your previous content, and it will learn to write like you.
 
 ### 2. Use AI for First Drafts and Ideas
 
@@ -42,7 +42,7 @@ Write down guidelines for your voice:
 - Do you share personal stories?
 - What words do you use (or avoid)?
 
-You can feed these guidelines to Use AI Writer.
+You can feed these guidelines to Try AI Writer.
 
 ## Specific Use Cases for Coaches
 
@@ -78,13 +78,13 @@ Keep engaging with your audience. Use the time you save with AI to interact more
 
 ## Case Study: How a Coach Tripled Their Content Output
 
-Maria, a business coach, was publishing one blog post per month. She started using Use AI Writer to generate outlines and drafts, and now she publishes three posts per month plus weekly social content. Her audience grew 40%, and she didn't lose her authentic voice.
+Maria, a business coach, was publishing one blog post per month. She started using Try AI Writer to generate outlines and drafts, and now she publishes three posts per month plus weekly social content. Her audience grew 40%, and she didn't lose her authentic voice.
 
 ## The Bottom Line
 
 AI is a powerful tool for coaches, but it's not a replacement. Use it to save time, generate ideas, and scale your content, but always add your personal touch.
 
-If you're a coach looking to try AI, start with Use AI Writer. It's built to help you keep your unique voice while scaling your content.
+If you're a coach looking to try AI, start with Try AI Writer. It's built to help you keep your unique voice while scaling your content.
 
 ## Related Articles
 

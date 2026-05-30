@@ -29,7 +29,7 @@ We evaluated quality, voice consistency, creativity, and technical accuracy.
 - **Safety and alignment**: Claude is less likely to produce harmful or inaccurate content.
 - **Follows instructions**: It's very good at understanding and following detailed instructions.
 
-Use AI Writer is built on Claude, and we've seen firsthand how well it works for content that needs to sound authentic.
+Try AI Writer is built on Claude, and we've seen firsthand how well it works for content that needs to sound authentic.
 
 ### Weaknesses of Claude
 - **Cost**: Claude can be more expensive than some other options.
@@ -72,7 +72,7 @@ Choose **DeepSeek V3.2** if:
 - You need maximum speed
 - You're doing more routine, formulaic writing
 
-Of course, if you want the benefits of Claude with a user-friendly interface and great brand voice training, give Use AI Writer a try.
+Of course, if you want the benefits of Claude with a user-friendly interface and great brand voice training, give Try AI Writer a try.
 
 ## The Bottom Line
 

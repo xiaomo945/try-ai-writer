@@ -39,7 +39,7 @@ AI writing helps you maintain the quality and consistency subscribers expect.
 - Community feeling
 - Genuine value
 
-Use AI Writer to maintain consistency while adding your personal touch.
+Try AI Writer to maintain consistency while adding your personal touch.
 
 ## Newsletter Format That Works
 

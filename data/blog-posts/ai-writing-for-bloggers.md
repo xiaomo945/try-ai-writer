@@ -17,7 +17,7 @@ When you start using AI, it's tempting to let it write everything. But if you do
 
 ### 1. Train the AI on Your Existing Content
 
-The best way to keep your voice is to train the AI on it. Use AI Writer lets you upload your previous blog posts, and it will learn your style, tone, and preferences.
+The best way to keep your voice is to train the AI on it. Try AI Writer lets you upload your previous blog posts, and it will learn your style, tone, and preferences.
 
 ### 2. Use AI for First Drafts, Not Final Products
 
@@ -73,7 +73,7 @@ Then verify everything and add your own analysis.
 
 ## Tools That Help You Scale
 
-Use AI Writer is built for bloggers who want to scale without losing their voice. Our brand voice training feature lets you upload your existing content, and the AI learns to write like you. It's like having a writing assistant who's been reading your blog for years.
+Try AI Writer is built for bloggers who want to scale without losing their voice. Our brand voice training feature lets you upload your existing content, and the AI learns to write like you. It's like having a writing assistant who's been reading your blog for years.
 
 ## Common Pitfalls to Avoid
 
@@ -91,7 +91,7 @@ Keep engaging with your audience in the comments and on social media—that's wh
 
 ## Case Study: How One Blogger Scaled 3x Without Losing Readers
 
-Sarah was publishing 500 words per week, struggling to keep up. She started using Use AI Writer to:
+Sarah was publishing 500 words per week, struggling to keep up. She started using Try AI Writer to:
 - Generate outlines and drafts
 - Train the AI on her 100+ previous posts
 

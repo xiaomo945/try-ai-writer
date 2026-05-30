@@ -2,7 +2,7 @@ import { Sparkles, ArrowRight, ChevronRight, Brain } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Creative Interview Engine | Use AI Writer",
+  title: "Creative Interview Engine | Try AI Writer",
   description: "Tell your digital twin what you want. It asks the right questions, then assembles the perfect prompt. Creative AI writing interview assistant.",
 };
 

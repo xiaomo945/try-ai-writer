@@ -13,7 +13,7 @@ AI writing tools are transforming how we create content across every industry an
 
 In today's digital landscape, content is essential for connecting with audiences, building trust, and standing out from the competition. Whether you're a small business owner, creative professional, or passionate hobbyist, AI can help you create the content you need while saving you time to focus on what matters most.
 
-Tools like **Use AI Writer** are designed to adapt to different writing styles and niches, making it easier than ever to create authentic, engaging content that speaks directly to your audience.
+Tools like **Try AI Writer** are designed to adapt to different writing styles and niches, making it easier than ever to create authentic, engaging content that speaks directly to your audience.
 
 ## Getting Started with AI Writing for Your Niche
 

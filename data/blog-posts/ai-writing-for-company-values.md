@@ -9,7 +9,7 @@ description: "Learn how AI writing tools help you articulate your company values
 
 Company values are the behavioral compass of your organization. They guide hiring decisions, performance evaluations, conflict resolution, and strategic priorities. But writing values that go beyond generic platitudes like "integrity" and "teamwork" is surprisingly difficult. Most company values pages read like they were copy-pasted from a template because, in many cases, they were. AI writing tools are helping companies craft values statements that are specific, authentic, and genuinely useful for guiding day-to-day behavior.
 
-When you Use AI Writer capabilities for culture documentation, you can transform abstract ideals into concrete, actionable values that your team can actually live by.
+When you Try AI Writer capabilities for culture documentation, you can transform abstract ideals into concrete, actionable values that your team can actually live by.
 
 ## Why Well-Written Company Values Matter
 
@@ -68,7 +68,7 @@ Before publishing your values, share them with a cross-section of employees. Ask
 Defining your company values with AI is a collaborative process that produces better results than working in isolation.
 
 1. **Gather input from across the organization.** Survey employees about what they believe the company stands for, what behaviors are rewarded, and what decisions are celebrated.
-2. **Run an AI-assisted discovery session.** Use AI Writer to analyze the collected input and identify recurring themes that represent your actual values.
+2. **Run an AI-assisted discovery session.** Try AI Writer to analyze the collected input and identify recurring themes that represent your actual values.
 3. **Draft values statements.** Generate draft values with behavioral descriptions for each one. Request variations in tone and specificity.
 4. **Review and consolidate.** Share drafts with your team and consolidate overlapping values. Aim for three to five core values.
 5. **Refine behavioral examples.** Use AI to generate specific, realistic behavioral examples for each value based on team feedback.

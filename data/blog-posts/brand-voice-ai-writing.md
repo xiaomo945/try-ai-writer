@@ -50,7 +50,7 @@ Not all AI writing tools are equal. Look for:
 - **Customization options**: Can you adjust formality, humor, technical depth?
 - **Quality output**: Does it sound like you, or generic AI?
 
-At [Use AI Writer](https://tryaiwriter.com), our digital twin technology analyzes your writing patterns and creates a personalized model.
+At [Try AI Writer](https://tryaiwriter.com), our digital twin technology analyzes your writing patterns and creates a personalized model.
 
 ### Step 3: Train and Refine
 
@@ -175,10 +175,10 @@ In 2026 and beyond, brand voice AI will become:
 
 Brand voice AI isn't about replacing human writers—it's about amplifying their impact. Your voice, expertise, and unique perspective remain essential. AI simply helps you express them at scale.
 
-Ready to create your digital twin? [Try Use AI Writer](https://tryaiwriter.com) and experience the future of brand-consistent content creation.
+Ready to create your digital twin? [Try Try AI Writer](https://tryaiwriter.com) and experience the future of brand-consistent content creation.
 
 ## Related Articles
 
 - [How to Train AI on Your Writing Style: The Complete Guide](https://tryaiwriter.com/blog/13-how-to-train-ai-on-your-writing-style)
-- [Jasper Brand Voice vs Use AI Writer Digital Twin: Which Learns You Better?](https://tryaiwriter.com/blog/ai-writing-brand-voice-jasper-vs-use-ai-writer)
+- [Jasper Brand Voice vs Try AI Writer Digital Twin: Which Learns You Better?](https://tryaiwriter.com/blog/ai-writing-brand-voice-jasper-vs-use-ai-writer)
 - [AI Writing for Freelancers: How to 10x Your Output Without Burning Out](https://tryaiwriter.com/blog/ai-writing-for-freelancers)

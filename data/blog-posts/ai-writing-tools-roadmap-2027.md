@@ -97,7 +97,7 @@ Try new tools and techniques to see what works for you.
 
 The future of writing isn't AI replacing humans—it's AI and humans working together. AI will handle the repetitive parts, freeing humans to focus on creativity, strategy, and connection.
 
-Use AI Writer is committed to being at the forefront of these developments, building tools that help you write better, faster, and more creatively.
+Try AI Writer is committed to being at the forefront of these developments, building tools that help you write better, faster, and more creatively.
 
 ## Related Articles
 

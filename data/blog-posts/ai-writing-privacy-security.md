@@ -41,7 +41,7 @@ Read the privacy policy carefully. Look for:
 
 ### Opt-Out of Training
 
-Choose tools that let you opt out of having your content used for training. At Use AI Writer, we never train our models on user content—period.
+Choose tools that let you opt out of having your content used for training. At Try AI Writer, we never train our models on user content—period.
 
 ### End-to-End Encryption
 
@@ -55,9 +55,9 @@ You should be able to delete your data at any time, and it should actually be de
 
 Look for tools that comply with GDPR, CCPA, and other privacy regulations.
 
-## How Use AI Writer Protects Your Privacy
+## How Try AI Writer Protects Your Privacy
 
-We take privacy seriously at Use AI Writer. Here's our promise:
+We take privacy seriously at Try AI Writer. Here's our promise:
 
 - **We never train on user content.** Your writing is yours alone.
 - **End-to-end encryption.** Your data is encrypted in transit and at rest.
@@ -65,7 +65,7 @@ We take privacy seriously at Use AI Writer. Here's our promise:
 - **No third-party sharing.** We don't sell or share your data.
 - **GDPR and CCPA compliant.** We comply with major privacy regulations.
 
-We built Use AI Writer with privacy at the core because we believe your content should be yours.
+We built Try AI Writer with privacy at the core because we believe your content should be yours.
 
 ## What You Can Do to Protect Your Data
 
@@ -94,7 +94,7 @@ Privacy is becoming a growing concern, and regulations are evolving. We expect t
 - Better transparency about data usage
 - More user control over data
 
-At Use AI Writer, we'll continue to lead the way in privacy-first AI writing.
+At Try AI Writer, we'll continue to lead the way in privacy-first AI writing.
 
 ## Related Articles
 

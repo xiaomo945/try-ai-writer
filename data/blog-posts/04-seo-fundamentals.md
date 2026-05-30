@@ -2,7 +2,7 @@
 title: "SEO Fundamentals That Still Matter in 2026"
 date: "2026-02-10"
 tags: ["SEO", "Search Engine Optimization", "Content Strategy"]
-author: "Use AI Writer"
+author: "Try AI Writer"
 ---
 
 # SEO Fundamentals That Still Matter in 2026

@@ -29,7 +29,7 @@ Use AI to:
 - Make complex information easy to understand
 - Ensure consistent tone
 
-Use AI Writer is great for this. Just tell it what you want to say and who you're saying it to, and it will generate a draft.
+Try AI Writer is great for this. Just tell it what you want to say and who you're saying it to, and it will generate a draft.
 
 ### 2. Company Newsletters
 
@@ -55,7 +55,7 @@ Use AI to help you write clear, understandable policy documents. Always have leg
 
 ### Keep Your Company's Voice
 
-Make sure your AI-generated content matches your company's voice. Use AI Writer can learn your voice from your existing content.
+Make sure your AI-generated content matches your company's voice. Try AI Writer can learn your voice from your existing content.
 
 ### Always Review
 
@@ -71,7 +71,7 @@ AI doesn't understand your company's culture or politics. Always use your judgme
 
 ## Case Study: How an Internal Comms Team Saved Time
 
-A mid-sized tech company's internal comms team was spending 20 hours per week on writing. They started using Use AI Writer to draft content and cut their time to 10 hours. They used the extra time to focus on more strategic work.
+A mid-sized tech company's internal comms team was spending 20 hours per week on writing. They started using Try AI Writer to draft content and cut their time to 10 hours. They used the extra time to focus on more strategic work.
 
 ## The Future of AI in Internal Comms
 

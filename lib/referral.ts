@@ -1,4 +1,4 @@
-// Referral system for Use AI Writer
+// Referral system for Try AI Writer
 // Using localStorage for storage (client-side only)
 
 export interface ReferralData {
