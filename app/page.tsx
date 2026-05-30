@@ -12,6 +12,7 @@ import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { WaitlistSignup } from "@/app/components/WaitlistSignup";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { LaunchCountdown } from "@/app/components/LaunchCountdown";
+import { WhyDifferent } from "@/app/components/WhyDifferent";
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -233,6 +234,9 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* 竞品对比区 */}
+      <WhyDifferent />
 
       {/* 定价区 — 3列水平对比 */}
       <section className="section-container section-spacing">

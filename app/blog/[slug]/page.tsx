@@ -72,9 +72,19 @@ export default function BlogPostPage({ params }: Props) {
                 "url": "https://tryaiwriter.com/logo.png"
               }
             },
-            "datePublished": "2026-05-28",
-            "dateModified": "2026-05-28",
-            "image": "https://tryaiwriter.com/og-image.png"
+            "datePublished": "2026-05-30",
+            "dateModified": "2026-05-30",
+            "image": "https://tryaiwriter.com/og-image.png",
+            "about": {
+              "@type": "Thing",
+              "name": "AI Writing"
+            },
+            "mentions": [
+              { "@type": "Thing", "name": "AI Writing Tools" },
+              { "@type": "Thing", "name": "Content Creation" },
+              { "@type": "Thing", "name": "Brand Voice" }
+            ],
+            "isAccessibleForFree": true
           })
         }}
       />
