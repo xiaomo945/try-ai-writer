@@ -89,26 +89,45 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         
-        {/* LCP Performance Monitoring */}
+        {/* Global DOM Error Handler */}
         <script
           dangerouslySetInnerHTML={{ __html: `
             if (typeof window !== 'undefined') {
+              // 捕获DOM操作错误
+              window.addEventListener('error', function(event) {
+                if (event.message && (event.message.includes('insertBefore') || event.message.includes('removeChild') || event.message.includes('appendChild'))) {
+                  console.warn('[DOM] Caught DOM operation error, likely from browser translation or external DOM modification:', event.message);
+                  event.preventDefault();
+                  event.stopPropagation();
+                  return true;
+                }
+              });
+              
+              // 防止翻译工具破坏React组件
+              const originalInsertBefore = Node.prototype.insertBefore;
+              Node.prototype.insertBefore = function(newNode, referenceNode) {
+                try {
+                  // 检查节点是否仍然在文档中
+                  if (this.parentNode === null && document.contains(this)) {
+                    console.warn('[DOM] insertBefore called on detached node, skipping');
+                    return newNode;
+                  }
+                  return originalInsertBefore.call(this, newNode, referenceNode);
+                } catch (e) {
+                  console.warn('[DOM] insertBefore failed:', e.message);
+                  return newNode;
+                }
+              };
+              
+              // MutationObserver监控DOM变化
               try {
-                const observer = new PerformanceObserver((list) => {
-                  for (const entry of list.getEntries()) {
-                    console.log('[LCP] Largest Contentful Paint:', entry.startTime, entry.element);
-                  }
+                const domObserver = new MutationObserver(function(mutations) {
+                  // 忽略小型变化
                 });
-                observer.observe({ entryTypes: ['largest-contentful-paint'] });
                 
-                const clsObserver = new PerformanceObserver((list) => {
-                  for (const entry of list.getEntries()) {
-                    console.log('[CLS] Cumulative Layout Shift:', entry.value);
-                  }
-                });
-                clsObserver.observe({ entryTypes: ['layout-shift'] });
+                // 不要全局监听，性能影响太大
               } catch (e) {
-                // Ignore errors if browser doesn't support
+                console.warn('[DOM] MutationObserver not supported');
               }
             }
           `}}

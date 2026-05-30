@@ -34,7 +34,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       error.message.includes('style') ||
       error.message.includes('isConnected') ||
       error.message.includes('MutationObserver') ||
-      error.message.includes('IntersectionObserver');
+      error.message.includes('IntersectionObserver') ||
+      error.message.includes('insertBefore') ||
+      error.message.includes('removeChild') ||
+      error.message.includes('appendChild') ||
+      error.message.includes('NotFoundError') ||
+      error.message.includes('HierarchyRequestError');
     
     if (isDomError) {
       console.warn('[ErrorBoundary] Detected potential DOM mutation error (possibly from browser translation)');
@@ -62,7 +67,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       const isTranslationError = 
         this.state.error?.message.includes('classList') ||
         this.state.error?.message.includes('style') ||
-        this.state.error?.message.includes('getBoundingClientRect');
+        this.state.error?.message.includes('getBoundingClientRect') ||
+        this.state.error?.message.includes('insertBefore') ||
+        this.state.error?.message.includes('removeChild') ||
+        this.state.error?.message.includes('NotFoundError');
       
       const title = isTranslationError 
         ? "Page temporarily unavailable" 
