@@ -57,11 +57,17 @@ const chinesePlans = [
 
 export default function PricingContentZh() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handlePlanClick = async (planName: string) => {
     if (planName === "免费版") {
       window.location.href = "/login";
+      return;
+    }
+
+    // 如果 session 还在加载，等待一下
+    if (status === "loading") {
+      alert("请稍候，正在检查登录状态...");
       return;
     }
 
@@ -85,15 +91,26 @@ export default function PricingContentZh() {
         body: JSON.stringify({ plan: planKey }),
       });
 
+      // 检查响应状态
       if (!response.ok) {
-        throw new Error("Failed to create checkout session");
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.error || `HTTP ${response.status}: 创建结账会话失败`;
+        throw new Error(errorMessage);
       }
 
-      const { url } = await response.json();
-      window.location.href = url;
+      const data = await response.json();
+      
+      // 检查返回的数据
+      if (!data.url) {
+        throw new Error("服务器未返回支付链接");
+      }
+      
+      // 跳转到支付页面
+      window.location.href = data.url;
     } catch (error) {
       console.error("Checkout error:", error);
-      alert("启动结账流程失败，请重试。");
+      const errorMessage = error instanceof Error ? error.message : "启动结账流程失败";
+      alert(`结账错误: ${errorMessage}\n\n请确保您已登录并重试。`);
     } finally {
       setLoadingPlan(null);
     }

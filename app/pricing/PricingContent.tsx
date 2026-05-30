@@ -49,11 +49,17 @@ const breadcrumbSchema = {
 
 export default function PricingContent() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handlePlanClick = async (planName: string) => {
     if (planName.toLowerCase() === "free") {
       window.location.href = "/login";
+      return;
+    }
+
+    // 如果 session 还在加载，等待一下
+    if (status === "loading") {
+      alert("Please wait, checking your login status...");
       return;
     }
 
@@ -73,15 +79,26 @@ export default function PricingContent() {
         body: JSON.stringify({ plan: planKey }),
       });
 
+      // 检查响应状态
       if (!response.ok) {
-        throw new Error("Failed to create checkout session");
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.error || `HTTP ${response.status}: Failed to create checkout session`;
+        throw new Error(errorMessage);
       }
 
-      const { url } = await response.json();
-      window.location.href = url;
+      const data = await response.json();
+      
+      // 检查返回的数据
+      if (!data.url) {
+        throw new Error("No checkout URL returned from server");
+      }
+      
+      // 跳转到支付页面
+      window.location.href = data.url;
     } catch (error) {
       console.error("Checkout error:", error);
-      alert("Failed to start checkout process. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to start checkout process";
+      alert(`Checkout Error: ${errorMessage}\n\nPlease make sure you are logged in and try again.`);
     } finally {
       setLoadingPlan(null);
     }

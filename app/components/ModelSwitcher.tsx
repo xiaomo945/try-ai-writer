@@ -5,10 +5,9 @@ import { ChevronDown, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useUsage, type ModelType } from '@/lib/usage';
 
-const MODEL_INFO = {
+const MODEL_INFO: Record<Exclude<ModelType, 'mock'>, { name: string; color: string; textColor: string; bgColor: string }> = {
   claude: { name: 'Claude', color: 'bg-orange-500', textColor: 'text-orange-700', bgColor: 'bg-orange-100' },
   deepseek: { name: 'DeepSeek', color: 'bg-blue-500', textColor: 'text-blue-700', bgColor: 'bg-blue-100' },
-  mock: { name: 'Mock', color: 'bg-slate-400', textColor: 'text-slate-700', bgColor: 'bg-slate-100' },
 };
 
 interface ModelOption {
@@ -20,7 +19,6 @@ interface ModelOption {
 const MODEL_OPTIONS: ModelOption[] = [
   { model: 'deepseek', label: 'DeepSeek' },
   { model: 'claude', label: 'Claude', isProOnly: true },
-  { model: 'mock', label: 'Mock' },
 ];
 
 interface ModelSwitcherProps {
@@ -62,7 +60,7 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
     }
   };
 
-  const currentModelInfo = MODEL_INFO[selectedModel];
+  const currentModelInfo = MODEL_INFO[selectedModel as Exclude<ModelType, 'mock'>];
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -81,7 +79,7 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
             {MODEL_OPTIONS.map((option) => {
               const isSelected = selectedModel === option.model;
               const isDisabled = option.isProOnly && !isProUser;
-              const modelInfo = MODEL_INFO[option.model];
+              const modelInfo = MODEL_INFO[option.model as Exclude<ModelType, 'mock'>];
 
               return (
                 <button
