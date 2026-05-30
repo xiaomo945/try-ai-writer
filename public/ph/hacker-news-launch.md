@@ -1,118 +1,121 @@
-# Hacker News Launch Preparation: Show HN Guide
+# Hacker News Launch: Show HN 发布指南
 
-## Show HN Post Template
+## Show HN 帖子模板
 
-**Title:** Show HN: Use AI Writer – Multi-Model AI Writing Tool with Brand Voice Learning
+**标题：**
+> Show HN: Use AI Writer – 多模型 AI 写作工具，支持数字替身学习写作风格
 
-**Body:**
-Hi HN,
+**正文：**
 
-After months of building and iterating with beta users, we're excited to share Use AI Writer – an AI writing tool that we think solves some real pain points for creators, marketers, and developers who write a lot.
+Hi HN，
 
-### What makes Use AI Writer different?
+经过数月的开发和 beta 用户测试，我们很高兴推出 Use AI Writer——一款专为内容创作者、营销人员和开发者打造的 AI 写作工具。
 
-1. **Multi-Model AI** – Most tools lock you into one model. We let you switch between DeepSeek (fast, great for drafts) and Claude Sonnet 4.6 (premium quality for important pieces) with a single click.
+### 核心技术差异化
 
-2. **Brand Voice Learning** – Generic AI writing makes everyone sound the same. We actually learn your unique writing style from your existing content so everything stays on-brand.
+1. **多模型支持（Claude + DeepSeek）** – 一键切换 DeepSeek（快速起草）和 Claude Sonnet 4.6（重要稿件的高质量输出），智能选择最适合当前任务的模型
 
-3. **Creative Interview Engine** – Instead of making you guess the perfect prompt, our AI interviews you to understand what you want, then builds the perfect prompt for you.
+2. **数字替身学习** – 不是通用模板，而是通过上传你的现有文章、邮件、社交帖子，让 AI 真正学习你的独特写作风格
 
-4. **Document Upload** – Train your brand voice by uploading your existing writing – articles, emails, social posts, whatever you have.
+3. **创意采访引擎** – AI 反向提问，引导你理清思路，自动构建最佳 prompt，让非技术用户也能获得高质量输出
 
-5. **It's Fast** – No waiting around. Get quality writing in seconds, not minutes.
+### 更多特点
 
-### Why we built this?
+- **多种写作模式**：博客、邮件、社交媒体、产品描述、文档等
+- **极速生成**：数秒内获得高质量内容，无需等待
+- **免费使用**：每日 10 次生成，无需信用卡
 
-As developers who also do content marketing, we got frustrated with AI tools that:
-- Locked you into a single provider
-- Made everything sound generic
-- Required you to be a prompt engineer
-- Were just slow
+### 为什么做这个？
 
-So we built what we wanted – a tool that actually amplifies our writing instead of replacing it.
+作为既写代码又做内容营销的开发者，我们受够了：
+- 被锁定在单一模型
+- AI 输出千篇一律
+- 必须成为 prompt 工程师
+- 生成速度慢
 
-We'd love to hear what you think! Check it out: https://tryaiwriter.com
+所以我们做了自己想要的工具——真正放大你的写作能力，而不是取代它。
 
-(Also, we have a free tier so you can try it without putting in a credit card)
-
----
-
-## First Comment (From Your Account)
-
-Just wanted to add some technical details since HN loves that:
-
-- Built with Next.js 15 and TypeScript
-- AI orchestration via LangChain
-- Multi-model support with automatic fallback if one model has issues
-- Brand voice learning using embeddings + fine-tuned prompt templates
-- Creative Interview Engine uses few-shot prompting to ask the right questions
-- All user data encrypted at rest and in transit
-- No data used for training without explicit consent
-
-Would love to hear feedback from the community – especially around the brand voice learning and multi-model approach!
+免费试用：https://tryaiwriter.com
 
 ---
 
-## Best Posting Time
-- **Tuesday or Wednesday**, **10 AM Pacific Time** (1 PM Eastern, 6 PM GMT)
-- This is when HN has the most active users from both US coasts and Europe
-- Avoid weekends and holidays
+## 首条评论（官方账号发布）
+
+补充一些技术细节，HN 的朋友们可能会感兴趣：
+
+- **多模型编排**：基于任务类型智能选择模型，自动故障转移
+- **数字替身**：使用 embeddings 理解写作风格细微差别，而非简单复制
+- **创意采访引擎**：few-shot prompting 动态生成提问，适配不同创作场景
+- **数据安全**：传输和存储全程加密，从不用于模型训练
+- **技术栈**：Next.js 15 + TypeScript + LangChain + Tailwind CSS
+
+欢迎大家反馈，特别是关于数字替身和多模型编排的部分！
 
 ---
 
-## Key Technical Differentiation to Emphasize
+## 最佳发布时间
 
-Make sure to highlight these technical points in comments and follow-ups:
-
-1. **Multi-Model Orchestration** – Not just switching models, but intelligent selection based on task type + automatic failover
-2. **Brand Voice as Embeddings** – We don't just copy-paste your style; we use embeddings to understand the nuances of your writing
-3. **Creative Interview as Few-Shot Prompting** – The interview questions are dynamically generated based on what you're trying to create
-4. **No Training Data Lock-In** – Your content is yours; we never use it for training anything without explicit permission
-5. **Built for Speed** – Optimized inference paths, cached embeddings, and efficient prompt engineering mean you get results in seconds
+**周二或周三上午 10:00（太平洋时间）**
+- 美国东西海岸 + 欧洲用户同时活跃
+- 避开周末和节假日
 
 ---
 
-## FAQ & Comment Response Templates
+## 关键技巧
 
-### Q: How is this different from [Other AI Writing Tool]?
-Great question! The main differences are:
-- We support multiple models (DeepSeek + Claude) instead of locking you into one
-- Our brand voice learning actually learns from your existing content rather than just applying a generic "tone" slider
-- Our Creative Interview Engine helps you get better results without having to be a prompt engineer
-- We're focused on speed – no waiting around
+在正文和后续评论中重点强调技术差异化：
 
-### Q: Do you train on my content?
-No, we never train our models on your content without explicit permission. Your uploaded documents are used only for your brand voice learning (via embeddings, not fine-tuning) and are encrypted at rest. You can delete them at any time.
-
-### Q: What's your pricing?
-We have a free tier that lets you try everything with no credit card required. Our paid plans start at $5/month (yes, really – we wanted to make this accessible) and scale based on usage. Full details: https://tryaiwriter.com/pricing
-
-### Q: What tech stack did you use?
-Next.js 15, TypeScript, LangChain for AI orchestration, DeepSeek + Claude APIs, Tailwind CSS for styling, and PostgreSQL for data storage. All deployed on Vercel.
-
-### Q: Can I use this for [specific use case]?
-Probably! We built Use AI Writer to be flexible – it works great for blog posts, social media, emails, product descriptions, documentation, and more. The best way to know is to try it (it's free!) and see if it fits your workflow.
-
-### Q: Do you have an API?
-Not yet, but it's high on our roadmap. If that's something you're interested in, let us know – we'd love to talk about what you'd need.
+1. **多模型编排** – 不是简单切换，而是基于任务类型的智能选择 + 自动故障转移
+2. **数字替身即 Embeddings** – 用向量理解写作风格细微差别，而非模板匹配
+3. **创意采访即 Few-Shot Prompting** – 动态生成引导问题，理解你的创作意图
+4. **数据主权** – 不用于训练，明确授权删除
+5. **极速体验** – 优化推理路径、缓存 embeddings、效率化 prompt 工程
 
 ---
 
-## Engagement Strategy
+## FAQ 回复模板（5 个常见问题）
 
-1. **Be responsive** – Check HN frequently for the first 6 hours after posting. Respond to every comment, even if it's just a quick "thanks!"
-2. **Ask questions back** – If someone gives feedback, ask follow-up questions to keep the conversation going
-3. **Be humble** – Admit what's not perfect yet, and share your roadmap
-4. **Don't spam** – Post only once, and don't keep promoting it in the comments
-5. **Thank people** – Make sure to thank people for their feedback and suggestions
+### Q：和 [其他 AI 写作工具] 有什么区别？
+
+最大的区别：
+- 多模型支持（DeepSeek + Claude），不是单一锁定
+- 数字替身真正学习你的风格，而非通用"语气"调节
+- 创意采访引擎让你无需成为 prompt 工程师
+- 极速生成，无需等待
+
+### Q：你们会训练我的内容吗？
+
+不会。永远不会。我们使用 embeddings（不是 fine-tuning）来学习风格，且绝不用于模型训练。数据加密存储，可随时删除。
+
+### Q：定价是多少？
+
+免费使用，每日 10 次生成，无需信用卡。付费计划 $5/月起：https://tryaiwriter.com/pricing
+
+### Q：支持哪些写作场景？
+
+博客文章、邮件、社交媒体、产品描述、文档、技术博客等。创意采访引擎能适配各类创作需求。免费试用即可体验。
+
+### Q：有 API 吗？
+
+目前没有，但已在路线图中。如果你有需求，欢迎告诉我们具体使用场景！
 
 ---
 
-## Things to Watch For
+## 互动策略
 
-- **Negative comments** – Don't get defensive. Thank them for their feedback, explain your thinking, and offer to improve
-- **Technical questions** – Be detailed in your answers – HN loves technical depth
-- **Feature requests** – Take note of them, and mention if they're already on your roadmap
-- **Interest from potential users** – Invite them to try it, and ask for their specific use case
+1. **及时回复** – 发布后 6 小时内关注 HN 评论区，每条评论都回复
+2. **主动提问** – 收到反馈时追问细节，保持对话活跃
+3. **保持谦逊** – 承认不完美，分享产品路线图
+4. **避免刷屏** – 只发一次，不在评论区反复推广
+5. **真诚感谢** – 感谢每一条反馈和建议
 
-Good luck! The HN community can be tough but fair – focus on being helpful and transparent, and you'll do great.
+---
+
+## 注意事项
+
+- **负面评论**：不要防御性回复，感谢反馈，解释思路
+- **技术问题**：详细回答，HN 社区重视技术深度
+- **功能请求**：记录下来，告知是否已在路线图
+- **潜在用户**：邀请试用，询问具体使用场景
+
+祝发布顺利！HN 社区虽然严格但公正，保持乐于助人和透明，你会做得很好。
