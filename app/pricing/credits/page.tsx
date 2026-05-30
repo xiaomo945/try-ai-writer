@@ -1,15 +1,61 @@
 "use client";
 
+import { useState } from "react";
 import { creditPackages, useCredits } from "@/lib/credits";
 import Link from "next/link";
 import Logo from "@/app/components/Logo";
+import { Loader2 } from "lucide-react";
 
 export default function CreditsPurchasePage() {
   const { addPoints } = useCredits();
+  const [loading, setLoading] = useState<string | null>(null);
 
-  const handlePurchase = (pkg: (typeof creditPackages)[0]) => {
-    addPoints(pkg.credits);
-    alert(`Successfully purchased ${pkg.credits} credits!`);
+  const handlePurchase = async (pkg: (typeof creditPackages)[0]) => {
+    // 如果是在开发/测试环境，直接添加点数
+    if (process.env.NODE_ENV === "development") {
+      addPoints(pkg.credits);
+      alert(`Test mode: Added ${pkg.credits} credits!`);
+      return;
+    }
+
+    setLoading(pkg.id);
+    
+    try {
+      // 调用支付 API
+      const response = await fetch("/api/payment/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          plan: `credits-${pkg.id}`,
+          credits: pkg.credits,
+          price: pkg.price
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Payment failed (${response.status})`);
+      }
+
+      const data = await response.json();
+      
+      // 检查返回的 checkout URL
+      if (!data.url) {
+        throw new Error("No checkout URL returned from payment provider");
+      }
+      
+      // 跳转到支付页面
+      window.location.href = data.url;
+      
+    } catch (error) {
+      console.error("Purchase error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to start payment";
+      alert(`Payment Error: ${errorMessage}\n\nPlease try again or contact support.`);
+    } finally {
+      setLoading(null);
+    }
   };
 
   return (
@@ -64,13 +110,21 @@ export default function CreditsPurchasePage() {
                 </ul>
                 <button
                   onClick={() => handlePurchase(pkg)}
+                  disabled={loading !== null}
                   className={`w-full min-h-[48px] flex items-center justify-center rounded-xl font-semibold transition-all duration-300 ${
                     pkg.id === "medium"
                       ? "bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-lg hover:shadow-emerald-500/25 hover:-translate-y-1"
                       : "btn-primary"
-                  }`}
+                  } ${loading !== null ? "opacity-70 cursor-not-allowed" : ""}`}
                 >
-                  Buy Now
+                  {loading === pkg.id ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      Processing...
+                    </>
+                  ) : (
+                    "Buy Now"
+                  )}
                 </button>
               </div>
             </div>

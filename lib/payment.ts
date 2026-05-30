@@ -72,9 +72,14 @@ export function getPaymentProvider(): PaymentProvider | null {
   }
 
   const productIds = {
+    // 订阅计划
     pro: process.env.CREEM_PRODUCT_PRO || "",
     max: process.env.CREEM_PRODUCT_MAX || "",
     team: process.env.CREEM_PRODUCT_TEAM || "",
+    // 点数包
+    "credits-small": process.env.CREEM_PRODUCT_CREDITS_SMALL || "",
+    "credits-medium": process.env.CREEM_PRODUCT_CREDITS_MEDIUM || "",
+    "credits-large": process.env.CREEM_PRODUCT_CREDITS_LARGE || "",
   };
 
   // 检查占位符产品 ID
@@ -99,6 +104,7 @@ export function getPaymentProvider(): PaymentProvider | null {
   const creemEnv = validEnvs.includes(env) ? env : "test";
 
   console.log(`[Payment] Initialized Creem provider (env: ${creemEnv})`);
+  console.log(`[Payment] Available product IDs:`, Object.keys(productIds).filter(k => (productIds as any)[k]));
 
   return new CreemProvider(apiKey, productIds, creemEnv);
 }
