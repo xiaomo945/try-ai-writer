@@ -317,6 +317,24 @@ const blogPosts = [
   { slug: "ai-writing-for-bloggers-2026", title: "AI Writing for Bloggers in 2026: From First Draft to Published Post", date: "2026-05-28" },
   { slug: "ai-writing-for-social-media-managers-2026", title: "AI Writing for Social Media Managers in 2026: Multi-Platform Content Strategy", date: "2026-05-28" },
   { slug: "ai-writing-for-digital-product-creators", title: "AI Writing for Digital Product Creators: Templates, Guides, and Sales Pages", date: "2026-05-28" },
+  // New batch 5: AI Writing for Gaming Industry (8 articles)
+  { slug: "ai-writing-for-game-developers", title: "AI Writing for Game Developers: Dialogue, Lore, and Tutorials", date: "2026-05-30" },
+  { slug: "ai-writing-for-game-reviews", title: "AI Writing for Game Reviews: Structure, Tone, and SEO", date: "2026-05-30" },
+  { slug: "ai-writing-for-game-guides", title: "AI Writing for Game Walkthroughs and Strategy Guides", date: "2026-05-30" },
+  { slug: "ai-writing-for-game-narrative", title: "AI Writing for Game Narrative Design: Characters and Plot", date: "2026-05-30" },
+  { slug: "ai-writing-for-game-marketing", title: "AI Writing for Game Marketing: Store Pages and Trailers", date: "2026-05-30" },
+  { slug: "ai-writing-for-mobile-game-descriptions", title: "AI Writing for Mobile Game Descriptions: Convert Views to Installs", date: "2026-05-30" },
+  { slug: "ai-writing-for-game-community", title: "AI Writing for Gaming Communities: Posts That Spark Discussion", date: "2026-05-30" },
+  { slug: "ai-writing-for-esports-content", title: "AI Writing for Esports: Match Recaps and Player Profiles", date: "2026-05-30" },
+  // New batch 6: AI Writing for Specific Professions (8 articles)
+  { slug: "ai-writing-for-dentists", title: "AI Writing for Dentists: Patient Education and Practice Marketing", date: "2026-05-30" },
+  { slug: "ai-writing-for-veterinarians", title: "AI Writing for Veterinarians: Pet Care Guides and Client Emails", date: "2026-05-30" },
+  { slug: "ai-writing-for-accountants-2026", title: "AI Writing for Accountants: Tax Tips and Client Newsletters", date: "2026-05-30" },
+  { slug: "ai-writing-for-financial-planners", title: "AI Writing for Financial Planners: Building Trust Through Content", date: "2026-05-30" },
+  { slug: "ai-writing-for-tutors", title: "AI Writing for Tutors: Lesson Materials and Student Feedback", date: "2026-05-30" },
+  { slug: "ai-writing-for-nutritionists-2026", title: "AI Writing for Nutritionists: Meal Plans and Wellness Content", date: "2026-05-30" },
+  { slug: "ai-writing-for-personal-trainers", title: "AI Writing for Personal Trainers: Workout Plans and Client Motivation", date: "2026-05-30" },
+  { slug: "ai-writing-for-beauty-professionals", title: "AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips", date: "2026-05-30" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
