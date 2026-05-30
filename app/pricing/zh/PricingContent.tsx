@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
 // 中文版本的定价计划
@@ -56,9 +57,16 @@ const chinesePlans = [
 
 export default function PricingContentZh() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const { data: session } = useSession();
 
   const handlePlanClick = async (planName: string) => {
     if (planName === "免费版") {
+      window.location.href = "/login";
+      return;
+    }
+
+    // 如果未登录，先跳转到登录页
+    if (!session) {
       window.location.href = "/login";
       return;
     }
