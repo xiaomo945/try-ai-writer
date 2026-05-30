@@ -124,37 +124,9 @@ export async function POST(request: NextRequest) {
 
     let stream: ReadableStream<Uint8Array>;
 
-    try {
-      if (aiProvider === "deepseek") {
-        console.log("[Generate] Using DeepSeek provider...");
-        stream = await generateDeepSeekStream({
-          prompt,
-          systemPrompt,
-          model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
-          maxTokens: 4096,
-          temperature: 0.7,
-        });
-      } else if (aiProvider === "claude") {
-        console.log("[Generate] Using Claude provider...");
-        stream = await generateClaudeStream({
-          prompt,
-          systemPrompt,
-          model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
-          maxTokens: 4096,
-          temperature: 0.7,
-        });
-      } else {
-        console.warn(`[Generate] Unknown provider: ${aiProvider}, falling back to Claude`);
-        stream = await generateClaudeStream({
-          prompt,
-          systemPrompt,
-          model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
-          maxTokens: 4096,
-          temperature: 0.7,
-        });
-      }
-    } catch (error) {
-      console.log(`[Generate] Falling back to mock mode due to: ${error}`);
+    // 只有明确设置为 mock 时才走 Mock
+    if (aiProvider === "mock") {
+      console.log("[Generate] Using mock mode explicitly");
       const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
       const encoder = new TextEncoder();
       
@@ -169,6 +141,33 @@ export async function POST(request: NextRequest) {
           }
           controller.close();
         },
+      });
+    } else if (aiProvider === "deepseek") {
+      console.log("[Generate] Using DeepSeek provider...");
+      stream = await generateDeepSeekStream({
+        prompt,
+        systemPrompt,
+        model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+        maxTokens: 4096,
+        temperature: 0.7,
+      });
+    } else if (aiProvider === "claude") {
+      console.log("[Generate] Using Claude provider...");
+      stream = await generateClaudeStream({
+        prompt,
+        systemPrompt,
+        model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+        maxTokens: 4096,
+        temperature: 0.7,
+      });
+    } else {
+      console.warn(`[Generate] Unknown provider: ${aiProvider}, falling back to Claude`);
+      stream = await generateClaudeStream({
+        prompt,
+        systemPrompt,
+        model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+        maxTokens: 4096,
+        temperature: 0.7,
       });
     }
 
