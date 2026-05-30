@@ -39,6 +39,20 @@ export default function LandingPage() {
             {session ? (
               <>
                 <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">Dashboard</Link>
+                <div className="flex items-center gap-3">
+                  {session.user?.image ? (
+                    <img 
+                      src={session.user.image} 
+                      alt={session.user.name || 'User'} 
+                      className="w-8 h-8 rounded-full border-2 border-white/20"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+                      {session.user?.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                  )}
+                  <span className="text-white text-sm font-medium">{session.user?.name || 'User'}</span>
+                </div>
                 <Link href="/write" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Write Now</Link>
               </>
             ) : (
@@ -71,6 +85,23 @@ export default function LandingPage() {
               </div>
               {session ? (
                 <>
+                  <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-lg">
+                    {session.user?.image ? (
+                      <img 
+                        src={session.user.image} 
+                        alt={session.user.name || 'User'} 
+                        className="w-10 h-10 rounded-full border-2 border-white/20"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold">
+                        {session.user?.name?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                    )}
+                    <div className="flex flex-col">
+                      <span className="text-white text-base font-medium">{session.user?.name || 'User'}</span>
+                      <span className="text-emerald-400 text-xs">Signed in</span>
+                    </div>
+                  </div>
                   <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
                   <Link href="/write" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Write Now</Link>
                 </>
