@@ -1,5 +1,6 @@
 import { BrandVoiceProfile } from "./brand-voice";
 import type { MemoryItem } from "./memory-bank";
+import { getPreviousInterviewTopics, findSimilarPreviousTopic, hasInterviewedAbout } from "./interview-memory";
 
 export function getPersonaGreeting(profile?: BrandVoiceProfile): string {
   if (profile) {
@@ -71,15 +72,12 @@ const GENERIC_QUESTIONS = [
 
 function detectWritingMode(prompt: string): WritingMode {
   const lower = prompt.toLowerCase();
-  
   const blogKeywords = ["博客", "blog", "文章", "article", "帖子", "post", "指南", "guide", "教程", "tutorial"];
   const emailKeywords = ["邮件", "email", "信", "letter", "通知", "newsletter", "邀请", "invitation", "跟进", "follow-up"];
   const socialKeywords = ["社交", "social", "推文", "tweet", "帖子", "linkedin", "instagram", "tiktok", "facebook", "twitter", "微博", "朋友圈"];
-  
   if (blogKeywords.some(k => lower.includes(k))) return "blog";
   if (emailKeywords.some(k => lower.includes(k))) return "email";
   if (socialKeywords.some(k => lower.includes(k))) return "social";
-  
   return "custom";
 }
 
@@ -99,26 +97,10 @@ function getModeQuestions(mode: WritingMode, isFiction: boolean): string[] {
 }
 
 const MODE_TRANSITIONS: Record<WritingMode, string[]> = {
-  blog: [
-    "好的，让我帮你理清这篇文章的思路...",
-    "写博客最关键的是对读者有价值，让我来帮你...",
-    "好文章需要好结构，我们一起来梳理...",
-  ],
-  email: [
-    "邮件最重要的是目标明确，让我帮你...",
-    "好的，我们来打造一封高转化邮件...",
-    "邮件写作讲究精炼有力，让我帮你...",
-  ],
-  social: [
-    "社交内容需要一秒抓住注意力，让我帮你...",
-    "好的，我们来打造一条高互动的内容...",
-    "社交平台讲究节奏感，让我帮你...",
-  ],
-  custom: [
-    "让我来帮你理清思路...",
-    "好，让我们聊聊你的想法...",
-    "很高兴帮你思考这个话题...",
-  ],
+  blog: ["好的，让我帮你理清这篇文章的思路...", "写博客最关键的是对读者有价值，让我来帮你...", "好文章需要好结构，我们一起来梳理..."],
+  email: ["邮件最重要的是目标明确，让我帮你...", "好的，我们来打造一封高转化邮件...", "邮件写作讲究精炼有力，让我帮你..."],
+  social: ["社交内容需要一秒抓住注意力，让我帮你...", "好的，我们来打造一条高互动的内容...", "社交平台讲究节奏感，让我帮你..."],
+  custom: ["让我来帮你理清思路...", "好，让我们聊聊你的想法...", "很高兴帮你思考这个话题..."],
 };
 
 export function getPersonaQuestions(
@@ -132,6 +114,9 @@ export function getPersonaQuestions(
   const isFiction = isCreativeFiction(topic || "");
   const modeQuestions = getModeQuestions(mode, isFiction);
 
+  const similarTopic = topic ? findSimilarPreviousTopic(topic) : null;
+  const hasInterviewed = topic ? hasInterviewedAbout(topic) : false;
+
   if (memories && topic) {
     const relevantMemories = getRelevantMemories(topic, memories);
     if (relevantMemories.length > 0) {
@@ -139,6 +124,20 @@ export function getPersonaQuestions(
       const memoryKeyword = memory?.keywords?.[0] || memory?.content?.slice(0, 15) || "";
       questions.push(`你之前提到过${memoryKeyword}，这次是想继续那个方向，还是换个角度？`);
     }
+  }
+
+  if (similarTopic) {
+    questions.push(`你之前提到过"${similarTopic}"，这次想从哪个新角度探讨？`);
+    if (modeQuestions[1]) questions.push(modeQuestions[1]);
+    if (modeQuestions[2]) questions.push(modeQuestions[2]);
+    return questions.slice(0, 3);
+  }
+
+  if (hasInterviewed) {
+    if (modeQuestions[0]) questions.push(modeQuestions[0]);
+    if (modeQuestions[1]) questions.push(modeQuestions[1]);
+    if (modeQuestions[2]) questions.push(modeQuestions[2]);
+    return questions.slice(0, 3);
   }
 
   if (topic && topic.length > 0) {
@@ -162,15 +161,12 @@ export function getPersonaQuestions(
   if (mode === "blog" && modeQuestions[3]) {
     questions.push(modeQuestions[3]);
   }
-
   if (mode === "email" && modeQuestions[3]) {
     questions.push(modeQuestions[3]);
   }
-
   if (mode === "social" && modeQuestions[3]) {
     questions.push(modeQuestions[3]);
   }
-
   if (isFiction && modeQuestions[3]) {
     questions.push(modeQuestions[3]);
   }

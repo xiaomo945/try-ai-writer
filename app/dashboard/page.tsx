@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette, Users, Copy, Share2 } from "lucide-react";
+import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette, Users, Copy, Share2, TrendingUp, BarChart3, Fingerprint } from "lucide-react";
 import { useHistory } from "@/lib/history";
 import { useUsage } from "@/lib/usage";
-import { useBrandVoice } from "@/lib/brand-voice";
-import { useMemoryBank } from "@/lib/memory-bank";
+import { useBrandVoice, type BrandVoiceProfile } from "@/lib/brand-voice";
+import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
 import { useCredits } from "@/lib/credits";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
@@ -19,6 +19,8 @@ import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingRefe
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { Gift } from "lucide-react";
+import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
+import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -418,6 +420,221 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
   );
 }
 
+function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const fingerprint = profile?.styleFingerprint;
+  const samplesNeeded = profile?.learningSamples ? Math.max(0, 3 - profile.learningSamples) : 3;
+
+  if (!fingerprint || fingerprint.sampleCount < 3) {
+    return (
+      <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
+            <Fingerprint className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">AI is learning your style</p>
+          </div>
+        </div>
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+            <Fingerprint className="w-8 h-8 text-blue-500 animate-pulse" />
+          </div>
+          <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
+            AI is learning your style. Write {samplesNeeded} more piece{samplesNeeded !== 1 ? "s" : ""} to generate your fingerprint report.
+          </p>
+          <div className="mt-3 w-full bg-slate-200 dark:bg-gray-700 rounded-full h-2">
+            <div
+              className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(100, ((profile?.learningSamples || 0) / 3) * 100)}%` }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex items-center justify-between"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
+            <Fingerprint className="w-6 h-6 text-white" />
+          </div>
+          <div className="text-left">
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{fingerprint.sampleCount} samples analyzed</p>
+          </div>
+        </div>
+        <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
+      </button>
+
+      {isExpanded && (
+        <div className="mt-6 space-y-4">
+          {/* Sentence Length Distribution */}
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Sentence Length Preference</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Short</span>
+                <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
+                  <div className="bg-blue-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.short}%` }} />
+                </div>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.short}%</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Medium</span>
+                <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
+                  <div className="bg-indigo-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.medium}%` }} />
+                </div>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.medium}%</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Long</span>
+                <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
+                  <div className="bg-purple-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.long}%` }} />
+                </div>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.long}%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Transition Words */}
+          {fingerprint.commonTransitionWords.length > 0 && (
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
+              <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Common Transition Words</div>
+              <div className="flex flex-wrap gap-2">
+                {fingerprint.commonTransitionWords.map((word, i) => (
+                  <span key={i} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full font-medium">
+                    {word}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Passive Voice Rate */}
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Passive Voice Usage</span>
+              <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{Math.round(fingerprint.passiveVoiceRate * 100)}%</span>
+            </div>
+            <div className="mt-2 w-full bg-slate-200 dark:bg-gray-700 rounded-full h-2">
+              <div
+                className={`h-2 rounded-full transition-all ${fingerprint.passiveVoiceRate > 0.3 ? "bg-amber-500" : "bg-emerald-500"}`}
+                style={{ width: `${Math.min(100, fingerprint.passiveVoiceRate * 100)}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile | null; memories: MemoryItem[] }) {
+  const [report, setReport] = useState<WeeklyStyleReport | null>(null);
+
+  useEffect(() => {
+    if (!profile || memories.length === 0) return;
+    try {
+      const matcherProfile = {
+        tone: {
+          formality: 0.5,
+          sentiment: "neutral" as const,
+          pace: "moderate" as const,
+        },
+        commonPhrases: profile.commonPhrases || [],
+        avgSentenceLength: profile.styleFingerprint?.avgSentenceLength || 15,
+        avgParagraphLength: profile.styleFingerprint?.avgParagraphSentenceCount || 4,
+        industryTerms: [],
+      };
+      const r = generateWeeklyStyleReport(memories, matcherProfile, profile.styleFingerprint);
+      setReport(r);
+    } catch {
+      // report generation failed silently
+    }
+  }, [profile, memories]);
+
+  if (!report) {
+    return (
+      <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
+            <TrendingUp className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Start writing to get your first report</p>
+          </div>
+        </div>
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Start writing to get your first evolution report ✨
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
+          <TrendingUp className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Your style growth this week</p>
+        </div>
+      </div>
+
+      {/* Evolution Summary */}
+      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-4 mb-4">
+        <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200 leading-relaxed">
+          {report.evolutionSummary}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        {/* New Samples */}
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-3 text-center">
+          <div className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{report.newSamplesCount}</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">New Samples</div>
+        </div>
+
+        {/* Style Match Change */}
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-3 text-center">
+          <div className="flex items-center justify-center gap-1">
+            <span className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{report.styleMatchChange.current}%</span>
+            {report.styleMatchChange.direction === "up" && <TrendingUp className="w-4 h-4 text-emerald-500" />}
+            {report.styleMatchChange.direction === "down" && <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />}
+          </div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">Style Match</div>
+        </div>
+      </div>
+
+      {/* Top Keywords */}
+      {report.topKeywords.length > 0 && (
+        <div className="mt-4">
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Top Keywords This Week</div>
+          <div className="flex flex-wrap gap-2">
+            {report.topKeywords.map((keyword, i) => (
+              <span key={i} className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full font-medium">
+                {keyword}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const { records, deleteRecord, clearAll } = useHistory();
   const { 
@@ -433,7 +650,7 @@ export default function DashboardPage() {
     isProUser 
   } = useUsage();
   const { balance } = useCredits();
-  const { hasProfile, isLoaded } = useBrandVoice();
+  const { hasProfile, isLoaded, profile } = useBrandVoice();
   const { memories, deleteMemory } = useMemoryBank();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
@@ -984,6 +1201,12 @@ export default function DashboardPage() {
               ) : (
                 demoData && <BrandVoiceDemoCard demoData={demoData} />
               )}
+              
+              {/* Style Fingerprint Card */}
+              <StyleFingerprintCard profile={profile} />
+              
+              {/* Weekly Evolution Report Card */}
+              <WeeklyEvolutionCard profile={profile} memories={memories} />
               
               {/* Memory Bank Card */}
               <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
