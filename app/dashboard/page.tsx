@@ -620,56 +620,71 @@ export default function DashboardPage() {
       )}
 
       {/* Header */}
-      <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-emerald-600 font-display text-xl">
+      <header className="border-b border-slate-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 transition-colors">
             <Logo size={32} />
-            Use <span className="font-extrabold">AI Writer</span>
+            <span className="font-display text-xl font-bold">Use AI Writer</span>
           </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
-              New Generation
+          <div className="flex items-center gap-3">
+            <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-shadow">
+              <Sparkles className="w-4 h-4" />
+              <span className="hidden sm:inline">New Generation</span>
             </Link>
             <ThemeToggle />
-            <div className="w-8 h-8 rounded-full bg-emerald-200 dark:bg-emerald-800" />
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
+              {records.length > 0 ? records.length : 'U'}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Dashboard Content */}
-      <div className="flex-1 max-w-7xl mx-auto w-full px-4 py-12 space-y-8">
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
         {/* Personalized Welcome Card */}
-        <div className="rounded-2xl bg-gradient-to-r from-emerald-50 to-white dark:from-emerald-950/20 dark:to-gray-950 border border-emerald-100 dark:border-emerald-900 p-6">
-          <div className="flex items-center justify-between">
-            <div>
+        <div className="rounded-3xl bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 text-white p-8 sm:p-10 shadow-2xl shadow-emerald-500/20 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
+          
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="flex-1">
               {userStage === 0 && (
                 <>
-                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">欢迎来到你的写作空间 🎉</h1>
-                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold mb-3 leading-tight">
+                    欢迎来到你的写作空间 🎉
+                  </h1>
+                  <p className="text-lg sm:text-xl text-emerald-100 leading-relaxed max-w-2xl">
                     让我们一起开始吧！先完成入门设置，然后开始你的第一次创作。
                   </p>
                 </>
               )}
               {userStage === 1 && (
                 <>
-                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">你的数字分身正在学习你的风格 📚</h1>
-                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold mb-3 leading-tight">
+                    你的数字分身正在学习你的风格 📚
+                  </h1>
+                  <p className="text-lg sm:text-xl text-emerald-100 leading-relaxed max-w-2xl">
                     继续使用吧！使用得越多，它就越了解你。
                   </p>
                 </>
               )}
               {userStage === 2 && (
                 <>
-                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">分身已经很了解你了 ✨</h1>
-                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold mb-3 leading-tight">
+                    分身已经很了解你了 ✨
+                  </h1>
+                  <p className="text-lg sm:text-xl text-emerald-100 leading-relaxed max-w-2xl">
                     看看升级 Pro 能为你带来什么！
                   </p>
                 </>
               )}
               {userStage === 3 && (
                 <>
-                  <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white">你们已经是创作搭档了 🚀</h1>
-                  <p className="text-slate-600 dark:text-slate-400 mt-2">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold mb-3 leading-tight">
+                    你们已经是创作搭档了 🚀
+                  </h1>
+                  <p className="text-lg sm:text-xl text-emerald-100 leading-relaxed max-w-2xl">
                     做得太棒了！要不要考虑团队版？
                   </p>
                 </>
@@ -678,10 +693,11 @@ export default function DashboardPage() {
             {hasRealData && (
               <button
                 onClick={clearAll}
-                className="btn-outline text-sm gap-2 min-h-[40px]"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-5 py-2.5 rounded-xl font-medium transition-all flex items-center gap-2 shadow-lg border border-white/20"
                 aria-label="Clear all history"
               >
-                <Trash2 className="w-4 h-4" /> Clear History
+                <Trash2 className="w-4 h-4" /> 
+                <span className="hidden sm:inline">Clear History</span>
               </button>
             )}
           </div>
@@ -689,56 +705,56 @@ export default function DashboardPage() {
 
         {/* Quick Start Cards */}
         {userStage === 0 ? (
-          <div className="grid md:grid-cols-3 gap-4">
-            <Link href="/onboarding" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
-                <Sparkles className="w-6 h-6 text-emerald-600" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link href="/onboarding" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <Sparkles className="w-8 h-8 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 mb-1">完成入门设置</h3>
-              <p className="text-sm text-slate-600">只需 1 分钟！</p>
+              <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">完成入门设置</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">只需 1 分钟！</p>
             </Link>
-            <Link href="/write" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
-                <Zap className="w-6 h-6 text-emerald-600" />
+            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <Zap className="w-8 h-8 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 mb-1">📝 开始写作</h3>
-              <p className="text-sm text-slate-600">立即尝试 AI！</p>
+              <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">📝 开始写作</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">立即尝试 AI！</p>
             </Link>
-            <Link href="/" className="card hover:border-emerald-300 transition-colors flex flex-col items-center justify-center p-6 text-center">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-3">
-                <BookOpen className="w-6 h-6 text-emerald-600" />
+            <Link href="/" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <BookOpen className="w-8 h-8 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 mb-1">浏览博客</h3>
-              <p className="text-sm text-slate-600">获取灵感和技巧！</p>
+              <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">浏览博客</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">获取灵感和技巧！</p>
             </Link>
           </div>
         ) : (
-          <div className="grid md:grid-cols-3 gap-4">
-            <Link href="/write" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-emerald-600" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                <Zap className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900">📝 开始写作</h3>
-                <p className="text-sm text-slate-600">立即开始创作！</p>
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">📝 开始写作</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">立即开始创作！</p>
               </div>
             </Link>
-            <Link href="#history" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <FileText className="w-6 h-6 text-emerald-600" />
+            <Link href="#history" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+              <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                <FileText className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900">📊 查看历史</h3>
-                <p className="text-sm text-slate-600">回顾你的创作</p>
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">📊 查看历史</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">回顾你的创作</p>
               </div>
             </Link>
-            <Link href="#brand-voice" className="card hover:border-emerald-300 transition-colors flex items-center gap-4 p-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-emerald-600" />
+            <Link href="#brand-voice" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+              <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
+                <Brain className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-slate-900">🎨 管理品牌声音</h3>
-                <p className="text-sm text-slate-600">调整和优化风格</p>
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">🎨 管理品牌声音</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">调整和优化风格</p>
               </div>
             </Link>
           </div>
@@ -750,109 +766,127 @@ export default function DashboardPage() {
         )}
 
         {/* Stats Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Daily Usage */}
-          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
+          <div className="card bg-gradient-to-br from-white to-emerald-50/30 dark:from-gray-900 dark:to-emerald-950/20 border-emerald-200 dark:border-emerald-800 p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-emerald-600" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <Zap className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
-              <span className="ml-auto px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-                {planName}
-              </span>
+              <div className="flex-1">
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+                  {planName}
+                </span>
+              </div>
             </div>
-            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white mb-2">
-              {used}/{limit}
+            <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-white mb-3">
+              {used}<span className="text-xl text-slate-400">/{limit}</span>
             </p>
-            <div className="w-full bg-slate-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden mb-3">
               <div
-                className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
+                className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${Math.min(percentage, 100)}%` }}
               />
             </div>
-            <div className="flex justify-between mt-3 text-xs text-slate-500 dark:text-slate-400">
+            <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-2">
               <span>Claude: {claudeUsed}/{claudeLimit}</span>
               <span>DeepSeek: {deepseekUsed}/{deepseekLimit}</span>
             </div>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-              {limit - used > 0 ? `${limit - used} generations remaining today` : "Daily limit reached"}
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              {limit - used > 0 ? `${limit - used} generations remaining` : "Daily limit reached"}
             </p>
-            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-gray-700">
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-gray-800">
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 当前模型：
-                <span className="font-medium">
-                  {isProUser ? 'Claude + DeepSeek (可切换)' : 'DeepSeek (免费)'}
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                  {isProUser ? 'Claude + DeepSeek' : 'DeepSeek (免费)'}
                 </span>
               </p>
             </div>
           </div>
 
           {/* Total Generations */}
-          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
+          <div className="card bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/20 border-blue-200 dark:border-blue-800 p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-                <FileText className="w-6 h-6 text-emerald-600" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
+                <FileText className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">Total History</h3>
+              <div>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Total History</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Saved generations</p>
+              </div>
             </div>
-            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white">{records.length}</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Saved generations</p>
+            <p className="text-4xl font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">{records.length}</p>
+            <div className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+              <Sparkles className="w-4 h-4" />
+              <span>Keep creating!</span>
+            </div>
           </div>
 
           {/* Avg Word Count */}
-          <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
+          <div className="card bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/20 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-                <Clock className="w-6 h-6 text-emerald-600" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
+                <Clock className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">Avg. Word Count</h3>
+              <div>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Avg. Words</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Per generation</p>
+              </div>
             </div>
-            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-white">{avgWords}</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Per generation</p>
+            <p className="text-4xl font-display font-extrabold text-purple-600 dark:text-purple-400 mb-2">{avgWords}</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">words per piece</p>
           </div>
 
           {/* Credit Balance */}
-          <div className="card bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 border-purple-200 dark:border-purple-800">
+          <div className="card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                💎
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                <span className="text-2xl">💎</span>
               </div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">Credit Balance</h3>
+              <div>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Credits</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Available balance</p>
+              </div>
             </div>
-            <p className="text-3xl font-display font-bold text-purple-600 dark:text-purple-400 mb-2">
+            <p className="text-4xl font-display font-extrabold text-purple-600 dark:text-purple-400 mb-3">
               {balance}
             </p>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
-              Credits remaining
-            </p>
-            <Link href="/pricing/credits" className="btn-primary text-sm text-center block min-h-[44px] flex items-center justify-center">
+            <Link href="/pricing/credits" className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-sm text-center block min-h-[44px] flex items-center justify-center rounded-xl font-semibold transition-all shadow-lg">
               🛒 Buy Credits
             </Link>
           </div>
 
           {/* Referral Progress */}
-          <div className="card bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/20 dark:to-gray-950 border-emerald-200 dark:border-emerald-800">
+          <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-emerald-200 dark:border-emerald-800 p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                <Share2 className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
+                <Share2 className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-semibold text-slate-900 dark:text-white">邀请好友</h3>
+              <div className="flex-1">
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">邀请好友</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Share & Earn Rewards</p>
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
+                  {referralsCount}/5
+                </p>
+              </div>
             </div>
-            <p className="text-3xl font-display font-bold text-emerald-600 dark:text-emerald-400 mb-1">
-              {referralsCount}/5
-            </p>
-            <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden mb-2">
+            <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden mb-3">
               <div
-                className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
+                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${referralProgress}%` }}
               />
             </div>
             {referralsCount >= 5 ? (
-              <p className="text-sm text-emerald-600 font-medium">🎉 恭喜！你已获得1个月Pro</p>
+              <p className="text-sm text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-2">
+                🎉 恭喜！你已获得1个月Pro
+              </p>
             ) : (
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                再邀请{5 - referralsCount}人获得额外奖励
+                再邀请{5 - referralsCount}人获得额外奖励 ✨
               </p>
             )}
           </div>
@@ -860,62 +894,64 @@ export default function DashboardPage() {
 
         {/* Brand Voice & Memory Bank Section */}
         {demoData && (
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               {/* Recent History */}
-              <div id="history" className="card">
+              <div id="history" className="card bg-white dark:bg-gray-900 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white">
+                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
                     {hasRealData ? "Recent Generations" : "Your Generations"}
                   </h2>
                 </div>
 
                 {records.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <FileText className="w-12 h-12 text-slate-300 dark:text-gray-600 mb-4" />
-                    <p className="text-slate-500 dark:text-slate-400 font-medium">No generation records yet</p>
-                    <p className="text-slate-400 dark:text-slate-500 text-sm mt-2">Start writing to see your history here.</p>
-                    <Link href="/write" className="btn-primary mt-6 text-sm">Start Writing</Link>
+                    <div className="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mb-6">
+                      <FileText className="w-10 h-10 text-slate-400 dark:text-gray-500" />
+                    </div>
+                    <p className="text-lg font-semibold text-slate-600 dark:text-slate-300 mb-2">No generation records yet</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Start writing to see your history here.</p>
+                    <Link href="/write" className="btn-primary shadow-lg">Start Writing</Link>
                   </div>
                 ) : (
                   <>
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto -mx-6 sm:mx-0 px-6 sm:px-0">
                       <table className="w-full text-left">
                         <thead>
-                          <tr className="border-b border-slate-200 dark:border-gray-700">
-                            <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Mode</th>
-                            <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Title</th>
-                            <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400 hidden sm:table-cell">Words</th>
-                            <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">When</th>
-                            <th className="pb-3 text-sm font-semibold text-slate-500 dark:text-slate-400"></th>
+                          <tr className="border-b-2 border-slate-100 dark:border-gray-800">
+                            <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Mode</th>
+                            <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Title</th>
+                            <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide hidden sm:table-cell">Words</th>
+                            <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">When</th>
+                            <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide w-12"></th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
+                        <tbody className="divide-y divide-slate-50 dark:divide-gray-800">
                           {visibleRecords.map((item) => (
-                            <tr key={item.id} className="group hover:bg-slate-50 dark:hover:bg-gray-800/50 transition-colors">
-                              <td className="py-3">
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 capitalize">
+                            <tr key={item.id} className="group hover:bg-gradient-to-r hover:from-emerald-50/50 hover:to-transparent dark:hover:bg-gradient-to-r dark:hover:from-emerald-950/20 dark:hover:to-transparent transition-all">
+                              <td className="py-4">
+                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-200 capitalize shadow-sm">
                                   {item.mode}
                                 </span>
                               </td>
-                              <td className="py-3">
+                              <td className="py-4">
                                 <Link
                                   href={`/write?load=${item.id}`}
-                                  className="text-sm text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 font-medium hover:underline max-w-xs truncate block"
+                                  className="text-sm font-medium text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors max-w-xs truncate block hover:underline decoration-2 underline-offset-2"
                                 >
                                   {item.title}
                                 </Link>
                               </td>
-                              <td className="py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell">
+                              <td className="py-4 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell font-medium">
                                 {getWordCount(item.result)}
                               </td>
-                              <td className="py-3 text-sm text-slate-500 dark:text-slate-400">
+                              <td className="py-4 text-sm text-slate-500 dark:text-slate-400">
                                 {getRelativeTime(item.createdAt)}
                               </td>
-                              <td className="py-3">
+                              <td className="py-4">
                                 <button
                                   onClick={() => deleteRecord(item.id)}
-                                  className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-500 transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
+                                  className="opacity-0 group-hover:opacity-100 w-10 h-10 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex items-center justify-center"
                                   aria-label="Delete record"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -930,7 +966,7 @@ export default function DashboardPage() {
                     {records.length > 5 && (
                       <button
                         onClick={() => setExpanded(!expanded)}
-                        className="w-full flex items-center justify-center gap-2 mt-4 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
+                        className="w-full flex items-center justify-center gap-2 mt-6 py-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 hover:underline transition-colors"
                       >
                         {expanded ? "Show Less" : `Show All (${records.length})`}
                         <ChevronDown className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`} />
@@ -950,50 +986,50 @@ export default function DashboardPage() {
               )}
               
               {/* Memory Bank Card */}
-              <div className="card bg-slate-50 dark:bg-gray-900 border-slate-200 dark:border-gray-700">
+              <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-                    <Brain className="w-5 h-5 text-emerald-600" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+                    <Brain className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-slate-900">Your Memory Bank</h3>
-                    <p className="text-xs text-slate-500">Saving your ideas and preferences</p>
+                    <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Memory Bank</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Your ideas & preferences</p>
                   </div>
                 </div>
                 
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-slate-600">Total Memories</span>
-                    <span className="text-2xl font-display font-bold text-emerald-600">{memories.length}</span>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl">
+                    <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Total Memories</span>
+                    <span className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{memories.length}</span>
                   </div>
                   
                   {memories.length === 0 ? (
-                    <div className="bg-slate-100 dark:bg-gray-800 rounded-xl p-4 text-center">
-                      <p className="text-sm text-slate-500">
+                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                         你还没有告诉分身任何想法。去写作页面开始对话吧。
                       </p>
                     </div>
                   ) : (
-                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                    <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
                       {memories.slice(0, 5).map((memory, index) => (
-                        <div key={memory.id} className="group flex items-start justify-between gap-2 p-3 bg-white dark:bg-gray-900 rounded-lg border border-slate-200 dark:border-gray-700">
-                          {index < 2 && <div className="w-2 h-2 bg-amber-400 rounded-full mt-1 flex-shrink-0" />}
+                        <div key={memory.id} className="group flex items-start justify-between gap-3 p-4 bg-gradient-to-br from-white to-slate-50 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-slate-100 dark:border-gray-700 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all shadow-sm">
+                          {index < 2 && <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0 shadow-sm" />}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs rounded-full capitalize">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="px-2.5 py-0.5 bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-700 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-300 text-xs rounded-full font-semibold capitalize">
                                 {memory.type}
                               </span>
-                              <span className="text-xs text-slate-400">
+                              <span className="text-xs text-slate-400 dark:text-slate-500">
                                 {new Date(memory.createdAt).toLocaleDateString()}
                               </span>
                             </div>
-                            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-3">
+                            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-3 leading-relaxed">
                               {memory.content}
                             </p>
                           </div>
                           <button
                             onClick={() => deleteMemory(memory.id)}
-                            className="opacity-0 group-hover:opacity-100 p-1 text-slate-400 hover:text-red-500 transition-colors min-w-[32px] min-h-[32px] flex items-center justify-center"
+                            className="opacity-0 group-hover:opacity-100 w-8 h-8 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex-shrink-0"
                             aria-label="Delete memory"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -1001,8 +1037,8 @@ export default function DashboardPage() {
                         </div>
                       ))}
                       {memories.length > 5 && (
-                        <p className="text-xs text-slate-500 text-center">
-                          And {memories.length - 5} more...
+                        <p className="text-xs text-slate-500 dark:text-slate-400 text-center font-medium py-2">
+                          And {memories.length - 5} more... ✨
                         </p>
                       )}
                     </div>
