@@ -105,7 +105,7 @@ export default function PrivacyPage() {
                   <li>Withdraw consent at any time</li>
                 </ul>
                 <p className="mt-4">
-                  To exercise any of these rights, please contact us at privacy@tryaiwriter.com.
+                  To exercise any of these rights, please contact us at hello@tryaiwriter.com.
                 </p>
               </div>
             </section>
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
                   If you have any questions about this Privacy Policy, please contact us:
                 </p>
                 <ul className="list-none space-y-2 mt-4">
-                  <li><strong className="text-white">Email:</strong> privacy@tryaiwriter.com</li>
+                  <li><strong className="text-white">Email:</strong> hello@tryaiwriter.com</li>
                   <li><strong className="text-white">Website:</strong> https://tryaiwriter.com/contact</li>
                 </ul>
               </div>

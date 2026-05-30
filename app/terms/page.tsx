@@ -217,7 +217,7 @@ export default function TermsPage() {
                   For questions about these Terms, please contact us:
                 </p>
                 <ul className="list-none space-y-2 mt-4">
-                  <li><strong className="text-white">Email:</strong> legal@tryaiwriter.com</li>
+                  <li><strong className="text-white">Email:</strong> hello@tryaiwriter.com</li>
                   <li><strong className="text-white">Website:</strong> https://tryaiwriter.com/contact</li>
                 </ul>
               </div>
