@@ -174,7 +174,7 @@ const blogPosts = [
   { slug: "ai-writing-for-investor-updates", title: "AI Writing for Investor Updates: Reports That Build Confidence", date: "2026-05-27" },
   { slug: "ai-writing-tools-multimodal-2026", title: "AI Writing Tools in the Multimodal Era: Text, Image, and Beyond", date: "2026-05-27" },
   { slug: "ai-writing-brand-voice-jasper-vs-use-ai-writer", title: "Jasper Brand Voice vs Use AI Writer Digital Twin: Which Learns You Better?", date: "2026-05-28" },
-  { slug: "ai-writing-for-enterprise-2026", title: "Enterprise AI Writing Tools in 2026: Security, Compliance, and Scale", date: "2026-05-28" },
+  { slug: "ai-writing-for-enterprise-2026", title: "AI Writing for Enterprise Teams: Complete Implementation Guide 2026", date: "2026-05-28" },
   { slug: "ai-writing-for-customer-success", title: "AI Writing for Customer Success Teams: Emails, Guides, and Playbooks", date: "2026-05-28" },
   { slug: "ai-writing-for-product-managers", title: "AI Writing for Product Managers: Specs, Roadmaps, and User Stories", date: "2026-05-28" },
   { slug: "ai-writing-for-designers", title: "AI Writing for Designers: Portfolio Descriptions and Case Studies", date: "2026-05-28" },
