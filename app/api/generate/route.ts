@@ -119,14 +119,28 @@ export async function POST(request: NextRequest) {
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
-    const aiProvider = (process.env.AI_PROVIDER || "claude").toLowerCase();
-    console.log(`[Generate] Selected AI Provider: ${aiProvider}`);
+    const aiProvider = (process.env.AI_PROVIDER || "").toLowerCase();
+    const hasClaudeKey = process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY !== "sk-ant-xxxxx" && !process.env.CLAUDE_API_KEY.startsWith("your-");
+    const hasDeepSeekKey = process.env.DEEPSEEK_API_KEY && !process.env.DEEPSEEK_API_KEY.startsWith("your-");
+    
+    // 智能选择 provider: 先按配置，再检查 API Key 可用性，最后默认 mock
+    let finalProvider = aiProvider;
+    if (!finalProvider) {
+      if (hasClaudeKey) finalProvider = "claude";
+      else if (hasDeepSeekKey) finalProvider = "deepseek";
+      else finalProvider = "mock";
+    } else if (finalProvider === "claude" && !hasClaudeKey) {
+      finalProvider = hasDeepSeekKey ? "deepseek" : "mock";
+    } else if (finalProvider === "deepseek" && !hasDeepSeekKey) {
+      finalProvider = hasClaudeKey ? "claude" : "mock";
+    }
+    
+    console.log(`[Generate] Selected AI Provider: ${finalProvider}`);
 
     let stream: ReadableStream<Uint8Array>;
 
-    // 只有明确设置为 mock 时才走 Mock
-    if (aiProvider === "mock") {
-      console.log("[Generate] Using mock mode explicitly");
+    if (finalProvider === "mock") {
+      console.log("[Generate] Using mock mode (no valid API keys found)");
       const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
       const encoder = new TextEncoder();
       
@@ -142,7 +156,7 @@ export async function POST(request: NextRequest) {
           controller.close();
         },
       });
-    } else if (aiProvider === "deepseek") {
+    } else if (finalProvider === "deepseek") {
       console.log("[Generate] Using DeepSeek provider...");
       stream = await generateDeepSeekStream({
         prompt,
@@ -151,7 +165,7 @@ export async function POST(request: NextRequest) {
         maxTokens: 4096,
         temperature: 0.7,
       });
-    } else if (aiProvider === "claude") {
+    } else if (finalProvider === "claude") {
       console.log("[Generate] Using Claude provider...");
       stream = await generateClaudeStream({
         prompt,
@@ -161,13 +175,19 @@ export async function POST(request: NextRequest) {
         temperature: 0.7,
       });
     } else {
-      console.warn(`[Generate] Unknown provider: ${aiProvider}, falling back to Claude`);
-      stream = await generateClaudeStream({
-        prompt,
-        systemPrompt,
-        model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
-        maxTokens: 4096,
-        temperature: 0.7,
+      console.warn(`[Generate] Unknown provider: ${finalProvider}, falling back to mock`);
+      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
+      const encoder = new TextEncoder();
+      stream = new ReadableStream({
+        async start(controller) {
+          const chunkSize = 50;
+          for (let i = 0; i < mockText.length; i += chunkSize) {
+            const chunk = mockText.substring(i, i + chunkSize);
+            controller.enqueue(encoder.encode(chunk));
+            await new Promise(resolve => setTimeout(resolve, 50));
+          }
+          controller.close();
+        },
       });
     }
 
