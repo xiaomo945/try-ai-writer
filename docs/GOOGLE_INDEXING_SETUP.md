@@ -1,73 +1,143 @@
-# Google Indexing API Setup Guide
+# Google Indexing API 配置指南
 
-This guide will help you set up the Google Indexing API to automatically submit new pages and blog posts to Google Search Console when you deploy your site.
+本文档详细介绍如何配置 Google Indexing API，实现新博客文章发布后自动提交给 Google 搜索引擎收录。
 
-## Prerequisites
-- A Google Cloud Platform (GCP) account
-- A Google Search Console account with your site verified
+## 前提条件
+- Google Cloud Platform (GCP) 账号
+- Google Search Console 账号（已验证您的网站）
 
 ---
 
-## Step 1: Create a Project in Google Cloud Platform
-1. Go to [https://console.cloud.google.com/](https://console.cloud.google.com/)
-2. Click on the project dropdown in the top left and click "New Project"
-3. Name your project (e.g., "Try AI Writer Indexing") and click "Create"
+## 第一步：在 Google Cloud Console 创建项目
 
-## Step 2: Enable the Indexing API
-1. In your new project, go to "APIs & Services" → "Library"
-2. Search for "Indexing API"
-3. Select it and click "Enable"
+1. 访问 [https://console.cloud.google.com/](https://console.cloud.google.com/)
+2. 点击左上角的项目下拉菜单，然后点击"新建项目"
+3. 输入项目名称（例如："Try AI Writer Indexing"）
+4. 点击"创建"
 
-## Step 3: Create a Service Account & Download Credentials
-1. Go to "APIs & Services" → "Credentials"
-2. Click "Create Credentials" → "Service Account"
-3. Fill in the service account details:
-   - Service account name: `search-console-indexer`
-   - Service account ID: `search-console-indexer@PROJECT_ID.iam.gserviceaccount.com` (will be auto-filled)
-   - Description: "Service account for Google Indexing API"
-4. Click "Create and Continue"
-5. Click "Done" (no role needed)
-6. Now, select the service account you just created from the list
-7. Go to the "Keys" tab
-8. Click "Add Key" → "Create New Key"
-9. Choose "JSON" format and click "Create"
-10. Save the downloaded JSON file as `google-indexing-key.json` (we'll use this in the next steps)
+---
 
-## Step 4: Add Service Account to Google Search Console
-1. Go to [Google Search Console](https://search.google.com/search-console/)
-2. Select your site property
-3. Click on "Settings" (gear icon in the sidebar)
-4. Click on "Users and permissions"
-5. Click the "Add user" button
-6. In the "Email address" field, paste the service account email from Step 3.3
-7. Set the permission to "Owner" or "Full" (both work)
-8. Click "Add"
+## 第二步：启用 Indexing API
 
-## Step 5: Set Up Environment Variables
-Create or edit `.env.local` in your project root and add:
-```env
-GOOGLE_INDEXING_KEY_PATH=./google-indexing-key.json
-SITE_URL=https://tryaiwriter.com
+1. 在新项目中，导航到"APIs & Services" → "Library"
+2. 在搜索框中输入"Indexing API"
+3. 选择"Indexing API"并点击"启用"
+
+---
+
+## 第三步：创建服务账号并下载 JSON 密钥
+
+1. 导航到"APIs & Services" → "Credentials"
+2. 点击"创建凭据" → "服务账号"
+3. 填写服务账号信息：
+   - 服务账号名称：`search-console-indexer`
+   - 服务账号 ID：自动生成（格式：`search-console-indexer@PROJECT_ID.iam.gserviceaccount.com`）
+   - 描述："Google Indexing API 服务账号"
+4. 点击"创建并继续"
+5. 点击"完成"（无需分配角色）
+6. 在服务账号列表中选择刚创建的服务账号
+7. 切换到"密钥"标签页
+8. 点击"添加密钥" → "创建新密钥"
+9. 选择"JSON"格式并点击"创建"
+10. 保存下载的 JSON 文件（后面会用到）
+
+---
+
+## 第四步：在 Google Search Console 授权服务账号
+
+1. 访问 [Google Search Console](https://search.google.com/search-console/)
+2. 选择您的网站属性
+3. 点击侧边栏的"设置"（齿轮图标）
+4. 点击"用户和权限"
+5. 点击"添加用户"按钮
+6. 在"电子邮件地址"字段中粘贴第三步中服务账号的邮箱地址
+7. 将权限设置为"所有者"或"完全权限"
+8. 点击"添加"
+
+---
+
+## 第五步：配置环境变量
+
+### 方法一：配置到 Vercel（推荐）
+
+1. 登录 Vercel 控制台，打开您的项目
+2. 导航到"Settings" → "Environment Variables"
+3. 添加新的环境变量：
+   - **名称**：`GOOGLE_INDEXING_CREDENTIALS_JSON`
+   - **值**：将下载的 JSON 密钥文件内容粘贴进去
+
+### 方法二：本地开发环境
+
+将下载的 JSON 密钥文件保存到项目根目录，命名为 `credentials.json`
+
+---
+
+## 第六步：使用脚本
+
+### 手动提交新文章
+
+```bash
+# 提交今日新增的文章
+npm run index-now
+
+# 模拟运行（仅列出待提交的URL，不实际提交）
+npm run index-dry-run
 ```
 
-## Step 6: Configure Vercel Deploy Webhook (Optional)
-1. In your Vercel project settings, go to "Git" → "Deploy Hooks"
-2. Create a deploy hook called "Production Deploy"
-3. Add the hook URL to a script in your package.json (optional)
+### 文章生成后自动提交
+
+```bash
+npm run generate-and-index
+```
+
+---
 
 ## FAQ
 
-### Q: What are the API limits?
-A: The Google Indexing API has a default quota of 200 requests per day, which is enough for most sites.
+### Q: API 配额限制是多少？
 
-### Q: What types of content can I submit?
-A: You can submit URLs with `URL_UPDATED` (new or updated content) or `URL_DELETED` (removed content).
+A: Google Indexing API 默认配额为每天 200 次请求，对于大多数网站足够使用。
 
-### Q: How long does it take for Google to index my pages?
-A: It varies, but typically pages are indexed within a few hours to a few days.
+### Q: 支持提交哪些类型的内容？
+
+A: 支持提交 `URL_UPDATED`（新增或更新的内容）和 `URL_DELETED`（已删除的内容）。
+
+### Q: Google 需要多长时间才能索引我的页面？
+
+A: 时间不一，通常在几小时到几天内完成索引。
+
+### Q: 如何验证提交是否成功？
+
+A: 提交成功后，脚本会输出确认信息。您也可以在 Google Search Console 的"URL 检查"工具中验证。
 
 ---
 
-## Troubleshooting
-- **403 Forbidden Errors**: Make sure your service account is added correctly to Google Search Console with proper permissions.
-- **Invalid Credentials**: Double-check your JSON key file path and contents.
+## 错误排查
+
+### 403 Forbidden 错误
+- 确保服务账号邮箱已正确添加到 Google Search Console
+- 确保权限级别设置为"所有者"或"完全权限"
+
+### 无效凭证错误
+- 检查 JSON 密钥内容是否完整且格式正确
+- 确认环境变量名称正确（`GOOGLE_INDEXING_CREDENTIALS_JSON`）
+
+### 速率限制错误
+- 默认脚本已内置每秒 1 次的速率限制
+- 如果仍遇到限制，请减少提交频率
+
+### 常见错误代码
+- `400 Bad Request`：请求格式错误，检查 URL 是否正确
+- `401 Unauthorized`：认证失败，检查凭证是否有效
+- `429 Too Many Requests`：超过配额限制，稍后重试
+
+---
+
+## 文件说明
+
+| 文件路径 | 说明 |
+|---------|------|
+| `scripts/auto-index.js` | 自动提交脚本，检测当日新增文章并提交 |
+| `scripts/generate-and-index.js` | 文章生成后自动提交的包装脚本 |
+| `reports/indexed-urls.json` | 已提交 URL 的记录文件 |
+| `docs/GOOGLE_INDEXING_SETUP.md` | 配置指南文档 |
