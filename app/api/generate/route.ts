@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
-    const aiProvider = (process.env.AI_PROVIDER || "claude").toLowerCase();
+    const aiProvider = (process.env.AI_PROVIDER || "").toLowerCase();
     // 宽松检测：只要有值就视为有 Key（除非是明显的占位符）
     const hasClaudeKey = process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY.length > 10 && !["your-api-key-here", "sk-ant-xxxxx"].includes(process.env.CLAUDE_API_KEY);
     const hasDeepSeekKey = process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_API_KEY.length > 10 && !["your-api-key-here"].includes(process.env.DEEPSEEK_API_KEY);
@@ -128,14 +128,24 @@ export async function POST(request: NextRequest) {
     console.log(`[Generate] Has Claude Key: ${hasClaudeKey ? "YES" : "NO"} (value: ${process.env.CLAUDE_API_KEY ? "set" : "not set"})`);
     console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey ? "YES" : "NO"} (value: ${process.env.DEEPSEEK_API_KEY ? "set" : "not set"})`);
     
-    // 智能选择 provider: 先按配置，再检查 API Key 可用性
+    // 智能选择 provider:
+    // 1. 如果显式配置了 AI_PROVIDER，就尝试用它
+    // 2. 否则，优先用已配置的 API Key（DeepSeek 优先）
+    // 3. 最后默认 Mock
     let finalProvider = aiProvider;
-    if (finalProvider === "claude" && !hasClaudeKey) {
+    if (!finalProvider) {
+      // 未指定 Provider，优先用已配置的 Key
+      if (hasDeepSeekKey) finalProvider = "deepseek";
+      else if (hasClaudeKey) finalProvider = "claude";
+      else finalProvider = "mock";
+    } else if (finalProvider === "claude" && !hasClaudeKey) {
+      // 指定用 Claude 但没 Key，尝试 DeepSeek
       finalProvider = hasDeepSeekKey ? "deepseek" : "mock";
     } else if (finalProvider === "deepseek" && !hasDeepSeekKey) {
+      // 指定用 DeepSeek 但没 Key，尝试 Claude
       finalProvider = hasClaudeKey ? "claude" : "mock";
     } else if (!["claude", "deepseek", "mock"].includes(finalProvider)) {
-      finalProvider = hasClaudeKey ? "claude" : (hasDeepSeekKey ? "deepseek" : "mock");
+      finalProvider = hasDeepSeekKey ? "deepseek" : (hasClaudeKey ? "claude" : "mock");
     }
     
     console.log(`[Generate] Final Selected AI Provider: ${finalProvider}`);
