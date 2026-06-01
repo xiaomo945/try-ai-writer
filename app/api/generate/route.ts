@@ -119,23 +119,26 @@ export async function POST(request: NextRequest) {
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
-    const aiProvider = (process.env.AI_PROVIDER || "").toLowerCase();
-    const hasClaudeKey = process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY !== "sk-ant-xxxxx" && !process.env.CLAUDE_API_KEY.startsWith("your-");
-    const hasDeepSeekKey = process.env.DEEPSEEK_API_KEY && !process.env.DEEPSEEK_API_KEY.startsWith("your-");
+    const aiProvider = (process.env.AI_PROVIDER || "claude").toLowerCase();
+    // 宽松检测：只要有值就视为有 Key（除非是明显的占位符）
+    const hasClaudeKey = process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY.length > 10 && !["your-api-key-here", "sk-ant-xxxxx"].includes(process.env.CLAUDE_API_KEY);
+    const hasDeepSeekKey = process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_API_KEY.length > 10 && !["your-api-key-here"].includes(process.env.DEEPSEEK_API_KEY);
     
-    // 智能选择 provider: 先按配置，再检查 API Key 可用性，最后默认 mock
+    console.log(`[Generate] AI_PROVIDER: ${aiProvider}`);
+    console.log(`[Generate] Has Claude Key: ${hasClaudeKey ? "YES" : "NO"} (value: ${process.env.CLAUDE_API_KEY ? "set" : "not set"})`);
+    console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey ? "YES" : "NO"} (value: ${process.env.DEEPSEEK_API_KEY ? "set" : "not set"})`);
+    
+    // 智能选择 provider: 先按配置，再检查 API Key 可用性
     let finalProvider = aiProvider;
-    if (!finalProvider) {
-      if (hasClaudeKey) finalProvider = "claude";
-      else if (hasDeepSeekKey) finalProvider = "deepseek";
-      else finalProvider = "mock";
-    } else if (finalProvider === "claude" && !hasClaudeKey) {
+    if (finalProvider === "claude" && !hasClaudeKey) {
       finalProvider = hasDeepSeekKey ? "deepseek" : "mock";
     } else if (finalProvider === "deepseek" && !hasDeepSeekKey) {
       finalProvider = hasClaudeKey ? "claude" : "mock";
+    } else if (!["claude", "deepseek", "mock"].includes(finalProvider)) {
+      finalProvider = hasClaudeKey ? "claude" : (hasDeepSeekKey ? "deepseek" : "mock");
     }
     
-    console.log(`[Generate] Selected AI Provider: ${finalProvider}`);
+    console.log(`[Generate] Final Selected AI Provider: ${finalProvider}`);
 
     let stream: ReadableStream<Uint8Array>;
 

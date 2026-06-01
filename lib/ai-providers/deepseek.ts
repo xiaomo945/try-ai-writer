@@ -13,10 +13,10 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
   
   // 调试日志
   console.log("[DeepSeek] Starting generation...");
-  console.log(`[DeepSeek] API Key: ${apiKey ? apiKey.substring(0, 8) + "..." : "NOT SET"}`);
+  console.log(`[DeepSeek] API Key: ${apiKey ? apiKey.substring(0, Math.min(8, apiKey.length)) + "..." : "NOT SET"}`);
   console.log(`[DeepSeek] Model: ${model}`);
   
-  if (!apiKey || apiKey === "your-deepseek-api-key-here" || apiKey.startsWith("your-")) {
+  if (!apiKey || ["your-api-key-here", "your-deepseek-api-key-here"].includes(apiKey) || apiKey.length < 10) {
     console.log("[DeepSeek] API Key missing or invalid, falling back to mock mode");
     throw new Error("DeepSeek API key not configured");
   }

@@ -12,10 +12,10 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
   const apiKey = process.env.CLAUDE_API_KEY;
   
   console.log("[Claude] Starting generation...");
-  console.log(`[Claude] API Key: ${apiKey ? apiKey.substring(0, 8) + "..." : "NOT SET"}`);
+  console.log(`[Claude] API Key: ${apiKey ? apiKey.substring(0, Math.min(8, apiKey.length)) + "..." : "NOT SET"}`);
   console.log(`[Claude] Model: ${model}`);
   
-  if (!apiKey || apiKey === "sk-ant-xxxxx" || apiKey.startsWith("your-")) {
+  if (!apiKey || ["your-api-key-here", "sk-ant-xxxxx"].includes(apiKey) || apiKey.length < 10) {
     console.log("[Claude] API Key missing or invalid, falling back to mock mode");
     throw new Error("Claude API key not configured");
   }
