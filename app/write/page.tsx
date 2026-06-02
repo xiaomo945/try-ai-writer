@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
@@ -87,8 +88,9 @@ export default function WritePage() {
   const [completionTip, setCompletionTip] = useState<string | null>(null);
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const { addRecord } = useHistory();
+  
+  const searchParams = useSearchParams();
+  const { addRecord, records } = useHistory();
   const { memories, addMemory } = useMemoryBank();
   const { profile } = useBrandVoice();
 
@@ -113,6 +115,20 @@ export default function WritePage() {
     if (!output) return 0;
     return output.trim().split(/\s+/).filter(Boolean).length;
   }, [output]);
+
+  // Load record from URL parameter
+  useEffect(() => {
+    const loadId = searchParams?.get("load");
+    if (loadId) {
+      const record = records.find(r => r.id === loadId);
+      if (record) {
+        setPrompt(record.title);
+        setOutput(record.result);
+        setMode(record.mode as WritingMode);
+        setState("done");
+      }
+    }
+  }, [searchParams, records]);
 
   useEffect(() => {
     if (state === "loading") {

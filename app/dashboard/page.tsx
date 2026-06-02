@@ -732,11 +732,6 @@ export default function DashboardPage() {
     const data = initializeReferral();
     setReferralData(data);
 
-    // Check if new user popup should be shown
-    if (!localStorage.getItem('referral_shown')) {
-      setShowReferralPopup(true);
-    }
-
     // Check for pending referral rewards
     const pendingRewards = checkPendingReferralRewards();
     if (pendingRewards.hasRefereeReward && pendingRewards.refereeRewardData) {
@@ -767,12 +762,12 @@ export default function DashboardPage() {
       {/* Onboarding Wizard */}
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       
-      {/* Referral Popup for New Users */}
+      {/* Referral Popup (Manual Trigger) */}
       {showReferralPopup && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
             <button 
-              onClick={dismissReferralPopup}
+              onClick={() => setShowReferralPopup(false)}
               className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
             >
               <X className="w-5 h-5" />
@@ -790,7 +785,11 @@ export default function DashboardPage() {
             </div>
             <div className="space-y-3">
               <button
-                onClick={copyReferralLink}
+                onClick={() => {
+                  copyReferralLink();
+                  // 复制后关闭弹窗
+                  setTimeout(() => setShowReferralPopup(false), 1500);
+                }}
                 className="w-full btn-primary min-h-[48px] flex items-center justify-center gap-2 text-base"
               >
                 {referralLinkCopied ? (
@@ -804,10 +803,10 @@ export default function DashboardPage() {
                 )}
               </button>
               <button
-                onClick={dismissReferralPopup}
+                onClick={() => setShowReferralPopup(false)}
                 className="w-full text-center text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-2"
               >
-                稍后再说
+                关闭
               </button>
             </div>
           </div>
@@ -1091,21 +1090,30 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden mb-3">
+            <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden mb-4">
               <div
                 className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${referralProgress}%` }}
               />
             </div>
-            {referralsCount >= 5 ? (
-              <p className="text-sm text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-2">
-                🎉 恭喜！你已获得1个月Pro
-              </p>
-            ) : (
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                再邀请{5 - referralsCount}人获得额外奖励 ✨
-              </p>
-            )}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              {referralsCount >= 5 ? (
+                <p className="text-sm text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-2">
+                  🎉 恭喜！你已获得1个月Pro
+                </p>
+              ) : (
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  再邀请{5 - referralsCount}人获得额外奖励 ✨
+                </p>
+              )}
+              <button
+                onClick={() => setShowReferralPopup(true)}
+                className="btn-primary text-sm min-h-[40px] px-5 flex items-center gap-2"
+              >
+                <Share2 className="w-4 h-4" />
+                邀请好友
+              </button>
+            </div>
           </div>
         </div>
 
