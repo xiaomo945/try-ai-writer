@@ -15,12 +15,14 @@ import { DigitalTwinAvatar, type AvatarVariant } from "@/app/components/DigitalT
 import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-variant";
 import { ReferralShare } from "@/app/components/ReferralShare";
 import { LearningTimeline } from "@/app/components/LearningTimeline";
+import { WritingStats } from "@/app/components/WritingStats";
 import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { Gift } from "lucide-react";
 import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
 import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
+import { getCommunityWorkflows, publishWorkflow, unpublishWorkflow, isWorkflowPublished, type WorkflowDefinition } from "@/lib/workflows";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -659,6 +661,8 @@ export default function DashboardPage() {
   const [referralData, setReferralData] = useState<any>(null);
   const [referralLinkCopied, setReferralLinkCopied] = useState(false);
   const [referralRewardNotification, setReferralRewardNotification] = useState<{ type: 'referee'; extraGenerations: number } | { type: 'referrer'; proDays: number } | null>(null);
+  const [communityWorkflows, setCommunityWorkflows] = useState<WorkflowDefinition[]>([]);
+  const [publishedIds, setPublishedIds] = useState<Set<string>>(new Set());
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
   const [userStage, setUserStage] = useState(0); // Default to stage 0
 
@@ -693,6 +697,22 @@ export default function DashboardPage() {
   const dismissReferralPopup = () => {
     setShowReferralPopup(false);
     localStorage.setItem('referral_shown', 'true');
+  };
+
+  const handlePublishWorkflow = (workflow: WorkflowDefinition) => {
+    publishWorkflow(workflow);
+    setPublishedIds(prev => new Set([...prev, workflow.id]));
+    setCommunityWorkflows(getCommunityWorkflows());
+  };
+
+  const handleUnpublishWorkflow = (workflowId: string) => {
+    unpublishWorkflow(workflowId);
+    setPublishedIds(prev => {
+      const next = new Set(prev);
+      next.delete(workflowId);
+      return next;
+    });
+    setCommunityWorkflows(getCommunityWorkflows());
   };
 
   // Set registration time and calculate user stage in useEffect
@@ -750,6 +770,12 @@ export default function DashboardPage() {
       clearPendingReferralRewards();
     }
   }, [isLoaded, hasProfile]);
+
+  useEffect(() => {
+    setCommunityWorkflows(getCommunityWorkflows());
+    const published = getCommunityWorkflows();
+    setPublishedIds(new Set(published.map(w => w.id)));
+  }, []);
 
   const hasRealData = records.length > 0;
 
@@ -976,6 +1002,121 @@ export default function DashboardPage() {
           </div>
         )}
 
+        {/* Writing Statistics */}
+        {userStage > 0 && (
+          <WritingStats records={records} />
+        )}
+
+        {/* Weekly Summary Card */}
+        {userStage > 0 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* This Week Generations */}
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                  <Zap className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周生成</h3>
+              </div>
+              <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
+                {records.filter(r => {
+                  const d = new Date(r.createdAt);
+                  const now = new Date();
+                  const weekStart = new Date(now);
+                  weekStart.setDate(now.getDate() - now.getDay());
+                  weekStart.setHours(0,0,0,0);
+                  return d >= weekStart;
+                }).length}
+              </p>
+              {/* Compare with last week */}
+              {(() => {
+                const now = new Date();
+                const thisWeekStart = new Date(now);
+                thisWeekStart.setDate(now.getDate() - now.getDay());
+                thisWeekStart.setHours(0,0,0,0);
+                const lastWeekStart = new Date(thisWeekStart);
+                lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+                const thisWeekCount = records.filter(r => new Date(r.createdAt) >= thisWeekStart).length;
+                const lastWeekCount = records.filter(r => {
+                  const d = new Date(r.createdAt);
+                  return d >= lastWeekStart && d < thisWeekStart;
+                }).length;
+                const change = lastWeekCount > 0 ? Math.round(((thisWeekCount - lastWeekCount) / lastWeekCount) * 100) : thisWeekCount > 0 ? 100 : 0;
+                return (
+                  <p className={`text-xs mt-1 ${change >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>
+                    {change >= 0 ? '↑' : '↓'} {Math.abs(change)}% vs 上周
+                  </p>
+                );
+              })()}
+            </div>
+
+            {/* This Week Words */}
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周字数</h3>
+              </div>
+              <p className="text-3xl font-display font-extrabold text-blue-600 dark:text-blue-400">
+                {records.filter(r => {
+                  const d = new Date(r.createdAt);
+                  const now = new Date();
+                  const weekStart = new Date(now);
+                  weekStart.setDate(now.getDate() - now.getDay());
+                  weekStart.setHours(0,0,0,0);
+                  return d >= weekStart;
+                }).reduce((sum, r) => sum + r.result.split(/\s+/).filter(Boolean).length, 0).toLocaleString()}
+              </p>
+            </div>
+
+            {/* Most Used Mode */}
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-purple-500">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">常用模式</h3>
+              </div>
+              {(() => {
+                const now = new Date();
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay());
+                weekStart.setHours(0,0,0,0);
+                const weekRecords = records.filter(r => new Date(r.createdAt) >= weekStart);
+                if (weekRecords.length === 0) {
+                  return <p className="text-sm text-slate-400">本周无数据</p>;
+                }
+                const modeCounts: Record<string, number> = {};
+                weekRecords.forEach(r => { modeCounts[r.mode] = (modeCounts[r.mode] || 0) + 1; });
+                const topMode = Object.entries(modeCounts).sort((a, b) => b[1] - a[1])[0];
+                return (
+                  <p className="text-2xl font-display font-extrabold text-purple-600 dark:text-purple-400 capitalize">
+                    {topMode[0]}
+                  </p>
+                );
+              })()}
+            </div>
+
+            {/* Style Match */}
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-amber-500">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
+                  <BarChart3 className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">风格匹配</h3>
+              </div>
+              {profile?.styleFingerprint ? (
+                <p className="text-3xl font-display font-extrabold text-amber-600 dark:text-amber-400">
+                  {Math.round(profile.styleFingerprint.avgSentenceLength * 5)}%
+                </p>
+              ) : (
+                <p className="text-sm text-slate-400">数据不足</p>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Weekly Insights Card */}
         {userStage > 0 && (
           <WeeklyInsightCard insights={insights} />
@@ -1114,6 +1255,60 @@ export default function DashboardPage() {
                 邀请好友
               </button>
             </div>
+          </div>
+
+          {/* Community Workflows */}
+          <div className="card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                <Share2 className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">社区工作流</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">分享和发现优质工作流</p>
+              </div>
+              <Link href="/templates" className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">
+                浏览全部 →
+              </Link>
+            </div>
+            {communityWorkflows.length === 0 ? (
+              <div className="text-center py-6">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">还没有社区工作流</p>
+                <Link href="/write" className="btn-primary text-sm">创建工作流</Link>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {communityWorkflows.slice(0, 3).map((workflow) => (
+                  <div key={workflow.id} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
+                    <h4 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{workflow.name}</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-2 line-clamp-2">{workflow.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-slate-400">by {workflow.author || "Anonymous"}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
+                        {workflow.steps.length} steps
+                      </span>
+                    </div>
+                    <div className="mt-3 flex items-center gap-2">
+                      {publishedIds.has(workflow.id) ? (
+                        <button
+                          onClick={() => handleUnpublishWorkflow(workflow.id)}
+                          className="text-xs px-3 py-1.5 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition-colors"
+                        >
+                          已分享 ✓
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handlePublishWorkflow(workflow)}
+                          className="text-xs px-3 py-1.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors flex items-center gap-1"
+                        >
+                          <Share2 className="w-3 h-3" /> 分享到社区
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

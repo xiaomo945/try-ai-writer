@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2 } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
@@ -88,7 +88,13 @@ export default function WritePage() {
   const [completionTip, setCompletionTip] = useState<string | null>(null);
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  
+
+  // Focus mode state
+  const [focusMode, setFocusMode] = useState<boolean>(false);
+  const [showFocusExit, setShowFocusExit] = useState<boolean>(false);
+  const promptRef = useRef<HTMLTextAreaElement>(null);
+  const focusActionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const searchParams = useSearchParams();
   const { addRecord, records } = useHistory();
   const { memories, addMemory } = useMemoryBank();
@@ -115,6 +121,61 @@ export default function WritePage() {
     if (!output) return 0;
     return output.trim().split(/\s+/).filter(Boolean).length;
   }, [output]);
+
+  // Load focus mode from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("focus_mode");
+      if (saved === "true") {
+        setFocusMode(true);
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
+  // Save focus mode to localStorage when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("focus_mode", String(focusMode));
+    } catch {
+      // localStorage unavailable
+    }
+  }, [focusMode]);
+
+  // Handle Esc key to exit focus mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && focusMode) {
+        setFocusMode(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [focusMode]);
+
+  // Auto-focus textarea when entering focus mode
+  useEffect(() => {
+    if (focusMode && promptRef.current) {
+      promptRef.current.focus();
+    }
+  }, [focusMode]);
+
+  // Handle mouse position at bottom of screen for showing exit button in focus mode
+  useEffect(() => {
+    if (!focusMode) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      const windowHeight = window.innerHeight;
+      const mouseY = e.clientY;
+      if (mouseY > windowHeight - 80) {
+        setShowFocusExit(true);
+      } else {
+        setShowFocusExit(false);
+      }
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [focusMode]);
 
   // Load record from URL parameter
   useEffect(() => {
@@ -245,6 +306,152 @@ export default function WritePage() {
     return labels[m];
   };
 
+  // Focus mode layout
+  if (focusMode) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#0A0A0C] flex flex-col">
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 py-3">
+          <span className="text-xs text-slate-500">{getModeLabel(mode)}</span>
+          <button
+            onClick={() => setFocusMode(false)}
+            className="text-slate-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            title="退出专注模式"
+          >
+            <Minimize2 className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Textarea area */}
+        <div className="px-6 pb-4">
+          <textarea
+            ref={promptRef}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
+            className="w-full h-40 bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
+          />
+        </div>
+
+        {/* Generate button */}
+        <div className="px-6 pb-4">
+          <button
+            onClick={handleGenerate}
+            disabled={state === "loading" || !prompt.trim()}
+            className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all min-h-[44px]"
+          >
+            {state === "loading" ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                {loadingMessages[loadingMsgIndex]}
+              </>
+            ) : (
+              <>
+                <Zap className="w-5 h-5" />
+                Generate
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Output area */}
+        <div className="flex-1 overflow-y-auto px-6 pb-20">
+          {state === "idle" && (
+            <div className="h-full flex flex-col items-center justify-center text-center py-12">
+              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center mb-6">
+                <Sparkles className="w-10 h-10 text-emerald-400" />
+              </div>
+              <p className="text-lg font-semibold text-slate-300 mb-2">
+                还没想好写什么？我可以帮你
+              </p>
+              <p className="text-sm text-slate-500">
+                输入你的想法，然后点击 Generate
+              </p>
+            </div>
+          )}
+
+          {state === "loading" && (
+            <div className="h-full flex flex-col items-center justify-center text-center text-slate-400">
+              <Loader2 className="w-8 h-8 animate-spin mb-4" />
+              <p className="text-base">{loadingMessages[loadingMsgIndex]}</p>
+            </div>
+          )}
+
+          {state === "error" && errorInfo && (
+            <div className="h-full flex flex-col items-center justify-center text-center py-12">
+              <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-4">
+                <XCircle className="w-8 h-8 text-red-400" />
+              </div>
+              <p className="text-lg font-semibold text-red-400 mb-2">{errorInfo.message}</p>
+              <p className="text-sm text-slate-500 mb-6">{errorInfo.suggestion}</p>
+              <button
+                onClick={handleGenerate}
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-all min-h-[44px]"
+              >
+                <Zap className="w-4 h-4" />
+                再试一次
+              </button>
+            </div>
+          )}
+
+          {state === "done" && (
+            <div>
+              {completionTip && (
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3 text-sm text-emerald-400 flex items-center gap-2 mb-4">
+                  <Sparkles className="w-4 h-4 flex-shrink-0" />
+                  {completionTip}
+                </div>
+              )}
+              <div className="whitespace-pre-wrap text-slate-200 text-lg leading-relaxed">
+                {output}
+              </div>
+              {outputWordCount > 0 && (
+                <div className="mt-4 pt-3 border-t border-white/10 flex items-center gap-3">
+                  <span className="text-xs text-slate-500">
+                    {outputWordCount} words
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {getWordCountFeedback(outputWordCount)}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Bottom action buttons (shown when generation is done, auto-fade after 5s) */}
+        {state === "done" && <FocusModeActions
+          copied={copied}
+          savedToHistory={savedToHistory}
+          savedToMemory={savedToMemory}
+          onCopy={handleCopy}
+          onSaveToHistory={handleSaveToHistory}
+          onSaveToMemory={handleSaveToMemory}
+          timerRef={focusActionTimerRef}
+        />}
+
+        {/* Semi-transparent exit bar at bottom on hover */}
+        <div
+          className={`fixed bottom-0 left-0 right-0 transition-all duration-300 ${
+            showFocusExit ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
+          }`}
+        >
+          <div className="bg-white/5 backdrop-blur-md border-t border-white/10 px-6 py-3 flex items-center justify-between">
+            <span className="text-xs text-slate-500">按 Esc 或点击退出专注模式</span>
+            <button
+              onClick={() => setFocusMode(false)}
+              className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors min-h-[44px] px-4"
+            >
+              <Minimize2 className="w-4 h-4" />
+              退出
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Normal layout
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0C] text-gray-900 dark:text-white">
       <header className="border-b border-gray-200 dark:border-white/10">
@@ -253,12 +460,21 @@ export default function WritePage() {
             <Link href="/" className="text-2xl font-bold text-emerald-400">
               ✨ Write
             </Link>
-            <Link
-              href="/dashboard"
-              className="text-sm text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-2"
-            >
-              Dashboard
-            </Link>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setFocusMode(true)}
+                className="text-slate-400 hover:text-emerald-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                title="专注模式"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
+              <Link
+                href="/dashboard"
+                className="text-sm text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-2"
+              >
+                Dashboard
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -329,6 +545,7 @@ export default function WritePage() {
             <div className="space-y-4">
               <div className="relative">
                 <textarea
+                  ref={promptRef}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
@@ -627,6 +844,69 @@ export default function WritePage() {
           )}
         </button>
       </div>
+    </div>
+  );
+}
+
+function FocusModeActions({
+  copied,
+  savedToHistory,
+  savedToMemory,
+  onCopy,
+  onSaveToHistory,
+  onSaveToMemory,
+  timerRef,
+}: {
+  copied: boolean;
+  savedToHistory: boolean;
+  savedToMemory: boolean;
+  onCopy: () => void;
+  onSaveToHistory: () => void;
+  onSaveToMemory: () => void;
+  timerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
+}) {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    setVisible(true);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setVisible(false);
+    }, 5000);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [timerRef]);
+
+  return (
+    <div
+      className={`px-6 py-3 border-t border-white/10 flex items-center justify-center gap-3 transition-all duration-500 ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+      }`}
+    >
+      <button
+        onClick={onCopy}
+        className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-slate-300 transition-all min-h-[44px]"
+      >
+        {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+        {copied ? "Copied!" : "Copy"}
+      </button>
+      <button
+        onClick={onSaveToHistory}
+        disabled={savedToHistory}
+        className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-400 rounded-lg text-sm transition-all min-h-[44px]"
+      >
+        {savedToHistory ? <CheckCircle2 className="w-4 h-4" /> : <Save className="w-4 h-4" />}
+        {savedToHistory ? "Saved!" : "History"}
+      </button>
+      <button
+        onClick={onSaveToMemory}
+        disabled={savedToMemory}
+        className="flex items-center gap-2 px-4 py-2 bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-400 rounded-lg text-sm transition-all min-h-[44px]"
+      >
+        {savedToMemory ? <CheckCircle2 className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
+        {savedToMemory ? "Memorized!" : "Memory"}
+      </button>
     </div>
   );
 }

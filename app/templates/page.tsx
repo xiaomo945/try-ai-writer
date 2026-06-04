@@ -1,10 +1,9 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
-
-export const metadata = {
-  title: "Writing Templates | Try AI Writer",
-  description: "16+ professional writing templates for every use case. Amazon listings, Google Ads, blog posts, social media, and more.",
-};
+import { getCommunityWorkflows, type WorkflowDefinition } from "@/lib/workflows";
 
 const categories = [
   {
@@ -48,6 +47,67 @@ const categories = [
     ]
   }
 ];
+
+function CommunityWorkflowsSection() {
+  const [communityWorkflows, setCommunityWorkflows] = useState<WorkflowDefinition[]>([]);
+
+  useEffect(() => {
+    setCommunityWorkflows(getCommunityWorkflows());
+  }, []);
+
+  if (communityWorkflows.length === 0) {
+    return (
+      <div className="mb-16">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+            <Sparkles className="w-6 h-6 text-emerald-400" />
+          </div>
+          <h2 className="text-2xl font-bold">Community Workflows</h2>
+        </div>
+        <div className="glass-card p-8 text-center">
+          <p className="text-slate-400 mb-4">还没有社区工作流</p>
+          <p className="text-sm text-slate-500 mb-6">去创建并分享你的第一个工作流吧 →</p>
+          <Link href="/write" className="btn-primary text-sm">去创建工作流</Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mb-16">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+          <Sparkles className="w-6 h-6 text-emerald-400" />
+        </div>
+        <h2 className="text-2xl font-bold">Community Workflows</h2>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {communityWorkflows.map((workflow) => (
+          <Link
+            key={workflow.id}
+            href={`/write?workflow=${workflow.id}`}
+            className="glass-card hover:scale-[1.02] transition-all duration-300 flex flex-col"
+          >
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-2">{workflow.name}</h3>
+              <p className="text-sm text-slate-400 mb-3 line-clamp-2">{workflow.description}</p>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs text-slate-500">by {workflow.author || "Anonymous"}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+                  {workflow.steps.length} steps
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+              <span className="text-sm text-slate-400">Use Workflow</span>
+              <ArrowRight className="w-5 h-5 text-emerald-400" />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function TemplatesPage() {
   return (
@@ -119,6 +179,12 @@ export default function TemplatesPage() {
           </div>
         ))}
       </section>
+
+      {/* Divider */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-8" />
+
+      {/* Community Workflows */}
+      <CommunityWorkflowsSection />
 
       {/* CTA */}
       <section className="section-container section-spacing">
