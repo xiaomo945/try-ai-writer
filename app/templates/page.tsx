@@ -1,9 +1,73 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight } from "lucide-react";
+import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight, Star, X } from "lucide-react";
 import Link from "next/link";
 import { getCommunityWorkflows, type WorkflowDefinition } from "@/lib/workflows";
+import { useWorkflowReviews } from "@/lib/workflow-reviews";
+
+function StarRating({ rating, onRatingChange, editable = false }: { rating: number, onRatingChange?: (r: number) => void, editable?: boolean }) {
+  return (
+    <div className="flex items-center gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          disabled={!editable}
+          onClick={() => editable && onRatingChange?.(star)}
+          className={`p-0.5 transition-colors ${editable ? "cursor-pointer" : "cursor-default"}`}
+        >
+          <Star
+            className={`w-4 h-4 ${
+              star <= rating
+                ? "text-yellow-400 fill-yellow-400"
+                : "text-slate-500"
+            }`}
+          />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ReviewForm({ onSubmit, onCancel }: { onSubmit: (rating: number, comment?: string) => void, onCancel: () => void }) {
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+
+  return (
+    <div className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10">
+      <h4 className="font-semibold mb-3">Add a Review</h4>
+      <div className="mb-3">
+        <label className="text-sm text-slate-400 block mb-2">Rating</label>
+        <StarRating rating={rating} onRatingChange={setRating} editable />
+      </div>
+      <div className="mb-4">
+        <label className="text-sm text-slate-400 block mb-2">Comment (optional)</label>
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          maxLength={500}
+          rows={3}
+          className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+          placeholder="Write your review..."
+        />
+      </div>
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => onSubmit(rating, comment)}
+          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-semibold transition-colors"
+        >
+          Submit
+        </button>
+        <button
+          onClick={onCancel}
+          className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
 
 const categories = [
   {
@@ -50,6 +114,8 @@ const categories = [
 
 function CommunityWorkflowsSection() {
   const [communityWorkflows, setCommunityWorkflows] = useState<WorkflowDefinition[]>([]);
+  const [expandedWorkflow, setExpandedWorkflow] = useState<string | null>(null);
+  const [showReviewForm, setShowReviewForm] = useState<string | null>(null);
 
   useEffect(() => {
     setCommunityWorkflows(getCommunityWorkflows());
@@ -83,27 +149,115 @@ function CommunityWorkflowsSection() {
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {communityWorkflows.map((workflow) => (
-          <Link
+          <WorkflowCard
             key={workflow.id}
-            href={`/write?workflow=${workflow.id}`}
-            className="glass-card hover:scale-[1.02] transition-all duration-300 flex flex-col"
-          >
-            <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2">{workflow.name}</h3>
-              <p className="text-sm text-slate-400 mb-3 line-clamp-2">{workflow.description}</p>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs text-slate-500">by {workflow.author || "Anonymous"}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
-                  {workflow.steps.length} steps
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-              <span className="text-sm text-slate-400">Use Workflow</span>
-              <ArrowRight className="w-5 h-5 text-emerald-400" />
-            </div>
-          </Link>
+            workflow={workflow}
+            isExpanded={expandedWorkflow === workflow.id}
+            onToggleExpand={() => setExpandedWorkflow(expandedWorkflow === workflow.id ? null : workflow.id)}
+            showReviewForm={showReviewForm === workflow.id}
+            onToggleReviewForm={() => setShowReviewForm(showReviewForm === workflow.id ? null : workflow.id)}
+          />
         ))}
+      </div>
+    </div>
+  );
+}
+
+function WorkflowCard({
+  workflow,
+  isExpanded,
+  onToggleExpand,
+  showReviewForm,
+  onToggleReviewForm,
+}: {
+  workflow: WorkflowDefinition;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  showReviewForm: boolean;
+  onToggleReviewForm: () => void;
+}) {
+  const { reviews, averageRating, reviewCount, addReview } = useWorkflowReviews(workflow.id);
+
+  const handleAddReview = (rating: number, comment?: string) => {
+    addReview(rating, comment);
+    onToggleReviewForm();
+  };
+
+  return (
+    <div className="glass-card hover:scale-[1.02] transition-all duration-300 flex flex-col">
+      <Link
+        href={`/write?workflow=${workflow.id}`}
+        className="flex-1"
+      >
+        <div className="flex-1">
+          <h3 className="text-lg font-bold mb-2">{workflow.name}</h3>
+          <p className="text-sm text-slate-400 mb-3 line-clamp-2">{workflow.description}</p>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs text-slate-500">by {workflow.author || "Anonymous"}</span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+              {workflow.steps.length} steps
+            </span>
+          </div>
+        </div>
+      </Link>
+
+      {/* Rating Section */}
+      <button
+        onClick={(e) => { e.preventDefault(); onToggleExpand(); }}
+        className="flex items-center gap-2 mt-2 mb-3 text-left"
+      >
+        <StarRating rating={Math.round(averageRating)} />
+        {reviewCount > 0 && (
+          <span className="text-xs text-slate-400">({reviewCount} reviews)</span>
+        )}
+      </button>
+
+      {/* Expandable Reviews */}
+      {isExpanded && (
+        <div className="border-t border-white/5 pt-3">
+          {reviews.length > 0 ? (
+            <div className="space-y-3 mb-4 max-h-60 overflow-y-auto">
+              {reviews.map((review) => (
+                <div key={review.id} className="p-3 bg-white/5 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <StarRating rating={review.rating} />
+                    <span className="text-xs text-slate-500">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  {review.comment && (
+                    <p className="text-sm text-slate-300">{review.comment}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-slate-500 mb-4">No reviews yet. Be the first!</p>
+          )}
+          
+          {!showReviewForm ? (
+            <button
+              onClick={(e) => { e.preventDefault(); onToggleReviewForm(); }}
+              className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              Add a Review
+            </button>
+          ) : (
+            <ReviewForm
+              onSubmit={handleAddReview}
+              onCancel={onToggleReviewForm}
+            />
+          )}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+        <Link href={`/write?workflow=${workflow.id}`} className="text-sm text-slate-400">
+          Use Workflow
+        </Link>
+        <Link href={`/write?workflow=${workflow.id}`}>
+          <ArrowRight className="w-5 h-5 text-emerald-400" />
+        </Link>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
+import { FloatingToolbar } from "@/app/components/FloatingToolbar";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -296,6 +297,43 @@ export default function WritePage() {
     setTimeout(() => setSavedToMemory(false), 3000);
   };
 
+  const handleFormat = useCallback((formatType: "bold" | "italic" | "quote" | "code") => {
+    if (!promptRef.current) return;
+    const textarea = promptRef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = prompt.substring(start, end);
+    
+    let formattedText = selectedText;
+    switch (formatType) {
+      case "bold":
+        formattedText = `**${selectedText}**`;
+        break;
+      case "italic":
+        formattedText = `*${selectedText}*`;
+        break;
+      case "quote":
+        formattedText = `> ${selectedText}`;
+        break;
+      case "code":
+        formattedText = `\`${selectedText}\``;
+        break;
+    }
+
+    const newText = prompt.substring(0, start) + formattedText + prompt.substring(end);
+    setPrompt(newText);
+
+    // Keep focus and cursor position
+    requestAnimationFrame(() => {
+      textarea.focus();
+      if (formatType === "bold" || formatType === "italic" || formatType === "code") {
+        textarea.setSelectionRange(start + 2, end + 2);
+      } else if (formatType === "quote") {
+        textarea.setSelectionRange(start + 2, end + 2);
+      }
+    });
+  }, [prompt]);
+
   const getModeLabel = (m: WritingMode) => {
     const labels: Record<WritingMode, string> = {
       blog: "Blog Post",
@@ -454,6 +492,7 @@ export default function WritePage() {
   // Normal layout
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0C] text-gray-900 dark:text-white">
+      <FloatingToolbar textareaRef={promptRef} onFormat={handleFormat} />
       <header className="border-b border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">

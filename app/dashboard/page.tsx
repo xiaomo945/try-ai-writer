@@ -220,6 +220,18 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
   const [avatarDescription, setAvatarDescription] = useState('');
   const learningProgress = profile?.learningSamples || 3;
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowCustomizationModal(false);
+      }
+    };
+    if (showCustomizationModal) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showCustomizationModal]);
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -296,7 +308,10 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
         </div>
         {/* Customization Modal */}
         {showCustomizationModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={(e) => e.target === e.currentTarget && setShowCustomizationModal(false)}
+          >
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
               <button 
                 onClick={() => setShowCustomizationModal(false)} 
@@ -664,6 +679,18 @@ export default function DashboardPage() {
   const [communityWorkflows, setCommunityWorkflows] = useState<WorkflowDefinition[]>([]);
   const [publishedIds, setPublishedIds] = useState<Set<string>>(new Set());
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowReferralPopup(false);
+      }
+    };
+    if (showReferralPopup) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showReferralPopup]);
   const [userStage, setUserStage] = useState(0); // Default to stage 0
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
@@ -790,7 +817,10 @@ export default function DashboardPage() {
       
       {/* Referral Popup (Manual Trigger) */}
       {showReferralPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => e.target === e.currentTarget && setShowReferralPopup(false)}
+        >
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
             <button 
               onClick={() => setShowReferralPopup(false)}
