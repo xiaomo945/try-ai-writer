@@ -176,7 +176,16 @@ function WorkflowCard({
   showReviewForm: boolean;
   onToggleReviewForm: () => void;
 }) {
-  const { reviews, averageRating, reviewCount, addReview } = useWorkflowReviews(workflow.id);
+  const { 
+    reviews, 
+    averageRating, 
+    reviewCount, 
+    addReview, 
+    voteHelpful, 
+    getCurrentVote,
+    sortBy, 
+    setSortBy 
+  } = useWorkflowReviews(workflow.id);
 
   const handleAddReview = (rating: number, comment?: string) => {
     addReview(rating, comment);
@@ -215,21 +224,70 @@ function WorkflowCard({
       {/* Expandable Reviews */}
       {isExpanded && (
         <div className="border-t border-white/5 pt-3">
+          {reviews.length > 0 && (
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs text-slate-500">Sort by:</span>
+              {["time", "rating", "useful"].map((sort) => (
+                <button
+                  key={sort}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSortBy(sort as any);
+                  }}
+                  className={`text-xs px-2 py-1 rounded ${
+                    sortBy === sort
+                      ? "bg-emerald-500/20 text-emerald-400"
+                      : "text-slate-400 hover:text-emerald-300"
+                  } transition-colors`}
+                >
+                  {sort === "time" ? "Latest" : sort === "rating" ? "Highest Rated" : "Most Useful"}
+                </button>
+              ))}
+            </div>
+          )}
+
           {reviews.length > 0 ? (
             <div className="space-y-3 mb-4 max-h-60 overflow-y-auto">
-              {reviews.map((review) => (
-                <div key={review.id} className="p-3 bg-white/5 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <StarRating rating={review.rating} />
-                    <span className="text-xs text-slate-500">
-                      {new Date(review.createdAt).toLocaleDateString()}
-                    </span>
+              {reviews.map((review) => {
+                const currentVote = getCurrentVote(review.id);
+                return (
+                  <div key={review.id} className="p-3 bg-white/5 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <StarRating rating={review.rating} />
+                      <span className="text-xs text-slate-500">
+                        {new Date(review.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    {review.comment && (
+                      <p className="text-sm text-slate-300 mb-2">{review.comment}</p>
+                    )}
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          voteHelpful(review.id, true);
+                        }}
+                        className={`flex items-center gap-1 text-xs ${
+                          currentVote === "helpful" ? "text-emerald-400" : "text-slate-500 hover:text-slate-300"
+                        } transition-colors`}
+                      >
+                        👍 {review.helpfulCount}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          voteHelpful(review.id, false);
+                        }}
+                        className={`flex items-center gap-1 text-xs ${
+                          currentVote === "notHelpful" ? "text-emerald-400" : "text-slate-500 hover:text-slate-300"
+                        } transition-colors`}
+                      >
+                        👎 {review.notHelpfulCount}
+                      </button>
+                    </div>
                   </div>
-                  {review.comment && (
-                    <p className="text-sm text-slate-300">{review.comment}</p>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <p className="text-sm text-slate-500 mb-4">No reviews yet. Be the first!</p>

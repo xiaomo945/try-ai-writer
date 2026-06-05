@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2 } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
@@ -10,6 +10,7 @@ import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
 import { FloatingToolbar } from "@/app/components/FloatingToolbar";
+import { MarkdownPreview } from "@/app/components/MarkdownPreview";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -89,6 +90,7 @@ export default function WritePage() {
   const [completionTip, setCompletionTip] = useState<string | null>(null);
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   // Focus mode state
   const [focusMode, setFocusMode] = useState<boolean>(false);
@@ -177,6 +179,27 @@ export default function WritePage() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [focusMode]);
+
+  // Load preview mode from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("write_preview_mode");
+      if (saved === "true") {
+        setShowPreview(true);
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
+  // Save preview mode to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem("write_preview_mode", String(showPreview));
+    } catch {
+      // localStorage unavailable
+    }
+  }, [showPreview]);
 
   // Load record from URL parameter
   useEffect(() => {
@@ -582,14 +605,29 @@ export default function WritePage() {
             )}
 
             <div className="space-y-4">
-              <div className="relative">
-                <textarea
-                  ref={promptRef}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
-                  className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
-                />
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-500 dark:text-slate-400">Your Input</span>
+                <button
+                  onClick={() => setShowPreview(!showPreview)}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center gap-2"
+                >
+                  {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPreview ? "Hide Preview" : "Preview"}
+                </button>
+              </div>
+              <div className={`${showPreview ? "grid lg:grid-cols-2 gap-4" : "space-y-4"}`}>
+                <div className="relative">
+                  <textarea
+                    ref={promptRef}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
+                    className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
+                  />
+                </div>
+                {showPreview && (
+                  <MarkdownPreview content={prompt} className="h-48" />
+                )}
               </div>
 
               <div className="space-y-2">
