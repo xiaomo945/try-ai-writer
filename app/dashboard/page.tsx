@@ -16,6 +16,7 @@ import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-va
 import { ReferralShare } from "@/app/components/ReferralShare";
 import { LearningTimeline } from "@/app/components/LearningTimeline";
 import { WritingStats } from "@/app/components/WritingStats";
+import { StyleRadar } from "@/app/components/StyleRadar";
 import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
@@ -1035,6 +1036,59 @@ export default function DashboardPage() {
         {/* Writing Statistics */}
         {userStage > 0 && (
           <WritingStats records={records} />
+        )}
+
+        {/* Style Evolution Radar */}
+        {userStage > 0 && (
+          <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <Fingerprint className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">风格演变雷达图</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">你的写作风格成长轨迹</p>
+              </div>
+            </div>
+
+            {profile?.styleFingerprint && profile.learningSamples && profile.learningSamples >= 5 ? (
+              <div className="flex justify-center">
+                <StyleRadar
+                  currentData={{
+                    formality: 50,
+                    sentenceLength: profile.styleFingerprint.avgSentenceLength || 50,
+                    vocabularyDiversity: 50,
+                    paragraphLength: (profile.styleFingerprint.avgParagraphSentenceCount || 5) * 10,
+                    passiveVoiceRate: (profile.styleFingerprint.passiveVoiceRate || 0.2) * 100,
+                  }}
+                  initialData={{
+                    formality: 40,
+                    sentenceLength: Math.max(20, (profile.styleFingerprint.avgSentenceLength || 50) - 10),
+                    vocabularyDiversity: 40,
+                    paragraphLength: Math.max(30, ((profile.styleFingerprint.avgParagraphSentenceCount || 5) * 10) - 10),
+                    passiveVoiceRate: Math.min(70, ((profile.styleFingerprint.passiveVoiceRate || 0.2) * 100) + 15),
+                  }}
+                  className="mx-auto"
+                />
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <Fingerprint className="w-8 h-8 text-emerald-500 animate-pulse" />
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 font-medium mb-4">
+                  生成至少5篇文章后，这里将展示你的写作风格演变
+                </p>
+                <Link
+                  href="/write"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-all min-h-[44px]"
+                >
+                  <Zap className="w-4 h-4" />
+                  开始写作
+                </Link>
+              </div>
+            )}
+          </div>
         )}
 
         {/* Weekly Summary Card */}

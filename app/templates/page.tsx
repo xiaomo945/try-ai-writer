@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getCommunityWorkflows, type WorkflowDefinition } from "@/lib/workflows";
 import { useWorkflowReviews } from "@/lib/workflow-reviews";
 import { WorkflowRanking } from "@/app/components/WorkflowRanking";
+import { getReviewerLevel, type ReviewerReputation } from "@/lib/reviewer-reputation";
 
 function StarRating({ rating, onRatingChange, editable = false }: { rating: number, onRatingChange?: (r: number) => void, editable?: boolean }) {
   return (
@@ -251,10 +252,24 @@ function WorkflowCard({
             <div className="space-y-3 mb-4 max-h-60 overflow-y-auto">
               {reviews.map((review) => {
                 const currentVote = getCurrentVote(review.id);
+                const reviewerLevel = getReviewerLevel(review.userId);
+                const levelColors: Record<ReviewerReputation["level"], string> = {
+                  "新手": "bg-slate-500/20 text-slate-400",
+                  "活跃": "bg-blue-500/20 text-blue-400",
+                  "专家": "bg-purple-500/20 text-purple-400",
+                  "大师": "bg-yellow-500/20 text-yellow-400",
+                };
                 return (
                   <div key={review.id} className="p-3 bg-white/5 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <StarRating rating={review.rating} />
+                      <div className="flex items-center gap-2">
+                        <StarRating rating={review.rating} />
+                        {reviewerLevel && (
+                          <span className={`text-xs px-2 py-0.5 rounded ${levelColors[reviewerLevel]}`}>
+                            {reviewerLevel}
+                          </span>
+                        )}
+                      </div>
                       <span className="text-xs text-slate-500">
                         {new Date(review.createdAt).toLocaleDateString()}
                       </span>

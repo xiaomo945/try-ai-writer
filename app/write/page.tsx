@@ -11,6 +11,7 @@ import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib
 import { findRelatedIdeas } from "@/lib/idea-linker";
 import { FloatingToolbar } from "@/app/components/FloatingToolbar";
 import { MarkdownPreview } from "@/app/components/MarkdownPreview";
+import { LineNumbers } from "@/app/components/LineNumbers";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -617,7 +618,8 @@ export default function WritePage() {
                 </button>
               </div>
               <div className={`${showPreview ? "grid lg:grid-cols-2 gap-4" : "space-y-4"}`}>
-                <div className="relative">
+                <div className="flex rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
+                  <LineNumbers text={prompt} />
                   <textarea
                     ref={promptRef}
                     value={prompt}
@@ -634,7 +636,7 @@ export default function WritePage() {
                       }
                     }}
                     placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
-                    className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
+                    className="flex-1 h-48 bg-gray-50 dark:bg-white/5 p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
                   />
                 </div>
                 {showPreview && (
