@@ -91,6 +91,7 @@ export default function WritePage() {
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [scrollRatio, setScrollRatio] = useState(0);
 
   // Focus mode state
   const [focusMode, setFocusMode] = useState<boolean>(false);
@@ -621,12 +622,23 @@ export default function WritePage() {
                     ref={promptRef}
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
+                    onScroll={(e) => {
+                      const textarea = e.currentTarget;
+                      const scrollHeight = textarea.scrollHeight;
+                      const clientHeight = textarea.clientHeight;
+                      const maxScroll = scrollHeight - clientHeight;
+                      if (maxScroll > 0) {
+                        setScrollRatio(textarea.scrollTop / maxScroll);
+                      } else {
+                        setScrollRatio(0);
+                      }
+                    }}
                     placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
                     className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
                   />
                 </div>
                 {showPreview && (
-                  <MarkdownPreview content={prompt} className="h-48" />
+                  <MarkdownPreview content={prompt} className="h-48" scrollRatio={scrollRatio} />
                 )}
               </div>
 

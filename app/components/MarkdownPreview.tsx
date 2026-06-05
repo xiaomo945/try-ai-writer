@@ -1,11 +1,36 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 interface MarkdownPreviewProps {
   content: string;
   className?: string;
+  scrollRatio?: number;
 }
 
-export function MarkdownPreview({ content, className }: MarkdownPreviewProps) {
+export function MarkdownPreview({ content, className, scrollRatio }: MarkdownPreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll sync with requestAnimationFrame
+  useEffect(() => {
+    if (scrollRatio === undefined || !containerRef.current) return;
+
+    let ticking = false;
+    const container = containerRef.current;
+    const maxScroll = container.scrollHeight - container.clientHeight;
+
+    const updateScroll = () => {
+      const targetScrollTop = scrollRatio * maxScroll;
+      container.scrollTop = targetScrollTop;
+      ticking = false;
+    };
+
+    if (!ticking) {
+      requestAnimationFrame(updateScroll);
+      ticking = true;
+    }
+  }, [scrollRatio]);
+
   const renderMarkdown = (text: string) => {
     let html = text
       // Escape HTML first
@@ -79,6 +104,7 @@ export function MarkdownPreview({ content, className }: MarkdownPreviewProps) {
 
   return (
     <div
+      ref={containerRef}
       className={`glass-card p-6 overflow-y-auto ${className}`}
       dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
     />

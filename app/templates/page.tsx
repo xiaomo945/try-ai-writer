@@ -5,6 +5,7 @@ import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight, Star, X } from 
 import Link from "next/link";
 import { getCommunityWorkflows, type WorkflowDefinition } from "@/lib/workflows";
 import { useWorkflowReviews } from "@/lib/workflow-reviews";
+import { WorkflowRanking } from "@/app/components/WorkflowRanking";
 
 function StarRating({ rating, onRatingChange, editable = false }: { rating: number, onRatingChange?: (r: number) => void, editable?: boolean }) {
   return (
@@ -394,6 +395,9 @@ export default function TemplatesPage() {
 
       {/* Divider */}
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-8" />
+
+      {/* Hot Workflows Ranking */}
+      <WorkflowRanking />
 
       {/* Community Workflows */}
       <CommunityWorkflowsSection />
