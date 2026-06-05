@@ -7,7 +7,7 @@ import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
 import { UseCases } from "@/app/components/UseCases";
-import { IridescentRibbon } from "@/app/components/IridescentRibbon";
+import CognitiveFluxBackground from "@/app/components/CognitiveFluxBackground";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { WaitlistSignup } from "@/app/components/WaitlistSignup";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
@@ -124,10 +124,9 @@ export default function LandingPage() {
         🎨 新版本已部署！(2026-05-28 视觉更新
       </div>
       {/* Hero区 — 左右分栏 */}
-      <section className="section-container section-spacing pt-24 md:pt-32 relative">
-        <ScrollReveal parallax parallaxSpeed={0.4}>
-          <IridescentRibbon className="absolute inset-0 z-0 opacity-40 md:opacity-50" />
-        </ScrollReveal>
+      <section className="section-container section-spacing pt-24 md:pt-32 relative overflow-hidden">
+        <CognitiveFluxBackground />
+        <ScrollReveal parallax parallaxSpeed={0.4}></ScrollReveal>
         <div className="relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="flex flex-col items-start">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{textShadow: "0 0 100px rgba(91,156,245,0.3)"}}>
