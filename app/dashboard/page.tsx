@@ -313,64 +313,65 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
             className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
             onClick={(e) => e.target === e.currentTarget && setShowCustomizationModal(false)}
           >
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-sm w-full p-4 relative">
               <button 
                 onClick={() => setShowCustomizationModal(false)} 
-                className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
+                className="absolute top-3 right-3 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
-              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6">
+              <h2 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4">
                 🎨 Customize Your Digital Twin
               </h2>
 
               {/* AI Generation Section (Coming Soon) */}
-              <div className="mb-6 p-4 bg-slate-50 dark:bg-gray-800 rounded-xl">
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">
+              <div className="mb-4 p-3 bg-slate-50 dark:bg-gray-800 rounded-xl">
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-2 text-sm">
                   Generate with AI (Coming Soon)
                 </h3>
                 <textarea
                   value={avatarDescription}
                   onChange={(e) => setAvatarDescription(e.target.value)}
                   placeholder="Describe how you want your digital twin to look..."
-                  className="w-full p-3 border border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white resize-none"
+                  className="w-full p-2 border border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white resize-none text-sm"
                   disabled
+                  rows={2}
                 />
                 <button
                   disabled
-                  className="mt-2 w-full btn-primary opacity-50 cursor-not-allowed"
+                  className="mt-2 w-full btn-primary opacity-50 cursor-not-allowed text-sm py-2"
                 >
                   🔮 Generate Avatar
                 </button>
-                <p className="text-xs text-slate-500 mt-2 text-center">
+                <p className="text-xs text-slate-500 mt-1 text-center">
                   AI-powered avatar generation is coming soon!
                 </p>
               </div>
 
               {/* Preset Selection */}
               <div>
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-4">
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-3 text-sm">
                   Choose a Preset
                 </h3>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   {(['default', 'minimal', 'cute'] as AvatarVariant[]).map((preset) => (
                     <button
                       key={preset}
                       onClick={() => setVariant(preset)}
-                      className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${
+                      className={`p-3 rounded-xl border-2 flex flex-col items-center gap-1.5 transition-all ${
                         variant === preset
                           ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
                           : 'border-slate-200 dark:border-gray-700 hover:border-emerald-300'
                       }`}
                     >
-                      <div className="w-16 h-16 flex items-center justify-center">
+                      <div className="w-12 h-12 flex items-center justify-center">
                         <DigitalTwinAvatar 
                           isVisible={true} 
                           state="idle"
                           variant={preset} 
                         />
                       </div>
-                      <span className="text-sm capitalize font-medium text-slate-700 dark:text-slate-300">
+                      <span className="text-xs capitalize font-medium text-slate-700 dark:text-slate-300">
                         {preset}
                       </span>
                     </button>
@@ -817,58 +818,58 @@ export default function DashboardPage() {
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       
       {/* Referral Popup (Manual Trigger) */}
-      {showReferralPopup && (
-        <div 
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-          onClick={(e) => e.target === e.currentTarget && setShowReferralPopup(false)}
-        >
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
-            <button 
-              onClick={() => setShowReferralPopup(false)}
-              className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">
-                邀请好友一起写作
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                邀请好友，双方各得3天Pro体验
-              </p>
-            </div>
-            <div className="space-y-3">
-              <button
-                onClick={() => {
-                  copyReferralLink();
-                  // 复制后关闭弹窗
-                  setTimeout(() => setShowReferralPopup(false), 1500);
-                }}
-                className="w-full btn-primary min-h-[48px] flex items-center justify-center gap-2 text-base"
-              >
-                {referralLinkCopied ? (
-                  <>
-                    <Copy className="w-5 h-5" /> 已复制！
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-5 h-5" /> 复制邀请链接
-                  </>
-                )}
-              </button>
-              <button
+        {showReferralPopup && (
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={(e) => e.target === e.currentTarget && setShowReferralPopup(false)}
+          >
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-sm w-full p-4 relative">
+              <button 
                 onClick={() => setShowReferralPopup(false)}
-                className="w-full text-center text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-2"
+                className="absolute top-3 right-3 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
               >
-                关闭
+                <X className="w-4 h-4" />
               </button>
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <h2 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">
+                  邀请好友一起写作
+                </h2>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  邀请好友，双方各得3天Pro体验
+                </p>
+              </div>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    copyReferralLink();
+                    // 复制后关闭弹窗
+                    setTimeout(() => setShowReferralPopup(false), 1500);
+                  }}
+                  className="w-full btn-primary min-h-[40px] flex items-center justify-center gap-2 text-sm py-2"
+                >
+                  {referralLinkCopied ? (
+                    <>
+                      <Copy className="w-4 h-4" /> 已复制！
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" /> 复制邀请链接
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => setShowReferralPopup(false)}
+                  className="w-full text-center text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-1.5"
+                >
+                  关闭
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       {/* Referral Reward Notification */}
       {referralRewardNotification && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce-once">
