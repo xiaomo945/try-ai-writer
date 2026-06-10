@@ -373,7 +373,36 @@ const blogPosts = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://tryaiwriter.com';
   const now = new Date();
-  
+
+  const tutorialSlugs = [
+    "write-blog-post", "write-sales-email", "create-ad-copy", "build-content-calendar",
+    "write-product-description", "create-tiktok-script", "write-linkedin-post", "write-press-release",
+    "build-landing-page", "write-cold-outreach", "create-ebook-outline", "write-newsletter",
+    "build-marketing-strategy", "create-presentation", "write-resume", "write-cover-letter",
+  ];
+
+  const integrationNames = [
+    "notion", "google-docs", "slack", "zapier", "wordpress", "shopify", "hubspot", "mailchimp",
+    "discord", "figma", "github", "webflow", "salesforce", "dropbox", "airtable", "linkedin",
+  ];
+
+  const academyTracks = [
+    "content-writer", "marketing-pro", "copywriter", "designer", "video-creator", "growth-hacker",
+  ];
+
+  const comparisonSlugs = [
+    "jasper", "copy-ai", "writesonic", "rytr", "sudowrite", "notion-ai", "chatgpt", "claude", "grammarly", "quillbot",
+  ];
+
+  const changelogVersions = [
+    "3-2", "3-1", "3-0", "2-5", "2-0", "1-5", "1-0", "0-1",
+  ];
+
+  const customerIndustries = [
+    "saas", "ecommerce", "education", "finance", "healthcare", "legal", "marketing",
+    "real-estate", "travel", "design", "construction", "individual",
+  ];
+
   return [
     {
       url: baseUrl,
@@ -393,6 +422,54 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily' as const,
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/tools/translator`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/tools/headline-generator`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    },
+    ...tutorialSlugs.map((task) => ({
+      url: `${baseUrl}/blog/tutorial/${task}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    ...integrationNames.map((name) => ({
+      url: `${baseUrl}/integrations/${name}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    ...academyTracks.map((slug) => ({
+      url: `${baseUrl}/academy/track/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    ...comparisonSlugs.map((cat) => ({
+      url: `${baseUrl}/blog/comparison/${cat}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    ...changelogVersions.map((v) => ({
+      url: `${baseUrl}/changelog/${v}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    })),
+    ...customerIndustries.map((ind) => ({
+      url: `${baseUrl}/customers/${ind}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     ...blogPosts.map((post) => ({
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: new Date(post.date),

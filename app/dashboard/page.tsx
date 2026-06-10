@@ -1090,6 +1090,9 @@ export default function DashboardPage() {
                 const modeCounts: Record<string, number> = {};
                 weekRecords.forEach(r => { modeCounts[r.mode] = (modeCounts[r.mode] || 0) + 1; });
                 const topMode = Object.entries(modeCounts).sort((a, b) => b[1] - a[1])[0];
+                if (!topMode) {
+                  return <p className="text-sm text-slate-400">本周无数据</p>;
+                }
                 return (
                   <p className="text-2xl font-display font-extrabold text-purple-600 dark:text-purple-400 capitalize">
                     {topMode[0]}
