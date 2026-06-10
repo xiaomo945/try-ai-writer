@@ -7,12 +7,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tryaiwriter.com"),
-  title: "Try AI Writer — Claude-Powered AI Writing Tool | Affordable, Brand Voice Learning",
-  description: "Write blog posts, emails, and social media content 3x faster with this Claude-powered AI writing tool. Affordable, learns your brand voice, and starts free. Perfect for creators, solopreneurs, and small teams.",
-  keywords: ["AI writing tool", "Claude-powered AI writer", "affordable AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer"],
+  title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
+  description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
+  keywords: ["AI writing tool", "free AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer", "Claude AI", "DeepSeek AI"],
   openGraph: {
-    title: "Try AI Writer — Claude-Powered AI Writing Tool",
-    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
+    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice",
+    description: "Free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media in seconds. Start free — no credit card required.",
     url: "https://tryaiwriter.com",
     siteName: "Try AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Try AI Writer — Claude-Powered AI Writing",
-    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
+    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice",
+    description: "Free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media in seconds. Start free now.",
     images: ["/og-image.png"],
   },
 };

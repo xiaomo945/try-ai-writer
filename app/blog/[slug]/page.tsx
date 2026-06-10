@@ -37,7 +37,7 @@ export default function BlogPostPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="text-lg font-display font-extrabold text-white">Use AI<span className="text-blue-400">Writer</span></span>
+            <span className="text-lg font-display font-extrabold text-white">Try <span className="text-blue-400">AI Writer</span></span>
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors hidden sm:block">
