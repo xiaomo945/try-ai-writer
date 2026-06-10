@@ -87,23 +87,26 @@ export async function POST(request: NextRequest) {
       process.env.DEEPSEEK_API_KEY.length > 10 &&
       !["your-api-key-here"].includes(process.env.DEEPSEEK_API_KEY);
 
-    console.log(`[Generate] AI_PROVIDER: ${aiProvider}`);
-    console.log(`[Generate] Has Claude Key: ${hasClaudeKey}`);
-    console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey}`);
+    console.log(`[Generate] AI_PROVIDER env: "${process.env.AI_PROVIDER}" -> parsed: "${aiProvider}"`);
+    console.log(`[Generate] Has Claude Key: ${hasClaudeKey} (raw: ${!!process.env.CLAUDE_API_KEY})`);
+    console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey} (raw: ${!!process.env.DEEPSEEK_API_KEY})`);
 
-    const providers: string[] = [];
-    if (aiProvider === "deepseek" && hasDeepSeekKey) providers.push("deepseek");
-    if (aiProvider === "claude" && hasClaudeKey) providers.push("claude");
+    // 当 AI_PROVIDER 明确设置时，只用该 provider，不自动降级
+    // 只有 AI_PROVIDER 未设置、或设置为 mock/auto 时，才使用自动检测 + 降级链
+    let fullChain: string[] = [];
+    const isExplicitProvider = aiProvider && aiProvider !== "mock" && aiProvider !== "auto" && aiProvider !== "";
 
-    if (providers.length === 0) {
-      if (hasDeepSeekKey) providers.push("deepseek");
-      if (hasClaudeKey) providers.push("claude");
+    if (isExplicitProvider) {
+      // 显式指定的 provider：只尝试它，失败则报错（不降级）
+      fullChain = [aiProvider];
+    } else {
+      // 未指定或 mock：按 DeepSeek -> Claude -> Mock 的优先级自动选择
+      if (hasDeepSeekKey) fullChain.push("deepseek");
+      if (hasClaudeKey) fullChain.push("claude");
+      fullChain.push("mock");
     }
 
-    const fallbackProviders = providers.filter((p) => p !== aiProvider);
-    const fullChain = [...providers, ...fallbackProviders];
-
-    console.log(`[Generate] Provider chain (with fallbacks): ${fullChain.join(" -> ") || "mock"}`);
+    console.log(`[Generate] Provider chain: ${fullChain.join(" -> ")}`);
 
     const generationOptions = {
       prompt,
@@ -147,6 +150,16 @@ export async function POST(request: NextRequest) {
         console.error(`[Generate] Provider ${provider} failed: ${msg}`);
         lastError = err instanceof Error ? err : new Error(msg);
       }
+    }
+
+    // 显式指定的 provider 全部失败 → 返回错误，不走 Mock
+    if (isExplicitProvider && lastError) {
+      const errMsg = lastError.message || "AI provider unavailable";
+      console.error(`[Generate] Explicit provider "${aiProvider}" failed, returning error: ${errMsg}`);
+      return Response.json(
+        { error: errMsg, suggestion: "AI服务暂时不可用，请稍后再试。如问题持续，请检查API配置。" },
+        { status: 500 }
+      );
     }
 
     console.log("[Generate] All providers failed. Falling back to mock mode.");
