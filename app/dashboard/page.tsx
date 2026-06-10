@@ -784,7 +784,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 text-white">
       {/* Onboarding Wizard */}
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       
@@ -862,7 +862,7 @@ export default function DashboardPage() {
       )}
 
       {/* Header */}
-      <header className="border-b border-slate-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-white/10 bg-obsidian-900/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 transition-colors">
             <Logo size={32} />
