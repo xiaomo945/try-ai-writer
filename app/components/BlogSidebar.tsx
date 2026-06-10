@@ -1,55 +1,10 @@
 import Link from "next/link";
 import { PenTool } from "lucide-react";
-
-// Our blog post data with metadata
-const blogPosts = [
-  { slug: "how-to-write-blog-posts-with-ai", title: "How to Write Blog Posts with AI", tags: ["Blogging", "AI Writing"] },
-  { slug: "08-ai-content-strategy-2026", title: "Building an AI-Powered Content Strategy in 2026", tags: ["Content Strategy", "AI"] },
-  { slug: "13-how-to-train-ai-on-your-writing-style", title: "How to Train AI on Your Writing Style", tags: ["Brand Voice", "AI Training"] },
-  { slug: "11-seo-ai-writing-best-practices", title: "SEO and AI Writing Best Practices", tags: ["SEO", "AI Writing"] },
-  { slug: "06-ai-writing-for-email-marketing", title: "AI Writing for Email Marketing", tags: ["Email Marketing", "Conversion"] },
-  { slug: "07-overcoming-writers-block-with-ai", title: "How to Overcome Writer's Block with AI", tags: ["Writer's Block", "Productivity"] },
-  { slug: "10-multilingual-ai-writing", title: "Breaking Language Barriers: Multilingual AI Writing", tags: ["Multilingual", "Global"] },
-  { slug: "15-future-of-content-creation-ai", title: "The Future of Content Creation", tags: ["Future", "Content Creation"] },
-  { slug: "09-ai-vs-human-writers", title: "AI vs. Human Writers", tags: ["AI vs Human", "Writing"] },
-  { slug: "brand-voice-ai-writing", title: "Brand Voice AI Writing: Create Your Digital Twin", tags: ["Brand Voice", "Digital Twin"] },
-  { slug: "claude-vs-deepseek-for-writing", title: "Claude vs DeepSeek for Content Writing", tags: ["AI Comparison", "Claude", "DeepSeek"] },
-  { slug: "ai-writing-tools-affordable", title: "Affordable AI Writing Tools That Don't Suck", tags: ["AI Tools", "Pricing"] },
-  { slug: "01-ai-content-strategy", title: "The Complete AI Content Strategy for 2026", tags: ["Content Strategy", "AI"] },
-  { slug: "02-brand-voice-consistency", title: "Maintaining Brand Voice Consistency Across Channels", tags: ["Brand Voice", "Consistency"] },
-  { slug: "03-productivity-hacks", title: "10 Productivity Hacks for Content Creators", tags: ["Productivity", "Hacks"] },
-  { slug: "04-seo-fundamentals", title: "SEO Fundamentals That Still Matter in 2026", tags: ["SEO", "Fundamentals"] },
-  { slug: "05-future-of-writing", title: "The Future of Writing: Human-AI Collaboration", tags: ["Future", "Collaboration"] },
-  { slug: "12-ai-writing-for-social-media-managers", title: "AI Writing Tools for Social Media Managers", tags: ["Social Media", "Productivity"] },
-  { slug: "14-ai-writing-api-integration", title: "Integrating AI Writing APIs into Your Workflow", tags: ["API", "Developer"] },
-];
-
-// Popular articles (SEO priority)
-const popularArticles = [
-  "how-to-write-blog-posts-with-ai",
-  "11-seo-ai-writing-best-practices",
-  "08-ai-content-strategy-2026",
-  "13-how-to-train-ai-on-your-writing-style",
-  "brand-voice-ai-writing",
-];
-
-// Get unique tags and count
-function getCategories() {
-  const tagCount: Record<string, number> = {};
-  blogPosts.forEach(post => {
-    post.tags.forEach(tag => {
-      tagCount[tag] = (tagCount[tag] || 0) + 1;
-    });
-  });
-
-  return Object.entries(tagCount)
-    .sort(([,a], [,b]) => b - a)
-    .slice(0, 8);
-}
+import { getPopularPosts, getAllTags } from "@/lib/blog-index";
 
 export function BlogSidebar() {
-  const categories = getCategories();
-  const popularPosts = blogPosts.filter(p => popularArticles.includes(p.slug));
+  const popularPosts = getPopularPosts(6);
+  const categories = getAllTags().slice(0, 10);
 
   return (
     <div className="space-y-12">
@@ -77,7 +32,7 @@ export function BlogSidebar() {
           Popular Articles
         </h3>
         <ul className="space-y-3">
-          {popularPosts.map(post => (
+          {popularPosts.map((post) => (
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
@@ -97,13 +52,15 @@ export function BlogSidebar() {
           Categories
         </h3>
         <div className="flex flex-wrap gap-2">
-          {categories.map(([tag, count]) => (
-            <span
+          {categories.map(({ tag, count }) => (
+            <Link
               key={tag}
-              className="inline-flex items-center px-3 py-1 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+              href={`/blog?tag=${encodeURIComponent(tag)}`}
+              className="inline-flex items-center px-3 py-1 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 rounded-full transition-colors"
             >
-              {tag} <span className="ml-1 text-slate-400">({count})</span>
-            </span>
+              {tag}
+              <span className="ml-1 text-slate-400">({count})</span>
+            </Link>
           ))}
         </div>
       </div>

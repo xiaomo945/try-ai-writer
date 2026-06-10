@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { getAllBlogPosts, getBlogPost } from "@/lib/blog-index";
 import fs from "fs";
 import path from "path";
 
@@ -10,103 +11,26 @@ type Props = {
   params: { slug: string };
 };
 
-function findBlogPost(slug: string): { title?: string; description?: string } | null {
-  try {
-    const blogDir = path.join(process.cwd(), "data", "blog-posts");
-    if (!fs.existsSync(blogDir)) return null;
-
-    const files = fs.readdirSync(blogDir).filter((f) => f.endsWith(".md"));
-
-    const slugLower = slug.toLowerCase();
-
-    let matchedFile: string | null = null;
-    for (const file of files) {
-      const nameWithoutExt = file.replace(/\.md$/, "").toLowerCase();
-      if (nameWithoutExt === slugLower) {
-        matchedFile = file;
-        break;
-      }
-    }
-    if (!matchedFile) {
-      for (const file of files) {
-        const nameWithoutExt = file.replace(/\.md$/, "").toLowerCase();
-        if (nameWithoutExt.includes(slugLower) || slugLower.includes(nameWithoutExt)) {
-          matchedFile = file;
-          break;
-        }
-      }
-    }
-    if (!matchedFile) return null;
-
-    const filePath = path.join(blogDir, matchedFile);
-    const content = fs.readFileSync(filePath, "utf-8");
-    const lines = content.split("\n").slice(0, 15);
-
-    let title: string | undefined;
-    let description: string | undefined;
-    let inFrontmatter = false;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i] ?? "";
-      if (line.trim() === "---") {
-        if (!inFrontmatter) {
-          inFrontmatter = true;
-          continue;
-        } else {
-          break;
-        }
-      }
-
-      const titleMatch = line.match(/^title:\s*["']?(.+?)["']?\s*$/);
-      if (titleMatch) {
-        title = titleMatch[1];
-        continue;
-      }
-
-      const descMatch = line.match(/^description:\s*["']?(.+?)["']?\s*$/);
-      if (descMatch) {
-        description = descMatch[1];
-        continue;
-      }
-    }
-
-    if (!title) {
-      for (const line of lines) {
-        const titleMatch = line.match(/^title:\s*["']?(.+?)["']?\s*$/);
-        if (titleMatch) {
-          title = titleMatch[1];
-          break;
-        }
-      }
-    }
-    if (!description) {
-      for (const line of lines) {
-        const descMatch = line.match(/^description:\s*["']?(.+?)["']?\s*$/);
-        if (descMatch) {
-          description = descMatch[1];
-          break;
-        }
-      }
-    }
-
-    return { title, description };
-  } catch {
-    return null;
-  }
+export async function generateStaticParams() {
+  const posts = getAllBlogPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const parsed = findBlogPost(params.slug);
-  const title = parsed?.title || params.slug.replaceAll("-", " ");
-  const description = parsed?.description || "AI writing tips and tutorials to help you write better content faster.";
+  const slug = params.slug || "";
+  const post = getBlogPost(slug);
+  const title = post?.title || slug.replaceAll("-", " ");
+  const description =
+    post?.description ||
+    "AI writing tips and tutorials to help you write better content faster.";
 
   return {
     title: `${title} | Try AI Writer Blog`,
-    description: description,
+    description,
     openGraph: {
       title: `${title} | Try AI Writer Blog`,
-      description: description,
-      url: `https://tryaiwriter.com/blog/${params.slug}`,
+      description,
+      url: `https://tryaiwriter.com/blog/${slug}`,
       siteName: "Try AI Writer",
       images: [{ url: "/og-image.png", width: 1200, height: 630 }],
       type: "article",
@@ -114,28 +38,105 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: `${title} | Try AI Writer Blog`,
-      description: description,
+      description,
       images: ["/og-image.png"],
     },
   };
 }
 
+function renderMarkdown(content: string): string {
+  // Remove frontmatter
+  const parts = content.split("---");
+  const body = parts.length >= 3 ? parts.slice(2).join("---") : content;
+
+  return body
+    // Headers
+    .replace(/^### (.+)$/gm, '<h3 class="text-xl font-semibold mt-8 mb-3">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold mt-10 mb-4">$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1 class="text-3xl font-extrabold mt-12 mb-6">$1</h1>')
+    // Bold and italic
+    .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    // Links
+    .replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:text-emerald-500 underline">$1</a>'
+    )
+    // Inline code
+    .replace(/`([^`]+)`/g, '<code class="bg-slate-100 text-emerald-700 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>')
+    // Horizontal rules
+    .replace(/^---$/gm, '<hr class="my-8 border-slate-200" />')
+    // Blockquotes
+    .replace(
+      /^> (.+)$/gm,
+      '<blockquote class="border-l-4 border-emerald-400 pl-4 my-4 text-slate-600 italic">$1</blockquote>'
+    )
+    // Unordered lists
+    .replace(/^- (.+)$/gm, '<li class="ml-6 list-disc text-slate-700">$1</li>')
+    // Paragraphs (double newlines)
+    .replace(/\n\n/g, "</p><p>")
+    .replace(/^(?!<[a-z])/gm, "")
+    // Wrap in paragraph
+    .replace(/^(.+)$/gm, (match) => {
+      if (match.startsWith("<")) return match;
+      if (match.trim() === "") return "";
+      return `<p class="text-slate-700 leading-relaxed mb-4">${match}</p>`;
+    });
+}
+
 export default function BlogPostPage({ params }: Props) {
+  const slug = params.slug || "";
+  const post = getBlogPost(slug);
+
+  // Read and render the markdown content
+  let htmlContent = "";
+  if (post) {
+    try {
+      const filePath = path.join(
+        process.cwd(),
+        "data",
+        "blog-posts",
+        post.filename
+      );
+      const content = fs.readFileSync(filePath, "utf-8");
+      htmlContent = renderMarkdown(content);
+    } catch {
+      htmlContent =
+        '<p class="text-slate-500 italic">Article content is being prepared. Check back soon!</p>';
+    }
+  }
+
+  const title = post?.title || slug.replaceAll("-", " ");
+  const date = post?.date || new Date().toISOString();
+  const tags = post?.tags || [];
+  const description =
+    post?.description ||
+    "AI writing tips and tutorials to help you write better content faster.";
+
   return (
-    <main className="min-h-screen bg-obsidian-950 text-white">
+    <main className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-2xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="text-lg font-display font-extrabold text-white">Try <span className="text-blue-400">AI</span> Writer</span>
+            <span className="text-lg font-display font-extrabold text-white">
+              Try <span className="text-emerald-400">AI</span> Writer
+            </span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/write" className="text-slate-300 hover:text-white transition-colors hidden sm:block">
+            <Link
+              href="/write"
+              className="text-slate-300 hover:text-white transition-colors hidden sm:block"
+            >
               Write
             </Link>
             <ThemeToggle />
-            <Link href="/login" className="btn-outline min-h-[40px] px-5 py-2 text-sm">
+            <Link
+              href="/login"
+              className="rounded-2xl border border-slate-600 hover:border-emerald-500/60 px-5 py-2 text-sm font-medium text-slate-300 hover:text-white transition-all"
+            >
               Sign In
             </Link>
           </div>
@@ -149,39 +150,32 @@ export default function BlogPostPage({ params }: Props) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": params.slug.replaceAll("-", " "),
-            "description": "AI writing tips and tutorials to help you write better content faster.",
-            "author": {
+            headline: title,
+            description,
+            author: {
               "@type": "Organization",
-              "name": "Try AI Writer"
+              name: "Try AI Writer",
             },
-            "publisher": {
+            publisher: {
               "@type": "Organization",
-              "name": "Try AI Writer",
-              "logo": {
+              name: "Try AI Writer",
+              logo: {
                 "@type": "ImageObject",
-                "url": "https://tryaiwriter.com/logo.png"
-              }
+                url: "https://tryaiwriter.com/logo.png",
+              },
             },
-            "datePublished": "2026-05-30",
-            "dateModified": "2026-05-30",
-            "image": "https://tryaiwriter.com/og-image.png",
-            "about": {
-              "@type": "Thing",
-              "name": "AI Writing"
-            },
-            "mentions": [
-              { "@type": "Thing", "name": "AI Writing Tools" },
-              { "@type": "Thing", "name": "Content Creation" },
-              { "@type": "Thing", "name": "Brand Voice" }
-            ],
-            "isAccessibleForFree": true
-          })
+            datePublished: date,
+            dateModified: date,
+            image: "https://tryaiwriter.com/og-image.png",
+            about: tags.length > 0 ? tags[0] : "AI Writing",
+            keywords: tags.join(", "),
+            isAccessibleForFree: true,
+          }),
         }}
       />
 
       {/* Article */}
-      <article className="pt-32 pb-20 px-4 sm:px-6 section-container max-w-4xl mx-auto">
+      <article className="pt-32 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-12"
@@ -190,37 +184,65 @@ export default function BlogPostPage({ params }: Props) {
           Back to Blog
         </Link>
 
-        <div className="mb-12">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold mb-4">
-            {params.slug.replaceAll("-", " ")}
+        <header className="mb-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold mb-4 leading-tight">
+            {title}
           </h1>
-          <p className="text-slate-400 text-lg">
-            Published on May 28, 2026
-          </p>
-        </div>
+          <div className="flex flex-wrap items-center gap-4 text-sm">
+            <time dateTime={date} className="text-slate-400">
+              {new Date(date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/blog?tag=${encodeURIComponent(tag)}`}
+                    className="px-3 py-1 text-xs font-medium rounded-full bg-emerald-600/10 text-emerald-400 border border-emerald-600/20 hover:bg-emerald-600/20 transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </header>
 
-        {/* Article Content Placeholder */}
-        <div className="prose prose-invert prose-lg">
-          <p className="text-slate-300">
-            Full article coming soon!
-          </p>
-          <p className="text-slate-400">
-            In the meantime, you can:
-          </p>
-          <ul>
-            <li>Try our AI writing tool for free</li>
-            <li>Browse other articles on our blog</li>
-            <li>Check out our pricing plans</li>
-          </ul>
-        </div>
+        {/* Article Content */}
+        <div
+          className="prose prose-invert prose-emerald max-w-none
+            prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-5
+            prose-strong:text-white prose-strong:font-semibold
+            prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline
+            prose-code:text-emerald-300 prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+            prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-700
+            prose-li:text-slate-300
+            prose-blockquote:border-emerald-500 prose-blockquote:text-slate-400
+          "
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
 
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <Link
-            href="/write"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            Try AI Writing Now
-          </Link>
+        {/* CTA */}
+        <div className="mt-16 pt-8 border-t border-white/10">
+          <div className="bg-gradient-to-br from-emerald-600/10 to-teal-500/10 rounded-2xl p-8 border border-emerald-500/10 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">
+              Ready to write like this?
+            </h3>
+            <p className="text-slate-400 mb-6 max-w-md mx-auto">
+              Try AI Writer free and create content in your unique brand voice
+              — no credit card required.
+            </p>
+            <Link
+              href="/write"
+              className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-7 py-3.5 text-base font-semibold text-white shadow-sm hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300"
+            >
+              Start Writing Free
+            </Link>
+          </div>
         </div>
       </article>
     </main>

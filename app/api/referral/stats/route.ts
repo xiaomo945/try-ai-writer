@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { getReferralRecord, getReferralLink } from "@/lib/referral";
 
 export async function GET(req: NextRequest) {
   try {
-    const userId = req.nextUrl.searchParams.get("userId");
-    if (!userId) {
-      return NextResponse.json({ error: "userId required" }, { status: 400 });
+    // Authenticate user
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const record = getReferralRecord(userId);
+    const userId = req.nextUrl.searchParams.get("userId");
+
+    // Users can only query their own stats unless explicitly passed
+    if (userId && userId !== session.user.email) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const effectiveUserId = userId || session.user.email || "";
+
+    const record = getReferralRecord(effectiveUserId);
     if (!record) {
       return NextResponse.json({
         referralCode: null,
