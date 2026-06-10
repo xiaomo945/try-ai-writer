@@ -16,7 +16,7 @@ import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-va
 import { ReferralShare } from "@/app/components/ReferralShare";
 import { LearningTimeline } from "@/app/components/LearningTimeline";
 import { WritingStats } from "@/app/components/WritingStats";
-import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral-client";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { Gift } from "lucide-react";

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Copy, Check, Share2, Twitter, Users } from "lucide-react";
-import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral-client";
 import { useToast } from "./ToastContainer";
 
 export function ReferralShare() {

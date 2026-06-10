@@ -471,7 +471,7 @@ export default function HeadlineGeneratorContent() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
-              href="/signup"
+              href="/register"
               className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-7 py-3.5 text-base font-semibold text-white shadow-sm hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300"
             >
               <Sparkles className="w-5 h-5" />

@@ -1,62 +1,147 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Try AI Writer Assistant</title>
-    <style>
-      body {
-        width: 400px;
-        min-height: 500px;
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      }
-      .container {
-        padding: 16px;
-      }
-      header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid #e5e7eb;
-      }
-      .logo {
-        width: 32px;
-        height: 32px;
-        background-color: #059669;
-        border-radius: 8px;
-      }
-      h1 {
-        font-size: 18px;
-        font-weight: 700;
-        margin: 0;
-        color: #1f2937;
-      }
-      .content {
-        margin-top: 16px;
-      }
-      .placeholder {
-        text-align: center;
-        padding: 40px 0;
-        color: #6b7280;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <div class="logo"></div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Try AI Writer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 380px;
+      min-height: 480px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .container { padding: 20px; }
+
+    /* Header */
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 16px; border-bottom: 1px solid #1e293b;
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 36px; height: 36px; background: #059669; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: white;
+    }
+    .header-brand h1 { font-size: 16px; font-weight: 700; color: #f1f5f9; }
+    .header-badge {
+      font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px;
+      background: #05966920; color: #34d399; border: 1px solid #05966930;
+    }
+
+    /* Quick Action */
+    .quick-action { margin-top: 16px; }
+    .quick-action label { display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+    .input-row { display: flex; gap: 8px; }
+    .input-row input {
+      flex: 1; padding: 10px 14px; border-radius: 12px; border: 1px solid #334155;
+      background: #1e293b; color: #e2e8f0; font-size: 13px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-row input:focus { border-color: #059669; }
+    .input-row input::placeholder { color: #64748b; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 16px; border-radius: 12px; border: none; font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: all 0.2s;
+      min-height: 44px; white-space: nowrap;
+    }
+    .btn-primary { background: #059669; color: white; }
+    .btn-primary:hover { background: #047857; }
+    .btn-outline { background: transparent; border: 1px solid #334155; color: #cbd5e1; }
+    .btn-outline:hover { border-color: #05966960; background: #1e293b; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Result */
+    .result-area {
+      margin-top: 14px; padding: 14px; border-radius: 12px;
+      border: 1px solid #334155; background: #1e293b;
+      min-height: 80px; max-height: 200px; overflow-y: auto;
+      font-size: 13px; line-height: 1.6; color: #cbd5e1; display: none;
+    }
+    .result-area.show { display: block; }
+    .result-area .loading { color: #34d399; font-style: italic; }
+    .result-area .error { color: #f87171; }
+    .result-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+    /* Quick Links */
+    .links { margin-top: 18px; }
+    .links h3 { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+    .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .link-card {
+      display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+      border-radius: 10px; border: 1px solid #1e293b; background: #1e293b;
+      text-decoration: none; font-size: 13px; font-weight: 500; color: #cbd5e1;
+      transition: all 0.2s;
+    }
+    .link-card:hover { border-color: #05966940; background: #0f172a; }
+    .link-icon { font-size: 16px; }
+
+    /* Footer */
+    .footer { margin-top: 16px; padding-top: 12px; border-top: 1px solid #1e293b; text-align: center; }
+    .footer a { font-size: 11px; color: #64748b; text-decoration: none; }
+    .footer a:hover { color: #34d399; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-brand">
+      <div class="logo">W</div>
+      <div>
         <h1>Try AI Writer</h1>
-      </header>
-      <div class="content">
-        <div class="placeholder">
-          <p>Extension placeholder</p>
-          <p>Coming soon...</p>
-        </div>
       </div>
     </div>
-    <script src="popup.js"></script>
-  </body>
+    <span class="header-badge">v1.0</span>
+  </div>
+
+  <!-- Quick Generate -->
+  <div class="quick-action">
+    <label for="prompt">Quick generate</label>
+    <div class="input-row">
+      <input id="prompt" type="text" placeholder="Write a blog intro about..." />
+      <button id="generateBtn" class="btn btn-primary">Generate</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="result" class="result-area"></div>
+
+  <!-- Quick Links -->
+  <div class="links">
+    <h3>Quick Actions</h3>
+    <div class="link-grid">
+      <a href="https://tryaiwriter.com/write" target="_blank" class="link-card">
+        <span class="link-icon">✍️</span> Write
+      </a>
+      <a href="https://tryaiwriter.com/interview" target="_blank" class="link-card">
+        <span class="link-icon">🎤</span> Interview
+      </a>
+      <a href="https://tryaiwriter.com/dashboard" target="_blank" class="link-card">
+        <span class="link-icon">📊</span> Dashboard
+      </a>
+      <a href="https://tryaiwriter.com/templates" target="_blank" class="link-card">
+        <span class="link-icon">📋</span> Templates
+      </a>
+      <a href="https://tryaiwriter.com/tools" target="_blank" class="link-card">
+        <span class="link-icon">🛠️</span> Tools
+      </a>
+      <a href="https://tryaiwriter.com/pricing" target="_blank" class="link-card">
+        <span class="link-icon">💎</span> Pricing
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="https://tryaiwriter.com" target="_blank">tryaiwriter.com</a>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
 </html>

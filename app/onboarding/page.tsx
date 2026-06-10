@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { Upload, Gift, Sparkles } from "lucide-react";
-import { applyReferralReward } from "@/lib/referral";
+import { applyReferralReward } from "@/lib/referral-client";
 
 type AnalysisState = "idle" | "uploading" | "analyzing" | "complete" | "error";
 

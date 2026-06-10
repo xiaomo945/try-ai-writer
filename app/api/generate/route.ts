@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { generateClaudeStream } from "@/lib/ai-providers/claude";
 import { generateDeepSeekStream } from "@/lib/ai-providers/deepseek";
+import { rateLimit, getRateLimitKey, DEFAULT_RATE_LIMIT } from "@/lib/rate-limiter";
 
 type ModePrompt = {
   blog: string;
@@ -205,6 +206,27 @@ function errorResponse(message: string, hint: string, status: number = 500): Res
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const rateLimitKey = getRateLimitKey(request);
+    const limitResult = rateLimit(rateLimitKey, DEFAULT_RATE_LIMIT);
+    if (!limitResult.allowed) {
+      return Response.json(
+        {
+          error: "请求过于频繁，请稍后再试。",
+          hint: `每分钟最多 ${DEFAULT_RATE_LIMIT.maxRequests} 次请求，${Math.ceil((limitResult.resetAt - Date.now()) / 1000)} 秒后重置。`,
+          retryAfter: Math.ceil((limitResult.resetAt - Date.now()) / 1000),
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil((limitResult.resetAt - Date.now()) / 1000)),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(limitResult.resetAt),
+          },
+        }
+      );
+    }
+
     const body = await request.json();
     const prompt: string | undefined = body.prompt;
     const mode: string | undefined = body.mode;
