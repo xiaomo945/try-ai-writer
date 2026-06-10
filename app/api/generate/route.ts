@@ -37,61 +37,20 @@ Topic: `,
   custom: "",
 };
 
-const mockResponses: ModePrompt = {
-  blog: `## Getting Started with AI Writing in 2025
-
-The landscape of content creation has shifted dramatically. With AI-powered tools, writers can now produce high-quality drafts in minutes rather than hours.
-
-### Why AI Writing Matters
-
-AI writing tools are no longer just glorified autocomplete. They understand context, maintain tone, and adapt to your unique voice. Here is what makes them indispensable:
-
-- **Speed**: Generate full drafts in under 30 seconds
-- **Quality**: Professionally structured content with proper formatting
-- **Consistency**: Maintain your brand voice across all pieces
-
-### Best Practices for AI-Assisted Writing
-
-1. Start with a clear, specific prompt
-2. Review and edit the AI output for accuracy
-3. Add your personal touch and unique insights
-4. Fact-check any claims or statistics
-
-### The Future is Collaborative
-
-The most successful creators use AI as a collaborator, not a replacement. Your expertise combined with AI efficiency creates content that neither could produce alone.
-
-### Conclusion
-
-AI writing is here to stay. The question is not whether to use it, but how to use it well. Start experimenting today and find the workflow that works for you.`,
-  email: `Subject: Quick question about your Q2 content strategy
-
-Hi there,
-
-I hope this email finds you well. I wanted to follow up on our conversation about scaling your content output this quarter.
-
-Here is what I would recommend:
-
-1. **Leverage AI for first drafts** - Cut writing time by 60%
-2. **Create a content calendar** - Plan 2 weeks ahead minimum
-3. **Batch similar tasks** - Write all blog posts on Monday, edit on Tuesday
-
-Would you be open to a quick 15-minute call this week to discuss? I have some ideas that could really move the needle for your team.
-
-Looking forward to hearing from you.
-
-Best regards`,
-  social: `🚀 Stop writing from scratch.
-
-AI-powered writing tools can generate blog posts, emails, and social content in seconds.
-
-The best part? They learn your style and get better every time.
-
-Try it free today. Your future self will thank you. ✨
-
-#AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content:\n\nThank you for using Try AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
-};
+function buildMockStream(text: string): ReadableStream<Uint8Array> {
+  const encoder = new TextEncoder();
+  return new ReadableStream({
+    async start(controller) {
+      const chunkSize = 50;
+      for (let i = 0; i < text.length; i += chunkSize) {
+        const chunk = text.substring(i, i + chunkSize);
+        controller.enqueue(encoder.encode(chunk));
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      controller.close();
+    },
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -113,96 +72,93 @@ export async function POST(request: NextRequest) {
       systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
     }
 
-    // Inject relevant memories into the system prompt
     if (relevantMemories && relevantMemories.length > 0) {
       const memoriesText = relevantMemories.join("\n\n");
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }
 
     const aiProvider = (process.env.AI_PROVIDER || "").toLowerCase();
-    // 宽松检测：只要有值就视为有 Key（除非是明显的占位符）
-    const hasClaudeKey = process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY.length > 10 && !["your-api-key-here", "sk-ant-xxxxx"].includes(process.env.CLAUDE_API_KEY);
-    const hasDeepSeekKey = process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_API_KEY.length > 10 && !["your-api-key-here"].includes(process.env.DEEPSEEK_API_KEY);
-    
+    const hasClaudeKey =
+      !!process.env.CLAUDE_API_KEY &&
+      process.env.CLAUDE_API_KEY.length > 10 &&
+      !["your-api-key-here", "sk-ant-xxxxx"].includes(process.env.CLAUDE_API_KEY);
+    const hasDeepSeekKey =
+      !!process.env.DEEPSEEK_API_KEY &&
+      process.env.DEEPSEEK_API_KEY.length > 10 &&
+      !["your-api-key-here"].includes(process.env.DEEPSEEK_API_KEY);
+
     console.log(`[Generate] AI_PROVIDER: ${aiProvider}`);
-    console.log(`[Generate] Has Claude Key: ${hasClaudeKey ? "YES" : "NO"} (value: ${process.env.CLAUDE_API_KEY ? "set" : "not set"})`);
-    console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey ? "YES" : "NO"} (value: ${process.env.DEEPSEEK_API_KEY ? "set" : "not set"})`);
-    
-    // 智能选择 provider:
-    // 1. 如果显式配置了 AI_PROVIDER，就尝试用它
-    // 2. 否则，优先用已配置的 API Key（DeepSeek 优先）
-    // 3. 最后默认 Mock
-    let finalProvider = aiProvider;
-    if (!finalProvider) {
-      // 未指定 Provider，优先用已配置的 Key
-      if (hasDeepSeekKey) finalProvider = "deepseek";
-      else if (hasClaudeKey) finalProvider = "claude";
-      else finalProvider = "mock";
-    } else if (finalProvider === "claude" && !hasClaudeKey) {
-      // 指定用 Claude 但没 Key，尝试 DeepSeek
-      finalProvider = hasDeepSeekKey ? "deepseek" : "mock";
-    } else if (finalProvider === "deepseek" && !hasDeepSeekKey) {
-      // 指定用 DeepSeek 但没 Key，尝试 Claude
-      finalProvider = hasClaudeKey ? "claude" : "mock";
-    } else if (!["claude", "deepseek", "mock"].includes(finalProvider)) {
-      finalProvider = hasDeepSeekKey ? "deepseek" : (hasClaudeKey ? "claude" : "mock");
-    }
-    
-    console.log(`[Generate] Final Selected AI Provider: ${finalProvider}`);
+    console.log(`[Generate] Has Claude Key: ${hasClaudeKey}`);
+    console.log(`[Generate] Has DeepSeek Key: ${hasDeepSeekKey}`);
 
-    let stream: ReadableStream<Uint8Array>;
+    const providers: string[] = [];
+    if (aiProvider === "deepseek" && hasDeepSeekKey) providers.push("deepseek");
+    if (aiProvider === "claude" && hasClaudeKey) providers.push("claude");
 
-    if (finalProvider === "mock") {
-      console.log("[Generate] Using mock mode (no valid API keys found)");
-      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
-      const encoder = new TextEncoder();
-      
-      // 模拟流式响应
-      stream = new ReadableStream({
-        async start(controller) {
-          const chunkSize = 50;
-          for (let i = 0; i < mockText.length; i += chunkSize) {
-            const chunk = mockText.substring(i, i + chunkSize);
-            controller.enqueue(encoder.encode(chunk));
-            await new Promise(resolve => setTimeout(resolve, 50));
-          }
-          controller.close();
-        },
-      });
-    } else if (finalProvider === "deepseek") {
-      console.log("[Generate] Using DeepSeek provider...");
-      stream = await generateDeepSeekStream({
-        prompt,
-        systemPrompt,
-        model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
-        maxTokens: 4096,
-        temperature: 0.7,
-      });
-    } else if (finalProvider === "claude") {
-      console.log("[Generate] Using Claude provider...");
-      stream = await generateClaudeStream({
-        prompt,
-        systemPrompt,
-        model: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
-        maxTokens: 4096,
-        temperature: 0.7,
-      });
-    } else {
-      console.warn(`[Generate] Unknown provider: ${finalProvider}, falling back to mock`);
-      const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
-      const encoder = new TextEncoder();
-      stream = new ReadableStream({
-        async start(controller) {
-          const chunkSize = 50;
-          for (let i = 0; i < mockText.length; i += chunkSize) {
-            const chunk = mockText.substring(i, i + chunkSize);
-            controller.enqueue(encoder.encode(chunk));
-            await new Promise(resolve => setTimeout(resolve, 50));
-          }
-          controller.close();
-        },
-      });
+    if (providers.length === 0) {
+      if (hasDeepSeekKey) providers.push("deepseek");
+      if (hasClaudeKey) providers.push("claude");
     }
+
+    const fallbackProviders = providers.filter((p) => p !== aiProvider);
+    const fullChain = [...providers, ...fallbackProviders];
+
+    console.log(`[Generate] Provider chain (with fallbacks): ${fullChain.join(" -> ") || "mock"}`);
+
+    const generationOptions = {
+      prompt,
+      systemPrompt,
+      model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+      claudeModel: process.env.CLAUDE_MODEL || "claude-sonnet-4-20250514",
+      maxTokens: 4096,
+      temperature: 0.7,
+    };
+
+    let lastError: Error | null = null;
+
+    for (const provider of fullChain) {
+      try {
+        console.log(`[Generate] Trying provider: ${provider}`);
+        if (provider === "deepseek") {
+          const stream = await generateDeepSeekStream(generationOptions);
+          return new Response(stream, {
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8",
+              "Cache-Control": "no-cache",
+              Connection: "keep-alive",
+            },
+          });
+        }
+        if (provider === "claude") {
+          const stream = await generateClaudeStream({
+            ...generationOptions,
+            model: generationOptions.claudeModel,
+          });
+          return new Response(stream, {
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8",
+              "Cache-Control": "no-cache",
+              Connection: "keep-alive",
+            },
+          });
+        }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`[Generate] Provider ${provider} failed: ${msg}`);
+        lastError = err instanceof Error ? err : new Error(msg);
+      }
+    }
+
+    console.log("[Generate] All providers failed. Falling back to mock mode.");
+    const mockResponses: ModePrompt = {
+      blog: `## Getting Started with AI Writing in 2025\n\nThe landscape of content creation has shifted dramatically. With AI-powered tools, writers can now produce high-quality drafts in minutes rather than hours.\n\n### Why AI Writing Matters\n\nAI writing tools are no longer just glorified autocomplete. They understand context, maintain tone, and adapt to your unique voice. Here is what makes them indispensable:\n\n- **Speed**: Generate full drafts in under 30 seconds\n- **Quality**: Professionally structured content with proper formatting\n- **Consistency**: Maintain your brand voice across all pieces\n\n### Best Practices for AI-Assisted Writing\n\n1. Start with a clear, specific prompt\n2. Review and edit the AI output for accuracy\n3. Add your personal touch and unique insights\n4. Fact-check any claims or statistics\n\n### The Future is Collaborative\n\nThe most successful creators use AI as a collaborator, not a replacement. Your expertise combined with AI efficiency creates content that neither could produce alone.\n\n### Conclusion\n\nAI writing is here to stay. The question is not whether to use it, but how to use it well. Start experimenting today and find the workflow that works for you.`,
+      email: `Subject: Quick question about your Q2 content strategy\n\nHi there,\n\nI hope this email finds you well. I wanted to follow up on our conversation about scaling your content output this quarter.\n\nHere is what I would recommend:\n\n1. **Leverage AI for first drafts** - Cut writing time by 60%\n2. **Create a content calendar** - Plan 2 weeks ahead minimum\n3. **Batch similar tasks** - Write all blog posts on Monday, edit on Tuesday\n\nWould you be open to a quick 15-minute call this week to discuss? I have some ideas that could really move the needle for your team.\n\nLooking forward to hearing from you.\n\nBest regards`,
+      social: `🚀 Stop writing from scratch.\n\nAI-powered writing tools can generate blog posts, emails, and social content in seconds.\n\nThe best part? They learn your style and get better every time.\n\nTry it free today. Your future self will thank you. ✨\n\n#AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
+      custom: `Here is your custom generated content based on: "${prompt.slice(0, 100)}"\n\nThank you for using Try AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
+    };
+
+    const mockText = mockResponses[mode as keyof ModePrompt] || mockResponses.custom;
+    const stream = buildMockStream(mockText);
 
     return new Response(stream, {
       headers: {
@@ -214,6 +170,6 @@ export async function POST(request: NextRequest) {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Internal server error";
     console.error("[Generate] Fatal error:", error);
-    return Response.json({ error: message }, { status: 500 });
+    return Response.json({ error: message, suggestion: "AI服务暂时不可用，请稍后再试" }, { status: 500 });
   }
 }

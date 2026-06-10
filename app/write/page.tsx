@@ -219,26 +219,44 @@ export default function WritePage() {
       return;
     }
 
+    const relevantMemories =
+      relatedIdeas.length > 0 ? relatedIdeas.slice(0, 3).map((r) => r.memory.content) : [];
+
+    let enhancedPrompt: string | undefined;
+    if (profile?.styleFingerprint) {
+      const toneHint =
+        profile.commonPhrases && profile.commonPhrases.length > 0
+          ? `\nCommon phrases to use: ${profile.commonPhrases.slice(0, 5).join(", ")}`
+          : "";
+      enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${prompt}`;
+    }
+
     let response: Response | null = null;
     let lastError: Error | null = null;
 
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000);
+        const timeoutId = setTimeout(() => controller.abort(), 45000);
         response = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt, mode }),
+          body: JSON.stringify({ prompt, mode, enhancedPrompt, relevantMemories }),
           signal: controller.signal,
         });
         clearTimeout(timeoutId);
         if (response.ok) break;
         const errorData = await response.json().catch(() => ({}));
         lastError = new Error(errorData.error || errorData.suggestion || `HTTP ${response.status}`);
+        if (attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+        }
       } catch (e) {
         lastError = e instanceof Error ? e : new Error("Network error");
-        if (attempt === 0) continue;
+        if (attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+          continue;
+        }
       }
     }
 
@@ -260,6 +278,12 @@ export default function WritePage() {
         const text = decoder.decode(value, { stream: true });
         fullText += text;
         setOutput(fullText);
+      }
+
+      if (!fullText.trim()) {
+        setErrorInfo({ message: "AI服务暂时不可用", suggestion: "请稍后再试，或刷新页面" });
+        setState("error");
+        return;
       }
 
       setState("done");
