@@ -60,57 +60,63 @@ export default function PricingContentZh() {
   const { data: session, status } = useSession();
 
   const handlePlanClick = async (planName: string) => {
-    if (planName === "免费版") {
-      window.location.href = "/login";
-      return;
-    }
+    let planKey: "pro" | "max" | "free";
+    if (planName === "免费版") planKey = "free";
+    else if (planName === "专业版") planKey = "pro";
+    else planKey = "max";
 
-    // 如果 session 还在加载，等待一下
+    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
+    console.log(`[Pricing] Session 状态: ${status}`);
+
     if (status === "loading") {
-      alert("请稍候，正在检查登录状态...");
+      alert("正在检查登录状态...");
       return;
     }
 
-    // 如果未登录，先跳转到登录页
-    if (!session) {
-      window.location.href = "/login";
+    if (status === "unauthenticated") {
+      window.location.href = "/login?redirect=/pricing";
       return;
     }
 
-    let planKey: "pro" | "max" | "team";
-    if (planName === "专业版") planKey = "pro";
-    else if (planName === "旗舰版") planKey = "max";
-    else planKey = "team";
+    if (planKey === "free") {
+      window.location.href = "/write";
+      return;
+    }
 
     setLoadingPlan(planName);
-    
+
     try {
+      console.log("[Pricing] 发起支付请求...");
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
       const response = await fetch("/api/payment/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: planKey }),
+        signal: controller.signal,
       });
 
-      // 检查响应状态
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        const errorMessage = errorData.error || `HTTP ${response.status}: 创建结账会话失败`;
-        throw new Error(errorMessage);
+        throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
       const data = await response.json();
-      
-      // 检查返回的数据
+
       if (!data.url) {
         throw new Error("服务器未返回支付链接");
       }
-      
-      // 跳转到支付页面
+
+      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       window.location.href = data.url;
     } catch (error) {
-      console.error("Checkout error:", error);
-      const errorMessage = error instanceof Error ? error.message : "启动结账流程失败";
-      alert(`结账错误: ${errorMessage}\n\n请确保您已登录并重试。`);
+      const message = error instanceof Error ? error.message : "未知错误";
+      console.log(`[Pricing] 支付错误: ${message}`);
+      alert("支付错误: " + message + "\n\n请稍后再试");
     } finally {
       setLoadingPlan(null);
     }

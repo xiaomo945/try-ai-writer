@@ -81,84 +81,84 @@ function getWordCount(text: string): number {
 
 function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
   const { profile, styleMatchScore } = demoData;
-  
+
   return (
-    <div className="card border-2 border-dashed border-emerald-200 bg-emerald-50/30">
+    <div className="glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-emerald-600" />
+        <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center">
+          <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
         </div>
         <div>
           <h3 className="font-display font-bold text-gray-900 dark:text-white">Demo Brand Voice</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-500">Generated from our blog content</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Generated from our blog content</p>
         </div>
       </div>
-      
+
       <div className="space-y-4">
         {/* Industry & Tone */}
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-700 border border-slate-200">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
             {profile.industry}
           </span>
-          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-emerald-700 border border-emerald-200">
+          <span className="px-3 py-1 bg-emerald-100/60 dark:bg-emerald-900/30 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
             {profile.tone.sentiment} tone
           </span>
-          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-700 border border-slate-200">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
             {profile.tone.pace} pace
           </span>
         </div>
-        
+
         {/* Style Match Score */}
-        <div className="bg-white rounded-xl p-4 border border-slate-200">
+        <div className="bg-white/[0.03] dark:bg-white/[0.03] rounded-xl p-4 border border-slate-200 dark:border-white/10">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-slate-700">Style Match Score</span>
-            <span className="text-2xl font-bold text-emerald-600">{styleMatchScore.overall}%</span>
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Style Match Score</span>
+            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{styleMatchScore.overall}%</span>
           </div>
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="bg-slate-50 rounded-lg p-2">
-              <div className="text-lg font-semibold text-slate-700">{styleMatchScore.tone}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-500">Tone</div>
+            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
+              <div className="text-lg font-semibold text-slate-700 dark:text-slate-300">{styleMatchScore.tone}%</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Tone</div>
             </div>
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
               <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.vocabulary}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-500">Vocab</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Vocab</div>
             </div>
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
               <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.structure}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-500">Structure</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Structure</div>
             </div>
           </div>
         </div>
-        
+
         {/* Common Phrases */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-500 mb-2">Common Phrases</div>
+          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Common Phrases</div>
           <div className="flex flex-wrap gap-1">
             {profile.commonPhrases.slice(0,6).map((phrase, i) => (
-              <span key={i} className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
+              <span key={i} className="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full">
                 {phrase}
               </span>
             ))}
           </div>
         </div>
-        
+
         {/* Sample Articles */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-500 mb-2">Sample Articles</div>
+          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Sample Articles</div>
           <div className="space-y-2">
             {demoData.samples.slice(0,3).map((sample) => (
               <div key={sample.id} className="flex items-center gap-2 text-sm">
                 <BookOpen className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-700 truncate flex-1">{sample.title}</span>
+                <span className="text-slate-700 dark:text-slate-300 truncate flex-1">{sample.title}</span>
                 <span className="text-xs text-slate-400">{sample.wordCount} words</span>
               </div>
             ))}
           </div>
         </div>
-        
+
         {/* CTA */}
-        <div className="pt-4 border-t border-emerald-200">
-          <p className="text-sm text-slate-600 mb-3">
+        <div className="pt-4 border-t border-emerald-200 dark:border-emerald-800">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
             This is a demo profile based on our blog content. Start writing to create your own brand voice.
           </p>
           <Link href="/write" className="btn-primary w-full text-center text-sm">
@@ -187,7 +187,7 @@ function LearningProgressRing({ progress }: { progress: number }) {
           stroke="currentColor"
           strokeWidth="6"
           fill="none"
-          className="text-slate-200 dark:text-gray-700"
+          className="text-slate-200 dark:text-gray-800"
         />
         <circle
           cx="48"
@@ -204,7 +204,7 @@ function LearningProgressRing({ progress }: { progress: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-2xl font-display font-bold text-gray-900 dark:text-white">{progress}</span>
-        <span className="text-xs text-gray-500 dark:text-gray-500">/20</span>
+        <span className="text-xs text-gray-500 dark:text-gray-400">/20</span>
       </div>
     </div>
   );
@@ -326,7 +326,7 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
                 >
                   🔮 Generate Avatar
                 </button>
-                <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 text-center">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
                   AI-powered avatar generation is coming soon!
                 </p>
               </div>
@@ -381,7 +381,7 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
           <p className="text-sm font-medium text-slate-900 dark:text-white">
             AI已学习你的 <span className="text-emerald-600 font-bold">{learningProgress}</span> 个写作习惯
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             继续写作，目标：20个样本
           </p>
         </div>
@@ -948,21 +948,21 @@ export default function DashboardPage() {
         {/* Quick Start Cards */}
         {userStage === 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/onboarding" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/onboarding" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">完成入门设置</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">只需 1 分钟！</p>
             </Link>
-            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Zap className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">📝 开始写作</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">立即尝试 AI！</p>
             </Link>
-            <Link href="/" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
@@ -972,7 +972,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Zap className="w-7 h-7 text-white" />
               </div>
@@ -981,7 +981,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">立即开始创作！</p>
               </div>
             </Link>
-            <Link href="#history" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="#history" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <FileText className="w-7 h-7 text-white" />
               </div>
@@ -990,7 +990,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">回顾你的创作</p>
               </div>
             </Link>
-            <Link href="#brand-voice" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="#brand-voice" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Brain className="w-7 h-7 text-white" />
               </div>
@@ -1330,7 +1330,7 @@ export default function DashboardPage() {
                 {records.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
                     <div className="w-20 h-20 bg-white/[0.03] dark:bg-white/[0.05] rounded-full flex items-center justify-center mb-6">
-                      <FileText className="w-10 h-10 text-gray-400 dark:text-gray-500" />
+                      <FileText className="w-10 h-10 text-gray-400 dark:text-gray-400" />
                     </div>
                     <p className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">No generation records yet</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Start writing to see your history here.</p>

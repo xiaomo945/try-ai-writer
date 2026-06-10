@@ -3,18 +3,109 @@ import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import fs from "fs";
+import path from "path";
 
 type Props = {
   params: { slug: string };
 };
 
+function findBlogPost(slug: string): { title?: string; description?: string } | null {
+  try {
+    const blogDir = path.join(process.cwd(), "data", "blog-posts");
+    if (!fs.existsSync(blogDir)) return null;
+
+    const files = fs.readdirSync(blogDir).filter((f) => f.endsWith(".md"));
+
+    const slugLower = slug.toLowerCase();
+
+    let matchedFile: string | null = null;
+    for (const file of files) {
+      const nameWithoutExt = file.replace(/\.md$/, "").toLowerCase();
+      if (nameWithoutExt === slugLower) {
+        matchedFile = file;
+        break;
+      }
+    }
+    if (!matchedFile) {
+      for (const file of files) {
+        const nameWithoutExt = file.replace(/\.md$/, "").toLowerCase();
+        if (nameWithoutExt.includes(slugLower) || slugLower.includes(nameWithoutExt)) {
+          matchedFile = file;
+          break;
+        }
+      }
+    }
+    if (!matchedFile) return null;
+
+    const filePath = path.join(blogDir, matchedFile);
+    const content = fs.readFileSync(filePath, "utf-8");
+    const lines = content.split("\n").slice(0, 15);
+
+    let title: string | undefined;
+    let description: string | undefined;
+    let inFrontmatter = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i] ?? "";
+      if (line.trim() === "---") {
+        if (!inFrontmatter) {
+          inFrontmatter = true;
+          continue;
+        } else {
+          break;
+        }
+      }
+
+      const titleMatch = line.match(/^title:\s*["']?(.+?)["']?\s*$/);
+      if (titleMatch) {
+        title = titleMatch[1];
+        continue;
+      }
+
+      const descMatch = line.match(/^description:\s*["']?(.+?)["']?\s*$/);
+      if (descMatch) {
+        description = descMatch[1];
+        continue;
+      }
+    }
+
+    if (!title) {
+      for (const line of lines) {
+        const titleMatch = line.match(/^title:\s*["']?(.+?)["']?\s*$/);
+        if (titleMatch) {
+          title = titleMatch[1];
+          break;
+        }
+      }
+    }
+    if (!description) {
+      for (const line of lines) {
+        const descMatch = line.match(/^description:\s*["']?(.+?)["']?\s*$/);
+        if (descMatch) {
+          description = descMatch[1];
+          break;
+        }
+      }
+    }
+
+    return { title, description };
+  } catch {
+    return null;
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const parsed = findBlogPost(params.slug);
+  const title = parsed?.title || params.slug.replaceAll("-", " ");
+  const description = parsed?.description || "AI writing tips and tutorials to help you write better content faster.";
+
   return {
-    title: `${params.slug.replaceAll("-", " ")} | Try AI Writer Blog`,
-    description: "AI writing tips and tutorials to help you write better content faster.",
+    title: `${title} | Try AI Writer Blog`,
+    description: description,
     openGraph: {
-      title: `${params.slug.replaceAll("-", " ")} | Try AI Writer Blog`,
-      description: "AI writing tips and tutorials.",
+      title: `${title} | Try AI Writer Blog`,
+      description: description,
       url: `https://tryaiwriter.com/blog/${params.slug}`,
       siteName: "Try AI Writer",
       images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -22,8 +113,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${params.slug.replaceAll("-", " ")} | Try AI Writer`,
-      description: "AI writing tips and tutorials.",
+      title: `${title} | Try AI Writer Blog`,
+      description: description,
       images: ["/og-image.png"],
     },
   };
@@ -37,7 +128,7 @@ export default function BlogPostPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="text-lg font-display font-extrabold text-white">Try <span className="text-blue-400">AI Writer</span></span>
+            <span className="text-lg font-display font-extrabold text-white">Try <span className="text-blue-400">AI</span> Writer</span>
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors hidden sm:block">

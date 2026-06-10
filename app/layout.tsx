@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
   keywords: ["AI writing tool", "free AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer", "Claude AI", "DeepSeek AI"],
   openGraph: {
-    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice",
-    description: "Free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media in seconds. Start free — no credit card required.",
+    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
+    description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
     url: "https://tryaiwriter.com",
     siteName: "Try AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice",
-    description: "Free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media in seconds. Start free now.",
+    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
+    description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
     images: ["/og-image.png"],
   },
 };

@@ -52,53 +52,60 @@ export default function PricingContent() {
   const { data: session, status } = useSession();
 
   const handlePlanClick = async (planName: string) => {
-    if (planName.toLowerCase() === "free") {
-      window.location.href = "/login";
-      return;
-    }
+    const planKey = planName.toLowerCase() as "pro" | "max" | "free";
 
-    // 如果 session 还在加载，等待一下
+    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
+    console.log(`[Pricing] Session 状态: ${status}`);
+
     if (status === "loading") {
       alert("Please wait, checking your login status...");
       return;
     }
 
-    // 如果未登录，先跳转到登录页
-    if (!session) {
-      window.location.href = "/login";
+    if (status === "unauthenticated") {
+      window.location.href = "/login?redirect=/pricing";
       return;
     }
 
-    const planKey = planName.toLowerCase() as "pro" | "max" | "team";
+    if (planKey === "free") {
+      window.location.href = "/write";
+      return;
+    }
+
     setLoadingPlan(planName);
-    
+
     try {
+      console.log("[Pricing] 发起支付请求...");
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
       const response = await fetch("/api/payment/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: planKey }),
+        signal: controller.signal,
       });
 
-      // 检查响应状态
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        const errorMessage = errorData.error || `HTTP ${response.status}: Failed to create checkout session`;
-        throw new Error(errorMessage);
+        throw new Error(errorData.error || `HTTP ${response.status}`);
       }
 
       const data = await response.json();
-      
-      // 检查返回的数据
+
       if (!data.url) {
-        throw new Error("No checkout URL returned from server");
+        throw new Error("No checkout URL returned");
       }
-      
-      // 跳转到支付页面
+
+      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       window.location.href = data.url;
     } catch (error) {
-      console.error("Checkout error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to start checkout process";
-      alert(`Checkout Error: ${errorMessage}\n\nPlease make sure you are logged in and try again.`);
+      const message = error instanceof Error ? error.message : "未知错误";
+      console.log(`[Pricing] 支付错误: ${message}`);
+      alert("支付错误: " + message + "\n\n请稍后再试");
     } finally {
       setLoadingPlan(null);
     }
