@@ -60,7 +60,7 @@ export function BlogSidebar() {
           <span className="font-semibold text-emerald-800">Ready to write?</span>
         </div>
         <p className="text-sm text-emerald-700 mb-4">
-          Try Use AI Writer free and create content in your unique brand voice.
+          Try AI Writer free and create content in your unique brand voice.
         </p>
         <Link
           href="/write"
