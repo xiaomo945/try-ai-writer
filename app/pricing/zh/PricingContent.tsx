@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import { NavWrapper } from "@/app/components/NavWrapper";
 
 // 中文版本的定价计划
 const chinesePlans = [
@@ -65,9 +66,6 @@ export default function PricingContentZh() {
     else if (planName === "专业版") planKey = "pro";
     else planKey = "max";
 
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
     if (status === "loading") {
       alert("正在检查登录状态...");
       return;
@@ -86,8 +84,6 @@ export default function PricingContentZh() {
     setLoadingPlan(planName);
 
     try {
-      console.log("[Pricing] 发起支付请求...");
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -111,11 +107,9 @@ export default function PricingContentZh() {
         throw new Error("服务器未返回支付链接");
       }
 
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       window.location.href = data.url;
     } catch (error) {
       const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
       alert("支付错误: " + message + "\n\n请稍后再试");
     } finally {
       setLoadingPlan(null);
@@ -128,29 +122,18 @@ export default function PricingContentZh() {
 
   return (
     <>
-      <main className="min-h-screen flex flex-col">
+      <main className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0C] text-slate-900 dark:text-white">
         {/* Header */}
-        <header className="border-b border-glass-border">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/" className="bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent font-display text-xl font-extrabold">
-              Try AI Writer
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
-                开始写作
-              </Link>
-            </div>
-          </div>
-        </header>
+        <NavWrapper />
 
         {/* Pricing Content */}
         <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
               简单透明的定价
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
               免费开始，需要时再升级。
             </p>
           </div>
@@ -165,19 +148,19 @@ export default function PricingContentZh() {
               >
                 <div>
                   {/* Plan Name */}
-                  <h2 className="text-xl font-display font-bold text-white">
+                  <h2 className="text-xl font-display font-bold text-slate-900 dark:text-white">
                     {plan.name}
                   </h2>
-                  <p className="text-sm text-slate-400 mt-1">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                     {plan.description}
                   </p>
 
                   {/* Price */}
                   <div className="mt-6">
-                    <p className="text-5xl font-display font-extrabold text-white">
+                    <p className="text-5xl font-display font-extrabold text-slate-900 dark:text-white">
                       {plan.price}
                     </p>
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       /month
                     </p>
                   </div>
@@ -187,7 +170,7 @@ export default function PricingContentZh() {
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
                         <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
-                        <span className="text-slate-400">{feature}</span>
+                        <span className="text-slate-500 dark:text-slate-400">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -218,7 +201,7 @@ export default function PricingContentZh() {
 
           {/* FAQ Section */}
           <div className="mt-20 md:mt-32">
-            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
+            <h2 className="text-3xl font-display font-bold text-slate-900 dark:text-white text-center mb-12">
               常见问题
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -241,8 +224,8 @@ export default function PricingContentZh() {
                 }
               ].map((faq, index) => (
                 <div key={index} className="glass-card p-6">
-                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-slate-400">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-slate-500 dark:text-slate-400">
                     {faq.answer}
                   </p>
                 </div>
@@ -252,7 +235,7 @@ export default function PricingContentZh() {
         </div>
 
         {/* Footer */}
-        <footer className="py-12 border-t border-glass-border">
+        <footer className="py-12 border-t border-slate-200 dark:border-glass-border">
           <div className="max-w-6xl mx-auto px-6 text-center">
             <p className="text-sm text-slate-500">&copy; 2026 Try AI Writer. 保留所有权利。</p>
           </div>

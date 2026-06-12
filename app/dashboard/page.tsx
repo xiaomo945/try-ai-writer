@@ -17,8 +17,7 @@ import { ReferralShare } from "@/app/components/ReferralShare";
 import { LearningTimeline } from "@/app/components/LearningTimeline";
 import { WritingStats } from "@/app/components/WritingStats";
 import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral-client";
-import Logo from "@/app/components/Logo";
-import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { NavWrapper } from "@/app/components/NavWrapper";
 import { Gift } from "lucide-react";
 import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
 import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
@@ -83,33 +82,33 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
   const { profile, styleMatchScore } = demoData;
 
   return (
-    <div className="glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6">
+    <div className="glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center">
           <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
         </div>
         <div>
-          <h3 className="font-display font-bold text-gray-900 dark:text-white">Demo Brand Voice</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Generated from our blog content</p>
+          <h3 className="font-display font-bold text-slate-900 dark:text-white">Demo Brand Voice</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Generated from our blog content</p>
         </div>
       </div>
 
       <div className="space-y-4">
         {/* Industry & Tone */}
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-gray-800">
             {profile.industry}
           </span>
           <span className="px-3 py-1 bg-emerald-100/60 dark:bg-emerald-900/30 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
             {profile.tone.sentiment} tone
           </span>
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-gray-800">
             {profile.tone.pace} pace
           </span>
         </div>
 
         {/* Style Match Score */}
-        <div className="bg-white/[0.03] dark:bg-white/[0.03] rounded-xl p-4 border border-slate-200 dark:border-white/10">
+        <div className="bg-white/[0.03] dark:bg-white/[0.03] rounded-xl p-4 border border-slate-200 dark:border-gray-800">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Style Match Score</span>
             <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{styleMatchScore.overall}%</span>
@@ -117,22 +116,22 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
           <div className="grid grid-cols-3 gap-2 text-center">
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
               <div className="text-lg font-semibold text-slate-700 dark:text-slate-300">{styleMatchScore.tone}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Tone</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Tone</div>
             </div>
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
-              <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.vocabulary}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Vocab</div>
+              <div className="text-lg font-semibold text-slate-700 dark:text-slate-300">{styleMatchScore.vocabulary}%</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Vocab</div>
             </div>
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
-              <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.structure}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Structure</div>
+              <div className="text-lg font-semibold text-slate-700 dark:text-slate-300">{styleMatchScore.structure}%</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Structure</div>
             </div>
           </div>
         </div>
 
         {/* Common Phrases */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Common Phrases</div>
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Common Phrases</div>
           <div className="flex flex-wrap gap-1">
             {profile.commonPhrases.slice(0,6).map((phrase, i) => (
               <span key={i} className="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full">
@@ -144,13 +143,13 @@ function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
 
         {/* Sample Articles */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Sample Articles</div>
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Sample Articles</div>
           <div className="space-y-2">
             {demoData.samples.slice(0,3).map((sample) => (
               <div key={sample.id} className="flex items-center gap-2 text-sm">
-                <BookOpen className="w-4 h-4 text-slate-400" />
+                <BookOpen className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span className="text-slate-700 dark:text-slate-300 truncate flex-1">{sample.title}</span>
-                <span className="text-xs text-slate-400">{sample.wordCount} words</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400">{sample.wordCount} words</span>
               </div>
             ))}
           </div>
@@ -203,8 +202,8 @@ function LearningProgressRing({ progress }: { progress: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-display font-bold text-gray-900 dark:text-white">{progress}</span>
-        <span className="text-xs text-gray-500 dark:text-gray-400">/20</span>
+        <span className="text-2xl font-display font-bold text-slate-900 dark:text-white">{progress}</span>
+        <span className="text-xs text-slate-500 dark:text-slate-400">/20</span>
       </div>
     </div>
   );
@@ -277,8 +276,8 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
             <Sparkles className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-display font-bold text-gray-900 dark:text-white">Your Brand Voice</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Built from your writing style</p>
+            <h3 className="font-display font-bold text-slate-900 dark:text-white">Your Brand Voice</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Built from your writing style</p>
           </div>
           <button
             onClick={() => setShowCustomizationModal(true)}
@@ -310,7 +309,7 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
 
               {/* AI Generation Section (Coming Soon) */}
               <div className="mb-6 p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl">
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">
+                <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
                   Generate with AI (Coming Soon)
                 </h3>
                 <textarea
@@ -326,14 +325,14 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
                 >
                   🔮 Generate Avatar
                 </button>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
                   AI-powered avatar generation is coming soon!
                 </p>
               </div>
 
               {/* Preset Selection */}
               <div>
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-4">
+                <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-4">
                   Choose a Preset
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
@@ -344,7 +343,7 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
                       className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${
                         variant === preset
                           ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
-                          : 'border-slate-200 dark:border-gray-700 hover:border-emerald-300'
+                          : 'border-slate-200 dark:border-gray-800 hover:border-emerald-300'
                       }`}
                     >
                       <div className="w-16 h-16 flex items-center justify-center">
@@ -381,7 +380,7 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
           <p className="text-sm font-medium text-slate-900 dark:text-white">
             AI已学习你的 <span className="text-emerald-600 font-bold">{learningProgress}</span> 个写作习惯
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             继续写作，目标：20个样本
           </p>
         </div>
@@ -389,22 +388,22 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
 
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-gray-800">
             {profile.industry}
           </span>
           <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
             {profile.tone} tone
           </span>
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-gray-800">
             {profile.audience} audience
           </span>
         </div>
         {profile.commonPhrases.length > 0 && (
           <div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Common Phrases</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Common Phrases</p>
             <div className="flex flex-wrap gap-1">
               {profile.commonPhrases.slice(0, 8).map((phrase, i) => (
-                <span key={i} className="px-2 py-1 bg-white/[0.03] dark:bg-white/[0.05] text-gray-700 dark:text-gray-300 text-xs rounded-full border border-gray-200 dark:border-gray-700">
+                <span key={i} className="px-2 py-1 bg-white/[0.03] dark:bg-white/[0.05] text-slate-700 dark:text-slate-300 text-xs rounded-full border border-slate-200 dark:border-gray-800">
                   {phrase}
                 </span>
               ))}
@@ -435,8 +434,8 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
             <Fingerprint className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Writing Style Fingerprint</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">AI is learning your style</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">AI is learning your style</p>
           </div>
         </div>
         <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
@@ -468,39 +467,39 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
             <Fingerprint className="w-6 h-6 text-white" />
           </div>
           <div className="text-left">
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Writing Style Fingerprint</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{fingerprint.sampleCount} samples analyzed</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{fingerprint.sampleCount} samples analyzed</p>
           </div>
         </div>
-        <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
+        <ChevronDown className={`w-5 h-5 text-slate-500 dark:text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
       </button>
 
       {isExpanded && (
         <div className="mt-6 space-y-4">
           {/* Sentence Length Distribution */}
           <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Sentence Length Preference</div>
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Sentence Length Preference</div>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Short</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400 w-16">Short</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
                   <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.short}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.short}%</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 w-10 text-right">{fingerprint.sentenceLengthDistribution.short}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Medium</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400 w-16">Medium</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
                   <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.medium}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.medium}%</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 w-10 text-right">{fingerprint.sentenceLengthDistribution.medium}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Long</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400 w-16">Long</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
                   <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.long}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.long}%</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 w-10 text-right">{fingerprint.sentenceLengthDistribution.long}%</span>
               </div>
             </div>
           </div>
@@ -508,7 +507,7 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
           {/* Transition Words */}
           {fingerprint.commonTransitionWords.length > 0 && (
             <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Common Transition Words</div>
+              <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Common Transition Words</div>
               <div className="flex flex-wrap gap-2">
                 {fingerprint.commonTransitionWords.map((word, i) => (
                   <span key={i} className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full font-medium">
@@ -522,8 +521,8 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
           {/* Passive Voice Rate */}
           <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Passive Voice Usage</span>
-              <span className="text-sm font-bold text-gray-700 dark:text-gray-200">{Math.round(fingerprint.passiveVoiceRate * 100)}%</span>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Passive Voice Usage</span>
+              <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{Math.round(fingerprint.passiveVoiceRate * 100)}%</span>
             </div>
             <div className="mt-2 w-full bg-slate-200 dark:bg-gray-700 rounded-full h-2">
               <div
@@ -570,12 +569,12 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Weekly Evolution Report</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Start writing to get your first report</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Start writing to get your first report</p>
           </div>
         </div>
         <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Start writing to get your first evolution report ✨
           </p>
         </div>
@@ -590,8 +589,8 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
           <TrendingUp className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Weekly Evolution Report</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Your style growth this week</p>
+          <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Your style growth this week</p>
         </div>
       </div>
 
@@ -606,7 +605,7 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
         {/* New Samples */}
         <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-3 text-center">
           <div className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{report.newSamplesCount}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">New Samples</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">New Samples</div>
         </div>
 
         {/* Style Match Change */}
@@ -616,14 +615,14 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
             {report.styleMatchChange.direction === "up" && <TrendingUp className="w-4 h-4 text-emerald-500" />}
             {report.styleMatchChange.direction === "down" && <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Style Match</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">Style Match</div>
         </div>
       </div>
 
       {/* Top Keywords */}
       {report.topKeywords.length > 0 && (
         <div className="mt-4">
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Top Keywords This Week</div>
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Top Keywords This Week</div>
           <div className="flex flex-wrap gap-2">
             {report.topKeywords.map((keyword, i) => (
               <span key={i} className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full font-medium">
@@ -784,7 +783,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 text-white">
+    <main className="min-h-screen flex flex-col bg-white dark:bg-gradient-to-b dark:from-obsidian-950 dark:via-obsidian-900 dark:to-obsidian-950 text-slate-900 dark:text-white">
       {/* Onboarding Wizard */}
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       
@@ -861,25 +860,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="border-b border-white/10 bg-obsidian-900/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 transition-colors">
-            <Logo size={32} />
-            <span className="font-display text-xl font-bold">Try AI Writer</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-shadow">
-              <Sparkles className="w-4 h-4" />
-              <span className="hidden sm:inline">New Generation</span>
-            </Link>
-            <ThemeToggle />
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
-              {records.length > 0 ? records.length : 'U'}
-            </div>
-          </div>
-        </div>
-      </header>
+      <NavWrapper />
 
       {/* Dashboard Content */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
@@ -948,21 +929,21 @@ export default function DashboardPage() {
         {/* Quick Start Cards */}
         {userStage === 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/onboarding" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/onboarding" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">完成入门设置</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">只需 1 分钟！</p>
             </Link>
-            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Zap className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">📝 开始写作</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">立即尝试 AI！</p>
             </Link>
-            <Link href="/" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
@@ -972,7 +953,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Zap className="w-7 h-7 text-white" />
               </div>
@@ -981,7 +962,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">立即开始创作！</p>
               </div>
             </Link>
-            <Link href="#history" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="#history" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <FileText className="w-7 h-7 text-white" />
               </div>
@@ -990,7 +971,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">回顾你的创作</p>
               </div>
             </Link>
-            <Link href="#brand-voice" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="#brand-voice" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Brain className="w-7 h-7 text-white" />
               </div>
@@ -1016,7 +997,7 @@ export default function DashboardPage() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                   <Zap className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">本周生成</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周生成</h3>
               </div>
               <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
                 {records.filter(r => {
@@ -1056,7 +1037,7 @@ export default function DashboardPage() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                   <FileText className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">本周字数</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周字数</h3>
               </div>
               <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
                 {records.filter(r => {
@@ -1076,7 +1057,7 @@ export default function DashboardPage() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">常用模式</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">常用模式</h3>
               </div>
               {(() => {
                 const now = new Date();
@@ -1085,13 +1066,13 @@ export default function DashboardPage() {
                 weekStart.setHours(0,0,0,0);
                 const weekRecords = records.filter(r => new Date(r.createdAt) >= weekStart);
                 if (weekRecords.length === 0) {
-                  return <p className="text-sm text-gray-400 dark:text-gray-400">本周无数据</p>;
+                  return <p className="text-sm text-slate-500 dark:text-slate-400">本周无数据</p>;
                 }
                 const modeCounts: Record<string, number> = {};
                 weekRecords.forEach(r => { modeCounts[r.mode] = (modeCounts[r.mode] || 0) + 1; });
                 const topMode = Object.entries(modeCounts).sort((a, b) => b[1] - a[1])[0];
                 if (!topMode) {
-                  return <p className="text-sm text-gray-400 dark:text-gray-400">本周无数据</p>;
+                  return <p className="text-sm text-slate-500 dark:text-slate-400">本周无数据</p>;
                 }
                 return (
                   <p className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 capitalize">
@@ -1107,14 +1088,14 @@ export default function DashboardPage() {
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">风格匹配</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">风格匹配</h3>
               </div>
               {profile?.styleFingerprint ? (
                 <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
                   {Math.round(profile.styleFingerprint.avgSentenceLength * 5)}%
                 </p>
               ) : (
-                <p className="text-sm text-slate-400">数据不足</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">数据不足</p>
               )}
             </div>
           </div>
@@ -1134,14 +1115,14 @@ export default function DashboardPage() {
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Today&apos;s Usage</h3>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
                   {planName}
                 </span>
               </div>
             </div>
             <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-white mb-3">
-              {used}<span className="text-xl text-slate-400">/{limit}</span>
+              {used}<span className="text-xl text-slate-500 dark:text-slate-400">/{limit}</span>
             </p>
             <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden mb-3">
               <div
@@ -1156,7 +1137,7 @@ export default function DashboardPage() {
             <p className="text-sm text-slate-500 dark:text-slate-400">
               {limit - used > 0 ? `${limit - used} generations remaining` : "Daily limit reached"}
             </p>
-            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-gray-800">
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-gray-800">
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 当前模型：
                 <span className="font-semibold text-emerald-600 dark:text-emerald-400">
@@ -1173,8 +1154,8 @@ export default function DashboardPage() {
                 <FileText className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Total History</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Saved generations</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Total History</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Saved generations</p>
               </div>
             </div>
             <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-2">{records.length}</p>
@@ -1191,12 +1172,12 @@ export default function DashboardPage() {
                 <Clock className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Avg. Words</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Per generation</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Avg. Words</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Per generation</p>
               </div>
             </div>
             <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-2">{avgWords}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">words per piece</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">words per piece</p>
           </div>
 
           {/* Credit Balance */}
@@ -1206,8 +1187,8 @@ export default function DashboardPage() {
                 <span className="text-2xl">💎</span>
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Credits</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Available balance</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Credits</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Available balance</p>
               </div>
             </div>
             <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-3">
@@ -1225,8 +1206,8 @@ export default function DashboardPage() {
                 <Share2 className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">邀请好友</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Share & Earn Rewards</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">邀请好友</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Share & Earn Rewards</p>
               </div>
               <div className="text-right">
                 <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
@@ -1267,8 +1248,8 @@ export default function DashboardPage() {
                 <Share2 className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">社区工作流</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">分享和发现优质工作流</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">社区工作流</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">分享和发现优质工作流</p>
               </div>
               <Link href="/templates" className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">
                 浏览全部 →
@@ -1282,11 +1263,11 @@ export default function DashboardPage() {
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {communityWorkflows.slice(0, 3).map((workflow) => (
-                  <div key={workflow.id} className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4 border border-gray-100 dark:border-gray-800">
-                    <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1">{workflow.name}</h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{workflow.description}</p>
+                  <div key={workflow.id} className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4 border border-slate-200 dark:border-gray-800">
+                    <h4 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{workflow.name}</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-2 line-clamp-2">{workflow.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-slate-400">by {workflow.author || "Anonymous"}</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">by {workflow.author || "Anonymous"}</span>
                       <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
                         {workflow.steps.length} steps
                       </span>
@@ -1322,7 +1303,7 @@ export default function DashboardPage() {
               {/* Recent History */}
               <div id="history" className="glass-card p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-gray-900 dark:text-white">
+                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
                     {hasRealData ? "Recent Generations" : "Your Generations"}
                   </h2>
                 </div>
@@ -1330,10 +1311,10 @@ export default function DashboardPage() {
                 {records.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
                     <div className="w-20 h-20 bg-white/[0.03] dark:bg-white/[0.05] rounded-full flex items-center justify-center mb-6">
-                      <FileText className="w-10 h-10 text-gray-400 dark:text-gray-400" />
+                      <FileText className="w-10 h-10 text-slate-500 dark:text-slate-400" />
                     </div>
-                    <p className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">No generation records yet</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Start writing to see your history here.</p>
+                    <p className="text-lg font-semibold text-slate-600 dark:text-slate-400 mb-2">No generation records yet</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Start writing to see your history here.</p>
                     <Link href="/write" className="btn-primary shadow-lg">Start Writing</Link>
                   </div>
                 ) : (
@@ -1341,7 +1322,7 @@ export default function DashboardPage() {
                     <div className="overflow-x-auto -mx-6 sm:mx-0 px-6 sm:px-0">
                       <table className="w-full text-left">
                         <thead>
-                          <tr className="border-b-2 border-slate-100 dark:border-gray-800">
+                          <tr className="border-b-2 border-slate-200 dark:border-gray-800">
                             <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Mode</th>
                             <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Title</th>
                             <th className="pb-4 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide hidden sm:table-cell">Words</th>
@@ -1374,7 +1355,7 @@ export default function DashboardPage() {
                               <td className="py-4">
                                 <button
                                   onClick={() => deleteRecord(item.id)}
-                                  className="opacity-0 group-hover:opacity-100 w-10 h-10 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex items-center justify-center"
+                                  className="opacity-0 group-hover:opacity-100 w-10 h-10 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex items-center justify-center"
                                   aria-label="Delete record"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -1421,34 +1402,34 @@ export default function DashboardPage() {
                     <Brain className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Memory Bank</h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Your ideas & preferences</p>
+                    <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Memory Bank</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Your ideas & preferences</p>
                   </div>
                 </div>
                 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Total Memories</span>
+                    <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Memories</span>
                     <span className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{memories.length}</span>
                   </div>
                   
                   {memories.length === 0 ? (
                     <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                         你还没有告诉分身任何想法。去写作页面开始对话吧。
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
                       {memories.slice(0, 5).map((memory, index) => (
-                        <div key={memory.id} className="group flex items-start justify-between gap-3 p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl border border-gray-100 dark:border-gray-800 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all shadow-sm">
+                        <div key={memory.id} className="group flex items-start justify-between gap-3 p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl border border-slate-200 dark:border-gray-800 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all shadow-sm">
                           {index < 2 && <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0 shadow-sm" />}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">
                               <span className="px-2.5 py-0.5 bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-700 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-300 text-xs rounded-full font-semibold capitalize">
                                 {memory.type}
                               </span>
-                              <span className="text-xs text-slate-400 dark:text-slate-500">
+                              <span className="text-xs text-slate-500 dark:text-slate-400">
                                 {new Date(memory.createdAt).toLocaleDateString()}
                               </span>
                             </div>
@@ -1458,7 +1439,7 @@ export default function DashboardPage() {
                           </div>
                           <button
                             onClick={() => deleteMemory(memory.id)}
-                            className="opacity-0 group-hover:opacity-100 w-8 h-8 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex-shrink-0"
+                            className="opacity-0 group-hover:opacity-100 w-8 h-8 text-slate-500 dark:text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all flex-shrink-0"
                             aria-label="Delete memory"
                           >
                             <Trash2 className="w-4 h-4" />

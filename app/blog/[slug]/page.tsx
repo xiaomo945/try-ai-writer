@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
-import Logo from "@/app/components/Logo";
-import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { NavWrapper } from "@/app/components/NavWrapper";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog-index";
 import fs from "fs";
 import path from "path";
@@ -115,33 +114,8 @@ export default function BlogPostPage({ params }: Props) {
     "AI writing tips and tutorials to help you write better content faster.";
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-2xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Logo size={32} />
-            <span className="text-lg font-display font-extrabold text-white">
-              Try <span className="text-emerald-400">AI</span> Writer
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/write"
-              className="text-slate-300 hover:text-white transition-colors hidden sm:block"
-            >
-              Write
-            </Link>
-            <ThemeToggle />
-            <Link
-              href="/login"
-              className="rounded-2xl border border-slate-600 hover:border-emerald-500/60 px-5 py-2 text-sm font-medium text-slate-300 hover:text-white transition-all"
-            >
-              Sign In
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
+      <NavWrapper />
 
       {/* JSON-LD Article Schema */}
       <script
@@ -178,7 +152,7 @@ export default function BlogPostPage({ params }: Props) {
       <article className="pt-32 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-12"
+          className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors mb-12"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Blog
@@ -189,7 +163,7 @@ export default function BlogPostPage({ params }: Props) {
             {title}
           </h1>
           <div className="flex flex-wrap items-center gap-4 text-sm">
-            <time dateTime={date} className="text-slate-400">
+            <time dateTime={date} className="text-slate-500 dark:text-slate-400">
               {new Date(date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -214,25 +188,25 @@ export default function BlogPostPage({ params }: Props) {
 
         {/* Article Content */}
         <div
-          className="prose prose-invert prose-emerald max-w-none
-            prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-5
-            prose-strong:text-white prose-strong:font-semibold
+          className="prose prose-slate dark:prose-invert prose-emerald max-w-none
+            prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-5
+            prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-semibold
             prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline
-            prose-code:text-emerald-300 prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-            prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-700
-            prose-li:text-slate-300
-            prose-blockquote:border-emerald-500 prose-blockquote:text-slate-400
+            prose-code:text-emerald-600 dark:prose-code:text-emerald-300 prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+            prose-pre:bg-slate-100 dark:prose-pre:bg-slate-800 prose-pre:border prose-pre:border-slate-300 dark:prose-pre:border-slate-700
+            prose-li:text-slate-600 dark:prose-li:text-slate-300
+            prose-blockquote:border-emerald-500 prose-blockquote:text-slate-500 dark:prose-blockquote:text-slate-400
           "
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
 
         {/* CTA */}
-        <div className="mt-16 pt-8 border-t border-white/10">
+        <div className="mt-16 pt-8 border-t border-slate-200 dark:border-white/10">
           <div className="bg-gradient-to-br from-emerald-600/10 to-teal-500/10 rounded-2xl p-8 border border-emerald-500/10 text-center">
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
               Ready to write like this?
             </h3>
-            <p className="text-slate-400 mb-6 max-w-md mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-md mx-auto">
               Try AI Writer free and create content in your unique brand voice
               — no credit card required.
             </p>

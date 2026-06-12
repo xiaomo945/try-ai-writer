@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import { NavWrapper } from "@/app/components/NavWrapper";
 import { plans } from "@/lib/pricing";
 
 // Product structured data — derived from shared pricing module
@@ -54,9 +55,6 @@ export default function PricingContent() {
   const handlePlanClick = async (planName: string) => {
     const planKey = planName.toLowerCase() as "pro" | "max" | "free";
 
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
     if (status === "loading") {
       alert("Please wait, checking your login status...");
       return;
@@ -75,8 +73,6 @@ export default function PricingContent() {
     setLoadingPlan(planName);
 
     try {
-      console.log("[Pricing] 发起支付请求...");
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -100,11 +96,9 @@ export default function PricingContent() {
         throw new Error("No checkout URL returned");
       }
 
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       window.location.href = data.url;
     } catch (error) {
       const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
       alert("支付错误: " + message + "\n\n请稍后再试");
     } finally {
       setLoadingPlan(null);
@@ -127,29 +121,18 @@ export default function PricingContent() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <main className="min-h-screen flex flex-col">
+      <main className="min-h-screen flex flex-col bg-white dark:bg-[#0A0A0C] text-slate-900 dark:text-white">
         {/* Header */}
-        <header className="border-b border-glass-border">
-          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/" className="bg-gradient-to-r from-[#4A90E2] to-[#A855F7] bg-clip-text text-transparent font-display text-xl font-extrabold">
-              Try AI Writer
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4">
-                Start Writing
-              </Link>
-            </div>
-          </div>
-        </header>
+        <NavWrapper />
 
         {/* Pricing Content */}
         <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
           {/* Header */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
               Simple, Transparent Pricing
             </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
               Start free, upgrade when you need more.
             </p>
           </div>
@@ -164,19 +147,19 @@ export default function PricingContent() {
               >
                 <div>
                   {/* Plan Name */}
-                  <h2 className="text-xl font-display font-bold text-white">
+                  <h2 className="text-xl font-display font-bold text-slate-900 dark:text-white">
                     {plan.name}
                   </h2>
-                  <p className="text-sm text-slate-400 mt-1">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                     {plan.description}
                   </p>
 
                   {/* Price */}
                   <div className="mt-6">
-                    <p className="text-5xl font-display font-extrabold text-white">
+                    <p className="text-5xl font-display font-extrabold text-slate-900 dark:text-white">
                       {plan.price}
                     </p>
-                    <p className="text-sm text-slate-400">
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       /month
                     </p>
                   </div>
@@ -186,7 +169,7 @@ export default function PricingContent() {
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
                         <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
-                        <span className="text-slate-400">{feature}</span>
+                        <span className="text-slate-500 dark:text-slate-400">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -217,58 +200,58 @@ export default function PricingContent() {
 
           {/* Compare with Alternatives */}
           <div className="mt-20 md:mt-32">
-            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
+            <h2 className="text-3xl font-display font-bold text-slate-900 dark:text-white text-center mb-12">
               Compare with Alternatives
             </h2>
             <div className="glass-card overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left p-4 text-slate-400 font-semibold">Feature</th>
-                    <th className="text-center p-4 text-blue-400 font-semibold">Try AI Writer Pro</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Jasper</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Copy.ai</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Writesonic</th>
+                  <tr className="border-b border-slate-200 dark:border-white/10">
+                    <th className="text-left p-4 text-slate-500 dark:text-slate-400 font-semibold">Feature</th>
+                    <th className="text-center p-4 text-emerald-400 font-semibold">Try AI Writer Pro</th>
+                    <th className="text-center p-4 text-slate-500 dark:text-slate-400 font-semibold">Jasper</th>
+                    <th className="text-center p-4 text-slate-500 dark:text-slate-400 font-semibold">Copy.ai</th>
+                    <th className="text-center p-4 text-slate-500 dark:text-slate-400 font-semibold">Writesonic</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Monthly Price</td>
-                    <td className="p-4 text-center text-white font-bold">$9</td>
-                    <td className="p-4 text-center text-slate-400">$49</td>
-                    <td className="p-4 text-center text-slate-400">$29</td>
-                    <td className="p-4 text-center text-slate-400">$39</td>
+                  <tr className="border-b border-slate-200 dark:border-white/5">
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Monthly Price</td>
+                    <td className="p-4 text-center text-slate-900 dark:text-white font-bold">$9</td>
+                    <td className="p-4 text-center text-slate-500 dark:text-slate-400">$49</td>
+                    <td className="p-4 text-center text-slate-500 dark:text-slate-400">$29</td>
+                    <td className="p-4 text-center text-slate-500 dark:text-slate-400">$39</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Free Tier</td>
+                  <tr className="border-b border-slate-200 dark:border-white/5">
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Free Tier</td>
                     <td className="p-4 text-center text-emerald-400">✅ 10/day</td>
                     <td className="p-4 text-center text-red-400">❌ 7-day trial</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Brand Voice Learning</td>
+                  <tr className="border-b border-slate-200 dark:border-white/5">
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Brand Voice Learning</td>
                     <td className="p-4 text-center text-emerald-400">✅ Digital Twin</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Claude Model</td>
+                  <tr className="border-b border-slate-200 dark:border-white/5">
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Claude Model</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Creative Interview</td>
+                  <tr className="border-b border-slate-200 dark:border-white/5">
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Creative Interview</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-slate-300">Chinese Optimization</td>
+                    <td className="p-4 text-slate-600 dark:text-slate-300">Chinese Optimization</td>
                     <td className="p-4 text-center text-emerald-400">✅</td>
                     <td className="p-4 text-center text-red-400">❌</td>
                     <td className="p-4 text-center text-red-400">❌</td>
@@ -281,7 +264,7 @@ export default function PricingContent() {
 
           {/* FAQ Section */}
           <div className="mt-20 md:mt-32">
-            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
+            <h2 className="text-3xl font-display font-bold text-slate-900 dark:text-white text-center mb-12">
               Frequently Asked Questions
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -304,8 +287,8 @@ export default function PricingContent() {
                 }
               ].map((faq, index) => (
                 <div key={index} className="glass-card p-6">
-                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-slate-400">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-slate-500 dark:text-slate-400">
                     {faq.answer}
                   </p>
                 </div>
@@ -315,7 +298,7 @@ export default function PricingContent() {
         </div>
 
         {/* Footer */}
-        <footer className="py-12 border-t border-glass-border">
+        <footer className="py-12 border-t border-slate-200 dark:border-glass-border">
           <div className="max-w-6xl mx-auto px-6 text-center">
             <p className="text-sm text-slate-500">&copy; 2026 Try AI Writer. All rights reserved.</p>
           </div>
