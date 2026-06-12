@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FileText, MessageSquare, PenTool, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getCommunityWorkflows, type WorkflowDefinition } from "@/lib/workflows";
+import { NavWrapper } from "@/app/components/NavWrapper";
 
 const categories = [
   {
@@ -64,9 +65,9 @@ function CommunityWorkflowsSection() {
           </div>
           <h2 className="text-2xl font-bold">Community Workflows</h2>
         </div>
-        <div className="glass-card p-8 text-center">
-          <p className="text-slate-400 mb-4">还没有社区工作流</p>
-          <p className="text-sm text-slate-500 mb-6">去创建并分享你的第一个工作流吧 →</p>
+        <div className="glass-card p-8 text-center border border-slate-200 dark:border-white/5">
+          <p className="text-slate-500 dark:text-slate-400 mb-4">还没有社区工作流</p>
+          <p className="text-sm text-slate-400 dark:text-slate-500 mb-6">去创建并分享你的第一个工作流吧 →</p>
           <Link href="/write" className="btn-primary text-sm">去创建工作流</Link>
         </div>
       </div>
@@ -89,17 +90,17 @@ function CommunityWorkflowsSection() {
             className="glass-card hover:scale-[1.02] transition-all duration-300 flex flex-col"
           >
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2">{workflow.name}</h3>
-              <p className="text-sm text-slate-400 mb-3 line-clamp-2">{workflow.description}</p>
+              <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-white">{workflow.name}</h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2">{workflow.description}</p>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs text-slate-500">by {workflow.author || "Anonymous"}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">
+                <span className="text-xs text-slate-400 dark:text-slate-500">by {workflow.author || "Anonymous"}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                   {workflow.steps.length} steps
                 </span>
               </div>
             </div>
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-              <span className="text-sm text-slate-400">Use Workflow</span>
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-200 dark:border-white/5">
+              <span className="text-sm text-slate-500 dark:text-slate-400">Use Workflow</span>
               <ArrowRight className="w-5 h-5 text-emerald-400" />
             </div>
           </Link>
@@ -111,33 +112,19 @@ function CommunityWorkflowsSection() {
 
 export default function TemplatesPage() {
   return (
-    <main className="flex flex-col items-center w-full bg-[#0A0A0C] text-white min-h-screen">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0C]/80 backdrop-blur-2xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-lg font-bold text-white">Use AI<span className="text-blue-400">Writer</span></span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/" className="text-slate-300 hover:text-white transition-colors">Home</Link>
-            <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
-            <Link href="/interview" className="text-slate-300 hover:text-white transition-colors">Interview</Link>
-            <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Writing</Link>
-          </div>
-        </div>
-      </nav>
+    <main className="flex flex-col items-center w-full bg-white dark:bg-[#0A0A0C] text-slate-900 dark:text-white min-h-screen">
+      <NavWrapper />
 
       {/* Hero Section */}
       <section className="section-container section-spacing pt-32">
         <div className="text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
             16+ Templates for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
               Every Use Case
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-slate-400 mt-6 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-6 max-w-2xl mx-auto">
             Professional templates to get you started faster. Pick a template, customize, and generate.
           </p>
         </div>
@@ -161,16 +148,16 @@ export default function TemplatesPage() {
                   className="glass-card hover:scale-[1.02] transition-all duration-300 flex flex-col"
                 >
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold mb-2">{template.name}</h3>
-                    <p className="text-sm text-slate-400 mb-4">{template.desc}</p>
+                    <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-white">{template.name}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{template.desc}</p>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-400">
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">
                         {template.category}
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-                    <span className="text-sm text-slate-400">Use Template</span>
+                  <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-200 dark:border-white/5">
+                    <span className="text-sm text-slate-500 dark:text-slate-400">Use Template</span>
                     <ArrowRight className="w-5 h-5 text-blue-400" />
                   </div>
                 </Link>
@@ -189,10 +176,10 @@ export default function TemplatesPage() {
       {/* CTA */}
       <section className="section-container section-spacing">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="glass-card p-8 sm:p-12" style={{background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)"}}>
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-6">Ready to get writing?</h2>
-            <p className="text-lg text-slate-400 mb-10">Pick a template and generate your first piece in 30 seconds.</p>
+          <div className="glass-card p-8 sm:p-12" style={{background: "radial-gradient(circle at 50% 50%, rgba(16,185,129,0.1), rgba(20,184,166,0.05), transparent)"}}>
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-500 mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 text-slate-900 dark:text-white">Ready to get writing?</h2>
+            <p className="text-lg text-slate-500 dark:text-slate-400 mb-10">Pick a template and generate your first piece in 30 seconds.</p>
             <Link href="/write" className="btn-primary text-base sm:text-lg">
               Start Writing Free <ArrowRight className="ml-2 w-5 h-5" />
             </Link>

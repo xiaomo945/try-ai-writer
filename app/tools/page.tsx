@@ -49,14 +49,14 @@ const tools = [
 
 export default function ToolsPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
       {/* Header */}
       <section className="pt-24 pb-12 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
-            AI Writing <span className="text-emerald-400">Tools</span>
+          <h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
+            AI Writing <span className="text-emerald-600 dark:text-emerald-400">Tools</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
             Free, focused tools to supercharge specific parts of your writing
             workflow. All powered by the same AI that drives our full editor.
           </p>
@@ -74,8 +74,8 @@ export default function ToolsPage() {
                 href={tool.available ? tool.href : "#"}
                 className={`group relative rounded-2xl border p-6 transition-all duration-300 ${
                   tool.available
-                    ? "border-slate-800 bg-slate-900/50 hover:border-emerald-500/40 hover:bg-slate-900 hover:shadow-xl hover:shadow-emerald-500/5"
-                    : "border-slate-800/50 bg-slate-900/30 opacity-60 cursor-not-allowed"
+                    ? "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:border-emerald-500/40 hover:bg-slate-100 dark:hover:bg-slate-900 hover:shadow-xl hover:shadow-emerald-500/5"
+                    : "border-slate-200/50 dark:border-slate-800/50 bg-slate-100/50 dark:bg-slate-900/30 opacity-60 cursor-not-allowed"
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -84,16 +84,16 @@ export default function ToolsPage() {
                   </div>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                      <h3 className="text-base font-semibold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                         {tool.name}
                       </h3>
                       {!tool.available && (
-                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                           Coming Soon
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-slate-400 mt-1.5 leading-relaxed">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
                       {tool.description}
                     </p>
                   </div>
@@ -110,10 +110,10 @@ export default function ToolsPage() {
       {/* CTA */}
       <section className="pb-24 px-4">
         <div className="max-w-3xl mx-auto text-center py-16 px-6 rounded-3xl bg-gradient-to-br from-emerald-600/5 via-teal-500/5 to-emerald-600/5 border border-emerald-500/10">
-          <h2 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-3">
+          <h2 className="text-2xl md:text-3xl font-display font-extrabold text-slate-900 dark:text-white mb-3">
             Ready to write with AI?
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto mb-6">
+          <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-6">
             Get access to all tools plus our full AI writing assistant with
             brand voice learning and style matching.
           </p>
@@ -128,7 +128,7 @@ export default function ToolsPage() {
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex items-center gap-2 rounded-2xl border border-slate-700 hover:border-emerald-500/60 px-7 py-3.5 text-base font-medium text-slate-200 hover:bg-slate-800/50 transition-all duration-300"
+              className="inline-flex items-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-700 hover:border-emerald-500/60 px-7 py-3.5 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all duration-300"
             >
               View Pricing
             </Link>

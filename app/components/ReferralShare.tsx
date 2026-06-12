@@ -40,7 +40,7 @@ export function ReferralShare() {
   };
 
   const shareOnTwitter = () => {
-    const text = `I'm using @UseAIWriter to write better content with AI. It learns my brand voice and saves me hours. Try it free: ${referralLink}`;
+    const text = `I'm using @TryAIWriter to write better content with AI. It learns my brand voice and saves me hours. Try it free: ${referralLink}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(twitterUrl, "_blank", "noopener noreferrer");
   };

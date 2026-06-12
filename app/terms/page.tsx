@@ -148,7 +148,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-display font-bold text-white mb-4">8. Limitation of Liability</h2>
               <div className="text-slate-300 space-y-4">
                 <p>
-                  TO THE MAXIMUM EXTENT PERMITTED BY LAW, USE AI WRITER SHALL NOT BE LIABLE FOR:
+                  TO THE MAXIMUM EXTENT PERMITTED BY LAW, TRY AI WRITER SHALL NOT BE LIABLE FOR:
                 </p>
                 <ul className="list-disc list-inside space-y-2 ml-4">
                   <li>Any indirect, incidental, special, consequential, or punitive damages</li>

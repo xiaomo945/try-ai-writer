@@ -13,6 +13,8 @@ import {
   type InterviewRecord
 } from "@/lib/interview-memory";
 
+import { NavWrapper } from "@/app/components/NavWrapper";
+
 export default function InterviewPage() {
   const [step, setStep] = useState<"intro" | "interview" | "complete">("intro");
   const [topic, setTopic] = useState("");
@@ -143,22 +145,8 @@ export default function InterviewPage() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center w-full bg-[#0A0A0C] text-white min-h-screen">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0C]/80 backdrop-blur-2xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-lg font-bold text-white">Use AI<span className="text-blue-400">Writer</span></span>
-          </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/" className="text-slate-300 hover:text-white transition-colors">Home</Link>
-            <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
-            <Link href="/templates" className="text-slate-300 hover:text-white transition-colors">Templates</Link>
-            <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/dashboard" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Dashboard</Link>
-          </div>
-        </div>
-      </nav>
+    <main className="flex flex-col items-center w-full bg-white dark:bg-[#0A0A0C] text-slate-900 dark:text-white min-h-screen">
+      <NavWrapper />
 
       <div className="w-full max-w-4xl mx-auto px-4 pt-24 pb-16">
         {/* Interview Content */}
@@ -166,17 +154,17 @@ export default function InterviewPage() {
           <div className="space-y-8">
             {/* Header */}
             <div className="text-center space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm text-slate-600 dark:text-slate-300">
                 <Brain className="w-4 h-4 text-purple-400" />
                 <span>Creative Interview Engine</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight">
+              <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight text-slate-900 dark:text-white">
                 From Vague Idea to{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
                   Perfect Draft
                 </span>
               </h1>
-              <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
                 Tell your digital twin what you want. It asks the right questions, then assembles the perfect prompt.
               </p>
             </div>
@@ -188,8 +176,8 @@ export default function InterviewPage() {
                   <Sparkles className="w-6 h-6 text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold">What do you want to create?</h3>
-                  <p className="text-slate-400 text-sm">Describe your content goal</p>
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">What do you want to create?</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">Describe your content goal</p>
                 </div>
               </div>
 
@@ -198,7 +186,7 @@ export default function InterviewPage() {
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="e.g., A blog post about AI writing tools, A sales email for my SaaS product, A LinkedIn post about productivity..."
-                  className="w-full h-32 bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-slate-500 resize-none focus:outline-none focus:border-blue-500/50 text-base"
+                  className="w-full h-32 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-blue-500/50 text-base"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                       e.preventDefault();
@@ -275,8 +263,8 @@ export default function InterviewPage() {
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="font-medium text-white">{record.topic}</p>
-                          <p className="text-sm text-slate-400 mt-1 line-clamp-2">
+                          <p className="font-medium text-slate-900 dark:text-white">{record.topic}</p>
+                          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
                             Q: {record.question}
                           </p>
                           <div className="flex items-center gap-2 mt-2 text-xs text-slate-500">
@@ -312,7 +300,7 @@ export default function InterviewPage() {
                   className="glass-card p-4 text-left hover:border-blue-500/30 transition-all"
                 >
                   <p className="text-blue-400 text-sm font-medium mb-2">{item.title}</p>
-                  <p className="text-slate-400 text-xs">{item.example}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">{item.example}</p>
                 </button>
               ))}
             </div>
@@ -324,7 +312,7 @@ export default function InterviewPage() {
             {/* Progress Bar */}
             <div className="glass-card p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">Question {currentQuestionIndex + 1} of {questions.length}</span>
                 <span className="text-sm text-blue-400">
                   {Math.round(((currentQuestionIndex + 1) / questions.length) * 100)}% Complete
                 </span>
@@ -344,21 +332,21 @@ export default function InterviewPage() {
                   <ChevronRight className="w-6 h-6 text-purple-400" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Question {currentQuestionIndex + 1}</h3>
-                  <p className="text-slate-400 text-sm">Answer in your own words</p>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Question {currentQuestionIndex + 1}</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">Answer in your own words</p>
                 </div>
               </div>
 
               <div className="mb-6">
-                <p className="text-lg text-white mb-2">{questions[currentQuestionIndex]}</p>
-                <p className="text-slate-500 text-sm">Topic: {topic}</p>
+                <p className="text-lg text-slate-900 dark:text-white mb-2">{questions[currentQuestionIndex]}</p>
+                <p className="text-slate-400 dark:text-slate-500 text-sm">Topic: {topic}</p>
               </div>
 
               <textarea
                 value={answers[currentQuestionIndex] || ""}
                 onChange={(e) => handleAnswer(e.target.value)}
                 placeholder="Type your answer here..."
-                className="w-full h-40 bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-slate-500 resize-none focus:outline-none focus:border-purple-500/50 text-base"
+                className="w-full h-40 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl p-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-purple-500/50 text-base"
               />
 
               <div className="flex items-center gap-4 mt-6">
@@ -414,8 +402,8 @@ export default function InterviewPage() {
                 <Check className="w-10 h-10 text-emerald-400" />
               </div>
               
-              <h2 className="text-3xl font-bold mb-4">Interview Complete!</h2>
-              <p className="text-slate-400 mb-8 max-w-xl mx-auto">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Interview Complete!</h2>
+              <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto">
                 Your digital twin has captured your requirements and preferences. Now let's create something amazing.
               </p>
 
@@ -444,17 +432,17 @@ export default function InterviewPage() {
               </h3>
               
               <div className="space-y-4">
-                <div className="p-4 bg-white/5 rounded-lg">
-                  <p className="text-sm text-slate-400 mb-2">Topic</p>
-                  <p className="text-white font-medium">{topic}</p>
+                <div className="p-4 bg-slate-50 dark:bg-white/5 rounded-lg">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mb-2">Topic</p>
+                  <p className="text-slate-900 dark:text-white font-medium">{topic}</p>
                 </div>
 
                 <div className="space-y-3">
-                  <p className="text-sm text-slate-400">Your Answers</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Your Answers</p>
                   {questions.map((q, i) => (
-                    <div key={i} className="p-4 bg-white/5 rounded-lg">
+                    <div key={i} className="p-4 bg-slate-50 dark:bg-white/5 rounded-lg">
                       <p className="text-sm text-blue-400 mb-2">{q}</p>
-                      <p className="text-slate-300">{answers[i] || "—"}</p>
+                      <p className="text-slate-700 dark:text-slate-300">{answers[i] || "—"}</p>
                     </div>
                   ))}
                 </div>

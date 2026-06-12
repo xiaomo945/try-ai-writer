@@ -17,7 +17,7 @@ export function NavWrapper() {
         <Link href="/" className="flex items-center gap-2">
           <Logo size={32} />
           <span className="text-lg font-display font-extrabold text-white">
-            Use AI<span className="text-blue-400">Writer</span>
+            Try AI<span className="text-emerald-400">Writer</span>
           </span>
         </Link>
         {/* Desktop nav */}
