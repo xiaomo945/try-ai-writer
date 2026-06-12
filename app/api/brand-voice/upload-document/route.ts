@@ -2,9 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { analyzeDocumentStyle, convertToBrandVoiceProfile } from "@/lib/document-style-analyzer";
 import { BrandVoiceProfile } from "@/lib/brand-voice";
 import { auth } from "@/lib/auth";
+import { rateLimit, getRateLimitKey } from "@/lib/rate-limiter";
+
+const UPLOAD_RATE_LIMIT = { windowMs: 60000, maxRequests: 10 };
 
 export async function POST(request: NextRequest) {
   try {
+    const key = getRateLimitKey(request);
+    const limitResult = rateLimit(key, UPLOAD_RATE_LIMIT);
+    if (!limitResult.allowed) {
+      return NextResponse.json(
+        { error: "Too many requests", retryAfter: Math.ceil((limitResult.resetAt - Date.now()) / 1000) },
+        { status: 429, headers: { "Retry-After": String(Math.ceil((limitResult.resetAt - Date.now()) / 1000)) } }
+      );
+    }
+
     const session = await auth();
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -30,6 +30,7 @@ export default function GlobalError({
               <RefreshCw className="w-4 h-4" />
               Try again
             </button>
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- global-error is outside Next.js router context */}
             <a
               href="/"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 rounded-xl font-medium hover:bg-slate-200 dark:hover:bg-white/10 transition-colors min-h-[44px]"

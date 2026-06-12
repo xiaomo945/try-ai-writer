@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { createStorage } from './storage';
+
+const storage = createStorage('memory-bank');
 
 export interface MemoryItem {
   id: string;
@@ -10,7 +13,6 @@ export interface MemoryItem {
   createdAt: string;
 }
 
-const MEMORY_KEY = 'use-ai-writer-memory';
 const STORAGE_LIMITS = {
   free: 100,
   pro: 1000,
@@ -35,22 +37,12 @@ export function useMemoryBank() {
   const [memories, setMemories] = useState<MemoryItem[]>([]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem(MEMORY_KEY);
-      if (stored) {
-        try {
-          setMemories(JSON.parse(stored));
-        } catch {
-          console.warn('Failed to parse memory bank');
-        }
-      }
-    }
+    const stored = storage.get<MemoryItem[]>('memories');
+    if (stored) setMemories(stored);
   }, []);
 
   const saveMemories = useCallback((newMemories: MemoryItem[]) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(MEMORY_KEY, JSON.stringify(newMemories));
-    }
+    storage.set('memories', newMemories);
     setMemories(newMemories);
   }, []);
 

@@ -1,4 +1,7 @@
 import { GenerateStreamOptions } from "./types";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger("Claude");
 
 export async function generateClaudeStream(options: GenerateStreamOptions): Promise<ReadableStream<Uint8Array>> {
   const {
@@ -11,12 +14,10 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
 
   const apiKey = process.env.CLAUDE_API_KEY;
 
-  console.log("[Claude] Starting generation...");
-  console.log(`[Claude] API Key: ${apiKey ? apiKey.substring(0, Math.min(8, apiKey.length)) + "..." : "NOT SET"}`);
-  console.log(`[Claude] Model: ${model}`);
+  logger.info("Starting generation", { model });
 
   if (!apiKey || ["your-api-key-here", "sk-ant-xxxxx"].includes(apiKey) || apiKey.length < 10) {
-    console.log("[Claude] API Key missing or invalid, falling back to mock mode");
+    logger.warn("API key missing or invalid");
     throw new Error("Claude API key not configured");
   }
 
@@ -33,7 +34,7 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
 
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      console.log(`[Claude] Attempt ${attempt + 1}/2...`);
+      logger.info("Attempting request", { attempt: attempt + 1 });
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -50,11 +51,11 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
 
       clearTimeout(timeoutId);
 
-      console.log(`[Claude] Response status: ${response.status} ${response.statusText}`);
+      logger.info("Response received", { status: response.status });
 
       if (!response.ok) {
         const errBody = await response.text().catch(() => "");
-        console.error(`[Claude] Error response: ${errBody}`);
+        logger.error("API error response", { status: response.status, body: errBody.substring(0, 200) });
         if (response.status === 401 || response.status === 403) {
           throw new Error(`Claude API key invalid or expired (${response.status}).`);
         }
@@ -66,7 +67,7 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
       }
 
       if (!response.body) {
-        console.error("[Claude] No response body received");
+        logger.error("No response body received");
         lastError = new Error("No response body from Claude API");
         continue;
       }
@@ -98,15 +99,15 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
                     if (parsed.type === "content_block_delta" && parsed.delta?.text) {
                       controller.enqueue(encoder.encode(parsed.delta.text));
                     }
-                  } catch (e) {
-                    // 忽略解析错误
+                  } catch {
+                    // ignore parse errors in stream chunks
                   }
                 }
               }
             }
             controller.close();
           } catch (error) {
-            console.error("[Claude] Stream error:", error);
+            logger.error("Stream error", { error: (error as Error).message });
             try {
               controller.error(error);
             } catch {
@@ -124,13 +125,13 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
       if (msg.includes("aborted") || msg.includes("timeout") || msg.includes("Timeout")) {
-        console.error(`[Claude] Attempt ${attempt + 1} timed out`);
-        lastError = new Error("Claude API request timed out.");
+        logger.warn("Request timed out", { attempt: attempt + 1 });
+        lastError = new Error("Claude API request timed out. The service may be slow or unavailable.");
       } else if (msg.includes("Failed to fetch") || msg.includes("fetch") || msg.includes("network") || msg.includes("ENOTFOUND")) {
-        console.error(`[Claude] Attempt ${attempt + 1} network error: ${msg}`);
-        lastError = new Error("Network error connecting to Claude API.");
+        logger.warn("Network error", { attempt: attempt + 1, error: msg });
+        lastError = new Error("Network error connecting to Claude API. Please check your network connectivity.");
       } else {
-        console.error(`[Claude] Attempt ${attempt + 1} failed: ${msg}`);
+        logger.error("Request failed", { attempt: attempt + 1, error: msg });
         lastError = error instanceof Error ? error : new Error(msg);
       }
       if (attempt === 0) {

@@ -1,3 +1,7 @@
+import { createStorage } from "./storage";
+
+const storage = createStorage("interview");
+
 export interface InterviewRecord {
   question: string;
   answer: string;
@@ -5,27 +9,12 @@ export interface InterviewRecord {
   timestamp: string;
 }
 
-const INTERVIEW_MEMORY_KEY = "use-ai-writer-interview-memory";
-
 function readInterviewRecords(): InterviewRecord[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(INTERVIEW_MEMORY_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as InterviewRecord[];
-  } catch {
-    return [];
-  }
+  return storage.get<InterviewRecord[]>("records") ?? [];
 }
 
 function writeInterviewRecords(records: InterviewRecord[]): void {
-  if (typeof window === "undefined") return;
-  try {
-    const trimmed = records.slice(0, 200);
-    localStorage.setItem(INTERVIEW_MEMORY_KEY, JSON.stringify(trimmed));
-  } catch {
-    // storage full
-  }
+  storage.set("records", records.slice(0, 200));
 }
 
 export function rememberInterviewAnswers(
@@ -108,6 +97,5 @@ export function findSimilarPreviousTopic(currentTopic: string): string | null {
 }
 
 export function clearInterviewMemory(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(INTERVIEW_MEMORY_KEY);
+  storage.remove("records");
 }

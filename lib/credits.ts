@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { createStorage } from "./storage";
+
+const storage = createStorage("credits");
 
 interface CreditPackage {
   id: string;
@@ -31,17 +34,12 @@ export function getCost(
 
 export function useCredits() {
   const [balance, setBalance] = useState<number>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("use-ai-writer-credits");
-      return saved ? parseInt(saved, 10) : 0;
-    }
-    return 0;
+    const saved = storage.get<string>("balance");
+    return saved ? parseInt(saved, 10) : 0;
   });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("use-ai-writer-credits", balance.toString());
-    }
+    storage.set("balance", balance.toString());
   }, [balance]);
 
   const usePoints = useCallback(

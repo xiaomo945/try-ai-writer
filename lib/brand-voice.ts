@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { createStorage } from "./storage";
 import { analyzeStyleFingerprint, type StyleFingerprint, DEFAULT_FINGERPRINT, getFingerprintSummary } from "./style-fingerprint";
+
+const storage = createStorage("brand-voice");
 
 export interface BrandVoiceProfile {
   industry: string;
@@ -13,47 +16,20 @@ export interface BrandVoiceProfile {
   styleFingerprint?: StyleFingerprint;
 }
 
-const STORAGE_KEY = "use-ai-writer-brand-profile";
-const SAMPLES_KEY = "use-ai-writer-brand-samples";
-
 function readProfile(): BrandVoiceProfile | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as BrandVoiceProfile;
-  } catch {
-    return null;
-  }
+  return storage.get<BrandVoiceProfile>("profile");
 }
 
 function writeProfile(profile: BrandVoiceProfile): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
-  } catch {
-    // storage full or unavailable
-  }
+  storage.set("profile", profile);
 }
 
 function readSamples(): string[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(SAMPLES_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as string[];
-  } catch {
-    return [];
-  }
+  return storage.get<string[]>("samples") ?? [];
 }
 
 function writeSamples(samples: string[]): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(SAMPLES_KEY, JSON.stringify(samples.slice(-50)));
-  } catch {
-    // storage full
-  }
+  storage.set("samples", samples.slice(-50));
 }
 
 export function useBrandVoice() {
@@ -116,9 +92,8 @@ export function useBrandVoice() {
   }, []);
 
   const clearProfile = useCallback(() => {
-    if (typeof window === "undefined") return;
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(SAMPLES_KEY);
+    storage.remove("profile");
+    storage.remove("samples");
     setProfileState(null);
   }, []);
 

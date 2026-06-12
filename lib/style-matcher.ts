@@ -1,3 +1,7 @@
+import { createStorage } from "./storage";
+
+const storage = createStorage("brand-voice");
+
 export interface BrandVoiceProfile {
   tone: {
     formality: number;
@@ -231,18 +235,10 @@ export function scoreStyleMatch(generatedText: string, profile: BrandVoiceProfil
 }
 
 export function hasBrandProfile(): boolean {
-  if (typeof window === "undefined") return false;
-  const profile = localStorage.getItem("use-ai-writer-brand-profile");
+  const profile = storage.get("profile");
   return profile !== null && profile !== "";
 }
 
 export function getBrandProfile(): BrandVoiceProfile | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem("use-ai-writer-brand-profile");
-    if (!raw) return null;
-    return JSON.parse(raw) as BrandVoiceProfile;
-  } catch {
-    return null;
-  }
+  return storage.get<BrandVoiceProfile>("profile");
 }

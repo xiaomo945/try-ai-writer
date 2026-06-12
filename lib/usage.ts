@@ -1,5 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { plans } from "./pricing";
+import { createStorage } from "./storage";
+
+const storage = createStorage("usage");
 
 type DailyUsageData = {
   date: string;
@@ -11,9 +14,6 @@ type AllUsageData = {
   [date: string]: DailyUsageData;
 };
 
-const STORAGE_KEY = "use-ai-writer-usage";
-const SELECTED_MODEL_KEY = "use-ai-writer-selected-model";
-const USER_PLAN_KEY = "use-ai-writer-user-plan";
 const FREE_PLAN = plans[0]; // Free plan is always first
 
 function getToday(): string {
@@ -36,17 +36,7 @@ const CLAUDE_DAILY_LIMIT = FREE_PLAN ? parseDailyLimit(FREE_PLAN.claudeLimit) : 
 const DEEPSEEK_DAILY_LIMIT = FREE_PLAN ? parseDailyLimit(FREE_PLAN.deepseekLimit) : 10;
 
 function readAllUsage(): AllUsageData {
-  if (typeof window === "undefined") {
-    return {};
-  }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed: AllUsageData = JSON.parse(raw) as AllUsageData;
-    return parsed;
-  } catch {
-    return {};
-  }
+  return storage.get<AllUsageData>("usage") ?? {};
 }
 
 function readTodayUsage(): DailyUsageData {
@@ -56,14 +46,9 @@ function readTodayUsage(): DailyUsageData {
 }
 
 function writeUsage(data: DailyUsageData): void {
-  if (typeof window === "undefined") return;
-  try {
-    const allUsage = readAllUsage();
-    allUsage[data.date] = data;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(allUsage));
-  } catch {
-    // storage full or unavailable
-  }
+  const allUsage = readAllUsage();
+  allUsage[data.date] = data;
+  storage.set("usage", allUsage);
 }
 
 export type ModelType = "claude" | "deepseek" | "mock";
@@ -162,41 +147,19 @@ export function isNoiseInput(input: string): NoiseCheckResult {
 }
 
 function readSelectedModel(): ModelType {
-  if (typeof window === "undefined") return "deepseek";
-  try {
-    const saved = localStorage.getItem(SELECTED_MODEL_KEY);
-    return (saved as ModelType) || "deepseek";
-  } catch {
-    return "deepseek";
-  }
+  return storage.get<ModelType>("selected-model") ?? "deepseek";
 }
 
 function writeSelectedModel(model: ModelType): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(SELECTED_MODEL_KEY, model);
-  } catch {
-    // storage full or unavailable
-  }
+  storage.set("selected-model", model);
 }
 
 function readUserPlan(): UserPlan {
-  if (typeof window === "undefined") return "free";
-  try {
-    const saved = localStorage.getItem(USER_PLAN_KEY);
-    return (saved as UserPlan) || "free";
-  } catch {
-    return "free";
-  }
+  return storage.get<UserPlan>("user-plan") ?? "free";
 }
 
 function writeUserPlan(plan: UserPlan): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(USER_PLAN_KEY, plan);
-  } catch {
-    // storage full or unavailable
-  }
+  storage.set("user-plan", plan);
 }
 
 export function useUsage() {

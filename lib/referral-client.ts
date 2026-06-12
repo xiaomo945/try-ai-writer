@@ -1,7 +1,11 @@
 "use client";
 
+import { createStorage } from "./storage";
+
 // Client-side referral utilities — localStorage based, compatible with old API.
 // For server-side persistence, use the API routes: /api/referral/generate and /api/referral/stats.
+
+const storage = createStorage("referral");
 
 export const REFERRAL_REWARDS = {
   perReferral: {
@@ -36,21 +40,11 @@ function generateReferralCode(): string {
 }
 
 function readReferralData(): ReferralData | null {
-  if (typeof window === "undefined") return null;
-  const stored = localStorage.getItem("use-ai-writer-referral");
-  if (stored) {
-    try {
-      return JSON.parse(stored) as ReferralData;
-    } catch {
-      return null;
-    }
-  }
-  return null;
+  return storage.get<ReferralData>("data");
 }
 
 function writeReferralData(data: ReferralData): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem("use-ai-writer-referral", JSON.stringify(data));
+  storage.set("data", data);
 }
 
 export function initializeReferral(): ReferralData {
@@ -67,7 +61,7 @@ export function initializeReferral(): ReferralData {
     const params = new URLSearchParams(window.location.search);
     const refCode = params.get("ref");
     if (refCode) {
-      localStorage.setItem("referred-by", refCode);
+      storage.set("referred-by", refCode);
     }
   }
 
@@ -108,25 +102,23 @@ export function applyReferralReward(
     ).toISOString(),
     rewardedAt: new Date().toISOString(),
   };
-  localStorage.setItem("referrer_reward_pending", JSON.stringify(referrerData));
+  storage.set("referrer-reward", referrerData);
 
   const refereeData = {
     userId: newUserId,
     extraGenerations: rewards.extraGenerations,
     rewardedAt: new Date().toISOString(),
   };
-  localStorage.setItem("referee_reward_pending", JSON.stringify(refereeData));
+  storage.set("referee-reward", refereeData);
 
-  const referralHistory = JSON.parse(
-    localStorage.getItem("referral_history") || "[]"
-  );
+  const referralHistory = storage.get<Array<Record<string, unknown>>>("history") ?? [];
   referralHistory.push({
     referrerId,
     newUserId,
     timestamp: new Date().toISOString(),
     rewards,
   });
-  localStorage.setItem("referral_history", JSON.stringify(referralHistory));
+  storage.set("history", referralHistory);
 
   return {
     referrerReward: { proDays: rewards.proDays, extraGenerations: 0 },
@@ -149,8 +141,8 @@ export function checkPendingReferralRewards(): {
     };
   }
 
-  const referrerRewardStr = localStorage.getItem("referrer_reward_pending");
-  const refereeRewardStr = localStorage.getItem("referee_reward_pending");
+  const referrerRewardStr = storage.get<{ proDays: number }>("referrer-reward");
+  const refereeRewardStr = storage.get<{ extraGenerations: number }>("referee-reward");
 
   const hasReferrerReward = !!referrerRewardStr;
   const hasRefereeReward = !!refereeRewardStr;
@@ -159,21 +151,11 @@ export function checkPendingReferralRewards(): {
   let refereeRewardData = null;
 
   if (referrerRewardStr) {
-    try {
-      const data = JSON.parse(referrerRewardStr);
-      referrerRewardData = { proDays: data.proDays || 3 };
-    } catch {
-      referrerRewardData = null;
-    }
+    referrerRewardData = { proDays: referrerRewardStr.proDays || 3 };
   }
 
   if (refereeRewardStr) {
-    try {
-      const data = JSON.parse(refereeRewardStr);
-      refereeRewardData = { extraGenerations: data.extraGenerations || 5 };
-    } catch {
-      refereeRewardData = null;
-    }
+    refereeRewardData = { extraGenerations: refereeRewardStr.extraGenerations || 5 };
   }
 
   return {
@@ -185,7 +167,6 @@ export function checkPendingReferralRewards(): {
 }
 
 export function clearPendingReferralRewards(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem("referrer_reward_pending");
-  localStorage.removeItem("referee_reward_pending");
+  storage.remove("referrer-reward");
+  storage.remove("referee-reward");
 }

@@ -1,5 +1,9 @@
 "use client";
 
+import { createStorage } from "./storage";
+
+const storage = createStorage("workflows");
+
 interface WorkflowStep {
   id: string;
   title: string;
@@ -205,28 +209,10 @@ function getPresetWorkflows(): WorkflowDefinition[] {
 }
 
 function getCustomWorkflows(): WorkflowDefinition[] {
-  if (typeof window === "undefined") {
-    return [];
-  }
-  try {
-    const stored = localStorage.getItem("custom_workflows");
-    if (!stored) {
-      return [];
-    }
-    const parsed: unknown = JSON.parse(stored);
-    if (!Array.isArray(parsed)) {
-      return [];
-    }
-    return parsed as WorkflowDefinition[];
-  } catch {
-    return [];
-  }
+  return storage.get<WorkflowDefinition[]>("custom") ?? [];
 }
 
 function saveCustomWorkflow(workflow: WorkflowDefinition): void {
-  if (typeof window === "undefined") {
-    return;
-  }
   const existing = getCustomWorkflows();
   const index = existing.findIndex((w) => w.id === workflow.id);
   if (index >= 0) {
@@ -234,22 +220,16 @@ function saveCustomWorkflow(workflow: WorkflowDefinition): void {
   } else {
     existing.push(workflow);
   }
-  localStorage.setItem("custom_workflows", JSON.stringify(existing));
+  storage.set("custom", existing);
 }
 
 function deleteCustomWorkflow(workflowId: string): void {
-  if (typeof window === "undefined") {
-    return;
-  }
   const existing = getCustomWorkflows();
   const filtered = existing.filter((w) => w.id !== workflowId);
-  localStorage.setItem("custom_workflows", JSON.stringify(filtered));
+  storage.set("custom", filtered);
 }
 
 function publishWorkflow(workflow: WorkflowDefinition): void {
-  if (typeof window === "undefined") {
-    return;
-  }
   const community = getCommunityWorkflows();
   const published: WorkflowDefinition = {
     ...workflow,
@@ -257,46 +237,25 @@ function publishWorkflow(workflow: WorkflowDefinition): void {
     author: workflow.author ?? "Anonymous",
   };
   community.push(published);
-  localStorage.setItem("community_workflows", JSON.stringify(community));
+  storage.set("community", community);
 }
 
 function unpublishWorkflow(workflowId: string): void {
-  if (typeof window === "undefined") {
-    return;
-  }
   const community = getCommunityWorkflows();
   const filtered = community.filter((w) => w.id !== workflowId);
-  localStorage.setItem("community_workflows", JSON.stringify(filtered));
+  storage.set("community", filtered);
 }
 
 function getCommunityWorkflows(): WorkflowDefinition[] {
-  if (typeof window === "undefined") {
-    return [];
-  }
-  try {
-    const stored = localStorage.getItem("community_workflows");
-    if (!stored) {
-      return [];
-    }
-    const parsed: unknown = JSON.parse(stored);
-    if (!Array.isArray(parsed)) {
-      return [];
-    }
-    const workflows = parsed as WorkflowDefinition[];
-    return workflows.sort((a, b) => {
-      const dateA = a.publishedAt ?? "";
-      const dateB = b.publishedAt ?? "";
-      return dateB.localeCompare(dateA);
-    });
-  } catch {
-    return [];
-  }
+  const workflows = storage.get<WorkflowDefinition[]>("community") ?? [];
+  return workflows.sort((a, b) => {
+    const dateA = a.publishedAt ?? "";
+    const dateB = b.publishedAt ?? "";
+    return dateB.localeCompare(dateA);
+  });
 }
 
 function isWorkflowPublished(workflowId: string): boolean {
-  if (typeof window === "undefined") {
-    return false;
-  }
   const community = getCommunityWorkflows();
   return community.some((w) => w.id === workflowId);
 }

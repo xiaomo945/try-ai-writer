@@ -676,7 +676,7 @@ export default function DashboardPage() {
       return getWeeklyStats();
     }
     return { thisWeekCount: 0, lastWeekCount: 0 };
-  }, [records, getWeeklyStats]);
+  }, [getWeeklyStats]);
 
   const insights = useMemo(() => {
     return getWeeklyInsights(records, memories, weeklyStats);

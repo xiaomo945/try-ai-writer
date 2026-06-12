@@ -1,4 +1,7 @@
 import { GenerateStreamOptions } from "./types";
+import { createLogger } from "@/lib/logger";
+
+const logger = createLogger("DeepSeek");
 
 function classifyDeepSeekError(status: number, body: string): { message: string; code: string } {
   if (status === 401) {
@@ -30,12 +33,10 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
 
   const apiKey = process.env.DEEPSEEK_API_KEY;
 
-  console.log("[DeepSeek] Starting generation...");
-  console.log(`[DeepSeek] API Key: ${apiKey ? apiKey.substring(0, Math.min(8, apiKey.length)) + "..." : "NOT SET"}`);
-  console.log(`[DeepSeek] Model: ${model}`);
+  logger.info("Starting generation", { model });
 
   if (!apiKey || ["your-api-key-here", "your-deepseek-api-key-here"].includes(apiKey) || apiKey.length < 10) {
-    console.log("[DeepSeek] API Key missing or invalid, falling back to mock mode");
+    logger.warn("API key missing or invalid");
     throw new Error("DeepSeek API key not configured");
   }
 
@@ -54,7 +55,7 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
 
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      console.log(`[DeepSeek] Attempt ${attempt + 1}/2...`);
+      logger.info("Attempting request", { attempt: attempt + 1 });
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -70,11 +71,11 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
 
       clearTimeout(timeoutId);
 
-      console.log(`[DeepSeek] Response status: ${response.status} ${response.statusText}`);
+      logger.info("Response received", { status: response.status });
 
       if (!response.ok) {
         const errBody = await response.text().catch(() => "");
-        console.error(`[DeepSeek] Error response: ${errBody}`);
+        logger.error("API error response", { status: response.status, body: errBody.substring(0, 200) });
         const classified = classifyDeepSeekError(response.status, errBody);
         lastError = new Error(classified.message);
 
@@ -85,7 +86,7 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
       }
 
       if (!response.body) {
-        console.error("[DeepSeek] No response body received");
+        logger.error("No response body received");
         lastError = new Error("No response body from DeepSeek API");
         continue;
       }
@@ -118,15 +119,15 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
                       const text = parsed.choices[0].delta.content;
                       controller.enqueue(encoder.encode(text));
                     }
-                  } catch (e) {
-                    // 忽略解析错误
+                  } catch {
+                    // ignore parse errors in stream chunks
                   }
                 }
               }
             }
             controller.close();
           } catch (error) {
-            console.error("[DeepSeek] Stream error:", error);
+            logger.error("Stream error", { error: (error as Error).message });
             try {
               controller.error(error);
             } catch {
@@ -144,13 +145,13 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error);
       if (msg.includes("aborted") || msg.includes("timeout") || msg.includes("Timeout")) {
-        console.error(`[DeepSeek] Attempt ${attempt + 1} timed out`);
+        logger.warn("Request timed out", { attempt: attempt + 1 });
         lastError = new Error("DeepSeek API request timed out. The service may be slow or unavailable.");
       } else if (msg.includes("Failed to fetch") || msg.includes("fetch") || msg.includes("network") || msg.includes("ENOTFOUND")) {
-        console.error(`[DeepSeek] Attempt ${attempt + 1} network error: ${msg}`);
+        logger.warn("Network error", { attempt: attempt + 1, error: msg });
         lastError = new Error("Network error connecting to DeepSeek API. Please check your network connectivity.");
       } else {
-        console.error(`[DeepSeek] Attempt ${attempt + 1} failed: ${msg}`);
+        logger.error("Request failed", { attempt: attempt + 1, error: msg });
         lastError = error instanceof Error ? error : new Error(msg);
       }
       if (attempt === 0) {

@@ -1,7 +1,10 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createStorage } from './storage';
 import type { AvatarVariant } from '@/app/components/DigitalTwinAvatar';
+
+const storage = createStorage('avatar');
 
 interface AvatarVariantContextType {
   variant: AvatarVariant;
@@ -14,7 +17,7 @@ export function AvatarVariantProvider({ children }: { children: React.ReactNode 
   const [variant, setVariant] = useState<AvatarVariant>('default');
 
   useEffect(() => {
-    const saved = localStorage.getItem('avatarVariant');
+    const saved = storage.get<string>('variant');
     if (saved && ['default', 'minimal', 'cute'].includes(saved)) {
       setVariant(saved as AvatarVariant);
     }
@@ -22,7 +25,7 @@ export function AvatarVariantProvider({ children }: { children: React.ReactNode 
 
   const updateVariant = (newVariant: AvatarVariant) => {
     setVariant(newVariant);
-    localStorage.setItem('avatarVariant', newVariant);
+    storage.set('variant', newVariant);
   };
 
   return (

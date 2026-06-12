@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { createStorage } from "./storage";
+
+const storage = createStorage("history");
 
 type HistoryRecord = {
   id: string;
@@ -11,27 +14,13 @@ type HistoryRecord = {
 };
 
 const MAX_RECORDS = 20;
-const STORAGE_KEY = "use-ai-writer-history";
 
 function readHistory(): HistoryRecord[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed: HistoryRecord[] = JSON.parse(raw) as HistoryRecord[];
-    return parsed.slice(0, MAX_RECORDS);
-  } catch {
-    return [];
-  }
+  return storage.get<HistoryRecord[]>("records") ?? [];
 }
 
 function writeHistory(records: HistoryRecord[]): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(records.slice(0, MAX_RECORDS)));
-  } catch {
-    // storage full or unavailable
-  }
+  storage.set("records", records.slice(0, MAX_RECORDS));
 }
 
 export function useHistory() {
