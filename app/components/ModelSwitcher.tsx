@@ -66,7 +66,10 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors min-h-[44px]"
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-label={`Current model: ${currentModelInfo.name}. Click to switch.`}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 transition-colors min-h-[44px]"
       >
         <div className={`w-3 h-3 rounded-full ${currentModelInfo.color}`} />
         <span className="text-sm font-medium text-slate-700">{currentModelInfo.name}</span>
@@ -74,7 +77,7 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-50">
+        <div role="listbox" aria-label="Available models" className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-slate-200 dark:border-white/10 z-50">
           <div className="py-1">
             {MODEL_OPTIONS.map((option) => {
               const isSelected = selectedModel === option.model;
@@ -86,11 +89,13 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
                   key={option.model}
                   onClick={() => handleSelectModel(option.model, !!option.isProOnly)}
                   disabled={isDisabled}
-                  className={`w-full flex items-center justify-between px-4 py-2 text-left transition-colors ${
+                  role="option"
+                  aria-selected={isSelected}
+                  className={`w-full flex items-center justify-between px-4 py-2 text-left transition-colors min-h-[44px] ${
                     isDisabled 
                       ? 'text-slate-400 cursor-not-allowed' 
-                      : 'text-slate-700 hover:bg-slate-100'
-                  } ${isSelected ? 'bg-slate-50' : ''}`}
+                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10'
+                  } ${isSelected ? 'bg-slate-50 dark:bg-white/5' : ''}`}
                 >
                   <div className="flex items-center gap-2">
                     <div className={`w-3 h-3 rounded-full ${modelInfo.color}`} />

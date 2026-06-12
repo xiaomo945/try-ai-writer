@@ -508,7 +508,7 @@ export function DigitalTwinAvatar({ isVisible, state, onSound, onQuestionAppear,
   };
 
   return (
-    <div className="relative">
+    <div className="relative" role="img" aria-label={`Digital twin avatar: ${state}`}>
       <style jsx global>{`
         @keyframes popIn {
           0% { transform: translateX(-50px) scale(0.5); opacity: 0; }

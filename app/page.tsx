@@ -1,14 +1,28 @@
 import { Zap, Brain, Shield, Sparkles, ArrowRight, ChevronDown, Check } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Logo from "@/app/components/Logo";
-import DemoAnimation from "@/app/components/DemoAnimation";
-import { Testimonials } from "@/app/components/Testimonials";
-import { UseCases } from "@/app/components/UseCases";
-import { IridescentRibbon } from "@/app/components/IridescentRibbon";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
-import { WaitlistSignup } from "@/app/components/WaitlistSignup";
 import { NavWrapper } from "@/app/components/NavWrapper";
-import { WhyDifferent } from "@/app/components/WhyDifferent";
+
+const DemoAnimation = dynamic(() => import("@/app/components/DemoAnimation"), {
+  loading: () => <div className="w-full h-96 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
+const Testimonials = dynamic(() => import("@/app/components/Testimonials").then(m => ({ default: m.Testimonials })), {
+  loading: () => <div className="w-full h-64 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
+const UseCases = dynamic(() => import("@/app/components/UseCases").then(m => ({ default: m.UseCases })), {
+  loading: () => <div className="w-full h-48 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
+const IridescentRibbon = dynamic(() => import("@/app/components/IridescentRibbon").then(m => ({ default: m.IridescentRibbon })), {
+  loading: () => <div className="w-full h-32 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
+const WaitlistSignup = dynamic(() => import("@/app/components/WaitlistSignup").then(m => ({ default: m.WaitlistSignup })), {
+  loading: () => <div className="w-full h-48 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
+const WhyDifferent = dynamic(() => import("@/app/components/WhyDifferent").then(m => ({ default: m.WhyDifferent })), {
+  loading: () => <div className="w-full h-64 bg-obsidian-900 animate-pulse rounded-2xl" />,
+});
 
 export default function LandingPage() {
   return (
