@@ -140,14 +140,14 @@ export function OnboardingTooltip() {
       {/* Tooltip */}
       <div
         ref={tooltipRef}
-        className="fixed z-50 bg-gray-900 border border-gray-700 rounded-2xl p-6 shadow-2xl w-80"
+        className="fixed z-50 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-2xl w-80"
         style={{
           top: tooltipPosition.top,
           left: tooltipPosition.left,
         }}
       >
         {/* Arrow pointing to target */}
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-gray-900 border-l border-t border-gray-700 rotate-45" />
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-white dark:bg-gray-900 border-l border-t border-gray-200 dark:border-gray-700 rotate-45" />
         
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -156,16 +156,16 @@ export function OnboardingTooltip() {
                 {currentStep + 1} / {steps.length}
               </span>
             </div>
-            <h3 className="font-display font-extrabold text-white text-lg mb-1">
+            <h3 className="font-display font-extrabold text-slate-900 dark:text-white text-lg mb-1">
               {step.title}
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               {step.description}
             </p>
           </div>
           <button
             onClick={completeOnboarding}
-            className="p-2 text-slate-500 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <X className="w-5 h-5" />
           </button>

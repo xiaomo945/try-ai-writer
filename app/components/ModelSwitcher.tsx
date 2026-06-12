@@ -118,10 +118,10 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-white mb-2">
+              <h2 className="text-2xl font-display font-extrabold text-slate-900 dark:text-white mb-2">
                 Unlock Claude-Powered Writing
               </h2>
-              <p className="text-slate-400">
+              <p className="text-slate-500 dark:text-slate-400">
                 Claude Sonnet 4.6 delivers superior writing quality, especially for long-form content.
               </p>
             </div>

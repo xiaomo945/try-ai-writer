@@ -190,7 +190,7 @@ export function WriteTourGuide() {
           width: 280,
         }}
       >
-        <div className="bg-gray-900/95 backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-4 shadow-2xl shadow-emerald-500/10">
+        <div className="bg-white dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-emerald-500/30 rounded-2xl p-4 shadow-2xl shadow-emerald-500/10">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
@@ -198,25 +198,25 @@ export function WriteTourGuide() {
                   {currentStep + 1}
                 </span>
               </div>
-              <h4 className="font-display font-bold text-white">
+              <h4 className="font-display font-bold text-slate-900 dark:text-white">
                 {currentTourStep.title}
               </h4>
             </div>
             <button
               onClick={handleSkip}
-              className="text-slate-400 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2 -mt-2"
+              className="text-slate-400 dark:hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2 -mt-2"
               aria-label="Skip tour"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <p className="text-slate-300 text-sm mb-4">
+          <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">
             {currentTourStep.description}
           </p>
 
           <div className="flex items-center justify-between gap-4">
-            <div className="flex-1 h-1 bg-slate-700 rounded-full overflow-hidden">
+            <div className="flex-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
@@ -246,7 +246,7 @@ export function WriteTourGuide() {
                     ? "bg-emerald-500 w-3"
                     : index < currentStep
                     ? "bg-emerald-500/50"
-                    : "bg-slate-600"
+                    : "bg-slate-300 dark:bg-slate-600"
                 }`}
               />
             ))}
@@ -254,7 +254,7 @@ export function WriteTourGuide() {
         </div>
 
         <div 
-          className={`absolute w-3 h-3 bg-gray-900/95 border-emerald-500/30 rotate-45 ${
+          className={`absolute w-3 h-3 bg-white dark:bg-gray-900/95 border-gray-200 dark:border-emerald-500/30 rotate-45 ${
             currentTourStep.position === "bottom" ? "-top-1.5 left-1/2 -translate-x-1/2 border-b border-r" : ""
           } ${
             currentTourStep.position === "top" ? "-bottom-1.5 left-1/2 -translate-x-1/2 border-t border-l" : ""

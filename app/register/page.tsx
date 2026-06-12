@@ -59,11 +59,11 @@ export default function RegisterPage() {
           </div>
           <p className="text-center text-sm text-slate-500 dark:text-slate-400">
             By signing up, you agree to our{" "}
-            <a href="#" className="text-emerald-600 hover:underline">
+            <a href="/terms" className="text-emerald-600 hover:underline">
               Terms
             </a>{" "}
             and{" "}
-            <a href="#" className="text-emerald-600 hover:underline">
+            <a href="/privacy" className="text-emerald-600 hover:underline">
               Privacy Policy
             </a>
             .

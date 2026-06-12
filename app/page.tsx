@@ -12,7 +12,7 @@ import { WhyDifferent } from "@/app/components/WhyDifferent";
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
+    <main className="flex flex-col items-center w-full bg-white dark:bg-obsidian-950 text-slate-900 dark:text-white min-h-screen">
       <NavWrapper />
 
       {/* Quick-start CTA for non-authenticated users */}
@@ -39,14 +39,14 @@ export default function LandingPage() {
           <div className="flex flex-col items-start">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{ textShadow: "0 0 100px rgba(91,156,245,0.3)" }}>
               Your Thoughts,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
                 Amplified.
               </span>
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-slate-400 mt-6 max-w-lg leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-500 dark:text-slate-400 mt-6 max-w-lg leading-relaxed">
               The AI that learns your brand voice, not just your prompts. Write better, faster, cheaper — meet Try AI Writer.
             </p>
-            <p className="text-sm text-slate-500 mt-3">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-3">
               Unlike static brand voices, our Digital Twin learns and evolves with every conversation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
@@ -57,13 +57,13 @@ export default function LandingPage() {
                 See Pricing
               </Link>
             </div>
-            <div className="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
+            <div className="flex items-center gap-6 mt-10 pt-8 border-t border-slate-200 dark:border-white/5">
               <div className="flex -space-x-2">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 border-2 border-obsidian-950" />
+                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-600 to-teal-500 border-2 border-white dark:border-obsidian-950" />
                 ))}
               </div>
-              <p className="text-sm text-slate-400"><span className="text-white font-semibold">500+</span> creators already writing</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-semibold">500+</span> creators already writing</p>
             </div>
           </div>
           <div className="hidden lg:flex justify-center">
@@ -72,17 +72,17 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-16"><ChevronDown className="w-6 h-6 text-slate-600 animate-bounce" /></div>
+        <div className="flex justify-center mt-16"><ChevronDown className="w-6 h-6 text-slate-400 dark:text-slate-600 animate-bounce" /></div>
       </section>
 
       {/* Social proof */}
       <section className="section-container py-12">
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16 text-slate-500 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16 text-slate-500 dark:text-slate-400 text-sm">
           <span className="text-slate-400 font-medium">Trusted by creators from</span>
-          <span className="text-white font-semibold">Product Hunt</span>
-          <span className="text-white font-semibold">Reddit</span>
-          <span className="text-white font-semibold">Twitter/X</span>
-          <span className="text-white font-semibold">Indie Hackers</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Product Hunt</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Reddit</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Twitter/X</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Indie Hackers</span>
         </div>
       </section>
 
@@ -91,36 +91,36 @@ export default function LandingPage() {
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
             Everything you need to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">write better.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">write better.</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Powerful features packed in a minimalist interface. No clutter, just results.</p>
+          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-4 max-w-2xl mx-auto">Powerful features packed in a minimalist interface. No clutter, just results.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-min">
           <div className="glass-card-blue md:col-span-2 flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5"><Zap className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" /></div>
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5"><Zap className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" /></div>
               <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Generate in 30 Seconds</h3>
-              <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">From prompt to polished draft faster than brewing coffee. Claude-powered quality, DeepSeek speed.</p>
+              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">From prompt to polished draft faster than brewing coffee. Claude-powered quality, DeepSeek speed.</p>
             </div>
-            <div className="mt-6 flex items-center gap-4"><span className="text-4xl sm:text-5xl font-display font-extrabold text-blue-400">30s</span><span className="text-slate-500 text-sm">average time<br />to first draft</span></div>
+            <div className="mt-6 flex items-center gap-4"><span className="text-4xl sm:text-5xl font-display font-extrabold text-emerald-400">30s</span><span className="text-slate-500 dark:text-slate-400 text-sm">average time<br />to first draft</span></div>
           </div>
           <div className="glass-card-purple flex flex-col">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4"><Brain className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" /></div>
             <h3 className="text-lg sm:text-xl font-display font-bold mb-2">Brand Voice Learning</h3>
-            <p className="text-slate-400 leading-relaxed text-sm sm:text-base">Remembers your tone, style, and phrases. Writes like you, not a robot.</p>
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base">Remembers your tone, style, and phrases. Writes like you, not a robot.</p>
           </div>
           <div className="glass-card-emerald flex flex-col">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4"><Shield className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" /></div>
             <h3 className="text-lg sm:text-xl font-display font-bold mb-2">100% Private</h3>
-            <p className="text-slate-400 leading-relaxed text-sm sm:text-base">Your data is never used for training or sold. Enterprise-grade privacy.</p>
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base">Your data is never used for training or sold. Enterprise-grade privacy.</p>
           </div>
           <div className="glass-card-blue md:col-span-2 flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5"><Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400" /></div>
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5"><Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400" /></div>
               <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Creative Interview Engine</h3>
-              <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">Tell your digital twin what you want — it asks the right questions, then assembles the perfect prompt for you.</p>
+              <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">Tell your digital twin what you want — it asks the right questions, then assembles the perfect prompt for you.</p>
             </div>
-            <div className="mt-6 font-mono text-sm text-slate-500">{">"} &quot;What tone should it have? Who&apos;s your audience?&quot;<br />{">"} &quot;Got it. Generating now...&quot;</div>
+            <div className="mt-6 font-mono text-sm text-slate-500 dark:text-slate-400">{">"} &quot;What tone should it have? Who&apos;s your audience?&quot;<br />{">"} &quot;Got it. Generating now...&quot;</div>
           </div>
         </div>
       </section>
@@ -133,10 +133,10 @@ export default function LandingPage() {
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
             Simple,{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Transparent</span>{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Transparent</span>{" "}
             Pricing
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4">Start free, upgrade when you need more. No hidden fees.</p>
+          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-4">Start free, upgrade when you need more. No hidden fees.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {[
@@ -145,12 +145,12 @@ export default function LandingPage() {
             { name: "Max", price: "$25", desc: "For power users", features: ["Unlimited generations", "Claude + DeepSeek", "Advanced brand voice", "Document + image upload", "Priority support"], btn: "primary" }
           ].map((plan) => (
             <div key={plan.name} className={`glass-card flex flex-col relative ${plan.popular ? 'glass-card-purple glass-card-recommended' : ''}`} style={plan.popular ? { borderColor: "rgba(155,109,255,0.25)" } : {}}>
-              {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500">Most Popular</span>}
+              {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-500">Most Popular</span>}
               <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
-              <p className="text-slate-400 text-sm mb-6">{plan.desc}</p>
-              <p className="text-4xl sm:text-5xl font-display font-extrabold mb-8">{plan.price}<span className="text-base sm:text-lg font-normal text-slate-500">/mo</span></p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">{plan.desc}</p>
+              <p className="text-4xl sm:text-5xl font-display font-extrabold mb-8">{plan.price}<span className="text-base sm:text-lg font-normal text-slate-500 dark:text-slate-400">/mo</span></p>
               <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
-                {plan.features.map((f, j) => <li key={j} className="flex items-center gap-2 sm:gap-3 text-sm text-slate-300"><Check className="w-4 h-4 text-blue-400 flex-shrink-0" />{f}</li>)}
+                {plan.features.map((f, j) => <li key={j} className="flex items-center gap-2 sm:gap-3 text-sm text-slate-600 dark:text-slate-300"><Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />{f}</li>)}
               </ul>
               <Link href="/login" className={plan.btn === 'primary' ? 'btn-primary w-full text-center' : 'btn-outline w-full text-center'}>
                 {plan.name === 'Free' ? 'Get Started' : `Start ${plan.name}`}
@@ -167,7 +167,7 @@ export default function LandingPage() {
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">Loved by Creators Worldwide</h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4">Join 500+ writers who already use Try AI Writer</p>
+          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-4">Join 500+ writers who already use Try AI Writer</p>
         </div>
         <Testimonials />
       </section>
@@ -184,8 +184,8 @@ export default function LandingPage() {
             { q: "Do I need a credit card to start?", a: "No! Start with the Free plan — no credit card required. Upgrade when you need more power." },
           ].map((faq, i) => (
             <details key={i} className="glass-card group cursor-pointer">
-              <summary className="flex items-center justify-between font-semibold text-white text-sm sm:text-base">{faq.q}<ChevronDown className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" /></summary>
-              <p className="mt-4 text-slate-400 leading-relaxed text-sm sm:text-base">{faq.a}</p>
+              <summary className="flex items-center justify-between font-semibold text-slate-900 dark:text-white text-sm sm:text-base">{faq.q}<ChevronDown className="w-5 h-5 text-slate-500 dark:text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" /></summary>
+              <p className="mt-4 text-slate-500 dark:text-slate-400 leading-relaxed text-sm sm:text-base">{faq.a}</p>
             </details>
           ))}
         </div>
@@ -202,27 +202,27 @@ export default function LandingPage() {
       <section className="w-full section-spacing">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{ background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)" }}>
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-400 mx-auto mb-6" />
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
-            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Try AI Writer. Start free, no credit card required.</p>
+            <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Try AI Writer. Start free, no credit card required.</p>
             <Link href="/write" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Try It Now — No Sign Up Required <ArrowRight className="ml-2 w-5 h-5" /></Link>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="w-full border-t border-white/5 py-10 sm:py-12">
+      <footer className="w-full border-t border-slate-200 dark:border-white/5 py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <Logo size={24} />
             <p className="text-sm text-slate-500">© 2026 Try AI Writer. All rights reserved.</p>
           </div>
-          <div className="flex items-center gap-4 sm:gap-6 text-sm text-slate-400">
-            <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
-            <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-            <a href="https://useaitools.me" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Use AI Tools</a>
+          <div className="flex items-center gap-4 sm:gap-6 text-sm text-slate-500 dark:text-slate-400">
+            <Link href="/pricing" className="hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</Link>
+            <Link href="/blog" className="hover:text-slate-900 dark:hover:text-white transition-colors">Blog</Link>
+            <Link href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</Link>
+            <a href="https://useaitools.me" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors">Use AI Tools</a>
             <Link href="/login" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Start Free</Link>
           </div>
         </div>

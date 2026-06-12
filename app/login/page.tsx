@@ -59,9 +59,9 @@ export default function LoginPage() {
           </div>
           <p className="text-center text-sm text-slate-500 dark:text-slate-400">
             By signing in, you agree to our{" "}
-            <a href="#" className="text-emerald-600 hover:underline">Terms</a>{" "}
+            <a href="/terms" className="text-emerald-600 hover:underline">Terms</a>{" "}
             and{" "}
-            <a href="#" className="text-emerald-600 hover:underline">Privacy Policy</a>.
+            <a href="/privacy" className="text-emerald-600 hover:underline">Privacy Policy</a>.
           </p>
           <p className="text-center text-sm text-slate-500 dark:text-slate-400">
             Don&apos;t have an account?{" "}
