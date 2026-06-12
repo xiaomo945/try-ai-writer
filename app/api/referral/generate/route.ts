@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createReferralRecord, getReferralLink } from "@/lib/referral";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await req.json();
-    if (!userId) {
-      return NextResponse.json({ error: "userId required" }, { status: 400 });
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const record = createReferralRecord(userId);
     const baseUrl = process.env.NEXTAUTH_URL || "https://tryaiwriter.com";
     const link = getReferralLink(record.code, baseUrl);

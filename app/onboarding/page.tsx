@@ -168,7 +168,7 @@ function ReferralRewardChecker({ onRewardFound }: { onRewardFound: (proDays: num
         <select
           value={industry}
           onChange={(e) => setIndustry(e.target.value)}
-          className="w-full px-4 py-4 text-base border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white cursor-pointer transition-all duration-200"
+          className="w-full px-4 py-4 text-base border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white dark:bg-white/5 text-slate-900 dark:text-white cursor-pointer transition-all duration-200"
         >
           <option value="">Select an industry</option>
           {INDUSTRIES.map((ind) => (
@@ -275,7 +275,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen bg-white dark:bg-[#0A0A0C] flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-lg">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 mb-4">

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function PaymentPendingPage() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen bg-white dark:bg-[#0A0A0C] flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md text-center">
         <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-8">
           <svg className="w-10 h-10 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">

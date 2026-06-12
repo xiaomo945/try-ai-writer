@@ -56,7 +56,7 @@ export function TwinIntroBubble({ onClose, isVisible }: TwinIntroBubbleProps) {
       }}
     >
       <div
-        className="relative bg-white border-2 border-emerald-600 rounded-2xl p-4 shadow-lg
+        className="relative bg-white dark:bg-gray-900 border-2 border-emerald-600 rounded-2xl p-4 shadow-lg
           md:ml-4 md:mt-0 mt-3"
       >
         {/* Triangle Tail - desktop: left */}
