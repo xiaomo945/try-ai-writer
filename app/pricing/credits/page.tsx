@@ -47,6 +47,7 @@ export default function CreditsPurchasePage() {
       }
       
       // 跳转到支付页面
+      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = data.url;
       
     } catch (error) {

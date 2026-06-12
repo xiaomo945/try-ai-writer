@@ -15,6 +15,31 @@ import {
 
 import { NavWrapper } from "@/app/components/NavWrapper";
 
+function generateQuestions(userTopic: string): string[] {
+  const topicLower = userTopic.toLowerCase();
+  const baseQuestions = [
+    `What's the main goal you want to achieve with this ${topicLower.includes("email") ? "email" : topicLower.includes("blog") ? "blog post" : "content"}?`,
+    `Who is your target audience for this?`,
+    `What key message or takeaway do you want to convey?`,
+    `Are there any specific examples or anecdotes you want to include?`,
+    `What tone or style are you aiming for? (e.g., professional, casual, persuasive)`
+  ];
+  
+  // Add topic-specific questions
+  if (topicLower.includes("email")) {
+    baseQuestions.push("What action do you want the recipient to take?");
+    baseQuestions.push("Is there a deadline or urgency we should emphasize?");
+  } else if (topicLower.includes("blog") || topicLower.includes("article")) {
+    baseQuestions.push("What SEO keywords are important for this piece?");
+    baseQuestions.push("Who is your main competitor or alternative in this space?");
+  } else if (topicLower.includes("social") || topicLower.includes("twitter") || topicLower.includes("linkedin")) {
+    baseQuestions.push("What platform is this for primarily?");
+    baseQuestions.push("Do you want to encourage engagement (comments, shares, likes)?");
+  }
+  
+  return baseQuestions;
+}
+
 export default function InterviewPage() {
   const [step, setStep] = useState<"intro" | "interview" | "complete">("intro");
   const [topic, setTopic] = useState("");
@@ -58,31 +83,6 @@ export default function InterviewPage() {
     setStep("interview");
     setCurrentQuestionIndex(0);
   }, [topic]);
-
-  const generateQuestions = (userTopic: string): string[] => {
-    const topicLower = userTopic.toLowerCase();
-    const baseQuestions = [
-      `What's the main goal you want to achieve with this ${topicLower.includes("email") ? "email" : topicLower.includes("blog") ? "blog post" : "content"}?`,
-      `Who is your target audience for this?`,
-      `What key message or takeaway do you want to convey?`,
-      `Are there any specific examples or anecdotes you want to include?`,
-      `What tone or style are you aiming for? (e.g., professional, casual, persuasive)`
-    ];
-    
-    // Add topic-specific questions
-    if (topicLower.includes("email")) {
-      baseQuestions.push("What action do you want the recipient to take?");
-      baseQuestions.push("Is there a deadline or urgency we should emphasize?");
-    } else if (topicLower.includes("blog") || topicLower.includes("article")) {
-      baseQuestions.push("What SEO keywords are important for this piece?");
-      baseQuestions.push("Who is your main competitor or alternative in this space?");
-    } else if (topicLower.includes("social") || topicLower.includes("twitter") || topicLower.includes("linkedin")) {
-      baseQuestions.push("What platform is this for primarily?");
-      baseQuestions.push("Do you want to encourage engagement (comments, shares, likes)?");
-    }
-    
-    return baseQuestions;
-  };
 
   const handleAnswer = useCallback((answer: string) => {
     const newAnswers = [...answers];
@@ -200,7 +200,7 @@ export default function InterviewPage() {
                     <div className="flex items-start gap-3">
                       <Lightbulb className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-purple-300 text-sm font-medium">You've interviewed about this before!</p>
+                        <p className="text-purple-300 text-sm font-medium">You&rsquo;ve interviewed about this before!</p>
                         <p className="text-slate-400 text-sm mt-1">Similar topic: {similarTopic}</p>
                       </div>
                     </div>
@@ -404,7 +404,7 @@ export default function InterviewPage() {
               
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Interview Complete!</h2>
               <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto">
-                Your digital twin has captured your requirements and preferences. Now let's create something amazing.
+                Your digital twin has captured your requirements and preferences. Now let&rsquo;s create something amazing.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">

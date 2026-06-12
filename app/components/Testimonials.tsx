@@ -95,7 +95,7 @@ export function Testimonials() {
                 </div>
                 {/* Middle: Quote */}
                 <p className="text-slate-300 text-lg leading-relaxed italic mb-4">
-                  "{testimonial.quote}"
+                  &ldquo;{testimonial.quote}&rdquo;
                 </p>
                 {/* Bottom: Stars */}
                 <StarRating />

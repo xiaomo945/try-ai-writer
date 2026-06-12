@@ -17,7 +17,7 @@ export default function PaymentPendingPage() {
         </h1>
         
         <p className="text-lg text-slate-500 mb-8">
-          We're finalizing our payment system. Your subscription will be available shortly.
+          We&rsquo;re finalizing our payment system. Your subscription will be available shortly.
         </p>
         
         <div className="space-y-4">

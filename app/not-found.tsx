@@ -18,8 +18,8 @@ export default function NotFound() {
 
         {/* Subhead */}
         <p className="text-lg text-slate-500 mb-10 leading-relaxed">
-          The page you're looking for doesn't exist or has been moved.
-          No worries—let's get you back on track!
+          The page you&rsquo;re looking for doesn&rsquo;t exist or has been moved.
+          No worries&mdash;let&rsquo;s get you back on track!
         </p>
 
         {/* Buttons */}

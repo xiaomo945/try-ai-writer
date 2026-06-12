@@ -2,6 +2,19 @@
 
 import { useEffect, useRef, ReactNode } from 'react';
 
+function getBaseTransform(element: HTMLElement): string {
+  try {
+    if (!element || !element.classList) return '';
+    const classList = element.classList;
+    if (classList.contains('scroll-reveal-left')) return 'translateX(-30px)';
+    if (classList.contains('scroll-reveal-right')) return 'translateX(30px)';
+    if (classList.contains('scroll-reveal-scale')) return 'scale(0.95)';
+    return 'translateY(20px)';
+  } catch (e) {
+    return '';
+  }
+}
+
 interface ScrollRevealProps {
   children: ReactNode;
   className?: string;
@@ -139,19 +152,6 @@ export function ScrollReveal({
       };
     }
   }, [delay, parallax, parallaxSpeed]);
-
-  const getBaseTransform = (element: HTMLElement): string => {
-    try {
-      if (!element || !element.classList) return '';
-      const classList = element.classList;
-      if (classList.contains('scroll-reveal-left')) return 'translateX(-30px)';
-      if (classList.contains('scroll-reveal-right')) return 'translateX(30px)';
-      if (classList.contains('scroll-reveal-scale')) return 'scale(0.95)';
-      return 'translateY(20px)';
-    } catch (e) {
-      return '';
-    }
-  };
 
   const baseClass = (() => {
     switch (direction) {

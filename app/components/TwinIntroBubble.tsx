@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface TwinIntroBubbleProps {
   onClose?: () => void;
@@ -12,6 +12,15 @@ export function TwinIntroBubble({ onClose, isVisible }: TwinIntroBubbleProps) {
   const [closing, setClosing] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const startClosing = useCallback(() => {
+    setClosing(true);
+    setTimeout(() => {
+      setShowing(false);
+      onClose?.();
+      localStorage.setItem('twin_intro_shown', 'true');
+    }, 400);
+  }, [onClose]);
+
   useEffect(() => {
     if (isVisible) {
       setShowing(true);
@@ -22,16 +31,7 @@ export function TwinIntroBubble({ onClose, isVisible }: TwinIntroBubbleProps) {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [isVisible]);
-
-  const startClosing = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setShowing(false);
-      onClose?.();
-      localStorage.setItem('twin_intro_shown', 'true');
-    }, 400);
-  };
+  }, [isVisible, startClosing]);
 
   const handleClick = () => {
     if (timerRef.current) clearTimeout(timerRef.current);

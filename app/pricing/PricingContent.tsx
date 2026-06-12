@@ -63,11 +63,13 @@ export default function PricingContent() {
     }
 
     if (status === "unauthenticated") {
+      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = "/login?redirect=/pricing";
       return;
     }
 
     if (planKey === "free") {
+      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = "/write";
       return;
     }
@@ -101,6 +103,7 @@ export default function PricingContent() {
       }
 
       console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
+      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = data.url;
     } catch (error) {
       const message = error instanceof Error ? error.message : "未知错误";
