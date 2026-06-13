@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog-index";
@@ -19,9 +20,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.slug || "";
   const post = getBlogPost(slug);
-  const title = post?.title || slug.replaceAll("-", " ");
+  
+  if (!post) {
+    return {
+      title: "Page Not Found | Try AI Writer",
+      description: "The requested page could not be found.",
+    };
+  }
+  
+  const title = post.title || slug.replaceAll("-", " ");
   const description =
-    post?.description ||
+    post.description ||
     "AI writing tips and tutorials to help you write better content faster.";
 
   return {
