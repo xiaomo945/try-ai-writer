@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-06-13T19:21:26.617Z",
+  "totalPosts": 383,
+  "totalDuplicates": 8,
+  "statistics": {
+    "severe": 7,
+    "high": 0,
+    "medium": 0,
+    "low": 1
+  },
+  "duplicates": [
+    {
+      "post1": {
+        "slug": "ai-writing-ai-editing-and-proofreading",
+        "title": "\"AI Editing and Proofreading: Polish Your Content to Perfection\"",
+        "filename": "ai-writing-ai-editing-and-proofreading.md"
+      },
+      "post2": {
+        "slug": "ai-writing-editing-and-proofreading",
+        "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
+        "filename": "ai-writing-editing-and-proofreading.md"
+      },
+      "issues": [
+        {
+          "type": "标签高度重叠",
+          "detail": "标签重叠 100.0%",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-for-influencer-marketing-2026",
+        "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
+        "filename": "ai-writing-for-influencer-marketing-2026.md"
+      },
+      "post2": {
+        "slug": "ai-writing-influencer-marketing-copy",
+        "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
+        "filename": "ai-writing-influencer-marketing-copy.md"
+      },
+      "issues": [
+        {
+          "type": "严重重复",
+          "detail": "标题完全相同",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-for-medium-articles-2026",
+        "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+        "filename": "ai-writing-for-medium-articles-2026.md"
+      },
+      "post2": {
+        "slug": "ai-writing-for-medium-articles",
+        "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
+        "filename": "ai-writing-for-medium-articles.md"
+      },
+      "issues": [
+        {
+          "type": "标签高度重叠",
+          "detail": "标签重叠 100.0%",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-for-pinterest-descriptions-2026",
+        "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
+        "filename": "ai-writing-for-pinterest-descriptions-2026.md"
+      },
+      "post2": {
+        "slug": "ai-writing-for-pinterest-descriptions",
+        "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
+        "filename": "ai-writing-for-pinterest-descriptions.md"
+      },
+      "issues": [
+        {
+          "type": "标签高度重叠",
+          "detail": "标签重叠 100.0%",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-for-podcast-marketing",
+        "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
+        "filename": "ai-writing-for-podcast-marketing.md"
+      },
+      "post2": {
+        "slug": "ai-writing-podcast-marketing-copy",
+        "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
+        "filename": "ai-writing-podcast-marketing-copy.md"
+      },
+      "issues": [
+        {
+          "type": "严重重复",
+          "detail": "标题完全相同",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-master-prompt-engineering",
+        "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
+        "filename": "ai-writing-master-prompt-engineering.md"
+      },
+      "post2": {
+        "slug": "ai-writing-prompt-engineering-master-guide",
+        "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\"",
+        "filename": "ai-writing-prompt-engineering-master-guide.md"
+      },
+      "issues": [
+        {
+          "type": "标签高度重叠",
+          "detail": "标签重叠 100.0%",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-press-release-tutorial",
+        "title": "\"使用AI撰写新闻稿 - 完整教程\"",
+        "filename": "ai-writing-press-release-tutorial.md"
+      },
+      "post2": {
+        "slug": "ai-writing-product-review-tutorial",
+        "title": "\"使用AI撰写可信的产品评论 - 完整指南\"",
+        "filename": "ai-writing-product-review-tutorial.md"
+      },
+      "issues": [
+        {
+          "type": "主题重叠",
+          "detail": "关键短语重叠 100.0%",
+          "score": 100
+        }
+      ],
+      "maxScore": 100,
+      "recommendation": "删除或合并：存在完全重复的内容"
+    },
+    {
+      "post1": {
+        "slug": "ai-writing-for-accountants-2026",
+        "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
+        "filename": "ai-writing-for-accountants-2026.md"
+      },
+      "post2": {
+        "slug": "ai-writing-for-accountants",
+        "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
+        "filename": "ai-writing-for-accountants.md"
+      },
+      "issues": [
+        {
+          "type": "主题重叠",
+          "detail": "关键短语重叠 53.8%",
+          "score": 53.84615384615385
+        }
+      ],
+      "maxScore": 53.84615384615385,
+      "recommendation": "监控：存在一定相似性，建议关注"
+    }
+  ]
+}

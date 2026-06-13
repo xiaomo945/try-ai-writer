@@ -14,7 +14,11 @@
     "submit-to-google": "node scripts/submit-to-google.js",
     "index-now": "node scripts/auto-index.js",
     "index-dry-run": "node scripts/auto-index.js --dry-run",
-    "generate-and-index": "node scripts/generate-and-index.js"
+    "generate-and-index": "node scripts/generate-and-index.js",
+    "check-duplicates": "node scripts/check-duplicate-content.js",
+    "check-topics": "node scripts/check-topic-diversity.js",
+    "generate-links": "node scripts/generate-internal-links.js",
+    "pre-check": "node scripts/pre-generation-check.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.0",
