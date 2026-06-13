@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-06-13T19:22:06.274Z",
+  "timestamp": "2026-06-13T19:31:26.183Z",
   "statistics": {
-    "totalArticles": 383,
-    "totalLinks": 1915,
+    "totalArticles": 376,
+    "totalLinks": 1880,
     "avgLinksPerArticle": 5,
     "hubArticles": [
       {
@@ -27,7 +27,7 @@
       },
       {
         "slug": "ai-writing-tone-optimization",
-        "count": 20,
+        "count": 17,
         "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\""
       },
       {
@@ -37,27 +37,22 @@
       },
       {
         "slug": "how-to-write-blog-posts-with-ai",
-        "count": 10,
+        "count": 12,
         "title": "\"How to Write Blog Posts with AI: The Complete Guide\""
       },
       {
         "slug": "ai-writing-for-instagram-captions-2026",
-        "count": 9,
+        "count": 8,
         "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
       },
       {
         "slug": "ai-writing-for-social-media-marketing",
-        "count": 8,
+        "count": 9,
         "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\""
       },
       {
-        "slug": "ai-writing-master-prompt-engineering",
-        "count": 17,
-        "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\""
-      },
-      {
         "slug": "ai-writing-seo-keyword-integration",
-        "count": 9,
+        "count": 8,
         "title": "\"SEO Keyword Integration in AI Writing: Best Practices\""
       },
       {
@@ -71,9 +66,9 @@
         "title": "\"7 Common AI Writing SEO Mistakes and How to Avoid Them\""
       },
       {
-        "slug": "ai-writing-for-pinterest-descriptions",
-        "count": 11,
-        "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
+        "slug": "ai-writing-for-glossary-pages",
+        "count": 10,
+        "title": "\"AI Writing for Glossary Pages: Define Your Industry Terms\""
       },
       {
         "slug": "ai-writing-ethics-transparency",
@@ -147,7 +142,7 @@
       },
       {
         "slug": "ai-writing-geo-optimization-2026",
-        "count": 9,
+        "count": 10,
         "title": "\"GEO Optimization for AI Writing: How to Rank in AI Search Results\""
       },
       {
@@ -207,7 +202,7 @@
       },
       {
         "slug": "ai-writing-for-tutors",
-        "count": 5,
+        "count": 6,
         "title": "\"AI Writing for Tutors: Lesson Materials and Student Feedback\""
       },
       {
@@ -227,12 +222,12 @@
       },
       {
         "slug": "ai-writing-content-optimization-checklist",
-        "count": 6,
+        "count": 5,
         "title": "\"AI Content Optimization Checklist: Before You Publish\""
       },
       {
         "slug": "ai-writing-ai-research-assistant",
-        "count": 9,
+        "count": 8,
         "title": "\"Using AI as a Research Assistant for Writing\""
       },
       {
@@ -241,28 +236,33 @@
         "title": "\"AI Headline Generator: Write Headlines That Get Clicks\""
       },
       {
-        "slug": "ai-writing-chain-of-thought-prompting",
+        "slug": "ai-writing-ai-rewriting-tool",
         "count": 6,
+        "title": "\"AI Rewriting Tool: Improve Your Existing Content\""
+      },
+      {
+        "slug": "ai-writing-chain-of-thought-prompting",
+        "count": 5,
         "title": "\"Chain of Thought Prompting for Better AI Writing Results\""
       },
       {
         "slug": "ai-writing-prompt-engineering-master-guide",
-        "count": 6,
+        "count": 8,
         "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\""
       },
       {
         "slug": "ai-writing-few-shot-prompting-tutorial",
-        "count": 6,
+        "count": 5,
         "title": "\"Few-Shot Prompting Tutorial: Teach AI Your Writing Style\""
       },
       {
         "slug": "ai-writing-zero-shot-prompting-guide",
-        "count": 7,
+        "count": 6,
         "title": "\"Zero-Shot Prompting Guide: Get Great Results Without Examples\""
       },
       {
         "slug": "ai-writing-prompt-templates-library",
-        "count": 6,
+        "count": 5,
         "title": "\"AI Writing Prompt Templates: 45 Ready-to-Use Prompts\""
       },
       {
@@ -277,8 +277,13 @@
       },
       {
         "slug": "ai-writing-for-newsletter-growth",
-        "count": 8,
+        "count": 7,
         "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\""
+      },
+      {
+        "slug": "ai-writing-for-instagram-carousels",
+        "count": 8,
+        "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\""
       },
       {
         "slug": "ai-writing-argumentation-techniques",
@@ -352,7 +357,7 @@
       },
       {
         "slug": "ai-writing-podcast-marketing-copy",
-        "count": 9,
+        "count": 8,
         "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
       },
       {
@@ -367,7 +372,7 @@
       },
       {
         "slug": "ai-writing-best-practices-2026",
-        "count": 5,
+        "count": 7,
         "title": "\"AI Writing Best Practices: 20 Tips for 2026\""
       },
       {
@@ -417,7 +422,7 @@
       },
       {
         "slug": "ai-writing-for-linkedin-personal-branding",
-        "count": 10,
+        "count": 8,
         "title": "\"AI Writing for LinkedIn: Build Your Personal Brand in 2026\""
       },
       {
@@ -426,19 +431,14 @@
         "title": "\"AI Writing for Meta Descriptions: Click-Through Rate Optimization\""
       },
       {
-        "slug": "ai-writing-for-medium-articles",
-        "count": 9,
-        "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
+        "slug": "ai-writing-for-medium-articles-2026",
+        "count": 12,
+        "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
       },
       {
         "slug": "ai-writing-for-training-development",
         "count": 5,
         "title": "\"AI Writing for Training: Create Effective Learning Materials\""
-      },
-      {
-        "slug": "ai-writing-for-sop-documentation",
-        "count": 14,
-        "title": "\"AI Writing for Standard Operating Procedures: Consistency at Scale\""
       },
       {
         "slug": "ai-writing-for-youtube-creators",
@@ -461,24 +461,9 @@
         "title": "\"Open Source AI Writing Tools vs. Paid: Which Should You Choose?\""
       },
       {
-        "slug": "ai-writing-for-accountants-2026",
-        "count": 5,
-        "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-      },
-      {
         "slug": "ai-writing-for-accountants",
         "count": 14,
         "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\""
-      },
-      {
-        "slug": "ai-writing-for-personal-trainers",
-        "count": 6,
-        "title": "\"AI Writing for Personal Trainers: Workout Plans and Client Motivation\""
-      },
-      {
-        "slug": "ai-writing-for-veterinarians",
-        "count": 6,
-        "title": "\"AI Writing for Veterinarians: Pet Care Guides and Client Emails\""
       },
       {
         "slug": "ai-writing-for-consultants-management",
@@ -492,7 +477,7 @@
       },
       {
         "slug": "ai-writing-for-travel-agents",
-        "count": 9,
+        "count": 10,
         "title": "\"AI Writing for Travel Agents: Itineraries, Promotions, and Reviews\""
       },
       {
@@ -531,9 +516,9 @@
         "title": "\"AI Writing for Agency Pitch Decks: Win More Clients\""
       },
       {
-        "slug": "ai-writing-for-glossary-pages",
-        "count": 8,
-        "title": "\"AI Writing for Glossary Pages: Define Your Industry Terms\""
+        "slug": "ai-writing-for-sop-documentation",
+        "count": 13,
+        "title": "\"AI Writing for Standard Operating Procedures: Consistency at Scale\""
       },
       {
         "slug": "ai-writing-for-troubleshooting-guides",
@@ -547,7 +532,7 @@
       },
       {
         "slug": "ai-writing-for-faq-pages-2026",
-        "count": 7,
+        "count": 8,
         "title": "\"AI Writing for FAQ Pages: Answer Questions Before They're Asked\""
       },
       {
@@ -656,6 +641,16 @@
         "title": "\"AI Writing for DIY Tutorials: Step-by-Step Instructions That Anyone Can Follow\""
       },
       {
+        "slug": "ai-writing-for-personal-trainers",
+        "count": 6,
+        "title": "\"AI Writing for Personal Trainers: Workout Plans and Client Motivation\""
+      },
+      {
+        "slug": "ai-writing-for-veterinarians",
+        "count": 5,
+        "title": "\"AI Writing for Veterinarians: Pet Care Guides and Client Emails\""
+      },
+      {
         "slug": "ai-writing-for-chatbots",
         "count": 12,
         "title": "\"AI Writing for Chatbots: Create Conversations That Convert\""
@@ -692,7 +687,7 @@
       },
       {
         "slug": "ai-writing-for-sales-emails",
-        "count": 6,
+        "count": 8,
         "title": "\"AI Writing for Sales Emails: Outreach Sequences That Get Replies\""
       },
       {
@@ -707,7 +702,7 @@
       },
       {
         "slug": "ai-writing-for-webinar-scripts",
-        "count": 10,
+        "count": 11,
         "title": "\"AI Writing for Webinar Scripts: Registrations and Conversions\""
       },
       {
@@ -766,8 +761,13 @@
         "title": "\"AI Writing for Resume Bullets: Achievements That Get Noticed\""
       },
       {
+        "slug": "ai-writing-for-internal-newsletters",
+        "count": 5,
+        "title": "\"AI Writing for Internal Company Newsletters: Keep Teams Informed and Engaged\""
+      },
+      {
         "slug": "ai-writing-for-youtube-descriptions",
-        "count": 9,
+        "count": 11,
         "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\""
       },
       {
@@ -777,13 +777,8 @@
       },
       {
         "slug": "ai-writing-for-facebook-ads",
-        "count": 9,
+        "count": 8,
         "title": "\"AI Writing for Facebook Ads: Audience Targeting Meets Creative Copy\""
-      },
-      {
-        "slug": "ai-writing-for-instagram-carousels",
-        "count": 7,
-        "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\""
       },
       {
         "slug": "ai-writing-for-training-manuals",
@@ -836,11 +831,6 @@
         "title": "\"AI Writing for Localization: Reach Global Audiences Effectively\""
       },
       {
-        "slug": "ai-writing-for-podcast-show-notes",
-        "count": 7,
-        "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
-      },
-      {
         "slug": "ai-writing-for-substack-newsletters",
         "count": 7,
         "title": "\"AI Writing for Substack: Grow Your Newsletter Audience\""
@@ -856,13 +846,8 @@
         "title": "\"AI Writing for Privacy Policies: GDPR-Compliant Without the Jargon\""
       },
       {
-        "slug": "ai-writing-for-medium-articles-2026",
-        "count": 9,
-        "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
-      },
-      {
         "slug": "ai-writing-for-twitter-threads",
-        "count": 10,
+        "count": 11,
         "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\""
       },
       {
@@ -881,18 +866,13 @@
         "title": "\"AI Writing for Financial Reports: Data-Driven Clarity\""
       },
       {
-        "slug": "ai-writing-for-game-community",
-        "count": 5,
-        "title": "\"AI Writing for Gaming Communities: Posts That Spark Discussion\""
-      },
-      {
         "slug": "ai-writing-for-video-game-dialogue",
         "count": 11,
         "title": "\"AI Writing for Video Game Dialogue: Branching Narratives Made Easy\""
       },
       {
         "slug": "ai-writing-for-tiktok-captions",
-        "count": 7,
+        "count": 8,
         "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\""
       },
       {
@@ -922,7 +902,7 @@
       },
       {
         "slug": "ai-writing-for-pinterest-descriptions-2026",
-        "count": 8,
+        "count": 9,
         "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\""
       },
       {
@@ -1037,10 +1017,6 @@
       {
         "slug": "ai-writing-for-internal-comms",
         "title": "\"AI Writing for Internal Communications: Memos, Updates, and Reports\""
-      },
-      {
-        "slug": "ai-writing-for-job-postings",
-        "title": "\"How to Write Inclusive Job Postings with AI: Attract the Right Talent\""
       },
       {
         "slug": "ai-writing-for-local-businesses",
@@ -1251,13 +1227,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 43.41463414634146,
+          "slug": "ai-writing-content-calendar-integration",
+          "title": "\"AI Writing and Content Calendars: Plan a Month in Minutes\"",
+          "score": 42.926829268292686,
           "reasons": [
-            "标签重叠: Content Creation",
+            "标签重叠: Workflow",
             "同分类: general",
-            "H2关键词重叠: content, templates, content"
+            "H2关键词重叠: content, content, content"
           ]
         }
       ],
@@ -1307,13 +1283,13 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 45.4054054054054,
+          "slug": "ai-writing-for-glossary-pages",
+          "title": "\"AI Writing for Glossary Pages: Define Your Industry Terms\"",
+          "score": 44.680851063829785,
           "reasons": [
-            "标签重叠: SEO",
+            "标签重叠: Content Strategy",
             "同分类: general",
-            "H2关键词重叠: understanding, search, content"
+            "H2关键词重叠: content, page, seo"
           ]
         }
       ],
@@ -2193,14 +2169,14 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 66.61904761904762,
+          "slug": "ai-writing-ai-research-assistant",
+          "title": "\"Using AI as a Research Assistant for Writing\"",
+          "score": 65.71428571428572,
           "reasons": [
             "标签重叠: AI Writing, Tutorial",
             "同分类: general",
-            "H2关键词重叠: templates, content, types",
-            "发布时间相近: 3天"
+            "H2关键词重叠: step, step, advanced",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -2254,13 +2230,13 @@
           ]
         },
         {
-          "slug": "ai-writing-ai-outline-generator",
-          "title": "\"AI Outline Generator: Structure Your Writing for Maximum Impact\"",
-          "score": 65.71428571428572,
+          "slug": "ai-writing-chain-of-thought-prompting",
+          "title": "\"Chain of Thought Prompting for Better AI Writing Results\"",
+          "score": 65.16129032258064,
           "reasons": [
             "标签重叠: AI Writing, Tutorial",
             "同分类: general",
-            "H2关键词重叠: step, step, advanced",
+            "H2关键词重叠: use, step, step",
             "发布时间相近: 0天"
           ]
         }
@@ -2432,13 +2408,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 53.84615384615385,
+          "slug": "ai-writing-for-instagram-carousels",
+          "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
+          "score": 53.75,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: content, content, content",
+            "H2关键词重叠: content, content, using",
             "发布时间相近: 0天"
           ]
         }
@@ -2912,13 +2888,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 54,
+          "slug": "ai-writing-collaboration-workflow",
+          "title": "\"AI Writing Collaboration: Human-AI Workflow Best Practices\"",
+          "score": 53.63636363636364,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: prompt, engineering, related",
+            "H2关键词重叠: quality, assurance, related",
             "发布时间相近: 0天"
           ]
         }
@@ -3151,13 +3127,13 @@
           ]
         },
         {
-          "slug": "ai-writing-ai-research-assistant",
-          "title": "\"Using AI as a Research Assistant for Writing\"",
-          "score": 65.16129032258064,
+          "slug": "ai-writing-prompt-templates-library",
+          "title": "\"AI Writing Prompt Templates: 45 Ready-to-Use Prompts\"",
+          "score": 61.81818181818182,
           "reasons": [
             "标签重叠: AI Writing, Tutorial",
             "同分类: general",
-            "H2关键词重叠: step, step, advanced",
+            "H2关键词重叠: use, related, articles",
             "发布时间相近: 0天"
           ]
         }
@@ -3395,13 +3371,13 @@
           ]
         },
         {
-          "slug": "ai-writing-editing-and-proofreading",
-          "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-          "score": 54.54545454545455,
+          "slug": "ai-writing-tools-predictions-2027",
+          "title": "\"AI Writing Tools in 2027: 10 Predictions for the Future\"",
+          "score": 54.11764705882353,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: human, building, workflows",
+            "H2关键词重叠: collaboration, collaboration, collaboration",
             "发布时间相近: 0天"
           ]
         }
@@ -3534,25 +3510,14 @@
       "title": "\"AI Content Optimization Checklist: Before You Publish\"",
       "links": [
         {
-          "slug": "ai-writing-editing-and-proofreading",
-          "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-          "score": 63.84615384615385,
-          "reasons": [
-            "标签重叠: Content Quality, AI Writing",
-            "同分类: general",
-            "H2关键词重叠: review, review, review",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 61.951219512195124,
+          "slug": "ai-writing-for-medium-articles-2026",
+          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+          "score": 60.666666666666664,
           "reasons": [
             "标签重叠: AI Writing, Publishing",
             "同分类: general",
-            "H2关键词重叠: publication, final, related",
-            "发布时间相近: 0天"
+            "H2关键词重叠: related, articles",
+            "发布时间相近: 1天"
           ]
         },
         {
@@ -3585,6 +3550,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: framework, quality, quality",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-impact-on-publishing",
+          "title": "\"AI's Impact on Publishing: From Blogs to Books\"",
+          "score": 53.07692307692308,
+          "reasons": [
+            "标签重叠: Publishing",
+            "同分类: general",
+            "H2关键词重叠: quality, quality, related",
             "发布时间相近: 0天"
           ]
         }
@@ -3647,67 +3623,6 @@
             "同分类: general",
             "H2关键词重叠: content, practical, tips",
             "发布时间相近: 0天"
-          ]
-        }
-      ],
-      "count": 5
-    },
-    "ai-writing-editing-and-proofreading": {
-      "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-      "links": [
-        {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 55.45454545454545,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: types, effective, common",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-tone-optimization",
-          "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\"",
-          "score": 53.57142857142857,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: types, common, building",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-content-calendar-integration",
-          "title": "\"AI Writing and Content Calendars: Plan a Month in Minutes\"",
-          "score": 53.333333333333336,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: common, building, related",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-sop-documentation",
-          "title": "\"AI Writing for Standard Operating Procedures: Consistency at Scale\"",
-          "score": 53.256410256410255,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: types, effective, common",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
-          "slug": "ai-writing-prompt-templates-library",
-          "title": "\"AI Writing Prompt Templates: 45 Ready-to-Use Prompts\"",
-          "score": 53.24242424242424,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: editing, editing, editing",
-            "发布时间相近: 3天"
           ]
         }
       ],
@@ -4245,63 +4160,6 @@
       ],
       "count": 5
     },
-    "ai-writing-for-accountants-2026": {
-      "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-      "links": [
-        {
-          "slug": "ai-writing-for-accountants",
-          "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
-          "score": 63.8,
-          "reasons": [
-            "标签重叠: accountants, tax tips",
-            "同分类: general",
-            "H2关键词重叠: writing, tax, content",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-personal-trainers",
-          "title": "\"AI Writing for Personal Trainers: Workout Plans and Client Motivation\"",
-          "score": 52.631578947368425,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, professionals, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-veterinarians",
-          "title": "\"AI Writing for Veterinarians: Pet Care Guides and Client Emails\"",
-          "score": 52.631578947368425,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, content, client",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-beauty-professionals",
-          "title": "\"AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips\"",
-          "score": 51.578947368421055,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, professionals, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-nutritionists-2026",
-          "title": "\"AI Writing for Nutritionists: Meal Plans and Wellness Content\"",
-          "score": 51.578947368421055,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, professionals, content",
-            "发布时间相近: 0天"
-          ]
-        }
-      ],
-      "count": 5
-    },
     "ai-writing-for-accountants": {
       "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
       "links": [
@@ -4489,17 +4347,6 @@
       "title": "\"AI Writing for Affiliate Marketing: Reviews and Promotions\"",
       "links": [
         {
-          "slug": "ai-writing-for-podcast-marketing",
-          "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-          "score": 58.333333333333336,
-          "reasons": [
-            "标签重叠: AI Content",
-            "同分类: general",
-            "H2关键词重叠: content, challenge, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-video-marketing-2026",
           "title": "\"AI Video Marketing Writing: Thumbnails, Descriptions, and CTAs\"",
           "score": 55.21739130434783,
@@ -4522,16 +4369,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-influencer-marketing-2026",
-          "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-          "score": 48.69565217391305,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: content, challenge, strategies",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-ecommerce",
           "title": "\"AI Writing for E-commerce: Product Descriptions That Convert\"",
           "score": 48.42424242424243,
@@ -4539,6 +4376,26 @@
             "同分类: general",
             "H2关键词重叠: content, challenge, product",
             "发布时间相近: 2天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-travel-agents",
+          "title": "\"AI Writing for Travel Agents: Itineraries, Promotions, and Reviews\"",
+          "score": 48,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, creating, reviews",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-accountants",
+          "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
+          "score": 47.2,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, challenge, creating",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -6706,13 +6563,13 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 55.945945945945944,
+          "slug": "ai-writing-analytics-and-optimization",
+          "title": "\"AI Writing Analytics: Track Performance and Iterate\"",
+          "score": 55.714285714285715,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: types, using, best",
+            "H2关键词重叠: communication, communication, using",
             "发布时间相近: 0天"
           ]
         }
@@ -7308,9 +7165,9 @@
           ]
         },
         {
-          "slug": "ai-writing-for-accountants-2026",
-          "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-          "score": 51.578947368421055,
+          "slug": "ai-writing-for-esports-content",
+          "title": "\"AI Writing for Esports: Match Recaps and Player Profiles\"",
+          "score": 50,
           "reasons": [
             "同分类: general",
             "H2关键词重叠: writing, practices, content",
@@ -7685,17 +7542,6 @@
       "title": "\"How to Write an eBook with AI: From Outline to Publication\"",
       "links": [
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 65.86046511627907,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing, Publishing",
-            "同分类: general",
-            "H2关键词重叠: formatting, publication, related",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-webinar-scripts",
           "title": "\"AI Writing for Webinar Scripts: Registrations and Conversions\"",
           "score": 65.86046511627907,
@@ -7704,6 +7550,17 @@
             "同分类: general",
             "H2关键词重叠: creating, writing, related",
             "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-medium-articles-2026",
+          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+          "score": 65.06201550387597,
+          "reasons": [
+            "标签重叠: AI Writing, Content Marketing, Publishing",
+            "同分类: general",
+            "H2关键词重叠: writing, related, articles",
+            "发布时间相近: 1天"
           ]
         },
         {
@@ -8311,16 +8168,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-dentists",
-          "title": "\"AI Writing for Dentists: Patient Education and Practice Marketing\"",
-          "score": 47.77777777777778,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: content, writing, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-nutritionists-2026",
           "title": "\"AI Writing for Nutritionists: Meal Plans and Wellness Content\"",
           "score": 47.77777777777778,
@@ -8333,6 +8180,16 @@
         {
           "slug": "ai-writing-for-personal-trainers",
           "title": "\"AI Writing for Personal Trainers: Workout Plans and Client Motivation\"",
+          "score": 47.77777777777778,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, writing, content",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-tutors",
+          "title": "\"AI Writing for Tutors: Lesson Materials and Student Feedback\"",
           "score": 47.77777777777778,
           "reasons": [
             "同分类: general",
@@ -8418,17 +8275,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-podcast-marketing",
-          "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-          "score": 54.827586206896555,
-          "reasons": [
-            "标签重叠: AI Content",
-            "同分类: general",
-            "H2关键词重叠: optimization, marketing, optimization",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-event-planners",
           "title": "\"AI Writing for Event Planners: Invitations, Agendas, and Promotions\"",
           "score": 46.56321839080459,
@@ -8455,6 +8301,16 @@
           "reasons": [
             "同分类: general",
             "H2关键词重叠: writing, page, registration",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-social-media-marketing",
+          "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\"",
+          "score": 44.827586206896555,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: writing, optimization, specific",
             "发布时间相近: 0天"
           ]
         }
@@ -8598,17 +8454,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 57.567567567567565,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: understanding, high, using",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-landing-page-headlines",
           "title": "\"How to Write Landing Page Headlines That Convert: AI-Powered A/B Testing\"",
           "score": 57.3170731707317,
@@ -8638,6 +8483,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: using, formulas, work",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-internal-newsletters",
+          "title": "\"AI Writing for Internal Company Newsletters: Keep Teams Informed and Engaged\"",
+          "score": 56.666666666666664,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, best, practices",
             "发布时间相近: 0天"
           ]
         }
@@ -9320,16 +9176,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-accountants-2026",
-          "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-          "score": 48,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: content, writing, prompts",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-beauty-professionals",
           "title": "\"AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips\"",
           "score": 48,
@@ -9352,6 +9198,16 @@
         {
           "slug": "ai-writing-for-nutritionists-2026",
           "title": "\"AI Writing for Nutritionists: Meal Plans and Wellness Content\"",
+          "score": 48,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, writing, prompts",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-personal-trainers",
+          "title": "\"AI Writing for Personal Trainers: Workout Plans and Client Motivation\"",
           "score": 48,
           "reasons": [
             "同分类: general",
@@ -9409,8 +9265,8 @@
           ]
         },
         {
-          "slug": "ai-writing-for-accountants-2026",
-          "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
+          "slug": "ai-writing-for-beauty-professionals",
+          "title": "\"AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips\"",
           "score": 46,
           "reasons": [
             "同分类: general",
@@ -9503,16 +9359,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-accountants-2026",
-          "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-          "score": 47,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: marketing, prompts, marketing",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-beauty-professionals",
           "title": "\"AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips\"",
           "score": 47,
@@ -9525,6 +9371,16 @@
         {
           "slug": "ai-writing-for-dentists",
           "title": "\"AI Writing for Dentists: Patient Education and Practice Marketing\"",
+          "score": 47,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: marketing, prompts, marketing",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-nutritionists-2026",
+          "title": "\"AI Writing for Nutritionists: Meal Plans and Wellness Content\"",
           "score": 47,
           "reasons": [
             "同分类: general",
@@ -9642,14 +9498,14 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 52.24324324324324,
+          "slug": "ai-writing-geo-optimization-2026",
+          "title": "\"GEO Optimization for AI Writing: How to Rank in AI Search Results\"",
+          "score": 51.904761904761905,
           "reasons": [
             "标签重叠: SEO",
             "同分类: general",
-            "H2关键词重叠: anatomy, seo, best",
-            "发布时间相近: 3天"
+            "H2关键词重叠: related, articles",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -10188,67 +10044,6 @@
       ],
       "count": 5
     },
-    "ai-writing-for-influencer-marketing-2026": {
-      "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-      "links": [
-        {
-          "slug": "ai-writing-for-social-media-marketing",
-          "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\"",
-          "score": 55.21739130434783,
-          "reasons": [
-            "标签重叠: Social Media",
-            "同分类: general",
-            "H2关键词重叠: content, creation, strategies",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-tiktok-captions",
-          "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\"",
-          "score": 53.2,
-          "reasons": [
-            "标签重叠: Social Media",
-            "同分类: general",
-            "H2关键词重叠: caption, generation, related",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-instagram-captions-2026",
-          "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\"",
-          "score": 52.247311827956985,
-          "reasons": [
-            "标签重叠: Social Media",
-            "同分类: general",
-            "H2关键词重叠: caption, building, related",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-linkedin-personal-branding",
-          "title": "\"AI Writing for LinkedIn: Build Your Personal Brand in 2026\"",
-          "score": 52.06666666666666,
-          "reasons": [
-            "标签重叠: Social Media",
-            "同分类: general",
-            "H2关键词重叠: content, related, articles",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-instagram-carousels",
-          "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
-          "score": 51.875,
-          "reasons": [
-            "标签重叠: Social Media",
-            "同分类: general",
-            "H2关键词重叠: content, related, articles",
-            "发布时间相近: 0天"
-          ]
-        }
-      ],
-      "count": 5
-    },
     "ai-writing-for-influencer-marketing": {
       "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\"",
       "links": [
@@ -10480,13 +10275,13 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 56.486486486486484,
+          "slug": "ai-writing-for-sales-emails",
+          "title": "\"AI Writing for Sales Emails: Outreach Sequences That Get Replies\"",
+          "score": 56.470588235294116,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: using, content, high",
+            "H2关键词重叠: fail, using, writing",
             "发布时间相近: 0天"
           ]
         }
@@ -10698,17 +10493,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-facebook-ads",
-          "title": "\"AI Writing for Facebook Ads: Audience Targeting Meets Creative Copy\"",
-          "score": 56.666666666666664,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: using, best, practices",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-quora-answers",
           "title": "\"Using AI to Write Quora Answers That Rank on Google\"",
           "score": 56.666666666666664,
@@ -10727,6 +10511,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: anatomy, using, best",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-youtube-descriptions",
+          "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
+          "score": 56.111111111111114,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, templates, best",
             "发布时间相近: 0天"
           ]
         }
@@ -10892,17 +10687,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 56.34146341463415,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: common, using, write",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-newsletter-growth",
           "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\"",
           "score": 56.34146341463415,
@@ -10910,6 +10694,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: matter, common, using",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-quora-answers",
+          "title": "\"Using AI to Write Quora Answers That Rank on Google\"",
+          "score": 56.34146341463415,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: common, using, write",
             "发布时间相近: 0天"
           ]
         }
@@ -11025,13 +10820,13 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
+          "slug": "ai-writing-for-youtube-descriptions",
+          "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
           "score": 57.3170731707317,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: headlines, understanding, headlines",
+            "H2关键词重叠: matter, convert, using",
             "发布时间相近: 0天"
           ]
         }
@@ -11208,13 +11003,13 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 58.29268292682927,
+          "slug": "ai-writing-for-sales-emails",
+          "title": "\"AI Writing for Sales Emails: Outreach Sequences That Get Replies\"",
+          "score": 58.23529411764706,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: articles, understanding, articles",
+            "H2关键词重叠: articles, articles, using",
             "发布时间相近: 0天"
           ]
         }
@@ -11269,14 +11064,14 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 56.06666666666666,
+          "slug": "ai-writing-for-tiktok-content",
+          "title": "\"AI Writing for TikTok: Scripts That Go Viral\"",
+          "score": 55.88235294117647,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: content, matters, types",
-            "发布时间相近: 1天"
+            "H2关键词重叠: content, help, best",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -11769,17 +11564,6 @@
       "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
       "links": [
         {
-          "slug": "ai-writing-for-ebooks-2026",
-          "title": "\"How to Write an eBook with AI: From Outline to Publication\"",
-          "score": 65.9922480620155,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing, Publishing",
-            "同分类: general",
-            "H2关键词重叠: writing, writing, articles",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-pinterest-descriptions-2026",
           "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
           "score": 65.58139534883722,
@@ -11822,66 +11606,16 @@
             "H2关键词重叠: using, common, mistakes",
             "发布时间相近: 1天"
           ]
-        }
-      ],
-      "count": 5
-    },
-    "ai-writing-for-medium-articles": {
-      "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-      "links": [
-        {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 69.26829268292683,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: understanding, using, best",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-quora-answers",
-          "title": "\"Using AI to Write Quora Answers That Rank on Google\"",
-          "score": 67.8048780487805,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: using, write, best",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-podcast-show-notes",
-          "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\"",
-          "score": 66.08695652173913,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: using, best, practices",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-tone-optimization",
-          "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\"",
-          "score": 63.90243902439025,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: understanding, content, types",
-            "发布时间相近: 0天"
-          ]
         },
         {
           "slug": "ai-writing-for-webinar-scripts",
           "title": "\"AI Writing for Webinar Scripts: Registrations and Conversions\"",
-          "score": 58.926829268292686,
+          "score": 60.166666666666664,
           "reasons": [
             "标签重叠: AI Writing, Content Marketing",
             "同分类: general",
-            "H2关键词重叠: success, common, mistakes",
-            "发布时间相近: 0天"
+            "H2关键词重叠: writing, common, mistakes",
+            "发布时间相近: 1天"
           ]
         }
       ],
@@ -12320,17 +12054,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 57.567567567567565,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: success, using, using",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-facebook-ads",
           "title": "\"AI Writing for Facebook Ads: Audience Targeting Meets Creative Copy\"",
           "score": 57.42857142857143,
@@ -12349,6 +12072,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: using, using, templates",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-twitter-threads",
+          "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
+          "score": 57.42857142857143,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: success, using, using",
             "发布时间相近: 0天"
           ]
         }
@@ -13098,16 +12832,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-game-community",
-          "title": "\"AI Writing for Gaming Communities: Posts That Spark Discussion\"",
-          "score": 48,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, content, prompts",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-fitness-trainers",
           "title": "\"AI Writing for Fitness Trainers: Programs, Nutrition, and Client Engagement\"",
           "score": 47.46153846153846,
@@ -13125,6 +12849,16 @@
             "同分类: general",
             "H2关键词重叠: creation, content, content",
             "发布时间相近: 3天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-financial-planners",
+          "title": "\"AI Writing for Financial Planners: Building Trust Through Content\"",
+          "score": 46.666666666666664,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, prompts, content",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -13321,17 +13055,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 65.24806201550388,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: using, write, content",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
           "slug": "ai-writing-seo-keyword-integration",
           "title": "\"SEO Keyword Integration in AI Writing: Best Practices\"",
           "score": 64.31782945736434,
@@ -13363,66 +13086,16 @@
             "H2关键词重叠: content, types, different",
             "发布时间相近: 1天"
           ]
-        }
-      ],
-      "count": 5
-    },
-    "ai-writing-for-pinterest-descriptions": {
-      "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-      "links": [
-        {
-          "slug": "ai-writing-for-quora-answers",
-          "title": "\"Using AI to Write Quora Answers That Rank on Google\"",
-          "score": 79.1891891891892,
-          "reasons": [
-            "标签重叠: SEO, AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: anatomy, ranking, using",
-            "发布时间相近: 0天"
-          ]
         },
         {
-          "slug": "ai-writing-seo-keyword-integration",
-          "title": "\"SEO Keyword Integration in AI Writing: Best Practices\"",
-          "score": 65.4054054054054,
-          "reasons": [
-            "标签重叠: SEO, AI Writing",
-            "同分类: general",
-            "H2关键词重叠: understanding, using, seo",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-podcast-show-notes",
-          "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\"",
-          "score": 65.21739130434783,
+          "slug": "ai-writing-for-webinar-scripts",
+          "title": "\"AI Writing for Webinar Scripts: Registrations and Conversions\"",
+          "score": 60.78294573643411,
           "reasons": [
             "标签重叠: AI Writing, Content Marketing",
             "同分类: general",
-            "H2关键词重叠: anatomy, using, best",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-medium-articles-2026",
-          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
-          "score": 64.66666666666667,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: understanding, using, types",
+            "H2关键词重叠: high, writing, common",
             "发布时间相近: 1天"
-          ]
-        },
-        {
-          "slug": "ai-writing-tone-optimization",
-          "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\"",
-          "score": 63.78378378378378,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: understanding, content, types",
-            "发布时间相近: 0天"
           ]
         }
       ],
@@ -13489,78 +13162,9 @@
       ],
       "count": 5
     },
-    "ai-writing-for-podcast-marketing": {
-      "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-      "links": [
-        {
-          "slug": "ai-writing-for-video-marketing-2026",
-          "title": "\"AI Video Marketing Writing: Thumbnails, Descriptions, and CTAs\"",
-          "score": 54.166666666666664,
-          "reasons": [
-            "标签重叠: AI Content",
-            "同分类: general",
-            "H2关键词重叠: content, performance, optimization",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-podcast-show-notes",
-          "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\"",
-          "score": 53.91304347826087,
-          "reasons": [
-            "标签重叠: Show Notes",
-            "同分类: general",
-            "H2关键词重叠: podcast, show, notes",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-content-marketing-strategy",
-          "title": "\"AI Writing for Content Marketing Strategy: From Planning to Publishing\"",
-          "score": 47.5,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: marketing, content, marketing",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-podcast-marketing-copy",
-          "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-          "score": 46,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: podcast, marketing, show",
-            "发布时间相近: 7天"
-          ]
-        },
-        {
-          "slug": "ai-writing-impact-on-publishing",
-          "title": "\"AI's Impact on Publishing: From Blogs to Books\"",
-          "score": 45.833333333333336,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: marketing, content, marketing",
-            "发布时间相近: 0天"
-          ]
-        }
-      ],
-      "count": 5
-    },
     "ai-writing-for-podcast-scripts": {
       "title": "\"AI Writing for Podcast Scripts: Episodes That Engage\"",
       "links": [
-        {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 59.03030303030303,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation",
-            "同分类: general",
-            "H2关键词重叠: types, content, effective",
-            "发布时间相近: 0天"
-          ]
-        },
         {
           "slug": "ai-writing-for-video-scripts-2026",
           "title": "\"Video Script Writing with AI: YouTube, TikTok, and Reels\"",
@@ -13570,6 +13174,17 @@
             "同分类: general",
             "H2关键词重叠: understanding, content, writing",
             "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-prompt-engineering-master-guide",
+          "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\"",
+          "score": 58.63636363636364,
+          "reasons": [
+            "标签重叠: AI Writing, Content Creation",
+            "同分类: general",
+            "H2关键词重叠: writing, writing, writing",
+            "发布时间相近: 3天"
           ]
         },
         {
@@ -15574,20 +15189,20 @@
           ]
         },
         {
-          "slug": "ai-writing-for-instagram-carousels",
-          "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
+          "slug": "ai-writing-for-twitter-threads",
+          "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
           "score": 56.470588235294116,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: fail, using, writing",
+            "H2关键词重叠: anatomy, using, best",
             "发布时间相近: 0天"
           ]
         },
         {
-          "slug": "ai-writing-for-twitter-threads",
-          "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
-          "score": 56.470588235294116,
+          "slug": "ai-writing-for-quora-answers",
+          "title": "\"Using AI to Write Quora Answers That Rank on Google\"",
+          "score": 56.111111111111114,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
@@ -15793,14 +15408,14 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 55.945945945945944,
+          "slug": "ai-writing-for-pinterest-descriptions-2026",
+          "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
+          "score": 55.713178294573645,
           "reasons": [
             "标签重叠: Content Marketing",
             "同分类: general",
-            "H2关键词重叠: understanding, seo, content",
-            "发布时间相近: 0天"
+            "H2关键词重叠: seo, writing, traffic",
+            "发布时间相近: 1天"
           ]
         },
         {
@@ -16131,13 +15746,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 53.1578947368421,
+          "slug": "ai-writing-for-instagram-carousels",
+          "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
+          "score": 53.125,
           "reasons": [
-            "标签重叠: Content Creation",
+            "标签重叠: Social Media",
             "同分类: general",
-            "H2关键词重叠: content, related, articles",
+            "H2关键词重叠: writing, content, performance",
             "发布时间相近: 0天"
           ]
         }
@@ -16220,17 +15835,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 56.00813008130081,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: using, write, types",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-substack-newsletters",
           "title": "\"AI Writing for Substack: Grow Your Newsletter Audience\"",
           "score": 55.64102564102564,
@@ -16249,6 +15853,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: anatomy, using, write",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-medium-articles-2026",
+          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+          "score": 55.5,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, types, prompts",
             "发布时间相近: 0天"
           ]
         },
@@ -17079,17 +16694,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-linkedin-personal-branding",
-          "title": "\"AI Writing for LinkedIn: Build Your Personal Brand in 2026\"",
-          "score": 55.88235294117647,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: content, help, best",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-facebook-ads",
           "title": "\"AI Writing for Facebook Ads: Audience Targeting Meets Creative Copy\"",
           "score": 55.549019607843135,
@@ -17108,6 +16712,17 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: using, content, pillars",
+            "发布时间相近: 1天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-instagram-carousels",
+          "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
+          "score": 54.96078431372549,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, generate, content",
             "发布时间相近: 1天"
           ]
         }
@@ -17428,32 +17043,12 @@
           ]
         },
         {
-          "slug": "ai-writing-for-accountants-2026",
-          "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-          "score": 48.421052631578945,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, content, prompts",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-game-community",
           "title": "\"AI Writing for Gaming Communities: Posts That Spark Discussion\"",
           "score": 48,
           "reasons": [
             "同分类: general",
             "H2关键词重叠: writing, content, prompts",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-esports-content",
-          "title": "\"AI Writing for Esports: Match Recaps and Player Profiles\"",
-          "score": 47.77777777777778,
-          "reasons": [
-            "同分类: general",
-            "H2关键词重叠: writing, content, content",
             "发布时间相近: 0天"
           ]
         },
@@ -17466,6 +17061,26 @@
             "H2关键词重叠: content, content, best",
             "发布时间相近: 3天"
           ]
+        },
+        {
+          "slug": "ai-writing-for-financial-planners",
+          "title": "\"AI Writing for Financial Planners: Building Trust Through Content\"",
+          "score": 46.666666666666664,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, prompts, content",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-ecommerce",
+          "title": "\"AI Writing for E-commerce: Product Descriptions That Convert\"",
+          "score": 46.333333333333336,
+          "reasons": [
+            "同分类: general",
+            "H2关键词重叠: content, content, best",
+            "发布时间相近: 5天"
+          ]
         }
       ],
       "count": 5
@@ -17473,17 +17088,6 @@
     "ai-writing-for-twitter-threads": {
       "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
       "links": [
-        {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 57.027027027027025,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: anatomy, using, formulas",
-            "发布时间相近: 0天"
-          ]
-        },
         {
           "slug": "ai-writing-for-youtube-descriptions",
           "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
@@ -17507,17 +17111,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-newsletter-growth",
-          "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\"",
-          "score": 56.285714285714285,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: using, best, practices",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-linkedin-articles",
           "title": "\"Writing LinkedIn Articles with AI: Establish Thought Leadership\"",
           "score": 56.06060606060606,
@@ -17525,6 +17118,28 @@
             "标签重叠: AI Writing",
             "同分类: general",
             "H2关键词重叠: work, using, work",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-job-postings",
+          "title": "\"How to Write Inclusive Job Postings with AI: Attract the Right Talent\"",
+          "score": 55.853658536585364,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, write, best",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-landing-page-headlines",
+          "title": "\"How to Write Landing Page Headlines That Convert: AI-Powered A/B Testing\"",
+          "score": 55.853658536585364,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: using, formulas, best",
             "发布时间相近: 0天"
           ]
         }
@@ -18080,28 +17695,6 @@
       "title": "\"AI Writing for Webinar Scripts: Registrations and Conversions\"",
       "links": [
         {
-          "slug": "ai-writing-for-pinterest-descriptions-2026",
-          "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
-          "score": 60.78294573643411,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: writing, measuring, success",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
-          "slug": "ai-writing-for-medium-articles-2026",
-          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
-          "score": 59.166666666666664,
-          "reasons": [
-            "标签重叠: AI Writing, Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: writing, measuring, success",
-            "发布时间相近: 1天"
-          ]
-        },
-        {
           "slug": "ai-writing-tone-optimization",
           "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\"",
           "score": 58,
@@ -18132,6 +17725,28 @@
             "同分类: general",
             "H2关键词重叠: writing, copy, creating",
             "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-faq-pages-2026",
+          "title": "\"AI Writing for FAQ Pages: Answer Questions Before They're Asked\"",
+          "score": 53.31884057971014,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: writing, page, creating",
+            "发布时间相近: 1天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-glossary-pages",
+          "title": "\"AI Writing for Glossary Pages: Define Your Industry Terms\"",
+          "score": 53.198581560283685,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: writing, page, creating",
+            "发布时间相近: 1天"
           ]
         }
       ],
@@ -18452,17 +18067,6 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 62.666666666666664,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation",
-            "同分类: general",
-            "H2关键词重叠: templates, common, related",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-youtube-thumbnails",
           "title": "\"AI Writing for YouTube Thumbnails and Titles: Boost Click-Through Rate\"",
           "score": 62.52380952380952,
@@ -18471,6 +18075,17 @@
             "同分类: general",
             "H2关键词重叠: matter, using, common",
             "发布时间相近: 1天"
+          ]
+        },
+        {
+          "slug": "ai-writing-prompt-engineering-master-guide",
+          "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\"",
+          "score": 62.333333333333336,
+          "reasons": [
+            "标签重叠: AI Writing, Content Creation",
+            "同分类: general",
+            "H2关键词重叠: common, mistakes, measuring",
+            "发布时间相近: 3天"
           ]
         },
         {
@@ -19210,17 +18825,6 @@
       "title": "\"AI's Impact on Marketing: Personalization at Scale\"",
       "links": [
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 53.78378378378378,
-          "reasons": [
-            "标签重叠: Content Marketing",
-            "同分类: general",
-            "H2关键词重叠: content, seo, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-tone-optimization",
           "title": "\"AI Writing Tone Optimization: Match Any Brand Voice\"",
           "score": 53.57142857142857,
@@ -19232,14 +18836,14 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 52.926829268292686,
+          "slug": "ai-writing-for-pinterest-descriptions-2026",
+          "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
+          "score": 52.922480620155035,
           "reasons": [
             "标签重叠: Content Marketing",
             "同分类: general",
-            "H2关键词重叠: content, content, strategy",
-            "发布时间相近: 0天"
+            "H2关键词重叠: content, seo, content",
+            "发布时间相近: 1天"
           ]
         },
         {
@@ -19263,6 +18867,17 @@
             "H2关键词重叠: content, content, measuring",
             "发布时间相近: 0天"
           ]
+        },
+        {
+          "slug": "ai-writing-for-medium-articles-2026",
+          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+          "score": 51.166666666666664,
+          "reasons": [
+            "标签重叠: Content Marketing",
+            "同分类: general",
+            "H2关键词重叠: measuring, related, articles",
+            "发布时间相近: 1天"
+          ]
         }
       ],
       "count": 5
@@ -19270,28 +18885,6 @@
     "ai-writing-impact-on-publishing": {
       "title": "\"AI's Impact on Publishing: From Blogs to Books\"",
       "links": [
-        {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 52.608695652173914,
-          "reasons": [
-            "标签重叠: Content Creation",
-            "同分类: general",
-            "H2关键词重叠: content, related, articles",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
-          "slug": "ai-writing-content-optimization-checklist",
-          "title": "\"AI Content Optimization Checklist: Before You Publish\"",
-          "score": 52.30769230769231,
-          "reasons": [
-            "标签重叠: Publishing",
-            "同分类: general",
-            "H2关键词重叠: quality, related, articles",
-            "发布时间相近: 0天"
-          ]
-        },
         {
           "slug": "ai-writing-for-instagram-captions-2026",
           "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\"",
@@ -19304,17 +18897,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-medium-articles",
-          "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-          "score": 51.951219512195124,
-          "reasons": [
-            "标签重叠: Publishing",
-            "同分类: general",
-            "H2关键词重叠: content, curation, related",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-tools-affordable",
           "title": "\"Affordable AI Writing Tools That Don't Suck (2026 Edition)\"",
           "score": 51.94202898550725,
@@ -19323,6 +18905,39 @@
             "同分类: general",
             "H2关键词重叠: quality, related, articles",
             "发布时间相近: 2天"
+          ]
+        },
+        {
+          "slug": "how-to-write-blog-posts-with-ai",
+          "title": "\"How to Write Blog Posts with AI: The Complete Guide\"",
+          "score": 51.94202898550725,
+          "reasons": [
+            "标签重叠: Content Creation",
+            "同分类: general",
+            "H2关键词重叠: human, related, articles",
+            "发布时间相近: 2天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-medium-articles-2026",
+          "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
+          "score": 51.666666666666664,
+          "reasons": [
+            "标签重叠: Publishing",
+            "同分类: general",
+            "H2关键词重叠: engagement, curation, related",
+            "发布时间相近: 1天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-tiktok-captions",
+          "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\"",
+          "score": 51.6,
+          "reasons": [
+            "标签重叠: Content Creation",
+            "同分类: general",
+            "H2关键词重叠: related, articles",
+            "发布时间相近: 0天"
           ]
         }
       ],
@@ -19683,67 +19298,6 @@
             "同分类: general",
             "H2关键词重叠: helps, workflows, best",
             "发布时间相近: 0天"
-          ]
-        }
-      ],
-      "count": 5
-    },
-    "ai-writing-master-prompt-engineering": {
-      "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-      "links": [
-        {
-          "slug": "ai-writing-zero-shot-prompting-guide",
-          "title": "\"Zero-Shot Prompting Guide: Get Great Results Without Examples\"",
-          "score": 77,
-          "reasons": [
-            "标签重叠: AI Writing, Prompt Engineering, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: prompt, effective, templates",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
-          "slug": "ai-writing-few-shot-prompting-tutorial",
-          "title": "\"Few-Shot Prompting Tutorial: Teach AI Your Writing Style\"",
-          "score": 76.5,
-          "reasons": [
-            "标签重叠: AI Writing, Prompt Engineering, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: prompt, templates, common",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
-          "slug": "ai-writing-ai-research-assistant",
-          "title": "\"Using AI as a Research Assistant for Writing\"",
-          "score": 75.3157894736842,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: prompt, advanced, prompt",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
-          "slug": "ai-writing-chain-of-thought-prompting",
-          "title": "\"Chain of Thought Prompting for Better AI Writing Results\"",
-          "score": 73.51612903225806,
-          "reasons": [
-            "标签重叠: AI Writing, Prompt Engineering, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: common, content, types",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
-          "slug": "ai-writing-prompt-templates-library",
-          "title": "\"AI Writing Prompt Templates: 45 Ready-to-Use Prompts\"",
-          "score": 72.03030303030303,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: prompts, templates, templates",
-            "发布时间相近: 3天"
           ]
         }
       ],
@@ -20260,17 +19814,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-youtube-descriptions",
-          "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
-          "score": 62.333333333333336,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation",
-            "同分类: general",
-            "H2关键词重叠: common, mistakes, measuring",
-            "发布时间相近: 3天"
-          ]
-        },
-        {
           "slug": "how-to-write-blog-posts-with-ai",
           "title": "\"How to Write Blog Posts with AI: The Complete Guide\"",
           "score": 61.781609195402304,
@@ -20279,6 +19822,17 @@
             "同分类: general",
             "H2关键词重叠: step, step, common",
             "发布时间相近: 5天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-tiktok-captions",
+          "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\"",
+          "score": 61.758620689655174,
+          "reasons": [
+            "标签重叠: AI Writing, Content Creation",
+            "同分类: general",
+            "H2关键词重叠: common, measuring, related",
+            "发布时间相近: 3天"
           ]
         }
       ],
@@ -20310,17 +19864,6 @@
           ]
         },
         {
-          "slug": "ai-writing-chain-of-thought-prompting",
-          "title": "\"Chain of Thought Prompting for Better AI Writing Results\"",
-          "score": 61.81818181818182,
-          "reasons": [
-            "标签重叠: AI Writing, Tutorial",
-            "同分类: general",
-            "H2关键词重叠: use, related, articles",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-youtube-descriptions",
           "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
           "score": 61.42424242424242,
@@ -20334,6 +19877,17 @@
         {
           "slug": "ai-writing-ai-headline-generator",
           "title": "\"AI Headline Generator: Write Headlines That Get Clicks\"",
+          "score": 61.21212121212121,
+          "reasons": [
+            "标签重叠: AI Writing, Tutorial",
+            "同分类: general",
+            "H2关键词重叠: related, articles",
+            "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-ai-rewriting-tool",
+          "title": "\"AI Rewriting Tool: Improve Your Existing Content\"",
           "score": 61.21212121212121,
           "reasons": [
             "标签重叠: AI Writing, Tutorial",
@@ -20989,14 +20543,14 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 53.84615384615385,
+          "slug": "ai-writing-ai-rewriting-tool",
+          "title": "\"AI Rewriting Tool: Improve Your Existing Content\"",
+          "score": 53.61538461538461,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
-            "H2关键词重叠: common, getting, started",
-            "发布时间相近: 0天"
+            "H2关键词重叠: step, step, common",
+            "发布时间相近: 3天"
           ]
         }
       ],
@@ -21233,13 +20787,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 52.49122807017544,
+          "slug": "ai-writing-for-social-media-marketing",
+          "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\"",
+          "score": 51.833333333333336,
           "reasons": [
             "标签重叠: Content Creation",
             "同分类: general",
-            "H2关键词重叠: matters, related, articles",
+            "H2关键词重叠: related, articles",
             "发布时间相近: 2天"
           ]
         }
@@ -22299,17 +21853,6 @@
           ]
         },
         {
-          "slug": "ai-writing-for-pinterest-descriptions",
-          "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-          "score": 52.7027027027027,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: understanding, seo, content",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-analytics-and-optimization",
           "title": "\"AI Writing Analytics: Track Performance and Iterate\"",
           "score": 52.35294117647059,
@@ -22329,6 +21872,17 @@
             "同分类: general",
             "H2关键词重叠: voice, seo, related",
             "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "ai-writing-for-facebook-ads-2026",
+          "title": "\"AI Writing for Facebook Ads: Copy That Lowers Cost Per Click\"",
+          "score": 52.01960784313725,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: real, workflow, related",
+            "发布时间相近: 1天"
           ]
         }
       ],
@@ -22382,9 +21936,9 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 52.10526315789474,
+          "slug": "ai-writing-best-practices-2026",
+          "title": "\"AI Writing Best Practices: 20 Tips for 2026\"",
+          "score": 52,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
@@ -22561,9 +22115,9 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 52.10526315789474,
+          "slug": "ai-writing-best-practices-2026",
+          "title": "\"AI Writing Best Practices: 20 Tips for 2026\"",
+          "score": 52,
           "reasons": [
             "标签重叠: AI Writing",
             "同分类: general",
@@ -22611,17 +22165,6 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 52.10526315789474,
-          "reasons": [
-            "标签重叠: AI Writing",
-            "同分类: general",
-            "H2关键词重叠: related, articles",
-            "发布时间相近: 0天"
-          ]
-        },
-        {
           "slug": "ai-writing-best-practices-2026",
           "title": "\"AI Writing Best Practices: 20 Tips for 2026\"",
           "score": 52,
@@ -22630,6 +22173,17 @@
             "同分类: general",
             "H2关键词重叠: related, articles",
             "发布时间相近: 0天"
+          ]
+        },
+        {
+          "slug": "how-to-write-blog-posts-with-ai",
+          "title": "\"How to Write Blog Posts with AI: The Complete Guide\"",
+          "score": 51.833333333333336,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: related, articles",
+            "发布时间相近: 2天"
           ]
         }
       ],
@@ -23712,13 +23266,13 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 51.438596491228076,
+          "slug": "ai-writing-for-youtube-descriptions",
+          "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\"",
+          "score": 51.333333333333336,
           "reasons": [
             "标签重叠: Content Creation",
             "同分类: general",
-            "H2关键词重叠: related, articles",
+            "H2关键词重叠: best, related, articles",
             "发布时间相近: 2天"
           ]
         }
@@ -23975,17 +23529,6 @@
           ]
         },
         {
-          "slug": "ai-writing-master-prompt-engineering",
-          "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-          "score": 62.49122807017544,
-          "reasons": [
-            "标签重叠: AI Writing, Content Creation",
-            "同分类: general",
-            "H2关键词重叠: common, related, articles",
-            "发布时间相近: 2天"
-          ]
-        },
-        {
           "slug": "ai-writing-for-instagram-captions-2026",
           "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\"",
           "score": 60.935483870967744,
@@ -24016,6 +23559,17 @@
             "同分类: general",
             "H2关键词重叠: related, articles",
             "发布时间相近: 2天"
+          ]
+        },
+        {
+          "slug": "ai-writing-ai-editing-and-proofreading",
+          "title": "\"AI Editing and Proofreading: Polish Your Content to Perfection\"",
+          "score": 55,
+          "reasons": [
+            "标签重叠: AI Writing",
+            "同分类: general",
+            "H2关键词重叠: workflow, step, step",
+            "发布时间相近: 5天"
           ]
         }
       ],

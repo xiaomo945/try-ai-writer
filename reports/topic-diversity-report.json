@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-06-13T19:21:46.179Z",
-  "totalPosts": 383,
+  "timestamp": "2026-06-13T19:31:41.729Z",
+  "totalPosts": 376,
   "distribution": {
     "byTags": {
       "2026": {
@@ -219,7 +219,7 @@
         ]
       },
       "Content Marketing": {
-        "count": 14,
+        "count": 12,
         "posts": [
           {
             "slug": "02-brand-voice-consistency",
@@ -242,19 +242,9 @@
             "date": "\"2026-05-28\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-for-podcast-show-notes",
@@ -319,7 +309,7 @@
         ]
       },
       "Content Creation": {
-        "count": 14,
+        "count": 13,
         "posts": [
           {
             "slug": "03-productivity-hacks",
@@ -359,11 +349,6 @@
           {
             "slug": "ai-writing-impact-on-publishing",
             "title": "\"AI's Impact on Publishing: From Blogs to Books\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
             "date": "\"2026-05-27\""
           },
           {
@@ -414,7 +399,7 @@
         ]
       },
       "SEO": {
-        "count": 21,
+        "count": 20,
         "posts": [
           {
             "slug": "04-seo-fundamentals",
@@ -460,11 +445,6 @@
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-for-quora-answers",
@@ -1574,7 +1554,7 @@
         ]
       },
       "AI Writing": {
-        "count": 89,
+        "count": 85,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
@@ -1629,11 +1609,6 @@
           {
             "slug": "ai-writing-content-optimization-checklist",
             "title": "\"AI Content Optimization Checklist: Before You Publish\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
             "date": "\"2026-05-27\""
           },
           {
@@ -1767,11 +1742,6 @@
             "date": "\"2026-05-28\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-for-newsletter-growth",
             "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\"",
             "date": "\"2026-05-27\""
@@ -1785,11 +1755,6 @@
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-for-podcast-scripts",
@@ -1922,11 +1887,6 @@
             "date": "\"2026-05-28\""
           },
           {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-prompt-engineering-master-guide",
             "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\"",
             "date": "\"2026-05-30\""
@@ -2024,37 +1984,27 @@
         ]
       },
       "Editing": {
-        "count": 2,
+        "count": 1,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
             "title": "\"AI Editing and Proofreading: Polish Your Content to Perfection\"",
             "date": "\"2026-05-30\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-            "date": "\"2026-05-27\""
           }
         ]
       },
       "Proofreading": {
-        "count": 2,
+        "count": 1,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
             "title": "\"AI Editing and Proofreading: Polish Your Content to Perfection\"",
             "date": "\"2026-05-30\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-            "date": "\"2026-05-27\""
           }
         ]
       },
       "Content Quality": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
@@ -2064,11 +2014,6 @@
           {
             "slug": "ai-writing-content-optimization-checklist",
             "title": "\"AI Content Optimization Checklist: Before You Publish\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
             "date": "\"2026-05-27\""
           }
         ]
@@ -2104,7 +2049,7 @@
         ]
       },
       "Tutorial": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "ai-writing-ai-headline-generator",
@@ -2135,11 +2080,6 @@
             "slug": "ai-writing-few-shot-prompting-tutorial",
             "title": "\"Few-Shot Prompting Tutorial: Teach AI Your Writing Style\"",
             "date": "\"2026-05-30\""
-          },
-          {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-prompt-engineering-master-guide",
@@ -3089,7 +3029,7 @@
         ]
       },
       "Prompt Engineering": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-chain-of-thought-prompting",
@@ -3100,11 +3040,6 @@
             "slug": "ai-writing-few-shot-prompting-tutorial",
             "title": "\"Few-Shot Prompting Tutorial: Teach AI Your Writing Style\"",
             "date": "\"2026-05-30\""
-          },
-          {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-prompt-engineering-master-guide",
@@ -3279,7 +3214,7 @@
         ]
       },
       "Publishing": {
-        "count": 6,
+        "count": 5,
         "posts": [
           {
             "slug": "ai-writing-content-optimization-checklist",
@@ -3300,11 +3235,6 @@
             "slug": "ai-writing-for-medium-articles-2026",
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-impact-on-publishing",
@@ -3574,13 +3504,8 @@
         ]
       },
       "accountants": {
-        "count": 2,
+        "count": 1,
         "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-            "date": "\"2026-05-30\""
-          },
           {
             "slug": "ai-writing-for-accountants",
             "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
@@ -3589,37 +3514,12 @@
         ]
       },
       "tax tips": {
-        "count": 2,
+        "count": 1,
         "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-            "date": "\"2026-05-30\""
-          },
           {
             "slug": "ai-writing-for-accountants",
             "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\"",
             "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "client newsletters": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-            "date": "\"2026-05-30\""
-          }
-        ]
-      },
-      "financial writing": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-            "date": "\"2026-05-30\""
           }
         ]
       },
@@ -3779,7 +3679,7 @@
         ]
       },
       "AI Content": {
-        "count": 4,
+        "count": 3,
         "posts": [
           {
             "slug": "ai-writing-for-affiliate-marketing-2026",
@@ -3789,11 +3689,6 @@
           {
             "slug": "ai-writing-for-event-marketing",
             "title": "\"AI Writing for Event Marketing: Invites, Landing Pages, and Follow-ups\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
             "date": "\"2026-05-27\""
           },
           {
@@ -6758,86 +6653,6 @@
           }
         ]
       },
-      "Influencer Marketing": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "Social Media": {
-        "count": 9,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-infographics",
-            "title": "\"AI Writing for Infographics: Copy That Makes Data Pop\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-captions-2026",
-            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\"",
-            "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-carousels",
-            "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-linkedin-personal-branding",
-            "title": "\"AI Writing for LinkedIn: Build Your Personal Brand in 2026\"",
-            "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-social-media-marketing",
-            "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-tiktok-captions",
-            "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-twitter-threads",
-            "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-video-scripts-2026",
-            "title": "\"Video Script Writing with AI: YouTube, TikTok, and Reels\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "Content Scripts": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "Creator Economy": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
       "influencer-marketing": {
         "count": 2,
         "posts": [
@@ -6899,6 +6714,51 @@
           {
             "slug": "ai-writing-for-infographics",
             "title": "\"AI Writing for Infographics: Copy That Makes Data Pop\"",
+            "date": "\"2026-05-27\""
+          }
+        ]
+      },
+      "Social Media": {
+        "count": 8,
+        "posts": [
+          {
+            "slug": "ai-writing-for-infographics",
+            "title": "\"AI Writing for Infographics: Copy That Makes Data Pop\"",
+            "date": "\"2026-05-27\""
+          },
+          {
+            "slug": "ai-writing-for-instagram-captions-2026",
+            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\"",
+            "date": "\"2026-05-28\""
+          },
+          {
+            "slug": "ai-writing-for-instagram-carousels",
+            "title": "\"How to Write Instagram Carousel Posts with AI: Slide-by-Slide Guide\"",
+            "date": "\"2026-05-27\""
+          },
+          {
+            "slug": "ai-writing-for-linkedin-personal-branding",
+            "title": "\"AI Writing for LinkedIn: Build Your Personal Brand in 2026\"",
+            "date": "\"2026-05-28\""
+          },
+          {
+            "slug": "ai-writing-for-social-media-marketing",
+            "title": "\"AI Writing for Social Media Marketing: All Platforms Covered\"",
+            "date": "\"2026-05-27\""
+          },
+          {
+            "slug": "ai-writing-for-tiktok-captions",
+            "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\"",
+            "date": "\"2026-05-27\""
+          },
+          {
+            "slug": "ai-writing-for-twitter-threads",
+            "title": "\"How to Write Viral Twitter Threads with AI: Structure and Timing\"",
+            "date": "\"2026-05-27\""
+          },
+          {
+            "slug": "ai-writing-for-video-scripts-2026",
+            "title": "\"Video Script Writing with AI: YouTube, TikTok, and Reels\"",
             "date": "\"2026-05-27\""
           }
         ]
@@ -7554,17 +7414,12 @@
         ]
       },
       "Medium": {
-        "count": 2,
+        "count": 1,
         "posts": [
           {
             "slug": "ai-writing-for-medium-articles-2026",
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-            "date": "\"2026-05-27\""
           }
         ]
       },
@@ -8039,17 +7894,12 @@
         ]
       },
       "Pinterest": {
-        "count": 2,
+        "count": 1,
         "posts": [
           {
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\"",
             "date": "\"2026-05-28\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-            "date": "\"2026-05-27\""
           }
         ]
       },
@@ -8098,41 +7948,6 @@
           }
         ]
       },
-      "Podcast Marketing": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "Show Notes": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-            "date": "\"2026-05-27\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-show-notes",
-            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
-      "Audio Marketing": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-            "date": "\"2026-05-27\""
-          }
-        ]
-      },
       "Podcasts": {
         "count": 1,
         "posts": [
@@ -8169,6 +7984,16 @@
         ]
       },
       "Podcasting": {
+        "count": 1,
+        "posts": [
+          {
+            "slug": "ai-writing-for-podcast-show-notes",
+            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\"",
+            "date": "\"2026-05-27\""
+          }
+        ]
+      },
+      "Show Notes": {
         "count": 1,
         "posts": [
           {
@@ -11576,7 +11401,7 @@
     },
     "byCategory": {
       "general": {
-        "count": 383,
+        "count": 376,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -11794,11 +11619,6 @@
             "date": "\"2026-06-03\""
           },
           {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-eeat-content-strategy-2026",
             "title": "\"EEAT Content Strategy with AI Writing: Experience, Expertise, Authority, Trust\"",
             "date": "\"2026-05-30\""
@@ -11842,11 +11662,6 @@
             "slug": "ai-writing-for-academic-research",
             "title": "\"AI Writing Tools for Academic Research: A Cautious Guide\"",
             "date": "\"2026-05-25\""
-          },
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\"",
-            "date": "\"2026-05-30\""
           },
           {
             "slug": "ai-writing-for-accountants",
@@ -12339,11 +12154,6 @@
             "date": "\"2026-05-26\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-for-influencer-marketing",
             "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\"",
             "date": "\"2026-05-28\""
@@ -12474,11 +12284,6 @@
             "date": "\"2026-05-28\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-for-mental-health",
             "title": "\"AI Writing for Mental Health: Sensitive, Accurate, and Compassionate Content\"",
             "date": "\"2026-05-25\""
@@ -12604,19 +12409,9 @@
             "date": "\"2026-05-28\""
           },
           {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\"",
             "date": "2026-05-28"
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\"",
-            "date": "\"2026-05-27\""
           },
           {
             "slug": "ai-writing-for-podcast-scripts",
@@ -13129,11 +12924,6 @@
             "date": "\"2026-05-26\""
           },
           {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\"",
-            "date": "\"2026-05-27\""
-          },
-          {
             "slug": "ai-writing-meta-descriptions-optimization",
             "title": "\"AI Writing for Meta Descriptions: Click-Through Rate Optimization\"",
             "date": "\"2026-05-30\""
@@ -13498,7 +13288,7 @@
     },
     "byH2Keywords": {
       "understanding": {
-        "count": 23,
+        "count": 21,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13548,7 +13338,7 @@
         ]
       },
       "content": {
-        "count": 195,
+        "count": 187,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13573,7 +13363,7 @@
         ]
       },
       "creation": {
-        "count": 26,
+        "count": 25,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13598,7 +13388,7 @@
         ]
       },
       "building": {
-        "count": 86,
+        "count": 83,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13698,7 +13488,7 @@
         ]
       },
       "measuring": {
-        "count": 84,
+        "count": 82,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13723,7 +13513,7 @@
         ]
       },
       "success": {
-        "count": 60,
+        "count": 58,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13773,7 +13563,7 @@
         ]
       },
       "related": {
-        "count": 362,
+        "count": 355,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13798,7 +13588,7 @@
         ]
       },
       "articles": {
-        "count": 373,
+        "count": 366,
         "posts": [
           {
             "slug": "01-ai-content-strategy",
@@ -13873,7 +13663,7 @@
         ]
       },
       "challenge": {
-        "count": 46,
+        "count": 44,
         "posts": [
           {
             "slug": "02-brand-voice-consistency",
@@ -14090,15 +13880,11 @@
         ]
       },
       "role": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "02-brand-voice-consistency",
             "title": "\"Maintaining Brand Voice Consistency Across All Channels\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
           },
           {
             "slug": "ai-writing-for-chatbots",
@@ -14157,7 +13943,7 @@
         ]
       },
       "templates": {
-        "count": 27,
+        "count": 25,
         "posts": [
           {
             "slug": "03-productivity-hacks",
@@ -14191,7 +13977,7 @@
         ]
       },
       "types": {
-        "count": 31,
+        "count": 27,
         "posts": [
           {
             "slug": "03-productivity-hacks",
@@ -14496,7 +14282,7 @@
         ]
       },
       "review": {
-        "count": 15,
+        "count": 14,
         "posts": [
           {
             "slug": "03-productivity-hacks",
@@ -14515,8 +14301,8 @@
             "title": "\"AI Content Optimization Checklist: Before You Publish\""
           },
           {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
+            "slug": "ai-writing-for-affiliate-marketers",
+            "title": "\"AI Writing for Affiliate Marketers: Reviews That Rank\""
           }
         ]
       },
@@ -14624,15 +14410,11 @@
         ]
       },
       "search": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "04-seo-fundamentals",
             "title": "\"SEO Fundamentals That Still Matter in 2026\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
           },
           {
             "slug": "ai-writing-for-saas-help-center",
@@ -14645,6 +14427,10 @@
           {
             "slug": "ai-writing-seo-mistakes",
             "title": "\"7 Common AI Writing SEO Mistakes and How to Avoid Them\""
+          },
+          {
+            "slug": "ai-writing-voice-search-optimization-2026",
+            "title": "\"Voice Search Optimization with AI Writing: Prepare for 2027\""
           }
         ]
       },
@@ -14724,7 +14510,7 @@
         ]
       },
       "seo": {
-        "count": 49,
+        "count": 48,
         "posts": [
           {
             "slug": "04-seo-fundamentals",
@@ -14897,7 +14683,7 @@
         ]
       },
       "writing": {
-        "count": 371,
+        "count": 370,
         "posts": [
           {
             "slug": "05-future-of-writing",
@@ -14922,7 +14708,7 @@
         ]
       },
       "human": {
-        "count": 20,
+        "count": 19,
         "posts": [
           {
             "slug": "05-future-of-writing",
@@ -14985,7 +14771,7 @@
         ]
       },
       "best": {
-        "count": 168,
+        "count": 164,
         "posts": [
           {
             "slug": "05-future-of-writing",
@@ -15010,7 +14796,7 @@
         ]
       },
       "practices": {
-        "count": 165,
+        "count": 161,
         "posts": [
           {
             "slug": "05-future-of-writing",
@@ -15186,7 +14972,7 @@
         ]
       },
       "marketing": {
-        "count": 50,
+        "count": 47,
         "posts": [
           {
             "slug": "06-ai-writing-for-email-marketing",
@@ -15236,7 +15022,7 @@
         ]
       },
       "matters": {
-        "count": 83,
+        "count": 82,
         "posts": [
           {
             "slug": "06-ai-writing-for-email-marketing",
@@ -15325,7 +15111,7 @@
         ]
       },
       "using": {
-        "count": 46,
+        "count": 44,
         "posts": [
           {
             "slug": "06-ai-writing-for-email-marketing",
@@ -15487,7 +15273,7 @@
         ]
       },
       "final": {
-        "count": 29,
+        "count": 27,
         "posts": [
           {
             "slug": "07-overcoming-writers-block-with-ai",
@@ -15512,7 +15298,7 @@
         ]
       },
       "thoughts": {
-        "count": 25,
+        "count": 23,
         "posts": [
           {
             "slug": "07-overcoming-writers-block-with-ai",
@@ -15546,7 +15332,7 @@
         ]
       },
       "strategy": {
-        "count": 27,
+        "count": 25,
         "posts": [
           {
             "slug": "08-ai-content-strategy-2026",
@@ -15571,7 +15357,7 @@
         ]
       },
       "powered": {
-        "count": 29,
+        "count": 28,
         "posts": [
           {
             "slug": "08-ai-content-strategy-2026",
@@ -15755,7 +15541,7 @@
         ]
       },
       "well": {
-        "count": 4,
+        "count": 2,
         "posts": [
           {
             "slug": "09-ai-vs-human-writers",
@@ -15764,14 +15550,6 @@
           {
             "slug": "ai-writing-for-company-values",
             "title": "\"AI Writing for Company Values: Culture in Words\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
           }
         ]
       },
@@ -15997,7 +15775,7 @@
         ]
       },
       "communication": {
-        "count": 54,
+        "count": 53,
         "posts": [
           {
             "slug": "10-multilingual-ai-writing",
@@ -16008,16 +15786,16 @@
             "title": "\"AI Writing Analytics: Track Performance and Iterate\""
           },
           {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
             "slug": "ai-writing-for-business-analysts",
             "title": "\"AI Writing for Business Analysts: Requirements and Proposals\""
           },
           {
             "slug": "ai-writing-for-coaches-2026",
             "title": "\"AI Writing for Coaches in 2026: Session Notes, Programs, and Client Engagement\""
+          },
+          {
+            "slug": "ai-writing-for-coaches-life",
+            "title": "\"Life Coaching with AI: Session Notes, Coaching Agreements, and Content\""
           }
         ]
       },
@@ -16039,7 +15817,7 @@
         ]
       },
       "common": {
-        "count": 131,
+        "count": 127,
         "posts": [
           {
             "slug": "11-seo-ai-writing-best-practices",
@@ -16269,7 +16047,7 @@
         ]
       },
       "essential": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "12-ai-writing-for-social-media-managers",
@@ -16284,12 +16062,12 @@
             "title": "\"AI Writing and the Future of Work: Jobs, Skills, and Automation\""
           },
           {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
-          },
-          {
             "slug": "ai-writing-for-contracts-agreements",
             "title": "\"AI Writing for Contracts: Clarity and Precision with AI\""
+          },
+          {
+            "slug": "ai-writing-for-infographics",
+            "title": "\"AI Writing for Infographics: Copy That Makes Data Pop\""
           }
         ]
       },
@@ -16328,7 +16106,7 @@
         ]
       },
       "management": {
-        "count": 8,
+        "count": 7,
         "posts": [
           {
             "slug": "12-ai-writing-for-social-media-managers",
@@ -16343,12 +16121,12 @@
             "title": "\"AI Writing for DevOps Teams: Runbooks and Incident Reports\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
             "slug": "ai-writing-for-influencer-marketing",
             "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
+          },
+          {
+            "slug": "ai-writing-for-project-managers",
+            "title": "\"AI Writing for Project Managers: Status Updates and Plans\""
           }
         ]
       },
@@ -16446,7 +16224,7 @@
         ]
       },
       "started": {
-        "count": 96,
+        "count": 95,
         "posts": [
           {
             "slug": "13-how-to-train-ai-on-your-writing-style",
@@ -16496,7 +16274,7 @@
         ]
       },
       "mistakes": {
-        "count": 63,
+        "count": 61,
         "posts": [
           {
             "slug": "13-how-to-train-ai-on-your-writing-style",
@@ -16521,7 +16299,7 @@
         ]
       },
       "avoid": {
-        "count": 23,
+        "count": 22,
         "posts": [
           {
             "slug": "13-how-to-train-ai-on-your-writing-style",
@@ -16546,7 +16324,7 @@
         ]
       },
       "advanced": {
-        "count": 21,
+        "count": 20,
         "posts": [
           {
             "slug": "13-how-to-train-ai-on-your-writing-style",
@@ -17034,7 +16812,7 @@
         ]
       },
       "editing": {
-        "count": 15,
+        "count": 10,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
@@ -17068,7 +16846,7 @@
         ]
       },
       "techniques": {
-        "count": 21,
+        "count": 20,
         "posts": [
           {
             "slug": "ai-writing-ai-editing-and-proofreading",
@@ -17170,7 +16948,7 @@
         ]
       },
       "headlines": {
-        "count": 13,
+        "count": 11,
         "posts": [
           {
             "slug": "ai-writing-ai-headline-generator",
@@ -17195,7 +16973,7 @@
         ]
       },
       "formulas": {
-        "count": 11,
+        "count": 10,
         "posts": [
           {
             "slug": "ai-writing-ai-headline-generator",
@@ -17214,8 +16992,8 @@
             "title": "\"Newsletter Writing with AI: Subject Lines and Content That Converts\""
           },
           {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
+            "slug": "ai-writing-for-ppc-landing-pages",
+            "title": "\"AI Writing for PPC Landing Pages: Increase Conversion Rates\""
           }
         ]
       },
@@ -17295,7 +17073,7 @@
         ]
       },
       "strategies": {
-        "count": 37,
+        "count": 36,
         "posts": [
           {
             "slug": "ai-writing-ai-headline-generator",
@@ -17483,7 +17261,7 @@
         ]
       },
       "prompt": {
-        "count": 15,
+        "count": 13,
         "posts": [
           {
             "slug": "ai-writing-ai-research-assistant",
@@ -17610,7 +17388,7 @@
         ]
       },
       "system": {
-        "count": 6,
+        "count": 5,
         "posts": [
           {
             "slug": "ai-writing-ai-rewriting-tool",
@@ -17625,12 +17403,12 @@
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
             "slug": "ai-writing-for-newsletter-creators",
             "title": "\"AI Writing for Newsletter Creators: Curated Content and Original Analysis\""
+          },
+          {
+            "slug": "ai-writing-for-sop-documentation",
+            "title": "\"AI Writing for Standard Operating Procedures: Consistency at Scale\""
           }
         ]
       },
@@ -17927,7 +17705,7 @@
         ]
       },
       "automation": {
-        "count": 7,
+        "count": 6,
         "posts": [
           {
             "slug": "ai-writing-and-the-future-of-work",
@@ -17946,8 +17724,8 @@
             "title": "\"AI Email Marketing in 2026: Sequences, Automation, and Personalization\""
           },
           {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
+            "slug": "ai-writing-for-qa-engineers",
+            "title": "\"AI Writing for QA Engineers: Test Cases and Bug Reports\""
           }
         ]
       },
@@ -18221,7 +17999,7 @@
         ]
       },
       "anatomy": {
-        "count": 24,
+        "count": 23,
         "posts": [
           {
             "slug": "ai-writing-argumentation-techniques",
@@ -18365,7 +18143,7 @@
         ]
       },
       "audience": {
-        "count": 7,
+        "count": 6,
         "posts": [
           {
             "slug": "ai-writing-audience-analysis",
@@ -18441,7 +18219,7 @@
         ]
       },
       "prompts": {
-        "count": 34,
+        "count": 32,
         "posts": [
           {
             "slug": "ai-writing-audience-analysis",
@@ -18456,12 +18234,12 @@
             "title": "\"How to Optimize AI-Generated Content for Featured Snippets\""
           },
           {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
             "slug": "ai-writing-for-agency-pitch-decks",
             "title": "\"AI Writing for Agency Pitch Decks: Win More Clients\""
+          },
+          {
+            "slug": "ai-writing-for-beauty-professionals",
+            "title": "\"AI Writing for Beauty Professionals: Service Descriptions and Skincare Tips\""
           }
         ]
       },
@@ -18500,7 +18278,7 @@
         ]
       },
       "getting": {
-        "count": 106,
+        "count": 105,
         "posts": [
           {
             "slug": "ai-writing-beginner-guide-2026",
@@ -18550,15 +18328,11 @@
         ]
       },
       "professionals": {
-        "count": 25,
+        "count": 24,
         "posts": [
           {
             "slug": "ai-writing-beginner-guide-2026",
             "title": "\"AI Writing for Absolute Beginners: Everything You Need to Know (2026)\""
-          },
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
           },
           {
             "slug": "ai-writing-for-beauty-professionals",
@@ -18571,6 +18345,10 @@
           {
             "slug": "ai-writing-for-cold-emails",
             "title": "\"AI Writing for Cold Emails: Templates That Actually Get Replies\""
+          },
+          {
+            "slug": "ai-writing-for-crisis-communications",
+            "title": "\"AI Writing for Crisis Communications: Tone, Timing, and Transparency\""
           }
         ]
       },
@@ -18945,15 +18723,11 @@
         ]
       },
       "engineering": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-best-practices-2026",
             "title": "\"AI Writing Best Practices: 20 Tips for 2026\""
-          },
-          {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\""
           },
           {
             "slug": "ai-writing-prompt-engineering-master-guide",
@@ -19054,7 +18828,7 @@
         ]
       },
       "optimization": {
-        "count": 42,
+        "count": 41,
         "posts": [
           {
             "slug": "ai-writing-best-practices-2026",
@@ -19172,7 +18946,7 @@
         ]
       },
       "scaling": {
-        "count": 31,
+        "count": 29,
         "posts": [
           {
             "slug": "ai-writing-brand-storytelling-marketing",
@@ -19530,7 +19304,7 @@
         ]
       },
       "effective": {
-        "count": 16,
+        "count": 13,
         "posts": [
           {
             "slug": "ai-writing-chain-of-thought-tips",
@@ -19545,12 +19319,12 @@
             "title": "\"AI Writing Data Citation: Use Statistics and Research Effectively\""
           },
           {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
+            "slug": "ai-writing-for-architects",
+            "title": "\"AI Writing for Architects: Project Briefs, Proposals, and Design Statements\""
           },
           {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
+            "slug": "ai-writing-for-faq-pages-2026",
+            "title": "\"AI Writing for FAQ Pages: Answer Questions Before They're Asked\""
           }
         ]
       },
@@ -19686,7 +19460,7 @@
         ]
       },
       "performance": {
-        "count": 24,
+        "count": 22,
         "posts": [
           {
             "slug": "ai-writing-claude-vs-deepseek-for-creators",
@@ -19780,7 +19554,7 @@
         ]
       },
       "core": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-collaboration-workflow",
@@ -19789,10 +19563,6 @@
           {
             "slug": "ai-writing-for-crisis-communication",
             "title": "\"Crisis Communication Writing with AI: Templates for Difficult Moments\""
-          },
-          {
-            "slug": "ai-writing-master-prompt-engineering",
-            "title": "\"Mastering AI Prompt Engineering: Templates for Every Content Type\""
           },
           {
             "slug": "ai-writing-storytelling-techniques",
@@ -19848,15 +19618,11 @@
         ]
       },
       "workflows": {
-        "count": 25,
+        "count": 24,
         "posts": [
           {
             "slug": "ai-writing-collaboration-workflow",
             "title": "\"AI Writing Collaboration: Human-AI Workflow Best Practices\""
-          },
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
           },
           {
             "slug": "ai-writing-for-annual-reports",
@@ -19869,6 +19635,10 @@
           {
             "slug": "ai-writing-for-bloggers",
             "title": "\"AI Writing for Bloggers: How to Scale Without Losing Your Voice\""
+          },
+          {
+            "slug": "ai-writing-for-chatbots",
+            "title": "\"AI Writing for Chatbots: Create Conversations That Convert\""
           }
         ]
       },
@@ -20077,7 +19847,7 @@
         ]
       },
       "publication": {
-        "count": 4,
+        "count": 3,
         "posts": [
           {
             "slug": "ai-writing-content-optimization-checklist",
@@ -20086,10 +19856,6 @@
           {
             "slug": "ai-writing-for-ebooks-2026",
             "title": "\"How to Write an eBook with AI: From Outline to Publication\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
           },
           {
             "slug": "ai-writing-impact-on-healthcare",
@@ -20183,7 +19949,7 @@
         ]
       },
       "elements": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "ai-writing-content-optimization-checklist",
@@ -20327,95 +20093,6 @@
           {
             "slug": "ai-writing-data-citation-techniques",
             "title": "\"AI Writing Data Citation: Use Statistics and Research Effectively\""
-          }
-        ]
-      },
-      "support": {
-        "count": 8,
-        "posts": [
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
-          },
-          {
-            "slug": "ai-writing-for-customer-support",
-            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
-          },
-          {
-            "slug": "ai-writing-for-customer-support",
-            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
-          },
-          {
-            "slug": "ai-writing-for-customer-support",
-            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
-          },
-          {
-            "slug": "ai-writing-for-data-scientists",
-            "title": "\"AI Writing for Data Scientists: Explaining Models to Stakeholders\""
-          }
-        ]
-      },
-      "challenges": {
-        "count": 9,
-        "posts": [
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
-          },
-          {
-            "slug": "ai-writing-for-enterprise-2026",
-            "title": "\"AI Writing for Enterprise Teams: Complete Implementation Guide 2026\""
-          },
-          {
-            "slug": "ai-writing-for-ghostwriting-services",
-            "title": "\"AI Writing for Ghostwriting: How to Scale Your Services\""
-          },
-          {
-            "slug": "ai-writing-for-internal-comms",
-            "title": "\"AI Writing for Internal Communications: Memos, Updates, and Reports\""
-          },
-          {
-            "slug": "ai-writing-for-technical-documentation",
-            "title": "\"AI Writing for Technical Documentation: Clarity Meets Accuracy\""
-          }
-        ]
-      },
-      "solutions": {
-        "count": 4,
-        "posts": [
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
-          },
-          {
-            "slug": "ai-writing-for-enterprise-2026",
-            "title": "\"AI Writing for Enterprise Teams: Complete Implementation Guide 2026\""
-          },
-          {
-            "slug": "ai-writing-for-financial-advisors",
-            "title": "\"AI Writing for Financial Advisors: Compliance-Ready Client Communications\""
-          },
-          {
-            "slug": "ai-writing-tools-predictions-2027",
-            "title": "\"AI Writing Tools in 2027: 10 Predictions for the Future\""
-          }
-        ]
-      },
-      "remains": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
-          }
-        ]
-      },
-      "habits": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-editing-and-proofreading",
-            "title": "\"AI-Assisted Editing and Proofreading: Polish Your Content\""
           }
         ]
       },
@@ -21123,87 +20800,6 @@
           }
         ]
       },
-      "accounting": {
-        "count": 3,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          }
-        ]
-      },
-      "tax": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
-            "slug": "ai-writing-for-accountants",
-            "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\""
-          }
-        ]
-      },
-      "season": {
-        "count": 3,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
-            "slug": "ai-writing-for-seasonal-promotions",
-            "title": "\"AI Writing for Seasonal Promotions: Holiday Campaigns That Convert\""
-          },
-          {
-            "slug": "ai-writing-for-seasonal-promotions",
-            "title": "\"AI Writing for Seasonal Promotions: Holiday Campaigns That Convert\""
-          }
-        ]
-      },
-      "client": {
-        "count": 23,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          },
-          {
-            "slug": "ai-writing-for-accountants",
-            "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\""
-          },
-          {
-            "slug": "ai-writing-for-agency-pitch-decks",
-            "title": "\"AI Writing for Agency Pitch Decks: Win More Clients\""
-          },
-          {
-            "slug": "ai-writing-for-architects",
-            "title": "\"AI Writing for Architects: Project Briefs, Proposals, and Design Statements\""
-          },
-          {
-            "slug": "ai-writing-for-coaches-2026",
-            "title": "\"AI Writing for Coaches in 2026: Session Notes, Programs, and Client Engagement\""
-          }
-        ]
-      },
-      "firms": {
-        "count": 1,
-        "posts": [
-          {
-            "slug": "ai-writing-for-accountants-2026",
-            "title": "\"AI Writing for Accountants: Tax Tips and Client Newsletters\""
-          }
-        ]
-      },
       "accountant": {
         "count": 1,
         "posts": [
@@ -21223,6 +20819,15 @@
           {
             "slug": "ai-writing-future-2027-predictions",
             "title": "\"AI Writing in 2027: 10 Predictions That Will Surprise You\""
+          }
+        ]
+      },
+      "tax": {
+        "count": 1,
+        "posts": [
+          {
+            "slug": "ai-writing-for-accountants",
+            "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\""
           }
         ]
       },
@@ -21248,6 +20853,31 @@
           {
             "slug": "ai-writing-for-fitness-trainers",
             "title": "\"AI Writing for Fitness Trainers: Programs, Nutrition, and Client Engagement\""
+          }
+        ]
+      },
+      "client": {
+        "count": 22,
+        "posts": [
+          {
+            "slug": "ai-writing-for-accountants",
+            "title": "\"AI Writing for Accountants: Tax Tips, Client Updates, and Firm Marketing\""
+          },
+          {
+            "slug": "ai-writing-for-agency-pitch-decks",
+            "title": "\"AI Writing for Agency Pitch Decks: Win More Clients\""
+          },
+          {
+            "slug": "ai-writing-for-architects",
+            "title": "\"AI Writing for Architects: Project Briefs, Proposals, and Design Statements\""
+          },
+          {
+            "slug": "ai-writing-for-coaches-2026",
+            "title": "\"AI Writing for Coaches in 2026: Session Notes, Programs, and Client Engagement\""
+          },
+          {
+            "slug": "ai-writing-for-coaches-life",
+            "title": "\"Life Coaching with AI: Session Notes, Coaching Agreements, and Content\""
           }
         ]
       },
@@ -21622,7 +21252,7 @@
         ]
       },
       "promotional": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-for-affiliate-marketing-2026",
@@ -21631,10 +21261,6 @@
           {
             "slug": "ai-writing-for-event-planners",
             "title": "\"AI Writing for Event Planners: Invitations, Agendas, and Promotions\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-travel-agents",
@@ -21647,7 +21273,7 @@
         ]
       },
       "generation": {
-        "count": 7,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-for-affiliate-marketing-2026",
@@ -21658,29 +21284,21 @@
             "title": "\"AI Writing for Data Scientists: Explaining Models to Stakeholders\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
+            "slug": "ai-writing-for-sales-emails",
+            "title": "\"AI Writing for Sales Emails: Outreach Sequences That Get Replies\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
+            "slug": "ai-writing-for-tiktok-captions",
+            "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\""
           }
         ]
       },
       "operation": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-affiliate-marketing-2026",
             "title": "\"AI Writing for Affiliate Marketing: Reviews and Promotions\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-social-media-managers-2026",
@@ -21689,7 +21307,7 @@
         ]
       },
       "compliance": {
-        "count": 7,
+        "count": 6,
         "posts": [
           {
             "slug": "ai-writing-for-affiliate-marketing-2026",
@@ -21700,16 +21318,16 @@
             "title": "\"AI Writing for Email Marketers: Sequences That Convert\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
             "slug": "ai-writing-for-influencer-marketing",
             "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
           },
           {
             "slug": "ai-writing-for-logistics",
             "title": "\"AI Writing for Logistics: Reports, Emails, and Documentation\""
+          },
+          {
+            "slug": "ai-writing-for-qa-engineers",
+            "title": "\"AI Writing for QA Engineers: Test Cases and Bug Reports\""
           }
         ]
       },
@@ -21806,7 +21424,7 @@
         ]
       },
       "write": {
-        "count": 24,
+        "count": 23,
         "posts": [
           {
             "slug": "ai-writing-for-agency-pitch-decks",
@@ -22055,7 +21673,7 @@
         ]
       },
       "descriptions": {
-        "count": 30,
+        "count": 29,
         "posts": [
           {
             "slug": "ai-writing-for-amazon-product-descriptions",
@@ -22080,7 +21698,7 @@
         ]
       },
       "high": {
-        "count": 13,
+        "count": 12,
         "posts": [
           {
             "slug": "ai-writing-for-amazon-product-descriptions",
@@ -23410,7 +23028,7 @@
         ]
       },
       "optimizing": {
-        "count": 15,
+        "count": 14,
         "posts": [
           {
             "slug": "ai-writing-for-case-studies-2026",
@@ -23763,7 +23381,7 @@
         ]
       },
       "engagement": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "ai-writing-for-coaches-2026",
@@ -23782,8 +23400,8 @@
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
           },
           {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
+            "slug": "ai-writing-for-push-notifications",
+            "title": "\"AI Writing for Push Notifications: Get Clicks Without Annoying Users\""
           }
         ]
       },
@@ -24044,27 +23662,27 @@
         ]
       },
       "influencer": {
-        "count": 10,
+        "count": 7,
         "posts": [
           {
             "slug": "ai-writing-for-community-managers",
             "title": "\"AI Writing for Community Managers: Posts That Spark Conversations\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
+            "slug": "ai-writing-for-influencer-marketing",
+            "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
           },
           {
             "slug": "ai-writing-for-influencer-marketing",
             "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
+          },
+          {
+            "slug": "ai-writing-for-influencer-marketing",
+            "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
+          },
+          {
+            "slug": "ai-writing-influencer-marketing-copy",
+            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           }
         ]
       },
@@ -24246,7 +23864,7 @@
         ]
       },
       "distribution": {
-        "count": 4,
+        "count": 3,
         "posts": [
           {
             "slug": "ai-writing-for-content-marketing-strategy",
@@ -24255,10 +23873,6 @@
           {
             "slug": "ai-writing-for-ebooks-2026",
             "title": "\"How to Write an eBook with AI: From Outline to Publication\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-impact-on-publishing",
@@ -24292,15 +23906,11 @@
         ]
       },
       "engine": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-content-marketing-strategy",
             "title": "\"AI Writing for Content Marketing Strategy: From Planning to Publishing\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
           },
           {
             "slug": "ai-writing-for-product-review-emails",
@@ -24309,7 +23919,7 @@
         ]
       },
       "operations": {
-        "count": 6,
+        "count": 5,
         "posts": [
           {
             "slug": "ai-writing-for-content-marketing-strategy",
@@ -24324,12 +23934,12 @@
             "title": "\"AI Writing for Ghostwriting: How to Scale Your Services\""
           },
           {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
             "slug": "ai-writing-for-influencer-marketing",
             "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
+          },
+          {
+            "slug": "ai-writing-for-technical-writers",
+            "title": "\"AI Writing for Technical Writers: Consistency at Scale\""
           }
         ]
       },
@@ -24580,7 +24190,7 @@
         ]
       },
       "relationships": {
-        "count": 5,
+        "count": 4,
         "posts": [
           {
             "slug": "ai-writing-for-copywriting-freelancers",
@@ -24593,10 +24203,6 @@
           {
             "slug": "ai-writing-for-ghostwriting-services",
             "title": "\"AI Writing for Ghostwriting: How to Scale Your Services\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           },
           {
             "slug": "ai-writing-for-influencer-marketing",
@@ -25439,15 +25045,11 @@
         ]
       },
       "script": {
-        "count": 10,
+        "count": 9,
         "posts": [
           {
             "slug": "ai-writing-for-customer-service-scripts",
             "title": "\"AI Writing for Customer Service Scripts: Consistent, Empathetic Responses\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           },
           {
             "slug": "ai-writing-for-tiktok-content",
@@ -25460,6 +25062,10 @@
           {
             "slug": "ai-writing-for-video-marketing-2026",
             "title": "\"AI Video Marketing Writing: Thumbnails, Descriptions, and CTAs\""
+          },
+          {
+            "slug": "ai-writing-for-video-scripts-2026",
+            "title": "\"Video Script Writing with AI: YouTube, TikTok, and Reels\""
           }
         ]
       },
@@ -25564,6 +25170,31 @@
           {
             "slug": "ai-writing-for-therapists",
             "title": "\"AI Writing for Therapists: Progress Notes, Resources, and Marketing\""
+          }
+        ]
+      },
+      "support": {
+        "count": 7,
+        "posts": [
+          {
+            "slug": "ai-writing-for-customer-support",
+            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
+          },
+          {
+            "slug": "ai-writing-for-customer-support",
+            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
+          },
+          {
+            "slug": "ai-writing-for-customer-support",
+            "title": "\"AI Writing for Customer Support: Templates That Sound Human\""
+          },
+          {
+            "slug": "ai-writing-for-data-scientists",
+            "title": "\"AI Writing for Data Scientists: Explaining Models to Stakeholders\""
+          },
+          {
+            "slug": "ai-writing-for-qa-engineers",
+            "title": "\"AI Writing for QA Engineers: Test Cases and Bug Reports\""
           }
         ]
       },
@@ -26180,7 +25811,7 @@
         ]
       },
       "formatting": {
-        "count": 6,
+        "count": 5,
         "posts": [
           {
             "slug": "ai-writing-for-ebooks-2026",
@@ -26191,16 +25822,16 @@
             "title": "\"AI Writing for Infographics: Copy That Makes Data Pop\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
             "slug": "ai-writing-for-sop-documentation",
             "title": "\"AI Writing for Standard Operating Procedures: Consistency at Scale\""
           },
           {
             "slug": "ai-writing-for-troubleshooting-guides",
             "title": "\"AI Writing for Troubleshooting Guides: Clear Step-by-Step Instructions\""
+          },
+          {
+            "slug": "ai-writing-for-white-papers-2026",
+            "title": "\"How to Write White Papers with AI: Research, Structure, and Authority\""
           }
         ]
       },
@@ -26398,7 +26029,7 @@
         ]
       },
       "description": {
-        "count": 14,
+        "count": 13,
         "posts": [
           {
             "slug": "ai-writing-for-ecommerce",
@@ -26409,16 +26040,16 @@
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\""
           },
           {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
-          },
-          {
             "slug": "ai-writing-for-real-estate-agents",
             "title": "\"AI Writing for Real Estate Agents: Property Descriptions That Sell\""
           },
           {
             "slug": "ai-writing-for-video-marketing-2026",
             "title": "\"AI Video Marketing Writing: Thumbnails, Descriptions, and CTAs\""
+          },
+          {
+            "slug": "ai-writing-for-youtube-descriptions",
+            "title": "\"YouTube Description Writing with AI: Boost Watch Time and CTR\""
           }
         ]
       },
@@ -26501,15 +26132,11 @@
         ]
       },
       "campaign": {
-        "count": 4,
+        "count": 3,
         "posts": [
           {
             "slug": "ai-writing-for-email-marketing-specialists",
             "title": "\"AI Writing for Email Marketers: Sequences That Convert\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           },
           {
             "slug": "ai-writing-for-ppc-specialists",
@@ -26577,6 +26204,48 @@
           {
             "slug": "ai-writing-tools-predictions-2027",
             "title": "\"AI Writing Tools in 2027: 10 Predictions for the Future\""
+          }
+        ]
+      },
+      "solutions": {
+        "count": 3,
+        "posts": [
+          {
+            "slug": "ai-writing-for-enterprise-2026",
+            "title": "\"AI Writing for Enterprise Teams: Complete Implementation Guide 2026\""
+          },
+          {
+            "slug": "ai-writing-for-financial-advisors",
+            "title": "\"AI Writing for Financial Advisors: Compliance-Ready Client Communications\""
+          },
+          {
+            "slug": "ai-writing-tools-predictions-2027",
+            "title": "\"AI Writing Tools in 2027: 10 Predictions for the Future\""
+          }
+        ]
+      },
+      "challenges": {
+        "count": 8,
+        "posts": [
+          {
+            "slug": "ai-writing-for-enterprise-2026",
+            "title": "\"AI Writing for Enterprise Teams: Complete Implementation Guide 2026\""
+          },
+          {
+            "slug": "ai-writing-for-ghostwriting-services",
+            "title": "\"AI Writing for Ghostwriting: How to Scale Your Services\""
+          },
+          {
+            "slug": "ai-writing-for-internal-comms",
+            "title": "\"AI Writing for Internal Communications: Memos, Updates, and Reports\""
+          },
+          {
+            "slug": "ai-writing-for-technical-documentation",
+            "title": "\"AI Writing for Technical Documentation: Clarity Meets Accuracy\""
+          },
+          {
+            "slug": "ai-writing-impact-on-healthcare",
+            "title": "\"AI Writing in Healthcare: Patient Communication and Records\""
           }
         ]
       },
@@ -27810,15 +27479,11 @@
         ]
       },
       "long": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-ghostwriting-services",
             "title": "\"AI Writing for Ghostwriting: How to Scale Your Services\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           },
           {
             "slug": "ai-writing-for-video-scripts-2026",
@@ -27827,7 +27492,7 @@
         ]
       },
       "term": {
-        "count": 4,
+        "count": 3,
         "posts": [
           {
             "slug": "ai-writing-for-ghostwriting-services",
@@ -27840,10 +27505,6 @@
           {
             "slug": "ai-writing-for-glossary-pages",
             "title": "\"AI Writing for Glossary Pages: Define Your Industry Terms\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
           }
         ]
       },
@@ -28071,44 +27732,6 @@
           }
         ]
       },
-      "caption": {
-        "count": 7,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-captions-2026",
-            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-captions-2026",
-            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-captions-2026",
-            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
-          },
-          {
-            "slug": "ai-writing-for-instagram-captions-2026",
-            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
-          }
-        ]
-      },
-      "disclosure": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-influencer-marketing-2026",
-            "title": "\"AI Writing for Influencer Marketing: Scripts and Captions\""
-          },
-          {
-            "slug": "ai-writing-for-influencer-marketing",
-            "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
-          }
-        ]
-      },
       "outreach": {
         "count": 8,
         "posts": [
@@ -28148,6 +27771,15 @@
           {
             "slug": "ai-writing-impact-on-healthcare",
             "title": "\"AI Writing in Healthcare: Patient Communication and Records\""
+          }
+        ]
+      },
+      "disclosure": {
+        "count": 1,
+        "posts": [
+          {
+            "slug": "ai-writing-for-influencer-marketing",
+            "title": "\"AI Writing for Influencer Outreach: Templates That Get Replies\""
           }
         ]
       },
@@ -28233,6 +27865,31 @@
           {
             "slug": "ai-writing-vs-traditional-copywriting",
             "title": "\"AI Writing vs. Traditional Copywriting: Which Should You Choose?\""
+          }
+        ]
+      },
+      "caption": {
+        "count": 6,
+        "posts": [
+          {
+            "slug": "ai-writing-for-instagram-captions-2026",
+            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
+          },
+          {
+            "slug": "ai-writing-for-instagram-captions-2026",
+            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
+          },
+          {
+            "slug": "ai-writing-for-instagram-captions-2026",
+            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
+          },
+          {
+            "slug": "ai-writing-for-instagram-captions-2026",
+            "title": "\"AI Writing for Instagram Captions: Engage and Grow Your Audience in 2026\""
+          },
+          {
+            "slug": "ai-writing-for-tiktok-captions",
+            "title": "\"AI Writing for TikTok Captions: Hook Viewers in Under 3 Seconds\""
           }
         ]
       },
@@ -28740,7 +28397,7 @@
         ]
       },
       "article": {
-        "count": 12,
+        "count": 10,
         "posts": [
           {
             "slug": "ai-writing-for-knowledge-base",
@@ -29453,15 +29110,11 @@
         ]
       },
       "importance": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-medical-professionals",
             "title": "\"AI Writing for Medical Professionals: Patient Communication Made Clear\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
           },
           {
             "slug": "ai-writing-for-mobile-game-descriptions",
@@ -29542,31 +29195,6 @@
         ]
       },
       "medium": {
-        "count": 11,
-        "posts": [
-          {
-            "slug": "ai-writing-for-medium-articles-2026",
-            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles-2026",
-            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles-2026",
-            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          }
-        ]
-      },
-      "curation": {
         "count": 3,
         "posts": [
           {
@@ -29574,8 +29202,21 @@
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
           },
           {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
+            "slug": "ai-writing-for-medium-articles-2026",
+            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
+          },
+          {
+            "slug": "ai-writing-for-medium-articles-2026",
+            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
+          }
+        ]
+      },
+      "curation": {
+        "count": 2,
+        "posts": [
+          {
+            "slug": "ai-writing-for-medium-articles-2026",
+            "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
           },
           {
             "slug": "ai-writing-impact-on-publishing",
@@ -29658,36 +29299,6 @@
           {
             "slug": "ai-writing-for-medium-articles-2026",
             "title": "\"How to Use AI to Write Medium Articles That Get Curated\""
-          }
-        ]
-      },
-      "body": {
-        "count": 3,
-        "posts": [
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
-            "slug": "ai-writing-for-newsletter-growth",
-            "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\""
-          },
-          {
-            "slug": "ai-writing-landing-page-copy-2026",
-            "title": "\"AI Writing for Landing Pages: Optimize Every Section\""
-          }
-        ]
-      },
-      "perform": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-medium-articles",
-            "title": "\"How to Grow on Medium with AI Writing: Headlines, Formatting, and Curation\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
           }
         ]
       },
@@ -29969,6 +29580,19 @@
           {
             "slug": "ai-writing-prompt-engineering-master-guide",
             "title": "\"Prompt Engineering for AI Writing: The Complete Master Guide\""
+          }
+        ]
+      },
+      "body": {
+        "count": 2,
+        "posts": [
+          {
+            "slug": "ai-writing-for-newsletter-growth",
+            "title": "\"Newsletter Growth with AI Writing: Subject Lines, Content, and CTAs\""
+          },
+          {
+            "slug": "ai-writing-landing-page-copy-2026",
+            "title": "\"AI Writing for Landing Pages: Optimize Every Section\""
           }
         ]
       },
@@ -30379,7 +30003,7 @@
         ]
       },
       "pinterest": {
-        "count": 16,
+        "count": 8,
         "posts": [
           {
             "slug": "ai-writing-for-pinterest-descriptions-2026",
@@ -30404,15 +30028,11 @@
         ]
       },
       "pin": {
-        "count": 2,
+        "count": 1,
         "posts": [
           {
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\""
-          },
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
           }
         ]
       },
@@ -30422,19 +30042,6 @@
           {
             "slug": "ai-writing-for-pinterest-descriptions-2026",
             "title": "\"AI Writing for Pinterest: Descriptions That Drive Traffic\""
-          }
-        ]
-      },
-      "ranking": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-pinterest-descriptions",
-            "title": "\"Pinterest SEO Writing with AI: Pin Descriptions That Drive Traffic\""
-          },
-          {
-            "slug": "ai-writing-for-quora-answers",
-            "title": "\"Using AI to Write Quora Answers That Rank on Google\""
           }
         ]
       },
@@ -30486,15 +30093,11 @@
         ]
       },
       "listeners": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-podcast-scripts",
@@ -30512,19 +30115,19 @@
         ]
       },
       "show": {
-        "count": 12,
+        "count": 11,
         "posts": [
           {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\""
           },
           {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
-          },
-          {
             "slug": "ai-writing-for-podcast-scripts",
             "title": "\"AI Writing for Podcast Scripts: Episodes That Engage\""
+          },
+          {
+            "slug": "ai-writing-for-podcast-show-notes",
+            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
           },
           {
             "slug": "ai-writing-for-podcast-show-notes",
@@ -30537,15 +30140,11 @@
         ]
       },
       "notes": {
-        "count": 17,
+        "count": 16,
         "posts": [
           {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-podcast-scripts",
@@ -30558,19 +30157,19 @@
           {
             "slug": "ai-writing-for-podcast-show-notes",
             "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
+          },
+          {
+            "slug": "ai-writing-for-podcast-show-notes",
+            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
           }
         ]
       },
       "drive": {
-        "count": 3,
+        "count": 2,
         "posts": [
           {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-saas-landing-pages-2026",
@@ -30648,7 +30247,7 @@
         ]
       },
       "podcast": {
-        "count": 14,
+        "count": 12,
         "posts": [
           {
             "slug": "ai-writing-for-podcast-creators",
@@ -30657,40 +30256,18 @@
           {
             "slug": "ai-writing-for-podcast-creators",
             "title": "\"AI Writing for Podcast Creators: Episode Planning, Show Notes, and Sponsorship Pitches\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
-          },
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
             "slug": "ai-writing-for-podcast-scripts",
             "title": "\"AI Writing for Podcast Scripts: Episodes That Engage\""
-          }
-        ]
-      },
-      "guest": {
-        "count": 2,
-        "posts": [
-          {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
           },
           {
-            "slug": "ai-writing-for-podcast-show-notes",
-            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
-          }
-        ]
-      },
-      "coordination": {
-        "count": 1,
-        "posts": [
+            "slug": "ai-writing-for-podcast-scripts",
+            "title": "\"AI Writing for Podcast Scripts: Episodes That Engage\""
+          },
           {
-            "slug": "ai-writing-for-podcast-marketing",
-            "title": "\"AI Writing for Podcast Marketing: Show Notes and Promotion\""
+            "slug": "ai-writing-for-podcast-scripts",
+            "title": "\"AI Writing for Podcast Scripts: Episodes That Engage\""
           }
         ]
       },
@@ -30765,6 +30342,15 @@
         ]
       },
       "mentioned": {
+        "count": 1,
+        "posts": [
+          {
+            "slug": "ai-writing-for-podcast-show-notes",
+            "title": "\"AI Writing for Podcast Show Notes: Timestamps, Summaries, and SEO\""
+          }
+        ]
+      },
+      "guest": {
         "count": 1,
         "posts": [
           {
@@ -31350,6 +30936,15 @@
             "slug": "ai-writing-for-quora-answers",
             "title": "\"Using AI to Write Quora Answers That Rank on Google\""
           },
+          {
+            "slug": "ai-writing-for-quora-answers",
+            "title": "\"Using AI to Write Quora Answers That Rank on Google\""
+          }
+        ]
+      },
+      "ranking": {
+        "count": 1,
+        "posts": [
           {
             "slug": "ai-writing-for-quora-answers",
             "title": "\"Using AI to Write Quora Answers That Rank on Google\""
@@ -32066,6 +31661,19 @@
           {
             "slug": "ai-writing-free-vs-paid-ai-tools-2026",
             "title": "\"Free vs Paid AI Writing Tools: When to Upgrade\""
+          }
+        ]
+      },
+      "season": {
+        "count": 2,
+        "posts": [
+          {
+            "slug": "ai-writing-for-seasonal-promotions",
+            "title": "\"AI Writing for Seasonal Promotions: Holiday Campaigns That Convert\""
+          },
+          {
+            "slug": "ai-writing-for-seasonal-promotions",
+            "title": "\"AI Writing for Seasonal Promotions: Holiday Campaigns That Convert\""
           }
         ]
       },
@@ -35384,7 +34992,7 @@
         ]
       }
     },
-    "totalPosts": 383
+    "totalPosts": 376
   },
   "gaps": {
     "overCovered": [
@@ -35396,9 +35004,9 @@
       },
       {
         "topic": "AI Writing",
-        "count": 89,
+        "count": 85,
         "type": "tag",
-        "recommendation": "该主题已有89篇文章，建议减少或从新角度撰写"
+        "recommendation": "该主题已有85篇文章，建议减少或从新角度撰写"
       },
       {
         "topic": "ai-writing",
@@ -35408,9 +35016,9 @@
       },
       {
         "topic": "SEO",
-        "count": 21,
+        "count": 20,
         "type": "tag",
-        "recommendation": "该主题已有21篇文章，建议减少或从新角度撰写"
+        "recommendation": "该主题已有20篇文章，建议减少或从新角度撰写"
       },
       {
         "topic": "AI",
@@ -35419,22 +35027,22 @@
         "recommendation": "该主题已有15篇文章，建议减少或从新角度撰写"
       },
       {
-        "topic": "Content Marketing",
-        "count": 14,
-        "type": "tag",
-        "recommendation": "该主题已有14篇文章，建议减少或从新角度撰写"
-      },
-      {
         "topic": "Content Creation",
-        "count": 14,
+        "count": 13,
         "type": "tag",
-        "recommendation": "该主题已有14篇文章，建议减少或从新角度撰写"
+        "recommendation": "该主题已有13篇文章，建议减少或从新角度撰写"
       },
       {
         "topic": "comparison",
         "count": 13,
         "type": "tag",
         "recommendation": "该主题已有13篇文章，建议减少或从新角度撰写"
+      },
+      {
+        "topic": "Content Marketing",
+        "count": 12,
+        "type": "tag",
+        "recommendation": "该主题已有12篇文章，建议减少或从新角度撰写"
       },
       {
         "topic": "AI tools",
@@ -35530,6 +35138,18 @@
       },
       {
         "topic": "AI-writing",
+        "count": 1,
+        "type": "tag",
+        "recommendation": "该主题仅有1篇文章，建议增加内容"
+      },
+      {
+        "topic": "Editing",
+        "count": 1,
+        "type": "tag",
+        "recommendation": "该主题仅有1篇文章，建议增加内容"
+      },
+      {
+        "topic": "Proofreading",
         "count": 1,
         "type": "tag",
         "recommendation": "该主题仅有1篇文章，建议增加内容"
@@ -35859,13 +35479,13 @@
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
-        "topic": "client newsletters",
+        "topic": "accountants",
         "count": 1,
         "type": "tag",
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
-        "topic": "financial writing",
+        "topic": "tax tips",
         "count": 1,
         "type": "tag",
         "recommendation": "该主题仅有1篇文章，建议增加内容"
@@ -36933,24 +36553,6 @@
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
-        "topic": "Influencer Marketing",
-        "count": 1,
-        "type": "tag",
-        "recommendation": "该主题仅有1篇文章，建议增加内容"
-      },
-      {
-        "topic": "Content Scripts",
-        "count": 1,
-        "type": "tag",
-        "recommendation": "该主题仅有1篇文章，建议增加内容"
-      },
-      {
-        "topic": "Creator Economy",
-        "count": 1,
-        "type": "tag",
-        "recommendation": "该主题仅有1篇文章，建议增加内容"
-      },
-      {
         "topic": "outreach",
         "count": 1,
         "type": "tag",
@@ -37227,6 +36829,12 @@
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
+        "topic": "Medium",
+        "count": 1,
+        "type": "tag",
+        "recommendation": "该主题仅有1篇文章，建议增加内容"
+      },
+      {
         "topic": "mental health",
         "count": 1,
         "type": "tag",
@@ -37437,6 +37045,12 @@
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
+        "topic": "Pinterest",
+        "count": 1,
+        "type": "tag",
+        "recommendation": "该主题仅有1篇文章，建议增加内容"
+      },
+      {
         "topic": "podcast",
         "count": 1,
         "type": "tag",
@@ -37455,18 +37069,6 @@
         "recommendation": "该主题仅有1篇文章，建议增加内容"
       },
       {
-        "topic": "Podcast Marketing",
-        "count": 1,
-        "type": "tag",
-        "recommendation": "该主题仅有1篇文章，建议增加内容"
-      },
-      {
-        "topic": "Audio Marketing",
-        "count": 1,
-        "type": "tag",
-        "recommendation": "该主题仅有1篇文章，建议增加内容"
-      },
-      {
         "topic": "Podcasts",
         "count": 1,
         "type": "tag",
@@ -37480,6 +37082,12 @@
       },
       {
         "topic": "Podcasting",
+        "count": 1,
+        "type": "tag",
+        "recommendation": "该主题仅有1篇文章，建议增加内容"
+      },
+      {
+        "topic": "Show Notes",
         "count": 1,
         "type": "tag",
         "recommendation": "该主题仅有1篇文章，建议增加内容"
@@ -39243,13 +38851,7 @@
         "recommendation": "该主题仅有2篇文章，建议增加内容"
       },
       {
-        "topic": "Editing",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
-        "topic": "Proofreading",
+        "topic": "Content Quality",
         "count": 2,
         "type": "tag",
         "recommendation": "该主题仅有2篇文章，建议增加内容"
@@ -39340,18 +38942,6 @@
       },
       {
         "topic": "电商营销",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
-        "topic": "accountants",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
-        "topic": "tax tips",
         "count": 2,
         "type": "tag",
         "recommendation": "该主题仅有2篇文章，建议增加内容"
@@ -39657,12 +39247,6 @@
         "recommendation": "该主题仅有2篇文章，建议增加内容"
       },
       {
-        "topic": "Medium",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
         "topic": "wellness",
         "count": 2,
         "type": "tag",
@@ -39711,19 +39295,7 @@
         "recommendation": "该主题仅有2篇文章，建议增加内容"
       },
       {
-        "topic": "Pinterest",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
         "topic": "show notes",
-        "count": 2,
-        "type": "tag",
-        "recommendation": "该主题仅有2篇文章，建议增加内容"
-      },
-      {
-        "topic": "Show Notes",
         "count": 2,
         "type": "tag",
         "recommendation": "该主题仅有2篇文章，建议增加内容"
@@ -39936,18 +39508,13 @@
         "type": "tag"
       },
       {
-        "topic": "Content Quality",
-        "count": 3,
-        "type": "tag"
-      },
-      {
         "topic": "Copywriting",
         "count": 3,
         "type": "tag"
       },
       {
         "topic": "Tutorial",
-        "count": 10,
+        "count": 9,
         "type": "tag"
       },
       {
@@ -39982,12 +39549,12 @@
       },
       {
         "topic": "Prompt Engineering",
-        "count": 5,
+        "count": 4,
         "type": "tag"
       },
       {
         "topic": "Publishing",
-        "count": 6,
+        "count": 5,
         "type": "tag"
       },
       {
@@ -40007,7 +39574,7 @@
       },
       {
         "topic": "AI Content",
-        "count": 4,
+        "count": 3,
         "type": "tag"
       },
       {
@@ -40147,7 +39714,7 @@
       },
       {
         "topic": "Social Media",
-        "count": 9,
+        "count": 8,
         "type": "tag"
       },
       {
@@ -40321,6 +39888,20 @@
       "topic": "AI-writing",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"AI-writing\"的文章",
+      "angle": "从实际应用角度出发"
+    },
+    {
+      "priority": "high",
+      "topic": "Editing",
+      "reason": "当前仅有1篇文章",
+      "action": "建议撰写2-3篇关于\"Editing\"的文章",
+      "angle": "从实际应用角度出发"
+    },
+    {
+      "priority": "high",
+      "topic": "Proofreading",
+      "reason": "当前仅有1篇文章",
+      "action": "建议撰写2-3篇关于\"Proofreading\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -40703,16 +40284,16 @@
     },
     {
       "priority": "high",
-      "topic": "client newsletters",
+      "topic": "accountants",
       "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"client newsletters\"的文章",
+      "action": "建议撰写2-3篇关于\"accountants\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
       "priority": "high",
-      "topic": "financial writing",
+      "topic": "tax tips",
       "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"financial writing\"的文章",
+      "action": "建议撰写2-3篇关于\"tax tips\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -41956,27 +41537,6 @@
     },
     {
       "priority": "high",
-      "topic": "Influencer Marketing",
-      "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"Influencer Marketing\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "Content Scripts",
-      "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"Content Scripts\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "Creator Economy",
-      "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"Creator Economy\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
       "topic": "outreach",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"outreach\"的文章",
@@ -42299,6 +41859,13 @@
     },
     {
       "priority": "high",
+      "topic": "Medium",
+      "reason": "当前仅有1篇文章",
+      "action": "建议撰写2-3篇关于\"Medium\"的文章",
+      "angle": "从实际应用角度出发"
+    },
+    {
+      "priority": "high",
       "topic": "mental health",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"mental health\"的文章",
@@ -42544,6 +42111,13 @@
     },
     {
       "priority": "high",
+      "topic": "Pinterest",
+      "reason": "当前仅有1篇文章",
+      "action": "建议撰写2-3篇关于\"Pinterest\"的文章",
+      "angle": "从实际应用角度出发"
+    },
+    {
+      "priority": "high",
       "topic": "podcast",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"podcast\"的文章",
@@ -42565,20 +42139,6 @@
     },
     {
       "priority": "high",
-      "topic": "Podcast Marketing",
-      "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"Podcast Marketing\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "Audio Marketing",
-      "reason": "当前仅有1篇文章",
-      "action": "建议撰写2-3篇关于\"Audio Marketing\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
       "topic": "Podcasts",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"Podcasts\"的文章",
@@ -42596,6 +42156,13 @@
       "topic": "Podcasting",
       "reason": "当前仅有1篇文章",
       "action": "建议撰写2-3篇关于\"Podcasting\"的文章",
+      "angle": "从实际应用角度出发"
+    },
+    {
+      "priority": "high",
+      "topic": "Show Notes",
+      "reason": "当前仅有1篇文章",
+      "action": "建议撰写2-3篇关于\"Show Notes\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -44651,16 +44218,9 @@
     },
     {
       "priority": "high",
-      "topic": "Editing",
+      "topic": "Content Quality",
       "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"Editing\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "Proofreading",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"Proofreading\"的文章",
+      "action": "建议撰写2-3篇关于\"Content Quality\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -44766,20 +44326,6 @@
       "topic": "电商营销",
       "reason": "当前仅有2篇文章",
       "action": "建议撰写2-3篇关于\"电商营销\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "accountants",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"accountants\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "tax tips",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"tax tips\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -45134,13 +44680,6 @@
     },
     {
       "priority": "high",
-      "topic": "Medium",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"Medium\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
       "topic": "wellness",
       "reason": "当前仅有2篇文章",
       "action": "建议撰写2-3篇关于\"wellness\"的文章",
@@ -45197,23 +44736,9 @@
     },
     {
       "priority": "high",
-      "topic": "Pinterest",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"Pinterest\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
       "topic": "show notes",
       "reason": "当前仅有2篇文章",
       "action": "建议撰写2-3篇关于\"show notes\"的文章",
-      "angle": "从实际应用角度出发"
-    },
-    {
-      "priority": "high",
-      "topic": "Show Notes",
-      "reason": "当前仅有2篇文章",
-      "action": "建议撰写2-3篇关于\"Show Notes\"的文章",
       "angle": "从实际应用角度出发"
     },
     {
@@ -45362,26 +44887,70 @@
       "reason": "已有98篇文章，内容可能重复",
       "action": "如需继续撰写，建议从以下角度切入",
       "angle": [
-        "真实案例与成功经验",
-        "结合最新趋势更新内容",
-        "从初学者视角重新解读"
+        "行业专家访谈与见解",
+        "从初学者视角重新解读",
+        "结合最新趋势更新内容"
       ]
     },
     {
       "priority": "medium",
       "topic": "AI Writing",
-      "reason": "已有89篇文章，内容可能重复",
+      "reason": "已有85篇文章，内容可能重复",
       "action": "如需继续撰写，建议从以下角度切入",
       "angle": [
-        "从初学者视角重新解读",
-        "行业专家访谈与见解",
-        "结合最新趋势更新内容"
+        "真实案例与成功经验",
+        "深入技术细节的高级教程",
+        "与其他工具的对比分析"
       ]
     },
     {
       "priority": "medium",
       "topic": "ai-writing",
       "reason": "已有68篇文章，内容可能重复",
+      "action": "如需继续撰写，建议从以下角度切入",
+      "angle": [
+        "真实案例与成功经验",
+        "深入技术细节的高级教程",
+        "与其他工具的对比分析"
+      ]
+    },
+    {
+      "priority": "medium",
+      "topic": "SEO",
+      "reason": "已有20篇文章，内容可能重复",
+      "action": "如需继续撰写，建议从以下角度切入",
+      "angle": [
+        "行业专家访谈与见解",
+        "真实案例与成功经验",
+        "结合最新趋势更新内容"
+      ]
+    },
+    {
+      "priority": "medium",
+      "topic": "AI",
+      "reason": "已有15篇文章，内容可能重复",
+      "action": "如需继续撰写，建议从以下角度切入",
+      "angle": [
+        "与其他工具的对比分析",
+        "从初学者视角重新解读",
+        "常见错误与避坑指南"
+      ]
+    },
+    {
+      "priority": "medium",
+      "topic": "Content Creation",
+      "reason": "已有13篇文章，内容可能重复",
+      "action": "如需继续撰写，建议从以下角度切入",
+      "angle": [
+        "结合最新趋势更新内容",
+        "与其他工具的对比分析",
+        "深入技术细节的高级教程"
+      ]
+    },
+    {
+      "priority": "medium",
+      "topic": "comparison",
+      "reason": "已有13篇文章，内容可能重复",
       "action": "如需继续撰写，建议从以下角度切入",
       "angle": [
         "与其他工具的对比分析",
@@ -45391,57 +44960,13 @@
     },
     {
       "priority": "medium",
-      "topic": "SEO",
-      "reason": "已有21篇文章，内容可能重复",
-      "action": "如需继续撰写，建议从以下角度切入",
-      "angle": [
-        "行业专家访谈与见解",
-        "常见错误与避坑指南",
-        "深入技术细节的高级教程"
-      ]
-    },
-    {
-      "priority": "medium",
-      "topic": "AI",
-      "reason": "已有15篇文章，内容可能重复",
-      "action": "如需继续撰写，建议从以下角度切入",
-      "angle": [
-        "行业专家访谈与见解",
-        "与其他工具的对比分析",
-        "深入技术细节的高级教程"
-      ]
-    },
-    {
-      "priority": "medium",
       "topic": "Content Marketing",
-      "reason": "已有14篇文章，内容可能重复",
+      "reason": "已有12篇文章，内容可能重复",
       "action": "如需继续撰写，建议从以下角度切入",
       "angle": [
-        "结合最新趋势更新内容",
-        "真实案例与成功经验",
-        "从初学者视角重新解读"
-      ]
-    },
-    {
-      "priority": "medium",
-      "topic": "Content Creation",
-      "reason": "已有14篇文章，内容可能重复",
-      "action": "如需继续撰写，建议从以下角度切入",
-      "angle": [
-        "行业专家访谈与见解",
-        "结合最新趋势更新内容",
-        "与其他工具的对比分析"
-      ]
-    },
-    {
-      "priority": "medium",
-      "topic": "comparison",
-      "reason": "已有13篇文章，内容可能重复",
-      "action": "如需继续撰写，建议从以下角度切入",
-      "angle": [
-        "从初学者视角重新解读",
+        "常见错误与避坑指南",
         "深入技术细节的高级教程",
-        "与其他工具的对比分析"
+        "行业专家访谈与见解"
       ]
     },
     {
@@ -45450,9 +44975,9 @@
       "reason": "已有12篇文章，内容可能重复",
       "action": "如需继续撰写，建议从以下角度切入",
       "angle": [
-        "行业专家访谈与见解",
+        "与其他工具的对比分析",
         "真实案例与成功经验",
-        "常见错误与避坑指南"
+        "行业专家访谈与见解"
       ]
     },
     {
@@ -45461,13 +44986,6 @@
       "reason": "新兴话题，近期文章频繁提及",
       "action": "建议撰写专题文章",
       "angle": "围绕\"one\"撰写专题系列"
-    },
-    {
-      "priority": "low",
-      "topic": "management",
-      "reason": "新兴话题，近期文章频繁提及",
-      "action": "建议撰写专题文章",
-      "angle": "围绕\"management\"撰写专题系列"
     },
     {
       "priority": "low",
@@ -45489,6 +45007,13 @@
       "reason": "新兴话题，近期文章频繁提及",
       "action": "建议撰写专题文章",
       "angle": "围绕\"chain\"撰写专题系列"
+    },
+    {
+      "priority": "low",
+      "topic": "fact",
+      "reason": "新兴话题，近期文章频繁提及",
+      "action": "建议撰写专题文章",
+      "angle": "围绕\"fact\"撰写专题系列"
     }
   ]
 }
