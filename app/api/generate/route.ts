@@ -255,6 +255,7 @@ export async function POST(request: NextRequest) {
     console.log(`[Generate] 配置读取 — CLAUDE_API_KEY 已配置: ${!!process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY.length > 10}`);
     console.log(`[Generate] AI_PROVIDER: ${process.env.AI_PROVIDER}`);
     console.log(`[Generate] DEEPSEEK_API_KEY exists: ${!!process.env.DEEPSEEK_API_KEY}`);
+    console.log(`[Generate] DEEPSEEK_API_KEY prefix: ${process.env.DEEPSEEK_API_KEY?.substring(0, 10) || 'NOT SET'}`);
 
     const aiProvider = (process.env.AI_PROVIDER || "").toLowerCase();
 
