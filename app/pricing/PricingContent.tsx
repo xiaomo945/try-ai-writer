@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
@@ -63,6 +63,8 @@ export default function PricingContent() {
     }
 
     if (status === "unauthenticated") {
+      // Save selected plan to localStorage before redirecting to login
+      localStorage.setItem("pending_plan", planKey);
       window.location.href = "/login?redirect=/pricing";
       return;
     }
@@ -110,6 +112,20 @@ export default function PricingContent() {
       setLoadingPlan(null);
     }
   };
+
+  // Auto-trigger payment if returning from login with plan parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const planParam = urlParams.get("plan");
+    
+    if (planParam && status === "authenticated" && !loadingPlan) {
+      console.log(`[Pricing] 检测到 plan 参数: ${planParam}，自动触发支付`);
+      // Clean up URL
+      window.history.replaceState({}, "", "/pricing");
+      // Trigger payment for the plan
+      handlePlanClick(planParam);
+    }
+  }, [status, loadingPlan]);
 
   const isPaidPlan = (planName: string) => {
     return planName.toLowerCase() !== "free";

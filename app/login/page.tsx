@@ -3,18 +3,35 @@
 import { Zap, Shield, Brain, Sparkles, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LoginPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (session) {
-      router.push("/dashboard");
+      // Check if there's a pending plan to purchase
+      const pendingPlan = localStorage.getItem("pending_plan");
+      const redirectUrl = searchParams?.get("redirect") || "/dashboard";
+
+      if (pendingPlan) {
+        // Clear the pending plan and redirect to pricing to trigger payment
+        localStorage.removeItem("pending_plan");
+        router.push(`/pricing?plan=${pendingPlan}`);
+      } else {
+        router.push(redirectUrl);
+      }
     }
-  }, [session, router]);
+  }, [session, router, searchParams]);
+
+  const handleSignIn = () => {
+    // Save redirect URL for after login
+    const redirectUrl = searchParams?.get("redirect") || "/dashboard";
+    signIn("google", { callbackUrl: redirectUrl });
+  };
 
   return (
     <main className="min-h-screen flex">
@@ -34,7 +51,7 @@ export default function LoginPage() {
           </div>
           <div className="space-y-4">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={handleSignIn}
               className="w-full btn-outline flex items-center justify-center gap-3 py-4 text-lg"
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24">

@@ -74,7 +74,9 @@ export default function PricingContentZh() {
     }
 
     if (status === "unauthenticated") {
-      window.location.href = "/login?redirect=/pricing";
+      // 保存待支付的套餐到localStorage
+      localStorage.setItem("pending_plan", planKey);
+      window.location.href = "/login?redirect=/pricing/zh";
       return;
     }
 
@@ -121,6 +123,28 @@ export default function PricingContentZh() {
       setLoadingPlan(null);
     }
   };
+
+  // 登录后自动触发支付流程
+  useEffect(() => {
+    if (status === "authenticated" && !loadingPlan) {
+      const pendingPlan = localStorage.getItem("pending_plan");
+      if (pendingPlan) {
+        console.log(`[Pricing] 检测到待支付套餐: ${pendingPlan}`);
+        localStorage.removeItem("pending_plan");
+        
+        // 映射planKey到中文套餐名
+        const planNameMap: Record<string, string> = {
+          "pro": "专业版",
+          "max": "旗舰版",
+          "free": "免费版"
+        };
+        const planName = planNameMap[pendingPlan] || pendingPlan;
+        
+        // 自动触发支付
+        setTimeout(() => handlePlanClick(planName), 100);
+      }
+    }
+  }, [status, loadingPlan]);
 
   const isPaidPlan = (planName: string) => {
     return planName !== "免费版";

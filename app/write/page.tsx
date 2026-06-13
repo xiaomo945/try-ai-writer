@@ -233,6 +233,7 @@ export default function WritePage() {
 
     let response: Response | null = null;
     let lastError: Error | null = null;
+    let apiErrorDetail: { error?: string; hint?: string } | null = null;
 
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
@@ -246,8 +247,15 @@ export default function WritePage() {
         });
         clearTimeout(timeoutId);
         if (response.ok) break;
-        const errorData = await response.json().catch(() => ({}));
-        lastError = new Error(errorData.error || errorData.suggestion || `HTTP ${response.status}`);
+        // Try to read detailed error from API response
+        try {
+          apiErrorDetail = await response.json();
+        } catch {
+          apiErrorDetail = null;
+        }
+        lastError = new Error(
+          apiErrorDetail?.error || `HTTP ${response.status}`
+        );
         if (attempt === 0) {
           await new Promise((resolve) => setTimeout(resolve, 800));
         }
@@ -261,7 +269,15 @@ export default function WritePage() {
     }
 
     if (!response || !response.ok) {
-      setErrorInfo(classifyError(lastError));
+      // Show detailed API error if available, otherwise classify
+      if (apiErrorDetail?.error) {
+        setErrorInfo({
+          message: apiErrorDetail.error,
+          suggestion: apiErrorDetail.hint || "请稍后再试，或联系支持。",
+        });
+      } else {
+        setErrorInfo(classifyError(lastError));
+      }
       setState("error");
       return;
     }
