@@ -127,7 +127,7 @@ export function useToast() {
   const [toasts, setToasts] = useState<ToastProps[]>([]);
 
   const addToast = (toast: Omit<ToastProps, "id" | "onClose">) => {
-    const id = Date.now().toString();
+    const id = crypto.randomUUID();
     setToasts((prev) => [...prev, { ...toast, id, onClose: removeToast }]);
     return id;
   };

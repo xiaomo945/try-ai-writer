@@ -62,8 +62,9 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
     if (step < 3) setStep(step + 1);
   };
 
-  const getRandomPrompt = () =>
-    examplePrompts[Math.floor(Math.random() * examplePrompts.length)];
+  const [randomPrompt] = useState(
+    () => examplePrompts[Math.floor(Math.random() * examplePrompts.length)]
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 p-4 overflow-y-auto">
@@ -244,7 +245,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
                 <PenTool className="w-4 h-4 text-emerald-400" />
                 <span className="text-xs font-medium text-gray-400">Example prompt</span>
               </div>
-              <p className="text-gray-300 text-left italic text-sm">&ldquo;{getRandomPrompt()}&rdquo;</p>
+              <p className="text-gray-300 text-left italic text-sm">&ldquo;{randomPrompt}&rdquo;</p>
             </div>
 
             <Link
