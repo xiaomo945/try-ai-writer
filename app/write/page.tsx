@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2 } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
@@ -143,16 +143,50 @@ export default function WritePage() {
     }
   }, [focusMode]);
 
-  // Handle Esc key to exit focus mode
+  // Handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Exit focus mode with Esc
       if (e.key === "Escape" && focusMode) {
         setFocusMode(false);
+        return;
+      }
+
+      // Keyboard shortcuts (Cmd/Ctrl + key)
+      const isMeta = e.metaKey || e.ctrlKey;
+      
+      if (isMeta && e.key === "Enter") {
+        // Generate content
+        e.preventDefault();
+        if (state !== "loading" && prompt.trim()) {
+          handleGenerate();
+        }
+      } else if (isMeta && e.key === "s") {
+        // Save to history
+        e.preventDefault();
+        if (state === "done" && !savedToHistory) {
+          handleSaveToHistory();
+        }
+      } else if (isMeta && e.key === "m") {
+        // Save to memory
+        e.preventDefault();
+        if (state === "done" && !savedToMemory) {
+          handleSaveToMemory();
+        }
+      } else if (isMeta && e.key === "e") {
+        // Export markdown
+        e.preventDefault();
+        if (state === "done") {
+          handleExportMarkdown();
+        }
+      } else if (isMeta && e.key === "c" && state === "done") {
+        // Copy output (only when output exists)
+        // Let default behavior handle it, but we could add custom logic here
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [focusMode]);
+  }, [focusMode, state, prompt, savedToHistory, savedToMemory]);
 
   // Auto-focus textarea when entering focus mode
   useEffect(() => {
@@ -334,6 +368,26 @@ export default function WritePage() {
     addMemory(output, "article");
     setSavedToMemory(true);
     setTimeout(() => setSavedToMemory(false), 3000);
+  };
+
+  const handleExportMarkdown = () => {
+    if (!output) return;
+    
+    const modeLabel = getModeLabel(mode);
+    const timestamp = new Date().toISOString().split('T')[0];
+    const filename = `${modeLabel.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.md`;
+    
+    const markdownContent = `# ${prompt}\n\n${output}\n\n---\n*Generated with Try AI Writer on ${timestamp}*`;
+    
+    const blob = new Blob([markdownContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const getModeLabel = (m: WritingMode) => {
@@ -639,6 +693,14 @@ export default function WritePage() {
                     >
                       {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                       {copied ? "Copied!" : "Copy"}
+                    </button>
+                    <button
+                      onClick={handleExportMarkdown}
+                      title="导出为Markdown文件"
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
+                    >
+                      <Download className="w-4 h-4" />
+                      Export
                     </button>
                     <button
                       onClick={handleSaveToHistory}
