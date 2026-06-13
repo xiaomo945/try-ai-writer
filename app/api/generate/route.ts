@@ -38,21 +38,6 @@ Topic: `,
   custom: "",
 };
 
-function buildMockStream(text: string): ReadableStream<Uint8Array> {
-  const encoder = new TextEncoder();
-  return new ReadableStream({
-    async start(controller) {
-      const chunkSize = 50;
-      for (let i = 0; i < text.length; i += chunkSize) {
-        const chunk = text.substring(i, i + chunkSize);
-        controller.enqueue(encoder.encode(chunk));
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      }
-      controller.close();
-    },
-  });
-}
-
 type GenerationOptions = {
   prompt: string;
   systemPrompt: string;
@@ -66,13 +51,6 @@ type ProviderAttemptResult = {
   success: boolean;
   stream?: ReadableStream<Uint8Array>;
   error?: { message: string; hint: string };
-};
-
-const MOCK_RESPONSES: ModePrompt = {
-  blog: `## Getting Started with AI Writing in 2025\n\nThe landscape of content creation has shifted dramatically. With AI-powered tools, writers can now produce high-quality drafts in minutes rather than hours.\n\n### Why AI Writing Matters\n\nAI writing tools are no longer just glorified autocomplete. They understand context, maintain tone, and adapt to your unique voice. Here is what makes them indispensable:\n\n- **Speed**: Generate full drafts in under 30 seconds\n- **Quality**: Professionally structured content with proper formatting\n- **Consistency**: Maintain your brand voice across all pieces\n\n### Best Practices for AI-Assisted Writing\n\n1. Start with a clear, specific prompt\n2. Review and edit the AI output for accuracy\n3. Add your personal touch and unique insights\n4. Fact-check any claims or statistics\n\n### The Future is Collaborative\n\nThe most successful creators use AI as a collaborator, not a replacement. Your expertise combined with AI efficiency creates content that neither could produce alone.\n\n### Conclusion\n\nAI writing is here to stay. The question is not whether to use it, but how to use it well. Start experimenting today and find the workflow that works for you.`,
-  email: `Subject: Quick question about your Q2 content strategy\n\nHi there,\n\nI hope this email finds you well. I wanted to follow up on our conversation about scaling your content output this quarter.\n\nHere is what I would recommend:\n\n1. **Leverage AI for first drafts** - Cut writing time by 60%\n2. **Create a content calendar** - Plan 2 weeks ahead minimum\n3. **Batch similar tasks** - Write all blog posts on Monday, edit on Tuesday\n\nWould you be open to a quick 15-minute call this week to discuss? I have some ideas that could really move the needle for your team.\n\nLooking forward to hearing from you.\n\nBest regards`,
-  social: `🚀 Stop writing from scratch.\n\nAI-powered writing tools can generate blog posts, emails, and social content in seconds.\n\nThe best part? They learn your style and get better every time.\n\nTry it free today. Your future self will thank you. ✨\n\n#AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
-  custom: `Here is your custom generated content based on your prompt.\n\nThank you for using Try AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
 };
 
 function analyzeDeepSeekError(err: unknown): { message: string; hint: string } {
