@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { trackPageView, trackEvent } from "@/lib/analytics";
 
 export default function RegisterPage() {
   const { data: session } = useSession();
@@ -14,6 +15,9 @@ export default function RegisterPage() {
     if (session) {
       router.push("/dashboard");
     }
+
+    // Track page view
+    trackPageView("/register");
   }, [session, router]);
 
   return (
@@ -34,7 +38,10 @@ export default function RegisterPage() {
           </div>
           <div className="space-y-4">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/onboarding" })}
+              onClick={() => {
+                trackEvent("register_click", "conversion", { method: "google" });
+                signIn("google", { callbackUrl: "/onboarding" });
+              }}
               className="w-full btn-outline flex items-center justify-center gap-3 py-4 text-lg"
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24">

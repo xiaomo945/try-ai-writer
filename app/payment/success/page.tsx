@@ -1,11 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import Link from "next/link";
-import { CheckCircle, ArrowRight } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { CheckCircle } from "lucide-react";
 import Logo from "@/app/components/Logo";
+import { trackEvent, trackFunnelStep } from "@/lib/analytics";
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const plan = searchParams.get("plan") || "unknown";
+    
+    // Track payment success
+    trackEvent("payment_success", "conversion", { plan });
+    trackFunnelStep("payment", "payment_success", 3, "anonymous", { plan });
+  }, [searchParams]);
+
   return (
     <main className="min-h-screen bg-obsidian-950 text-white flex flex-col items-center justify-center px-4 sm:px-6">
       <Link href="/" className="mb-12">
@@ -33,5 +45,13 @@ export default function PaymentSuccessPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-obsidian-950 flex items-center justify-center text-white">Loading...</div>}>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }
