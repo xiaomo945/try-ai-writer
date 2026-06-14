@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { AvatarVariantProvider } from '@/lib/avatar-variant';
+import { DataMigration } from '@/app/components/DataMigration';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <AvatarVariantProvider>{children}</AvatarVariantProvider>;
+  return (
+    <AvatarVariantProvider>
+      <DataMigration />
+      {children}
+    </AvatarVariantProvider>
+  );
 }

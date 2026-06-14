@@ -15,6 +15,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.40.0",
     "@auth/core": "^0.41.2",
+    "@auth/prisma-adapter": "^2.11.2",
     "@prisma/client": "^7.8.0",
     "@vercel/analytics": "^2.0.1",
     "googleapis": "^144.0.0",
