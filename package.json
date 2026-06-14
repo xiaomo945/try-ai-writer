@@ -24,6 +24,7 @@
     "@tiptap/starter-kit": "^3.26.1",
     "@vercel/analytics": "^2.0.1",
     "googleapis": "^144.0.0",
+    "html2pdf.js": "^0.14.0",
     "lucide-react": "^0.468.0",
     "mammoth": "^1.12.0",
     "next": "^16.2.6",
