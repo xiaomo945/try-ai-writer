@@ -24,11 +24,13 @@ import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-
 import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
 import { getCommunityWorkflows, publishWorkflow, unpublishWorkflow, isWorkflowPublished, type WorkflowDefinition } from "@/lib/workflows";
 import { trackPageView, trackEvent } from "@/lib/analytics";
-import { PersonalizedRecommendations } from "@/app/components/PersonalizedRecommendations";
-import PaymentConversionAnalytics from "@/app/components/PaymentConversionAnalytics";
-import { UserActivityTracker } from "@/app/components/UserActivityTracker";
-import { RetentionAnalysis } from "@/app/components/RetentionAnalysis";
-import { ReturnReminder } from "@/app/components/ReturnReminder";
+import {
+  LazyPersonalizedRecommendations,
+  LazyPaymentConversionAnalytics,
+  LazyUserActivityTracker,
+  LazyRetentionAnalysis,
+  LazyReturnReminder,
+} from "@/app/components/LazyComponents";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -958,22 +960,22 @@ export default function DashboardPage() {
         {/* Personalized Recommendations */}
         {userStage > 0 && (
           <div className="mt-8">
-            <PersonalizedRecommendations context="dashboard" maxItems={3} />
+            <LazyPersonalizedRecommendations context="dashboard" maxItems={3} />
           </div>
         )}
 
         {/* Analytics Components */}
         {userStage > 0 && (
           <div className="grid lg:grid-cols-2 gap-6 mt-8">
-            <UserActivityTracker />
-            <RetentionAnalysis />
+            <LazyUserActivityTracker />
+            <LazyRetentionAnalysis />
           </div>
         )}
 
         {userStage > 0 && (
           <div className="grid lg:grid-cols-2 gap-6 mt-6">
-            <PaymentConversionAnalytics />
-            <ReturnReminder />
+            <LazyPaymentConversionAnalytics />
+            <LazyReturnReminder />
           </div>
         )}
 

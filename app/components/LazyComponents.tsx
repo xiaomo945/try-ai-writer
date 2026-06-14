@@ -1,132 +1,183 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React from "react";
+import { Suspense } from "react";
 
-// ─── Loading Fallbacks ───────────────────────────────────────────────────────
+/**
+ * Lazy load wrapper for large components
+ * Uses next/dynamic for code splitting and reduces initial bundle size
+ */
 
-function MarkdownPreviewLoading() {
+// Lazy load heavy analytics components
+export const LazyPaymentConversionAnalytics = dynamic(
+  () => import("@/app/components/PaymentConversionAnalytics"),
+  {
+    loading: () => <AnalyticsSkeleton />,
+    ssr: false,
+  }
+);
+
+export const LazyUserActivityTracker = dynamic(
+  () =>
+    import("@/app/components/UserActivityTracker").then(
+      (mod) => mod.UserActivityTracker
+    ),
+  {
+    loading: () => <AnalyticsSkeleton />,
+    ssr: false,
+  }
+);
+
+export const LazyRetentionAnalysis = dynamic(
+  () =>
+    import("@/app/components/RetentionAnalysis").then(
+      (mod) => mod.RetentionAnalysis
+    ),
+  {
+    loading: () => <AnalyticsSkeleton />,
+    ssr: false,
+  }
+);
+
+export const LazyReturnReminder = dynamic(
+  () =>
+    import("@/app/components/ReturnReminder").then(
+      (mod) => mod.ReturnReminder
+    ),
+  {
+    loading: () => <AnalyticsSkeleton />,
+    ssr: false,
+  }
+);
+
+// Lazy load heavy UI components
+export const LazyPersonalizedRecommendations = dynamic(
+  () =>
+    import("@/app/components/PersonalizedRecommendations").then(
+      (mod) => mod.PersonalizedRecommendations
+    ),
+  {
+    loading: () => <RecommendationsSkeleton />,
+    ssr: false,
+  }
+);
+
+export const LazyABTestDashboard = dynamic(
+  () =>
+    import("@/app/components/ABTestDashboard").then(
+      (mod) => mod.ABTestDashboard
+    ),
+  {
+    loading: () => <DashboardSkeleton />,
+    ssr: false,
+  }
+);
+
+export const LazyConversionFunnel = dynamic(
+  () =>
+    import("@/app/components/ConversionFunnel").then(
+      (mod) => mod.ConversionFunnel
+    ),
+  {
+    loading: () => <FunnelSkeleton />,
+    ssr: false,
+  }
+);
+
+// Lazy load editor components
+export const LazyRichTextEditor = dynamic(
+  () => import("@/app/components/RichTextEditor"),
+  {
+    loading: () => <EditorSkeleton />,
+    ssr: false,
+  }
+);
+
+// Skeleton components for loading states
+function AnalyticsSkeleton() {
   return (
-    <div className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-2xl">
-      <div className="flex flex-col items-center gap-3">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-600/30 border-t-emerald-600" />
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Loading preview...
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function RichTextEditorLoading() {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-2xl">
-      <div className="mb-4 h-10 w-full animate-skeleton-pulse rounded-lg bg-slate-200/60 dark:bg-slate-800/80" />
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
       <div className="space-y-3">
-        <div className="h-4 w-full animate-skeleton-pulse rounded bg-slate-200/60 dark:bg-slate-800/80" />
-        <div className="h-4 w-5/6 animate-skeleton-pulse rounded bg-slate-200/60 dark:bg-slate-800/80" />
-        <div className="h-4 w-4/6 animate-skeleton-pulse rounded bg-slate-200/60 dark:bg-slate-800/80" />
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6"></div>
       </div>
     </div>
   );
 }
 
-function DashboardLoading() {
+function RecommendationsSkeleton() {
   return (
-    <div className="space-y-6 p-6">
-      <div className="h-8 w-48 animate-skeleton-pulse rounded-lg bg-slate-200/60 dark:bg-slate-800/80" />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="h-40 animate-skeleton-pulse rounded-2xl bg-slate-200/60 dark:bg-slate-800/80"
-          />
+          <div key={i} className="h-32 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
         ))}
       </div>
     </div>
   );
 }
 
-function AnalyticsLoading() {
+function DashboardSkeleton() {
   return (
-    <div className="space-y-4 p-6">
-      <div className="h-6 w-36 animate-skeleton-pulse rounded bg-slate-200/60 dark:bg-slate-800/80" />
-      <div className="h-64 w-full animate-skeleton-pulse rounded-2xl bg-slate-200/60 dark:bg-slate-800/80" />
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-24 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
+        ))}
+      </div>
     </div>
   );
 }
 
-function GenericLoading() {
+function FunnelSkeleton() {
   return (
-    <div className="flex items-center justify-center p-8">
-      <div className="h-6 w-6 animate-spin rounded-full border-2 border-teal-500/30 border-t-teal-500" />
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
+      <div className="space-y-2">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="h-12 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        ))}
+      </div>
     </div>
   );
 }
 
-// ─── Dynamic Imports ─────────────────────────────────────────────────────────
+function EditorSkeleton() {
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-10 bg-slate-200 dark:bg-slate-700 rounded mb-4"></div>
+      <div className="space-y-2">
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-5/6"></div>
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/6"></div>
+      </div>
+    </div>
+  );
+}
 
-/**
- * Lazy-loaded Markdown preview component.
- * Use for rendering markdown content with syntax highlighting.
- *
- * Usage:
- * ```tsx
- * const MarkdownPreview = createLazyComponent(
- *   () => import('./MarkdownPreview')
- * );
- * ```
- */
-export const LazyMarkdownPreview = null; // Placeholder - implement when needed
+function PreviewSkeleton() {
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm animate-pulse">
+      <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-4"></div>
+      <div className="aspect-video bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
+    </div>
+  );
+}
 
-/**
- * Lazy-loaded rich text editor component.
- * Use for the main content editing area.
- *
- * Usage:
- * ```tsx
- * const RichTextEditor = createLazyComponent(
- *   () => import('./RichTextEditor')
- * );
- * ```
- */
-export const LazyRichTextEditor = null; // Placeholder - implement when needed
-
-/**
- * Lazy-loaded dashboard component.
- * Heavy component with charts and data visualization.
- *
- * Usage:
- * ```tsx
- * const Dashboard = createLazyComponent(
- *   () => import('./Dashboard')
- * );
- * ```
- */
-export const LazyDashboard = null; // Placeholder - implement when needed
-
-/**
- * Lazy-loaded analytics component.
- * Heavy component with charts and metrics.
- *
- * Usage:
- * ```tsx
- * const Analytics = createLazyComponent(
- *   () => import('./Analytics')
- * );
- * ```
- */
-export const LazyAnalytics = null; // Placeholder - implement when needed
-
-/**
- * Generic lazy loader factory for any component.
- */
-export function createLazyComponent<T extends React.ComponentType<unknown>>(
-  importFn: () => Promise<{ default: T }>,
-  options?: { ssr?: boolean }
+// Helper function to wrap components with Suspense
+export function withLazyLoading<P extends object>(
+  Component: React.ComponentType<P>,
+  fallback: React.ReactNode = <AnalyticsSkeleton />
 ) {
-  return dynamic(importFn, {
-    loading: () => <GenericLoading />,
-    ssr: options?.ssr ?? false,
-  });
+  return function LazyComponent(props: P) {
+    return (
+      <Suspense fallback={fallback}>
+        <Component {...props} />
+      </Suspense>
+    );
+  };
 }

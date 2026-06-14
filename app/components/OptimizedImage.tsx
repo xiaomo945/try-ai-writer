@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 interface OptimizedImageProps {
@@ -8,108 +8,92 @@ interface OptimizedImageProps {
   alt: string;
   width?: number;
   height?: number;
-  fill?: boolean;
-  priority?: boolean;
   className?: string;
-  placeholder?: string;
-  fallbackSrc?: string;
+  priority?: boolean;
+  placeholder?: "blur" | "empty";
+  blurDataURL?: string;
   sizes?: string;
   quality?: number;
-  onLoad?: () => void;
-  onError?: () => void;
 }
 
-/**
- * Optimized image component with lazy loading, loading states,
- * and error handling built on top of Next.js Image.
- */
-export function OptimizedImage({
+export default function OptimizedImage({
   src,
   alt,
   width,
   height,
-  fill = false,
-  priority = false,
   className = "",
-  placeholder: blurPlaceholder,
-  fallbackSrc = "/placeholder.svg",
-  sizes,
-  quality = 80,
-  onLoad,
-  onError,
+  priority = false,
+  placeholder = "empty",
+  blurDataURL,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+  quality = 75,
 }: OptimizedImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(src);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(priority);
+  const imgRef = useRef<HTMLDivElement>(null);
 
-  const handleLoad = useCallback(() => {
-    setIsLoading(false);
-    onLoad?.();
-  }, [onLoad]);
+  useEffect(() => {
+    if (priority) {
+      setIsInView(true);
+      return;
+    }
 
-  const handleError = useCallback(() => {
-    setIsLoading(false);
-    setHasError(true);
-    setCurrentSrc(fallbackSrc);
-    onError?.();
-  }, [fallbackSrc, onError]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: "50px 0px",
+        threshold: 0.01,
+      }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [priority]);
+
+  const handleLoad = () => {
+    setIsLoaded(true);
+  };
 
   return (
-    <div
-      className={`relative overflow-hidden ${className}`}
-      style={
-        !fill && width && height
-          ? { width: `${width}px`, height: `${height}px` }
-          : undefined
-      }
-    >
-      {/* Loading skeleton */}
-      {isLoading && (
-        <div className="absolute inset-0 z-10 animate-skeleton-pulse bg-gradient-to-r from-slate-200/60 via-slate-100 to-slate-200/60 dark:from-slate-800/80 dark:via-slate-700 dark:to-slate-800/80" />
+    <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 animate-pulse" />
       )}
-
-      {/* Error overlay */}
-      {hasError && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-slate-100 dark:bg-slate-800/50">
-          <div className="text-center">
-            <svg
-              className="mx-auto h-8 w-8 text-slate-400 dark:text-slate-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"
-              />
-            </svg>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              Failed to load
-            </p>
-          </div>
-        </div>
+      
+      {isInView && (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`transition-opacity duration-300 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          } ${className}`}
+          onLoad={handleLoad}
+          priority={priority}
+          placeholder={placeholder}
+          blurDataURL={blurDataURL}
+          sizes={sizes}
+          quality={quality}
+          loading={priority ? "eager" : "lazy"}
+        />
       )}
-
-      <Image
-        src={currentSrc}
-        alt={alt}
-        width={fill ? undefined : width}
-        height={fill ? undefined : height}
-        fill={fill}
-        priority={priority}
-        loading={priority ? "eager" : "lazy"}
-        quality={quality}
-        sizes={sizes}
-        placeholder={blurPlaceholder ? "blur" : "empty"}
-        blurDataURL={blurPlaceholder}
-        className={`transition-opacity duration-300 ease-out ${
-          isLoading ? "opacity-0" : "opacity-100"
-        } ${fill ? "object-cover" : ""}`}
-        onLoad={handleLoad}
-        onError={handleError}
-      />
+      
+      {!isInView && (
+        <div className="w-full h-full bg-gray-100 dark:bg-gray-800" style={{ width, height }} />
+      )}
     </div>
   );
 }

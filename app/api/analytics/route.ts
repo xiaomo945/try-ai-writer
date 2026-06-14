@@ -25,13 +25,40 @@ export async function GET(request: NextRequest) {
   // In a real implementation, this would fetch from database or analytics service
   const responseData = getMockData(type);
 
+  // Generate ETag based on response content (simple hash without crypto)
+  const etag = generateSimpleETag(responseData);
+
+  // Check if client has cached version
+  const ifNoneMatch = request.headers.get("if-none-match");
+  if (ifNoneMatch === etag) {
+    return new NextResponse(null, {
+      status: 304,
+      headers: {
+        "ETag": etag,
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    });
+  }
+
   return NextResponse.json(responseData, {
     headers: {
       "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       "CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       "Vercel-CDN-Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      "ETag": etag,
     },
   });
+}
+
+function generateSimpleETag(data: unknown): string {
+  const str = JSON.stringify(data);
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return `"${Math.abs(hash).toString(36)}"`;
 }
 
 function getMockData(type: string): Record<string, unknown> {

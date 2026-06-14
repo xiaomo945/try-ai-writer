@@ -59,6 +59,11 @@ function renderMarkdown(content: string): string {
   const body = parts.length >= 3 ? parts.slice(2).join("---") : content;
 
   return body
+    // Images with lazy loading and SEO
+    .replace(
+      /!\[([^\]]*)\]\(([^)]+)\)/g,
+      '<img src="$2" alt="$1" loading="lazy" decoding="async" class="rounded-xl my-6 max-w-full h-auto shadow-lg" width="800" height="450" />'
+    )
     // Headers
     .replace(/^### (.+)$/gm, '<h3 class="text-xl font-semibold mt-8 mb-3">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold mt-10 mb-4">$1</h2>')
