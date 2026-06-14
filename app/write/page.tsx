@@ -12,6 +12,7 @@ import { findRelatedIdeas } from "@/lib/idea-linker";
 import { FloatingToolbar } from "@/app/components/FloatingToolbar";
 import { MarkdownPreview } from "@/app/components/MarkdownPreview";
 import { LineNumbers } from "@/app/components/LineNumbers";
+import { RichTextEditor } from "@/app/components/RichTextEditor";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -93,6 +94,7 @@ export default function WritePage() {
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [scrollRatio, setScrollRatio] = useState(0);
+  const [useRichEditor, setUseRichEditor] = useState(false);
 
   // Focus mode state
   const [focusMode, setFocusMode] = useState<boolean>(false);
@@ -684,6 +686,12 @@ export default function WritePage() {
                 {state === "done" && (
                   <div className="flex items-center gap-2">
                     <button
+                      onClick={() => setUseRichEditor(!useRichEditor)}
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
+                    >
+                      {useRichEditor ? "纯文本" : "富文本"}
+                    </button>
+                    <button
                       onClick={handleCopy}
                       title="复制到剪贴板，分享或粘贴到别处"
                       className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
@@ -780,9 +788,17 @@ export default function WritePage() {
 
                 {state === "done" && (
                   <div>
-                    <div className="whitespace-pre-wrap text-gray-800 dark:text-slate-200">
-                      {output}
-                    </div>
+                    {useRichEditor ? (
+                      <RichTextEditor
+                        content={output}
+                        onChange={setOutput}
+                        placeholder="开始编辑..."
+                      />
+                    ) : (
+                      <div className="whitespace-pre-wrap text-gray-800 dark:text-slate-200">
+                        {output}
+                      </div>
+                    )}
                     {outputWordCount > 0 && (
                       <div className="mt-4 pt-3 border-t border-gray-200 dark:border-white/10 flex items-center gap-3">
                         <span className="text-xs text-gray-400 dark:text-slate-500">
