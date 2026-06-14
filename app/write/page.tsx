@@ -136,13 +136,10 @@ export default function WritePage() {
     }
 
     // Track page view
-    trackPageView({
-      path: "/write",
-      sessionId: `session_${Date.now()}`,
-    });
+    trackPageView("/write");
 
     // Track funnel step
-    trackFunnelStep("writing-funnel", "enter_write_page");
+    trackFunnelStep("writing-funnel", "enter_write_page", 1, "anonymous");
   }, []);
 
   // Save focus mode to localStorage when it changes
@@ -251,12 +248,10 @@ export default function WritePage() {
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
+    const startTime = Date.now();
+
     // Track generation start
-    trackEvent({
-      name: "content_generation_start",
-      category: "engagement",
-      metadata: { mode, promptLength: prompt.length },
-    });
+    trackEvent("content_generation_start", "engagement", { mode, promptLength: prompt.length });
 
     setState("loading");
     setOutput("");
@@ -355,18 +350,14 @@ export default function WritePage() {
       }
 
       // Track successful generation
-      trackEvent({
-        name: "content_generation_success",
-        category: "engagement",
-        metadata: { 
-          mode, 
-          wordCount: fullText.trim().split(/\s+/).filter(Boolean).length,
-          generationTime: Date.now() - startTime 
-        },
+      trackEvent("content_generation_success", "engagement", { 
+        mode, 
+        wordCount: fullText.trim().split(/\s+/).filter(Boolean).length,
+        generationTime: Date.now() - startTime 
       });
 
       // Track funnel step
-      trackFunnelStep("writing-funnel", "generate_content");
+      trackFunnelStep("writing-funnel", "generate_content", 2, "anonymous");
 
       setState("done");
       const wc = fullText.trim().split(/\s+/).filter(Boolean).length;

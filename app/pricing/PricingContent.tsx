@@ -60,19 +60,14 @@ export default function PricingContent() {
     const userId = session?.user?.email || "anonymous";
     
     // Track page view
-    trackPageView({
-      path: "/pricing",
-      userId,
-      referrer: document.referrer,
-      sessionId: `session_${Date.now()}`,
-    });
+    trackPageView("/pricing", document.referrer, userId);
 
     // Assign A/B test variant for pricing CTA
     const variant = assignVariant("pricing-cta-test", userId);
     setAbVariant(variant);
 
     // Track funnel step
-    trackFunnelStep("pricing-funnel", "view_pricing", { userId });
+    trackFunnelStep("pricing-funnel", "view_pricing", 1, userId);
   }, [session]);
 
   const handlePlanClick = async (planName: string) => {
@@ -83,13 +78,7 @@ export default function PricingContent() {
 
     // Track conversion event
     const userId = session?.user?.email || "anonymous";
-    trackEvent({
-      name: "plan_selected",
-      category: "conversion",
-      userId,
-      metadata: { plan: planKey, variant: abVariant || "control" },
-      sessionId: `session_${Date.now()}`,
-    });
+    trackEvent("plan_selected", "conversion", { plan: planKey, variant: abVariant || "control" }, userId);
 
     // Track A/B test conversion
     if (abVariant) {
@@ -97,7 +86,7 @@ export default function PricingContent() {
     }
 
     // Track funnel step
-    trackFunnelStep("pricing-funnel", "select_plan", { userId, plan: planKey });
+    trackFunnelStep("pricing-funnel", "select_plan", 2, userId, { plan: planKey });
 
     if (status === "loading") {
       alert("Please wait, checking your login status...");

@@ -23,6 +23,8 @@ import { Gift } from "lucide-react";
 import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
 import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
 import { getCommunityWorkflows, publishWorkflow, unpublishWorkflow, isWorkflowPublished, type WorkflowDefinition } from "@/lib/workflows";
+import { trackPageView, trackEvent } from "@/lib/analytics";
+import { PersonalizedRecommendations } from "@/app/components/PersonalizedRecommendations";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
