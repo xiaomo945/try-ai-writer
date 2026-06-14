@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     // 检查当前用户是否有权限查看
     const userId = session.user.id;
     const currentParticipant = collabSession.participants.find(
-      (p) => p.userId === userId
+      (p: { userId: string }) => p.userId === userId
     );
 
     if (!currentParticipant) {
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       documentId: collabSession.documentId,
       ownerId: collabSession.ownerId,
-      participants: collabSession.participants.map((p) => ({
+      participants: collabSession.participants.map((p: { id: string; userId: string; user: { id: string; name: string | null; email: string | null; image: string | null }; role: string; joinedAt: Date }) => ({
         id: p.id,
         userId: p.user.id,
         name: p.user.name,
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     // 检查当前用户是否是所有者或编辑者
     const currentParticipant = collabSession.participants.find(
-      (p) => p.userId === userId
+      (p: { userId: string }) => p.userId === userId
     );
 
     if (!currentParticipant || currentParticipant.role === "VIEWER") {
@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
 
     // 检查用户是否已是参与者
     const existingParticipant = collabSession.participants.find(
-      (p) => p.userId === userToAdd.id
+      (p: { userId: string }) => p.userId === userToAdd.id
     );
 
     if (existingParticipant) {
@@ -231,7 +231,7 @@ export async function PATCH(request: NextRequest) {
 
     // 不能更改所有者的角色
     const participant = collabSession.participants.find(
-      (p) => p.id === participantId
+      (p: { id: string }) => p.id === participantId
     );
 
     if (!participant) {
@@ -309,7 +309,7 @@ export async function DELETE(request: NextRequest) {
 
     // 不能移除所有者
     const participant = collabSession.participants.find(
-      (p) => p.id === participantId
+      (p: { id: string }) => p.id === participantId
     );
 
     if (!participant) {

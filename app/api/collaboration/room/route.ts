@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     } else {
       // 检查用户是否已是参与者
       const existingParticipant = collabSession.participants.find(
-        (p) => p.userId === userId
+        (p: { userId: string }) => p.userId === userId
       );
 
       if (!existingParticipant) {
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
       documentId: collabSession.documentId,
       title: collabSession.title,
       ownerId: collabSession.ownerId,
-      participants: collabSession.participants.map((p) => ({
+      participants: collabSession.participants.map((p: { user: { id: string; name: string | null; email: string | null; image: string | null }; role: string }) => ({
         id: p.user.id,
         name: p.user.name,
         email: p.user.email,
