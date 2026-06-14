@@ -32,6 +32,7 @@ model User {
   templates     Template[]
   templateFavorites TemplateFavorite[]
   templateReviews   TemplateReview[]
+  apiKeys       ApiKey[]
 }
 
 model Account {
@@ -264,4 +265,22 @@ model TemplateReview {
   @@unique([userId, templateId])
   @@index([userId])
   @@index([templateId])
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String   // 密钥名称，如 "Production Key"
+  keyHash     String   @unique // SHA-256哈希
+  keyPrefix   String   // 前8位，用于显示 "sk-abc123..."
+  permissions String   @default("read,write") // 权限列表
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([keyHash])
 }
