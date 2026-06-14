@@ -195,7 +195,84 @@ export function clearPendingReferralRewards(): void {
 }
 
 // Get the referral link for sharing
-export function getReferralLink(code: string): string {
-  if (typeof window === "undefined") return "";
+export function getReferralLink(code: string, baseUrl?: string): string {
+  if (typeof window === "undefined") {
+    return baseUrl ? `${baseUrl}/?ref=${code}` : "";
+  }
   return `${window.location.origin}/?ref=${code}`;
+}
+
+// ── Server-side referral functions (in-memory storage) ──
+
+interface ServerReferralRecord {
+  userId: string;
+  code: string;
+  referralCount: number;
+}
+
+const serverReferralRecords = new Map<string, ServerReferralRecord>();
+const serverReferralCodes = new Map<string, string>(); // code -> userId
+
+function generateServerReferralCode(): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return `REF-${code}`;
+}
+
+export function createReferralRecord(userId: string): ServerReferralRecord {
+  // Return existing record if already created
+  for (const record of serverReferralRecords.values()) {
+    if (record.userId === userId) {
+      return record;
+    }
+  }
+
+  const code = generateServerReferralCode();
+  const record: ServerReferralRecord = {
+    userId,
+    code,
+    referralCount: 0,
+  };
+
+  serverReferralRecords.set(userId, record);
+  serverReferralCodes.set(code, userId);
+  return record;
+}
+
+export function findReferrerByCode(code: string): ServerReferralRecord | null {
+  const userId = serverReferralCodes.get(code);
+  if (!userId) return null;
+  return serverReferralRecords.get(userId) || null;
+}
+
+export function trackReferralConversion(
+  newUserId: string,
+  referralCode: string
+): {
+  referrerId: string | null;
+  rewards: {
+    referrerReward: { proDays: number };
+    refereeReward: { extraGenerations: number };
+  } | null;
+} {
+  const referrerRecord = findReferrerByCode(referralCode);
+  if (!referrerRecord) {
+    return { referrerId: null, rewards: null };
+  }
+
+  // Increment referral count
+  referrerRecord.referralCount += 1;
+
+  return {
+    referrerId: referrerRecord.userId,
+    rewards: {
+      referrerReward: { proDays: REFERRAL_REWARDS.perReferral.proDays },
+      refereeReward: {
+        extraGenerations: REFERRAL_REWARDS.perReferral.extraGenerations,
+      },
+    },
+  };
 }
