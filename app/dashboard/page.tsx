@@ -31,6 +31,10 @@ import {
   LazyRetentionAnalysis,
   LazyReturnReminder,
 } from "@/app/components/LazyComponents";
+import { DailyRewardCard } from "@/components/retention/DailyRewardCard";
+import { ReminderNotification } from "@/components/retention/ReminderNotification";
+import { UpdateNotificationPanel } from "@/components/retention/UpdateNotificationPanel";
+import { FeedbackForm, FeedbackList } from "@/components/retention/FeedbackForm";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -881,6 +885,8 @@ export default function DashboardPage() {
             <span className="font-display text-xl font-bold">Try AI Writer</span>
           </Link>
           <div className="flex items-center gap-3">
+            <ReminderNotification />
+            <UpdateNotificationPanel />
             <Link href="/write" className="btn-primary text-sm min-h-[40px] px-4 flex items-center gap-2 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-shadow">
               <Sparkles className="w-4 h-4" />
               <span className="hidden sm:inline">New Generation</span>
@@ -956,6 +962,9 @@ export default function DashboardPage() {
             )}
           </div>
         </div>
+
+        {/* Daily Reward Card */}
+        <DailyRewardCard />
 
         {/* Personalized Recommendations */}
         {userStage > 0 && (
@@ -1507,6 +1516,20 @@ export default function DashboardPage() {
                     </div>
                   )}
                 </div>
+              </div>
+
+              {/* Feedback Form */}
+              <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                    <span className="text-2xl">💬</span>
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">反馈与建议</h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">帮助我们改进产品</p>
+                  </div>
+                </div>
+                <FeedbackForm />
               </div>
             </div>
           </div>

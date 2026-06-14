@@ -133,15 +133,11 @@ export function DailyRewardCard() {
             <div
               key={days}
               className={`text-center p-2 rounded-lg ${
-                currentStreak >= days
-                  ? "bg-white/30"
-                  : "bg-white/10"
+                currentStreak >= days ? "bg-white/30" : "bg-white/10"
               }`}
             >
               <div className="text-xs opacity-90">{days}天</div>
-              <div className="text-lg">
-                {currentStreak >= days ? "✓" : "🔒"}
-              </div>
+              <div className="text-lg">{currentStreak >= days ? "✓" : "🔒"}</div>
             </div>
           ))}
         </div>

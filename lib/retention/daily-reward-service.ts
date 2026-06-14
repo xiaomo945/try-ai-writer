@@ -9,7 +9,9 @@ function getTodayString(): string {
 }
 
 export async function getDailyReward(userId: string): Promise<DailyReward | null> {
-  return Array.from(dailyRewards.values()).find((r) => r.userId === userId) || null;
+  return (
+    Array.from(dailyRewards.values()).find((r) => r.userId === userId) || null
+  );
 }
 
 export async function initializeDailyReward(userId: string): Promise<DailyReward> {
@@ -64,7 +66,10 @@ export async function checkLoginStreak(
       currentStreak,
       canClaim,
       nextReward: nextRewardConfig
-        ? { streakDays: nextRewardConfig.streakDays, description: nextRewardConfig.description }
+        ? {
+            streakDays: nextRewardConfig.streakDays,
+            description: nextRewardConfig.description,
+          }
         : null,
     };
   }
@@ -83,7 +88,10 @@ export async function checkLoginStreak(
     currentStreak,
     canClaim,
     nextReward: nextRewardConfig
-      ? { streakDays: nextRewardConfig.streakDays, description: nextRewardConfig.description }
+      ? {
+          streakDays: nextRewardConfig.streakDays,
+          description: nextRewardConfig.description,
+        }
       : null,
   };
 }

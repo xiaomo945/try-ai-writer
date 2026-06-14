@@ -6,11 +6,13 @@ export const DailyRewardSchema = z.object({
   loginStreak: z.number(),
   lastLoginDate: z.string(), // YYYY-MM-DD
   totalRewards: z.number(),
-  claimedRewards: z.array(z.object({
-    date: z.string(),
-    rewardType: z.string(),
-    rewardValue: z.number(),
-  })),
+  claimedRewards: z.array(
+    z.object({
+      date: z.string(),
+      rewardType: z.string(),
+      rewardValue: z.number(),
+    })
+  ),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
