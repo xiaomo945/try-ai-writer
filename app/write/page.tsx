@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff, History, Download, Upload, RotateCcw } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff, History, Download, Upload, RotateCcw, Cloud, CloudOff } from "lucide-react";
 import Link from "next/link";
 import { useDbHistory } from "@/lib/db-history";
 import { useDbMemoryBank } from "@/lib/db-memory-bank";
@@ -13,9 +13,10 @@ import { FloatingToolbar } from "@/app/components/FloatingToolbar";
 import { MarkdownPreview } from "@/app/components/MarkdownPreview";
 import { LineNumbers } from "@/app/components/LineNumbers";
 import { RichTextEditor } from "@/app/components/RichTextEditor";
+import { VersionHistoryPanel } from "@/app/components/VersionHistoryPanel";
 import { useAutoSave } from "@/lib/use-auto-save";
 import { useVersionHistory } from "@/lib/use-version-history";
-import { htmlToMarkdown, markdownToHtml, downloadMarkdown, downloadHtml } from "@/lib/markdown-utils";
+import { htmlToMarkdown, markdownToHtml, downloadMarkdown, downloadHtml, readMarkdownFile } from "@/lib/markdown-utils";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -96,19 +97,86 @@ export default function WritePage() {
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const searchParams = useSearchParams();
+  const { addRecord, records } = useDbHistory();
+  const { memories, addMemory } = useDbMemoryBank();
+  const { profile } = useDbBrandVoice();
+
   const [scrollRatio, setScrollRatio] = useState(0);
   const [useRichEditor, setUseRichEditor] = useState(false);
+  const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [documentId] = useState<string | null>("current-doc"); // 简化：使用固定ID
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 自动保存
+  const handleAutoSave = useCallback(async (content: string) => {
+    if (!documentId) return;
+    // 自动保存到历史记录
+    addRecord({
+      title: prompt.slice(0, 50) + (prompt.length > 50 ? "..." : ""),
+      mode,
+      result: content,
+    });
+  }, [documentId, prompt, mode, addRecord]);
+
+  const { isSaving, lastSaved, error: autoSaveError } = useAutoSave({
+    content: output,
+    onSave: handleAutoSave,
+    debounceMs: 2000,
+    enabled: autoSaveEnabled && state === "done",
+  });
+
+  // 版本历史
+  const { versions, saveVersion, restoreVersion } = useVersionHistory(documentId);
+
+  // Markdown导入
+  const handleImportMarkdown = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      const content = await readMarkdownFile(file);
+      setOutput(content);
+      setState("done");
+    } catch (err) {
+      console.error("导入失败:", err);
+    }
+  };
+
+  // Markdown导出
+  const handleExportMarkdown = () => {
+    if (!output) return;
+    const markdown = htmlToMarkdown(output);
+    downloadMarkdown(markdown, `document-${Date.now()}.md`);
+  };
+
+  // HTML导出
+  const handleExportHtml = () => {
+    if (!output) return;
+    downloadHtml(output, `document-${Date.now()}.html`);
+  };
+
+  // 保存版本
+  const handleSaveVersion = async () => {
+    if (!output) return;
+    await saveVersion(output, prompt.slice(0, 50));
+  };
+
+  // 恢复版本
+  const handleRestoreVersion = async (versionId: string) => {
+    const content = await restoreVersion(versionId);
+    if (content) {
+      setOutput(content);
+      setState("done");
+    }
+  };
 
   // Focus mode state
   const [focusMode, setFocusMode] = useState<boolean>(false);
   const [showFocusExit, setShowFocusExit] = useState<boolean>(false);
   const promptRef = useRef<HTMLTextAreaElement>(null);
   const focusActionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const searchParams = useSearchParams();
-  const { addRecord, records } = useDbHistory();
-  const { memories, addMemory } = useDbMemoryBank();
-  const { profile } = useDbBrandVoice();
 
   const relatedIdeas = useMemo(() => {
     if (!prompt.trim() || memories.length === 0) return [];
@@ -523,6 +591,15 @@ export default function WritePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0C] text-gray-900 dark:text-white">
       <FloatingToolbar textareaRef={promptRef} onFormat={handleFormat} />
+      
+      {/* 版本历史面板 */}
+      {showVersionHistory && (
+        <VersionHistoryPanel
+          documentId={documentId}
+          onRestore={handleRestoreVersion}
+          onClose={() => setShowVersionHistory(false)}
+        />
+      )}
       <header className="border-b border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -720,6 +797,52 @@ export default function WritePage() {
                       {savedToMemory ? <CheckCircle2 className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
                       {savedToMemory ? "Memorized!" : "Memory"}
                     </button>
+                    <button
+                      onClick={() => setShowVersionHistory(true)}
+                      title="查看历史版本，随时回滚"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-400 rounded-lg text-sm transition-all min-h-[44px]"
+                    >
+                      <History className="w-4 h-4" />
+                      版本
+                    </button>
+                    <div className="relative group">
+                      <button
+                        title="导出文档"
+                        className="flex items-center gap-2 px-4 py-2 bg-orange-600/20 hover:bg-orange-600/30 border border-orange-500/30 text-orange-400 rounded-lg text-sm transition-all min-h-[44px]"
+                      >
+                        <Download className="w-4 h-4" />
+                        导出
+                      </button>
+                      <div className="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-[#1A1A1E] border border-gray-200 dark:border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                        <button
+                          onClick={handleExportMarkdown}
+                          className="w-full px-4 py-3 text-left text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                        >
+                          导出为 Markdown
+                        </button>
+                        <button
+                          onClick={handleExportHtml}
+                          className="w-full px-4 py-3 text-left text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                        >
+                          导出为 HTML
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      title="导入Markdown文件"
+                      className="flex items-center gap-2 px-4 py-2 bg-teal-600/20 hover:bg-teal-600/30 border border-teal-500/30 text-teal-400 rounded-lg text-sm transition-all min-h-[44px]"
+                    >
+                      <Upload className="w-4 h-4" />
+                      导入
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".md,.markdown"
+                      onChange={handleImportMarkdown}
+                      className="hidden"
+                    />
                   </div>
                 )}
               </div>

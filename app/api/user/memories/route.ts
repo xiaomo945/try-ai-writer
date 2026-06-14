@@ -27,7 +27,7 @@ export async function GET() {
     });
 
     return NextResponse.json({
-      memories: memories.map((m) => ({
+      memories: memories.map((m: { id: string; content: string; type: string; createdAt: Date }) => ({
         id: m.id,
         content: m.content,
         type: m.type,

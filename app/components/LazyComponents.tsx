@@ -86,7 +86,10 @@ export const LazyConversionFunnel = dynamic(
 
 // Lazy load editor components
 export const LazyRichTextEditor = dynamic(
-  () => import("@/app/components/RichTextEditor"),
+  () =>
+    import("@/app/components/RichTextEditor").then(
+      (mod) => mod.RichTextEditor
+    ),
   {
     loading: () => <EditorSkeleton />,
     ssr: false,

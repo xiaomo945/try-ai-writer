@@ -95,7 +95,7 @@ export function markdownToHtml(markdown: string): string {
 
   // 转换列表
   html = html.replace(/^- (.*$)/gim, "<li>$1</li>");
-  html = html.replace(/(<li>.*<\/li>)/s, "<ul>$1</ul>");
+  html = html.replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>");
 
   // 转换段落
   html = html.replace(/^(?!<[huplb]|<hr|<blockquote|<pre|<code)(.*$)/gim, "<p>$1</p>");
