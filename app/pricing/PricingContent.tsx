@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import { plans } from "@/lib/pricing";
+import { PersonalizedRecommendations } from "@/app/components/PersonalizedRecommendations";
+import { trackEvent, trackPageView, trackFunnelStep } from "@/lib/analytics";
+import { assignVariant, trackConversion } from "@/lib/ab-testing";
 
 // Product structured data — derived from shared pricing module
 const productSchema = {
@@ -49,13 +52,52 @@ const breadcrumbSchema = {
 
 export default function PricingContent() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [abVariant, setAbVariant] = useState<string | null>(null);
   const { data: session, status } = useSession();
+
+  // A/B Testing & Analytics Integration
+  useEffect(() => {
+    const userId = session?.user?.email || "anonymous";
+    
+    // Track page view
+    trackPageView({
+      path: "/pricing",
+      userId,
+      referrer: document.referrer,
+      sessionId: `session_${Date.now()}`,
+    });
+
+    // Assign A/B test variant for pricing CTA
+    const variant = assignVariant("pricing-cta-test", userId);
+    setAbVariant(variant);
+
+    // Track funnel step
+    trackFunnelStep("pricing-funnel", "view_pricing", { userId });
+  }, [session]);
 
   const handlePlanClick = async (planName: string) => {
     const planKey = planName.toLowerCase() as "pro" | "max" | "free";
 
     console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
     console.log(`[Pricing] Session 状态: ${status}`);
+
+    // Track conversion event
+    const userId = session?.user?.email || "anonymous";
+    trackEvent({
+      name: "plan_selected",
+      category: "conversion",
+      userId,
+      metadata: { plan: planKey, variant: abVariant || "control" },
+      sessionId: `session_${Date.now()}`,
+    });
+
+    // Track A/B test conversion
+    if (abVariant) {
+      trackConversion("pricing-cta-test", abVariant, userId, "plan_click");
+    }
+
+    // Track funnel step
+    trackFunnelStep("pricing-funnel", "select_plan", { userId, plan: planKey });
 
     if (status === "loading") {
       alert("Please wait, checking your login status...");
@@ -229,6 +271,11 @@ export default function PricingContent() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Personalized Recommendations */}
+          <div className="mt-12">
+            <PersonalizedRecommendations context="pricing" maxItems={3} />
           </div>
 
           {/* Compare with Alternatives */}

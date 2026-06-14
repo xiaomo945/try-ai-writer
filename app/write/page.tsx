@@ -9,6 +9,8 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
+import { trackEvent, trackPageView, trackFunnelStep } from "@/lib/analytics";
+import { PerformanceMonitor } from "@/app/components/PerformanceMonitor";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -132,6 +134,15 @@ export default function WritePage() {
     } catch {
       // localStorage unavailable
     }
+
+    // Track page view
+    trackPageView({
+      path: "/write",
+      sessionId: `session_${Date.now()}`,
+    });
+
+    // Track funnel step
+    trackFunnelStep("writing-funnel", "enter_write_page");
   }, []);
 
   // Save focus mode to localStorage when it changes
@@ -240,6 +251,13 @@ export default function WritePage() {
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
+    // Track generation start
+    trackEvent({
+      name: "content_generation_start",
+      category: "engagement",
+      metadata: { mode, promptLength: prompt.length },
+    });
+
     setState("loading");
     setOutput("");
     setSavedToHistory(false);
@@ -335,6 +353,20 @@ export default function WritePage() {
         setState("error");
         return;
       }
+
+      // Track successful generation
+      trackEvent({
+        name: "content_generation_success",
+        category: "engagement",
+        metadata: { 
+          mode, 
+          wordCount: fullText.trim().split(/\s+/).filter(Boolean).length,
+          generationTime: Date.now() - startTime 
+        },
+      });
+
+      // Track funnel step
+      trackFunnelStep("writing-funnel", "generate_content");
 
       setState("done");
       const wc = fullText.trim().split(/\s+/).filter(Boolean).length;
