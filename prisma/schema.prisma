@@ -29,6 +29,9 @@ model User {
   collabOwned   CollaborationSession[]  @relation("CollabOwner")
   collabParts   CollaborationParticipant[]
   comments      Comment[]
+  templates     Template[]
+  templateFavorites TemplateFavorite[]
+  templateReviews   TemplateReview[]
 }
 
 model Account {
@@ -187,4 +190,78 @@ model Comment {
 
   @@index([documentId])
   @@index([userId])
+}
+
+model TemplateCategory {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  icon        String?
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  templates   Template[]
+}
+
+model Template {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  description   String      @db.Text
+  content       String      @db.Text
+  categoryId    String
+  authorId      String
+  tags          String      @default("[]") // JSON array as string
+  price         Int         @default(0) // 0 = free, in cents
+  isPremium     Boolean     @default(false)
+  usageCount    Int         @default(0)
+  rating        Float       @default(0)
+  ratingCount   Int         @default(0)
+  thumbnailUrl  String?
+  isPublished   Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  category      TemplateCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author        User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  favorites     TemplateFavorite[]
+  reviews       TemplateReview[]
+  
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([slug])
+  @@index([isPublished])
+}
+
+model TemplateFavorite {
+  id         String   @id @default(cuid())
+  userId     String
+  templateId String
+  createdAt  DateTime @default(now())
+  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, templateId])
+  @@index([userId])
+  @@index([templateId])
+}
+
+model TemplateReview {
+  id         String   @id @default(cuid())
+  userId     String
+  templateId String
+  rating     Int      // 1-5
+  comment    String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, templateId])
+  @@index([userId])
+  @@index([templateId])
 }
