@@ -3,6 +3,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
+export type ModelType = "claude" | "deepseek" | "mock";
+
 export interface UsageStats {
   used: number;
   limit: number;
@@ -90,9 +92,13 @@ export function useDbUsage() {
     }
   }, [session?.user?.email]);
 
+  // 设置选中模型
+  const setSelectedModel = useCallback((model: string) => {
+    setStats(prev => ({ ...prev, selectedModel: model }));
+  }, []);
+
   // 获取每周统计
   const getWeeklyStats = useCallback(() => {
-    // 这里可以扩展为从数据库获取每周数据
     return { thisWeekCount: 0, lastWeekCount: 0 };
   }, []);
 
@@ -100,6 +106,7 @@ export function useDbUsage() {
     ...stats,
     loading,
     incrementUsage,
+    setSelectedModel,
     getWeeklyStats,
     refresh: loadStats,
   };

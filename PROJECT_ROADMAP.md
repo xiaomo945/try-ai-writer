@@ -100,10 +100,35 @@
 
 ## ⏳ 待执行队列（每次3个）
 
-### 批次2：API路由 + 认证集成（下一步）
-- 目标4：创建用户API路由（`/api/user/profile`, `/api/user/history`等）
-- 目标5：集成NextAuth数据库适配器（用户登录自动创建/关联数据）
-- 目标6：创建数据迁移脚本（localStorage → 数据库）
+### 批次2：API路由 + 认证集成 ✅
+
+#### 目标4：创建用户API路由 ✅
+- [x] `/api/user/profile` - 用户资料API
+- [x] `/api/user/history` - 历史记录CRUD
+- [x] `/api/user/memories` - 记忆银行CRUD
+- [x] `/api/user/usage` - 使用统计API
+- [x] `/api/user/brand-voice` - 品牌声音API
+
+#### 目标5：集成NextAuth数据库适配器 ✅
+- [x] 安装 `@auth/prisma-adapter`
+- [x] 更新 `lib/auth.ts` 集成PrismaAdapter
+- [x] 配置session callback返回user.id
+- [x] 用户登录自动创建/关联数据库记录
+
+#### 目标6：创建数据迁移脚本 ✅
+- [x] 创建 `lib/migration.ts` - 自动迁移hook
+- [x] 创建 `app/components/DataMigration.tsx` - 迁移提示组件
+- [x] 集成到 `Providers.tsx` - 登录后自动执行迁移
+- [x] 迁移历史记录、记忆银行、品牌声音数据
+
+---
+
+## ⏳ 待执行队列（每次3个）
+
+### 批次3：数据库hooks完善 + 页面集成（当前执行中）
+- 目标7：创建数据库版本的品牌声音hook（`lib/db-brand-voice.ts`）
+- 目标8：更新dashboard页面，使用数据库hooks替代localStorage hooks
+- 目标9：测试数据迁移流程 + 构建验证
 
 ### 批次3：测试 + 构建 + 推送
 - 目标7：测试所有数据库操作

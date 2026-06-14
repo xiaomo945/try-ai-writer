@@ -1,6 +1,6 @@
 "use client";
 
-import { useHistory } from "@/lib/history";
+import { useDbHistory } from "@/lib/db-history";
 
 type MilestoneStage = "initial" | "forming" | "mastered";
 
@@ -56,7 +56,7 @@ function getStageStatus(
 }
 
 export function LearningTimeline() {
-  const { records } = useHistory();
+  const { records } = useDbHistory();
   const sampleCount = records.length;
   const currentStage = getCurrentStage(sampleCount);
 

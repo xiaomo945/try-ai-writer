@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 export interface MemoryItem {
   id: string;
   content: string;
-  type: "idea" | "preference" | "fact";
+  type: "idea" | "article" | "preference";
+  keywords: string[];
   createdAt: string;
 }
 

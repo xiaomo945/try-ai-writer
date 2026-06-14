@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
 import { Upload, Gift, Sparkles } from "lucide-react";
 import { applyReferralReward } from "@/lib/referral";
 
@@ -41,7 +41,7 @@ function ReferralRewardChecker({ onRewardFound }: { onRewardFound: (proDays: num
   const searchParams = useSearchParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const { updateProfile } = useBrandVoice();
+  const { updateProfile } = useDbBrandVoice();
 
   const [industry, setIndustry] = useState("");
   const [useCase, setUseCase] = useState("");

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Check, SkipForward, PenTool } from "lucide-react";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
 import { ScrollReveal } from "./ScrollReveal";
 
 const ONBOARDING_KEY = "onboarding_complete";
@@ -44,7 +44,7 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   const [tone, setTone] = useState("");
   const [audience, setAudience] = useState("");
   const [isVisible, setIsVisible] = useState(true);
-  const { updateProfile } = useBrandVoice();
+  const { updateProfile } = useDbBrandVoice();
 
   const handleSkip = () => {
     localStorage.setItem(ONBOARDING_KEY, "true");

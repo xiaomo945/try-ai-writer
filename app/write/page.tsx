@@ -4,9 +4,9 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useHistory } from "@/lib/history";
-import { useMemoryBank } from "@/lib/memory-bank";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbHistory } from "@/lib/db-history";
+import { useDbMemoryBank } from "@/lib/db-memory-bank";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
 import { FloatingToolbar } from "@/app/components/FloatingToolbar";
@@ -101,9 +101,9 @@ export default function WritePage() {
   const focusActionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const searchParams = useSearchParams();
-  const { addRecord, records } = useHistory();
-  const { memories, addMemory } = useMemoryBank();
-  const { profile } = useBrandVoice();
+  const { addRecord, records } = useDbHistory();
+  const { memories, addMemory } = useDbMemoryBank();
+  const { profile } = useDbBrandVoice();
 
   const relatedIdeas = useMemo(() => {
     if (!prompt.trim() || memories.length === 0) return [];

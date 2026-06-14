@@ -2,14 +2,14 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Brain, Search, Plus, Trash2, Filter, Calendar, Tag, Lightbulb, FileText, Star, X } from "lucide-react";
-import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
+import { useDbMemoryBank, type MemoryItem } from "@/lib/db-memory-bank";
 import { findRelatedIdeas } from "@/lib/idea-linker";
 
 type MemoryFilter = "all" | "idea" | "article" | "preference";
 type MemorySort = "newest" | "oldest" | "relevance";
 
 export function MemoryBankManager() {
-  const { memories, addMemory, deleteMemory, searchMemory } = useMemoryBank();
+  const { memories, addMemory, deleteMemory, searchMemories } = useDbMemoryBank();
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<MemoryFilter>("all");
   const [sort, setSort] = useState<MemorySort>("newest");
@@ -35,7 +35,7 @@ export function MemoryBankManager() {
 
     // Apply search filter
     if (searchQuery.trim()) {
-      result = searchMemory(searchQuery);
+      result = searchMemories(searchQuery);
     } else if (filter !== "all") {
       result = result.filter(m => m.type === filter);
     }
@@ -48,7 +48,7 @@ export function MemoryBankManager() {
     }
 
     return result;
-  }, [memories, searchQuery, filter, sort, searchMemory]);
+  }, [memories, searchQuery, filter, sort, searchMemories]);
 
   const stats = useMemo(() => {
     const typeCounts = {

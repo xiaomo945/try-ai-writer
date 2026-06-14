@@ -3,10 +3,10 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette, Users, Copy, Share2, TrendingUp, BarChart3, Fingerprint } from "lucide-react";
-import { useHistory } from "@/lib/history";
-import { useUsage } from "@/lib/usage";
-import { useBrandVoice, type BrandVoiceProfile } from "@/lib/brand-voice";
-import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
+import { useDbHistory } from "@/lib/db-history";
+import { useDbUsage } from "@/lib/db-usage";
+import { useDbBrandVoice, type BrandVoiceProfile } from "@/lib/db-brand-voice";
+import { useDbMemoryBank, type MemoryItem } from "@/lib/db-memory-bank";
 import { useCredits } from "@/lib/credits";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
@@ -212,7 +212,7 @@ function LearningProgressRing({ progress }: { progress: number }) {
 }
 
 function BrandVoiceCard({ records }: { records: Array<{ id: string; title: string; mode: string; result: string; createdAt: string }> }) {
-  const { profile, updateProfile } = useBrandVoice();
+  const { profile, updateProfile } = useDbBrandVoice();
   const { variant, setVariant } = useAvatarVariant();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
@@ -655,7 +655,7 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
 }
 
 export default function DashboardPage() {
-  const { records, deleteRecord, clearAll } = useHistory();
+  const { records, deleteRecord, clearAll } = useDbHistory();
   const { 
     used, 
     limit, 
@@ -667,10 +667,10 @@ export default function DashboardPage() {
     getWeeklyStats, 
     selectedModel, 
     isProUser 
-  } = useUsage();
+  } = useDbUsage();
   const { balance } = useCredits();
-  const { hasProfile, isLoaded, profile } = useBrandVoice();
-  const { memories, deleteMemory } = useMemoryBank();
+  const { hasProfile, isLoaded, profile } = useDbBrandVoice();
+  const { memories, deleteMemory } = useDbMemoryBank();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
