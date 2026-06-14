@@ -771,6 +771,10 @@ export default function DashboardPage() {
       // Clear after showing
       clearPendingReferralRewards();
     }
+
+    // Track dashboard page view
+    trackPageView("/dashboard");
+    trackEvent("dashboard_view", "engagement", { recordCount: records.length, stage: userStage });
   }, [isLoaded, hasProfile]);
 
   useEffect(() => {
@@ -946,6 +950,13 @@ export default function DashboardPage() {
             )}
           </div>
         </div>
+
+        {/* Personalized Recommendations */}
+        {userStage > 0 && (
+          <div className="mt-8">
+            <PersonalizedRecommendations context="dashboard" maxItems={3} />
+          </div>
+        )}
 
         {/* Quick Start Cards */}
         {userStage === 0 ? (
