@@ -20,11 +20,10 @@ export function PageTransition({ children, delay = 0, className = "" }: PageTran
 
   return (
     <div
-      className={`transition-all duration-400 ease-out ${className}`}
+      className={`transition-all duration-300 ease-out ${className}`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(12px)",
-        transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
       }}
     >
       {children}
@@ -34,7 +33,7 @@ export function PageTransition({ children, delay = 0, className = "" }: PageTran
 
 export function FadeIn({ 
   children, 
-  duration = 400,
+  duration = 200,
   className = "" 
 }: { 
   children: ReactNode; 
@@ -49,11 +48,9 @@ export function FadeIn({
 
   return (
     <div
-      className={`transition-all ${className}`}
+      className={`transition-all duration-200 ease-out ${className}`}
       style={{
         opacity: isVisible ? 1 : 0,
-        transitionDuration: `${duration}ms`,
-        transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
       }}
     >
       {children}
@@ -64,7 +61,7 @@ export function FadeIn({
 export function SlideUp({ 
   children, 
   delay = 0,
-  duration = 400,
+  duration = 300,
   className = "" 
 }: { 
   children: ReactNode; 
@@ -83,11 +80,10 @@ export function SlideUp({
 
   return (
     <div
-      className={className}
+      className={`transition-all duration-300 ease-out ${className}`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(20px)",
-        transition: `all ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1)`,
       }}
     >
       {children}

@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Brain, Search, Plus, Trash2, Filter, Calendar, Tag, Lightbulb, FileText, Star, X } from "lucide-react";
-import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
+import { useDbMemoryBank, type MemoryItem } from "@/lib/db-memory-bank";
 import { findRelatedIdeas } from "@/lib/idea-linker";
 
 type MemoryFilter = "all" | "idea" | "article" | "preference";
 type MemorySort = "newest" | "oldest" | "relevance";
 
 export function MemoryBankManager() {
-  const { memories, addMemory, deleteMemory, searchMemory } = useMemoryBank();
+  const { memories, addMemory, deleteMemory, searchMemories } = useDbMemoryBank();
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<MemoryFilter>("all");
   const [sort, setSort] = useState<MemorySort>("newest");
@@ -18,12 +18,24 @@ export function MemoryBankManager() {
   const [newMemoryType, setNewMemoryType] = useState<MemoryItem["type"]>("idea");
   const [selectedMemory, setSelectedMemory] = useState<MemoryItem | null>(null);
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowAddModal(false);
+      }
+    };
+    if (showAddModal) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showAddModal]);
+
   const filteredMemories = useMemo(() => {
     let result = [...memories];
 
     // Apply search filter
     if (searchQuery.trim()) {
-      result = searchMemory(searchQuery);
+      result = searchMemories(searchQuery);
     } else if (filter !== "all") {
       result = result.filter(m => m.type === filter);
     }
@@ -36,7 +48,7 @@ export function MemoryBankManager() {
     }
 
     return result;
-  }, [memories, searchQuery, filter, sort, searchMemory]);
+  }, [memories, searchQuery, filter, sort, searchMemories]);
 
   const stats = useMemo(() => {
     const typeCounts = {
@@ -327,7 +339,10 @@ export function MemoryBankManager() {
 
       {/* Add Memory Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => e.target === e.currentTarget && setShowAddModal(false)}
+        >
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">

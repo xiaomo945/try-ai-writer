@@ -2,17 +2,17 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { TrendingUp, Clock, Zap, Sparkles, BarChart3, Target, Award, ChevronDown, ChevronUp } from "lucide-react";
-import { useHistory } from "@/lib/history";
-import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbHistory } from "@/lib/db-history";
+import { useDbMemoryBank, type MemoryItem } from "@/lib/db-memory-bank";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
 import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { getFingerprintSummary, type StyleFingerprint } from "@/lib/style-fingerprint";
 
 export function EvolutionReport() {
-  const { records } = useHistory();
-  const { memories } = useMemoryBank();
-  const { profile } = useBrandVoice();
+  const { records } = useDbHistory();
+  const { memories } = useDbMemoryBank();
+  const { profile } = useDbBrandVoice();
   const [expandedSection, setExpandedSection] = useState<string | null>("overview");
   const [report, setReport] = useState<WeeklyStyleReport | null>(null);
 

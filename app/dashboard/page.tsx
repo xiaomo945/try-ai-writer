@@ -3,10 +3,10 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { Zap, Clock, FileText, ChevronDown, Trash2, Sparkles, BookOpen, Brain, Upload, X, Palette, Users, Copy, Share2, TrendingUp, BarChart3, Fingerprint } from "lucide-react";
-import { useHistory } from "@/lib/history";
-import { useUsage } from "@/lib/usage";
-import { useBrandVoice, type BrandVoiceProfile } from "@/lib/brand-voice";
-import { useMemoryBank, type MemoryItem } from "@/lib/memory-bank";
+import { useDbHistory } from "@/lib/db-history";
+import { useDbUsage } from "@/lib/db-usage";
+import { useDbBrandVoice, type BrandVoiceProfile } from "@/lib/db-brand-voice";
+import { useDbMemoryBank, type MemoryItem } from "@/lib/db-memory-bank";
 import { useCredits } from "@/lib/credits";
 import { OnboardingWizard } from "@/app/components/OnboardingWizard";
 import { WeeklyInsightCard } from "@/app/components/WeeklyInsightCard";
@@ -16,21 +16,14 @@ import { useAvatarVariant, generateAvatarFromDescription } from "@/lib/avatar-va
 import { ReferralShare } from "@/app/components/ReferralShare";
 import { LearningTimeline } from "@/app/components/LearningTimeline";
 import { WritingStats } from "@/app/components/WritingStats";
-import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral-client";
+import { StyleRadar } from "@/app/components/StyleRadar";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS, checkPendingReferralRewards, clearPendingReferralRewards } from "@/lib/referral";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { Gift } from "lucide-react";
 import { generateWeeklyStyleReport, type WeeklyStyleReport } from "@/lib/weekly-style-report";
 import { type StyleFingerprint, DEFAULT_FINGERPRINT } from "@/lib/style-fingerprint";
 import { getCommunityWorkflows, publishWorkflow, unpublishWorkflow, isWorkflowPublished, type WorkflowDefinition } from "@/lib/workflows";
-import { trackPageView, trackEvent } from "@/lib/analytics";
-import {
-  LazyPersonalizedRecommendations,
-  LazyPaymentConversionAnalytics,
-  LazyUserActivityTracker,
-  LazyRetentionAnalysis,
-  LazyReturnReminder,
-} from "@/app/components/LazyComponents";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 
@@ -89,84 +82,84 @@ function getWordCount(text: string): number {
 
 function BrandVoiceDemoCard({ demoData }: { demoData: DemoData }) {
   const { profile, styleMatchScore } = demoData;
-
+  
   return (
-    <div className="glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6">
+    <div className="card border-2 border-dashed border-emerald-200 bg-emerald-50/30">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+        <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+          <Sparkles className="w-5 h-5 text-emerald-600" />
         </div>
         <div>
-          <h3 className="font-display font-bold text-gray-900 dark:text-white">Demo Brand Voice</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Generated from our blog content</p>
+          <h3 className="font-display font-bold text-slate-900">Demo Brand Voice</h3>
+          <p className="text-xs text-slate-500">Generated from our blog content</p>
         </div>
       </div>
-
+      
       <div className="space-y-4">
         {/* Industry & Tone */}
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-700 border border-slate-200">
             {profile.industry}
           </span>
-          <span className="px-3 py-1 bg-emerald-100/60 dark:bg-emerald-900/30 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-emerald-700 border border-emerald-200">
             {profile.tone.sentiment} tone
           </span>
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.03] rounded-full text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10">
+          <span className="px-3 py-1 bg-white rounded-full text-xs font-medium text-slate-700 border border-slate-200">
             {profile.tone.pace} pace
           </span>
         </div>
-
+        
         {/* Style Match Score */}
-        <div className="bg-white/[0.03] dark:bg-white/[0.03] rounded-xl p-4 border border-slate-200 dark:border-white/10">
+        <div className="bg-white rounded-xl p-4 border border-slate-200">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Style Match Score</span>
-            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{styleMatchScore.overall}%</span>
+            <span className="text-sm font-medium text-slate-700">Style Match Score</span>
+            <span className="text-2xl font-bold text-emerald-600">{styleMatchScore.overall}%</span>
           </div>
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
-              <div className="text-lg font-semibold text-slate-700 dark:text-slate-300">{styleMatchScore.tone}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Tone</div>
+            <div className="bg-slate-50 rounded-lg p-2">
+              <div className="text-lg font-semibold text-slate-700">{styleMatchScore.tone}%</div>
+              <div className="text-xs text-slate-500">Tone</div>
             </div>
-            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
-              <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.vocabulary}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Vocab</div>
+            <div className="bg-slate-50 rounded-lg p-2">
+              <div className="text-lg font-semibold text-slate-700">{styleMatchScore.vocabulary}%</div>
+              <div className="text-xs text-slate-500">Vocab</div>
             </div>
-            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-lg p-2">
-              <div className="text-lg font-semibold text-gray-700 dark:text-gray-300">{styleMatchScore.structure}%</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Structure</div>
+            <div className="bg-slate-50 rounded-lg p-2">
+              <div className="text-lg font-semibold text-slate-700">{styleMatchScore.structure}%</div>
+              <div className="text-xs text-slate-500">Structure</div>
             </div>
           </div>
         </div>
-
+        
         {/* Common Phrases */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Common Phrases</div>
+          <div className="text-xs font-medium text-slate-500 mb-2">Common Phrases</div>
           <div className="flex flex-wrap gap-1">
             {profile.commonPhrases.slice(0,6).map((phrase, i) => (
-              <span key={i} className="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full">
+              <span key={i} className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full">
                 {phrase}
               </span>
             ))}
           </div>
         </div>
-
+        
         {/* Sample Articles */}
         <div>
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Sample Articles</div>
+          <div className="text-xs font-medium text-slate-500 mb-2">Sample Articles</div>
           <div className="space-y-2">
             {demoData.samples.slice(0,3).map((sample) => (
               <div key={sample.id} className="flex items-center gap-2 text-sm">
                 <BookOpen className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-700 dark:text-slate-300 truncate flex-1">{sample.title}</span>
+                <span className="text-slate-700 truncate flex-1">{sample.title}</span>
                 <span className="text-xs text-slate-400">{sample.wordCount} words</span>
               </div>
             ))}
           </div>
         </div>
-
+        
         {/* CTA */}
-        <div className="pt-4 border-t border-emerald-200 dark:border-emerald-800">
-          <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+        <div className="pt-4 border-t border-emerald-200">
+          <p className="text-sm text-slate-600 mb-3">
             This is a demo profile based on our blog content. Start writing to create your own brand voice.
           </p>
           <Link href="/write" className="btn-primary w-full text-center text-sm">
@@ -195,7 +188,7 @@ function LearningProgressRing({ progress }: { progress: number }) {
           stroke="currentColor"
           strokeWidth="6"
           fill="none"
-          className="text-slate-200 dark:text-gray-800"
+          className="text-slate-200 dark:text-gray-700"
         />
         <circle
           cx="48"
@@ -211,15 +204,15 @@ function LearningProgressRing({ progress }: { progress: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-display font-bold text-gray-900 dark:text-white">{progress}</span>
-        <span className="text-xs text-gray-500 dark:text-gray-400">/20</span>
+        <span className="text-2xl font-display font-bold text-slate-900 dark:text-white">{progress}</span>
+        <span className="text-xs text-slate-500">/20</span>
       </div>
     </div>
   );
 }
 
 function BrandVoiceCard({ records }: { records: Array<{ id: string; title: string; mode: string; result: string; createdAt: string }> }) {
-  const { profile, updateProfile } = useBrandVoice();
+  const { profile, updateProfile } = useDbBrandVoice();
   const { variant, setVariant } = useAvatarVariant();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadState, setUploadState] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
@@ -227,6 +220,18 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
   const [showCustomizationModal, setShowCustomizationModal] = useState(false);
   const [avatarDescription, setAvatarDescription] = useState('');
   const learningProgress = profile?.learningSamples || 3;
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowCustomizationModal(false);
+      }
+    };
+    if (showCustomizationModal) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showCustomizationModal]);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -279,14 +284,14 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
   }
 
   return (
-    <div id="brand-voice" className="glass-card border-l-4 border-emerald-500/30">
+    <div id="brand-voice" className="card border-l-4 border-emerald-600">
       <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-display font-bold text-gray-900 dark:text-white">Your Brand Voice</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Built from your writing style</p>
+            <h3 className="font-display font-bold text-slate-900">Your Brand Voice</h3>
+            <p className="text-xs text-slate-500">Built from your writing style</p>
           </div>
           <button
             onClick={() => setShowCustomizationModal(true)}
@@ -304,65 +309,69 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
         </div>
         {/* Customization Modal */}
         {showCustomizationModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-2xl shadow-xl max-w-md w-full p-6 relative">
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={(e) => e.target === e.currentTarget && setShowCustomizationModal(false)}
+          >
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-sm w-full p-4 relative">
               <button 
                 onClick={() => setShowCustomizationModal(false)} 
-                className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
+                className="absolute top-3 right-3 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
-              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6">
+              <h2 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-4">
                 🎨 Customize Your Digital Twin
               </h2>
 
               {/* AI Generation Section (Coming Soon) */}
-              <div className="mb-6 p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl">
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-2">
+              <div className="mb-4 p-3 bg-slate-50 dark:bg-gray-800 rounded-xl">
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-2 text-sm">
                   Generate with AI (Coming Soon)
                 </h3>
                 <textarea
                   value={avatarDescription}
                   onChange={(e) => setAvatarDescription(e.target.value)}
                   placeholder="Describe how you want your digital twin to look..."
-                  className="w-full p-3 border border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white resize-none"
+                  className="w-full p-2 border border-slate-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-slate-900 dark:text-white resize-none text-sm"
                   disabled
+                  rows={2}
                 />
                 <button
                   disabled
-                  className="mt-2 w-full btn-primary opacity-50 cursor-not-allowed"
+                  className="mt-2 w-full btn-primary opacity-50 cursor-not-allowed text-sm py-2"
                 >
                   🔮 Generate Avatar
                 </button>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                <p className="text-xs text-slate-500 mt-1 text-center">
                   AI-powered avatar generation is coming soon!
                 </p>
               </div>
 
               {/* Preset Selection */}
               <div>
-                <h3 className="font-semibold text-slate-800 dark:text-white mb-4">
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-3 text-sm">
                   Choose a Preset
                 </h3>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   {(['default', 'minimal', 'cute'] as AvatarVariant[]).map((preset) => (
                     <button
                       key={preset}
                       onClick={() => setVariant(preset)}
-                      className={`p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all ${
+                      className={`p-3 rounded-xl border-2 flex flex-col items-center gap-1.5 transition-all ${
                         variant === preset
                           ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
                           : 'border-slate-200 dark:border-gray-700 hover:border-emerald-300'
                       }`}
                     >
-                      <div className="w-16 h-16 flex items-center justify-center">
+                      <div className="w-12 h-12 flex items-center justify-center">
                         <DigitalTwinAvatar 
                           isVisible={true} 
                           state="idle"
                           variant={preset} 
                         />
                       </div>
-                      <span className="text-sm capitalize font-medium text-slate-700 dark:text-slate-300">
+                      <span className="text-xs capitalize font-medium text-slate-700 dark:text-slate-300">
                         {preset}
                       </span>
                     </button>
@@ -383,13 +392,13 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
         </div>
       )}
       
-      <div className="flex items-center gap-4 mb-4 p-3 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl">
+      <div className="flex items-center gap-4 mb-4 p-3 bg-slate-50 dark:bg-gray-800 rounded-xl">
         <LearningProgressRing progress={learningProgress} />
         <div>
           <p className="text-sm font-medium text-slate-900 dark:text-white">
             AI已学习你的 <span className="text-emerald-600 font-bold">{learningProgress}</span> 个写作习惯
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-slate-500">
             继续写作，目标：20个样本
           </p>
         </div>
@@ -397,22 +406,22 @@ function BrandVoiceCard({ records }: { records: Array<{ id: string; title: strin
 
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+          <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-700 border border-slate-200">
             {profile.industry}
           </span>
-          <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 rounded-full text-xs font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+          <span className="px-3 py-1 bg-emerald-100 rounded-full text-xs font-medium text-emerald-700 border border-emerald-200">
             {profile.tone} tone
           </span>
-          <span className="px-3 py-1 bg-white/[0.03] dark:bg-white/[0.05] rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+          <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-700 border border-slate-200">
             {profile.audience} audience
           </span>
         </div>
         {profile.commonPhrases.length > 0 && (
           <div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Common Phrases</p>
+            <p className="text-xs text-slate-500 mb-2">Common Phrases</p>
             <div className="flex flex-wrap gap-1">
               {profile.commonPhrases.slice(0, 8).map((phrase, i) => (
-                <span key={i} className="px-2 py-1 bg-white/[0.03] dark:bg-white/[0.05] text-gray-700 dark:text-gray-300 text-xs rounded-full border border-gray-200 dark:border-gray-700">
+                <span key={i} className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded-full border border-slate-200">
                   {phrase}
                 </span>
               ))}
@@ -437,19 +446,19 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
 
   if (!fingerprint || fingerprint.sampleCount < 3) {
     return (
-      <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+      <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
             <Fingerprint className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Writing Style Fingerprint</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">AI is learning your style</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">AI is learning your style</p>
           </div>
         </div>
-        <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-            <Fingerprint className="w-8 h-8 text-emerald-500 animate-pulse" />
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+            <Fingerprint className="w-8 h-8 text-blue-500 animate-pulse" />
           </div>
           <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
             AI is learning your style. Write {samplesNeeded} more piece{samplesNeeded !== 1 ? "s" : ""} to generate your fingerprint report.
@@ -466,18 +475,18 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
   }
 
   return (
-    <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+    <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
             <Fingerprint className="w-6 h-6 text-white" />
           </div>
           <div className="text-left">
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Writing Style Fingerprint</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{fingerprint.sampleCount} samples analyzed</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Writing Style Fingerprint</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{fingerprint.sampleCount} samples analyzed</p>
           </div>
         </div>
         <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
@@ -486,40 +495,40 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
       {isExpanded && (
         <div className="mt-6 space-y-4">
           {/* Sentence Length Distribution */}
-          <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
-            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Sentence Length Preference</div>
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
+            <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Sentence Length Preference</div>
             <div className="space-y-2">
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Short</span>
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Short</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.short}%` }} />
+                  <div className="bg-blue-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.short}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.short}%</span>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.short}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Medium</span>
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Medium</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.medium}%` }} />
+                  <div className="bg-indigo-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.medium}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.medium}%</span>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.medium}%</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-gray-600 dark:text-gray-300 w-16">Long</span>
+                <span className="text-xs text-slate-600 dark:text-slate-300 w-16">Long</span>
                 <div className="flex-1 bg-slate-200 dark:bg-gray-700 rounded-full h-3">
-                  <div className="bg-emerald-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.long}%` }} />
+                  <div className="bg-purple-500 h-3 rounded-full transition-all" style={{ width: `${fingerprint.sentenceLengthDistribution.long}%` }} />
                 </div>
-                <span className="text-xs text-gray-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.long}%</span>
+                <span className="text-xs text-slate-500 w-10 text-right">{fingerprint.sentenceLengthDistribution.long}%</span>
               </div>
             </div>
           </div>
 
           {/* Transition Words */}
           {fingerprint.commonTransitionWords.length > 0 && (
-            <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Common Transition Words</div>
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
+              <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Common Transition Words</div>
               <div className="flex flex-wrap gap-2">
                 {fingerprint.commonTransitionWords.map((word, i) => (
-                  <span key={i} className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full font-medium">
+                  <span key={i} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full font-medium">
                     {word}
                   </span>
                 ))}
@@ -528,10 +537,10 @@ function StyleFingerprintCard({ profile }: { profile: BrandVoiceProfile | null }
           )}
 
           {/* Passive Voice Rate */}
-          <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4">
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Passive Voice Usage</span>
-              <span className="text-sm font-bold text-gray-700 dark:text-gray-200">{Math.round(fingerprint.passiveVoiceRate * 100)}%</span>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Passive Voice Usage</span>
+              <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{Math.round(fingerprint.passiveVoiceRate * 100)}%</span>
             </div>
             <div className="mt-2 w-full bg-slate-200 dark:bg-gray-700 rounded-full h-2">
               <div
@@ -572,18 +581,18 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
 
   if (!report) {
     return (
-      <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+      <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Weekly Evolution Report</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Start writing to get your first report</p>
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Start writing to get your first report</p>
           </div>
         </div>
-        <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Start writing to get your first evolution report ✨
           </p>
         </div>
@@ -592,19 +601,19 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
   }
 
   return (
-    <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+    <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
           <TrendingUp className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Weekly Evolution Report</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Your style growth this week</p>
+          <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Weekly Evolution Report</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Your style growth this week</p>
         </div>
       </div>
 
       {/* Evolution Summary */}
-      <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4 mb-4">
+      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-4 mb-4">
         <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200 leading-relaxed">
           {report.evolutionSummary}
         </p>
@@ -612,26 +621,26 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
 
       <div className="grid grid-cols-2 gap-3">
         {/* New Samples */}
-        <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-3 text-center">
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-3 text-center">
           <div className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{report.newSamplesCount}</div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">New Samples</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">New Samples</div>
         </div>
 
         {/* Style Match Change */}
-        <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-3 text-center">
+        <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-3 text-center">
           <div className="flex items-center justify-center gap-1">
             <span className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{report.styleMatchChange.current}%</span>
             {report.styleMatchChange.direction === "up" && <TrendingUp className="w-4 h-4 text-emerald-500" />}
             {report.styleMatchChange.direction === "down" && <TrendingUp className="w-4 h-4 text-red-500 rotate-180" />}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">Style Match</div>
+          <div className="text-xs text-slate-500 dark:text-slate-400">Style Match</div>
         </div>
       </div>
 
       {/* Top Keywords */}
       {report.topKeywords.length > 0 && (
         <div className="mt-4">
-          <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Top Keywords This Week</div>
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Top Keywords This Week</div>
           <div className="flex flex-wrap gap-2">
             {report.topKeywords.map((keyword, i) => (
               <span key={i} className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs rounded-full font-medium">
@@ -646,7 +655,7 @@ function WeeklyEvolutionCard({ profile, memories }: { profile: BrandVoiceProfile
 }
 
 export default function DashboardPage() {
-  const { records, deleteRecord, clearAll } = useHistory();
+  const { records, deleteRecord, clearAll } = useDbHistory();
   const { 
     used, 
     limit, 
@@ -658,10 +667,10 @@ export default function DashboardPage() {
     getWeeklyStats, 
     selectedModel, 
     isProUser 
-  } = useUsage();
+  } = useDbUsage();
   const { balance } = useCredits();
-  const { hasProfile, isLoaded, profile } = useBrandVoice();
-  const { memories, deleteMemory } = useMemoryBank();
+  const { hasProfile, isLoaded, profile } = useDbBrandVoice();
+  const { memories, deleteMemory } = useDbMemoryBank();
   const [expanded, setExpanded] = useState(false);
   const [demoData, setDemoData] = useState<DemoData | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -672,6 +681,18 @@ export default function DashboardPage() {
   const [communityWorkflows, setCommunityWorkflows] = useState<WorkflowDefinition[]>([]);
   const [publishedIds, setPublishedIds] = useState<Set<string>>(new Set());
   const percentage = limit > 0 ? (used / limit) * 100 : 0;
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowReferralPopup(false);
+      }
+    };
+    if (showReferralPopup) {
+      document.addEventListener('keydown', handleEsc);
+    }
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showReferralPopup]);
   const [userStage, setUserStage] = useState(0); // Default to stage 0
 
   const visibleRecords = expanded ? records : records.slice(0, 5);
@@ -777,10 +798,6 @@ export default function DashboardPage() {
       // Clear after showing
       clearPendingReferralRewards();
     }
-
-    // Track dashboard page view
-    trackPageView("/dashboard");
-    trackEvent("dashboard_view", "engagement", { recordCount: records.length, stage: userStage });
   }, [isLoaded, hasProfile]);
 
   useEffect(() => {
@@ -796,60 +813,63 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 text-white">
+    <main className="min-h-screen flex flex-col">
       {/* Onboarding Wizard */}
       {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
       
       {/* Referral Popup (Manual Trigger) */}
-      {showReferralPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
-            <button 
-              onClick={() => setShowReferralPopup(false)}
-              className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">
-                邀请好友一起写作
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                邀请好友，双方各得3天Pro体验
-              </p>
-            </div>
-            <div className="space-y-3">
-              <button
-                onClick={() => {
-                  copyReferralLink();
-                  // 复制后关闭弹窗
-                  setTimeout(() => setShowReferralPopup(false), 1500);
-                }}
-                className="w-full btn-primary min-h-[48px] flex items-center justify-center gap-2 text-base"
-              >
-                {referralLinkCopied ? (
-                  <>
-                    <Copy className="w-5 h-5" /> 已复制！
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-5 h-5" /> 复制邀请链接
-                  </>
-                )}
-              </button>
-              <button
+        {showReferralPopup && (
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={(e) => e.target === e.currentTarget && setShowReferralPopup(false)}
+          >
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-sm w-full p-4 relative">
+              <button 
                 onClick={() => setShowReferralPopup(false)}
-                className="w-full text-center text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-2"
+                className="absolute top-3 right-3 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
               >
-                关闭
+                <X className="w-4 h-4" />
               </button>
+              <div className="text-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <h2 className="text-lg font-display font-bold text-slate-900 dark:text-white mb-2">
+                  邀请好友一起写作
+                </h2>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  邀请好友，双方各得3天Pro体验
+                </p>
+              </div>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    copyReferralLink();
+                    // 复制后关闭弹窗
+                    setTimeout(() => setShowReferralPopup(false), 1500);
+                  }}
+                  className="w-full btn-primary min-h-[40px] flex items-center justify-center gap-2 text-sm py-2"
+                >
+                  {referralLinkCopied ? (
+                    <>
+                      <Copy className="w-4 h-4" /> 已复制！
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" /> 复制邀请链接
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => setShowReferralPopup(false)}
+                  className="w-full text-center text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-1.5"
+                >
+                  关闭
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       {/* Referral Reward Notification */}
       {referralRewardNotification && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce-once">
@@ -874,7 +894,7 @@ export default function DashboardPage() {
       )}
 
       {/* Header */}
-      <header className="border-b border-white/10 bg-obsidian-900/80 backdrop-blur-md sticky top-0 z-40">
+      <header className="border-b border-slate-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 transition-colors">
             <Logo size={32} />
@@ -957,46 +977,24 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Personalized Recommendations */}
-        {userStage > 0 && (
-          <div className="mt-8">
-            <LazyPersonalizedRecommendations context="dashboard" maxItems={3} />
-          </div>
-        )}
-
-        {/* Analytics Components */}
-        {userStage > 0 && (
-          <div className="grid lg:grid-cols-2 gap-6 mt-8">
-            <LazyUserActivityTracker />
-            <LazyRetentionAnalysis />
-          </div>
-        )}
-
-        {userStage > 0 && (
-          <div className="grid lg:grid-cols-2 gap-6 mt-6">
-            <LazyPaymentConversionAnalytics />
-            <LazyReturnReminder />
-          </div>
-        )}
-
         {/* Quick Start Cards */}
         {userStage === 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/onboarding" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/onboarding" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Sparkles className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">完成入门设置</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">只需 1 分钟！</p>
             </Link>
-            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Zap className="w-8 h-8 text-white" />
               </div>
               <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">📝 开始写作</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">立即尝试 AI！</p>
             </Link>
-            <Link href="/" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col items-center justify-center text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="group card hover:border-emerald-300 transition-all duration-300 flex flex-col items-center justify-center p-8 text-center hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
@@ -1006,7 +1004,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/write" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="/write" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Zap className="w-7 h-7 text-white" />
               </div>
@@ -1015,7 +1013,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">立即开始创作！</p>
               </div>
             </Link>
-            <Link href="#history" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+            <Link href="#history" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <FileText className="w-7 h-7 text-white" />
               </div>
@@ -1024,7 +1022,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">回顾你的创作</p>
               </div>
             </Link>
-            <Link href="#brand-voice" className="group glass-card bg-white/[0.03] dark:bg-white/[0.03] border border-white/10 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 flex items-center gap-5 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
+            <Link href="#brand-voice" className="group card hover:border-emerald-300 transition-all duration-300 flex items-center gap-5 p-6 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 sm:col-span-2 lg:col-span-1">
               <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg flex-shrink-0">
                 <Brain className="w-7 h-7 text-white" />
               </div>
@@ -1041,16 +1039,69 @@ export default function DashboardPage() {
           <WritingStats records={records} />
         )}
 
+        {/* Style Evolution Radar */}
+        {userStage > 0 && (
+          <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <Fingerprint className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">风格演变雷达图</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">你的写作风格成长轨迹</p>
+              </div>
+            </div>
+
+            {profile?.styleFingerprint && profile.learningSamples && profile.learningSamples >= 5 ? (
+              <div className="flex justify-center">
+                <StyleRadar
+                  currentData={{
+                    formality: 50,
+                    sentenceLength: profile.styleFingerprint.avgSentenceLength || 50,
+                    vocabularyDiversity: 50,
+                    paragraphLength: (profile.styleFingerprint.avgParagraphSentenceCount || 5) * 10,
+                    passiveVoiceRate: (profile.styleFingerprint.passiveVoiceRate || 0.2) * 100,
+                  }}
+                  initialData={{
+                    formality: 40,
+                    sentenceLength: Math.max(20, (profile.styleFingerprint.avgSentenceLength || 50) - 10),
+                    vocabularyDiversity: 40,
+                    paragraphLength: Math.max(30, ((profile.styleFingerprint.avgParagraphSentenceCount || 5) * 10) - 10),
+                    passiveVoiceRate: Math.min(70, ((profile.styleFingerprint.passiveVoiceRate || 0.2) * 100) + 15),
+                  }}
+                  className="mx-auto"
+                />
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <Fingerprint className="w-8 h-8 text-emerald-500 animate-pulse" />
+                </div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 font-medium mb-4">
+                  生成至少5篇文章后，这里将展示你的写作风格演变
+                </p>
+                <Link
+                  href="/write"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-all min-h-[44px]"
+                >
+                  <Zap className="w-4 h-4" />
+                  开始写作
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Weekly Summary Card */}
         {userStage > 0 && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* This Week Generations */}
-            <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                   <Zap className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">本周生成</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周生成</h3>
               </div>
               <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
                 {records.filter(r => {
@@ -1085,14 +1136,14 @@ export default function DashboardPage() {
             </div>
 
             {/* This Week Words */}
-            <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
                   <FileText className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">本周字数</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">本周字数</h3>
               </div>
-              <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
+              <p className="text-3xl font-display font-extrabold text-blue-600 dark:text-blue-400">
                 {records.filter(r => {
                   const d = new Date(r.createdAt);
                   const now = new Date();
@@ -1105,12 +1156,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Most Used Mode */}
-            <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-purple-500">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">常用模式</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">常用模式</h3>
               </div>
               {(() => {
                 const now = new Date();
@@ -1119,16 +1170,14 @@ export default function DashboardPage() {
                 weekStart.setHours(0,0,0,0);
                 const weekRecords = records.filter(r => new Date(r.createdAt) >= weekStart);
                 if (weekRecords.length === 0) {
-                  return <p className="text-sm text-gray-400 dark:text-gray-400">本周无数据</p>;
+                  return <p className="text-sm text-slate-400">本周无数据</p>;
                 }
                 const modeCounts: Record<string, number> = {};
                 weekRecords.forEach(r => { modeCounts[r.mode] = (modeCounts[r.mode] || 0) + 1; });
                 const topMode = Object.entries(modeCounts).sort((a, b) => b[1] - a[1])[0];
-                if (!topMode) {
-                  return <p className="text-sm text-gray-400 dark:text-gray-400">本周无数据</p>;
-                }
+                if (!topMode) return <p className="text-sm text-slate-400">本周无数据</p>;
                 return (
-                  <p className="text-2xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 capitalize">
+                  <p className="text-2xl font-display font-extrabold text-purple-600 dark:text-purple-400 capitalize">
                     {topMode[0]}
                   </p>
                 );
@@ -1136,15 +1185,15 @@ export default function DashboardPage() {
             </div>
 
             {/* Style Match */}
-            <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+            <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-amber-500">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-display font-bold text-sm text-gray-900 dark:text-white">风格匹配</h3>
+                <h3 className="font-display font-bold text-sm text-slate-900 dark:text-white">风格匹配</h3>
               </div>
               {profile?.styleFingerprint ? (
-                <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
+                <p className="text-3xl font-display font-extrabold text-amber-600 dark:text-amber-400">
                   {Math.round(profile.styleFingerprint.avgSentenceLength * 5)}%
                 </p>
               ) : (
@@ -1162,13 +1211,13 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Daily Usage */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+          <div className="card bg-gradient-to-br from-white to-emerald-50/30 dark:from-gray-900 dark:to-emerald-950/20 border-emerald-200 dark:border-emerald-800 p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Today&apos;s Usage</h3>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Today&apos;s Usage</h3>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
                   {planName}
                 </span>
@@ -1201,17 +1250,17 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Generations */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+          <div className="card bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/20 border-blue-200 dark:border-blue-800 p-6 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
                 <FileText className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Total History</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Saved generations</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Total History</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Saved generations</p>
               </div>
             </div>
-            <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-2">{records.length}</p>
+            <p className="text-4xl font-display font-extrabold text-blue-600 dark:text-blue-400 mb-2">{records.length}</p>
             <div className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium">
               <Sparkles className="w-4 h-4" />
               <span>Keep creating!</span>
@@ -1219,48 +1268,48 @@ export default function DashboardPage() {
           </div>
 
           {/* Avg Word Count */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+          <div className="card bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/20 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
                 <Clock className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Avg. Words</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Per generation</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Avg. Words</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Per generation</p>
               </div>
             </div>
-            <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-2">{avgWords}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">words per piece</p>
+            <p className="text-4xl font-display font-extrabold text-purple-600 dark:text-purple-400 mb-2">{avgWords}</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">words per piece</p>
           </div>
 
           {/* Credit Balance */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+          <div className="card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
                 <span className="text-2xl">💎</span>
               </div>
               <div>
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">Credits</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Available balance</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">Credits</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Available balance</p>
               </div>
             </div>
-            <p className="text-4xl font-display font-extrabold text-emerald-600 dark:text-emerald-400 mb-3">
+            <p className="text-4xl font-display font-extrabold text-purple-600 dark:text-purple-400 mb-3">
               {balance}
             </p>
-            <Link href="/pricing/credits" className="w-full btn-primary text-sm min-h-[44px] flex items-center justify-center rounded-xl font-semibold transition-all shadow-lg">
+            <Link href="/pricing/credits" className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-sm text-center block min-h-[44px] flex items-center justify-center rounded-xl font-semibold transition-all shadow-lg">
               🛒 Buy Credits
             </Link>
           </div>
 
           {/* Referral Progress */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
+          <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-emerald-200 dark:border-emerald-800 p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
                 <Share2 className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">邀请好友</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Share & Earn Rewards</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">邀请好友</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Share & Earn Rewards</p>
               </div>
               <div className="text-right">
                 <p className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
@@ -1295,14 +1344,14 @@ export default function DashboardPage() {
           </div>
 
           {/* Community Workflows */}
-          <div className="glass-card p-6 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
+          <div className="card bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border-purple-200 dark:border-purple-800 p-6 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 sm:col-span-2 xl:col-span-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
                 <Share2 className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-display font-bold text-gray-900 dark:text-white">社区工作流</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">分享和发现优质工作流</p>
+                <h3 className="font-display font-bold text-slate-900 dark:text-white">社区工作流</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">分享和发现优质工作流</p>
               </div>
               <Link href="/templates" className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline">
                 浏览全部 →
@@ -1316,9 +1365,9 @@ export default function DashboardPage() {
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {communityWorkflows.slice(0, 3).map((workflow) => (
-                  <div key={workflow.id} className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-4 border border-gray-100 dark:border-gray-800">
-                    <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1">{workflow.name}</h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 line-clamp-2">{workflow.description}</p>
+                  <div key={workflow.id} className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700">
+                    <h4 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{workflow.name}</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-2 line-clamp-2">{workflow.description}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-slate-400">by {workflow.author || "Anonymous"}</span>
                       <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
@@ -1329,14 +1378,14 @@ export default function DashboardPage() {
                       {publishedIds.has(workflow.id) ? (
                         <button
                           onClick={() => handleUnpublishWorkflow(workflow.id)}
-                          className="btn-outline text-xs min-h-[36px] px-3 py-1.5"
+                          className="text-xs px-3 py-1.5 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-800 transition-colors"
                         >
                           已分享 ✓
                         </button>
                       ) : (
                         <button
                           onClick={() => handlePublishWorkflow(workflow)}
-                          className="btn-outline text-xs min-h-[36px] px-3 py-1.5 flex items-center gap-1"
+                          className="text-xs px-3 py-1.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors flex items-center gap-1"
                         >
                           <Share2 className="w-3 h-3" /> 分享到社区
                         </button>
@@ -1354,20 +1403,20 @@ export default function DashboardPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               {/* Recent History */}
-              <div id="history" className="glass-card p-6 sm:p-8">
+              <div id="history" className="card bg-white dark:bg-gray-900 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-gray-900 dark:text-white">
+                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 dark:text-white">
                     {hasRealData ? "Recent Generations" : "Your Generations"}
                   </h2>
                 </div>
 
                 {records.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <div className="w-20 h-20 bg-white/[0.03] dark:bg-white/[0.05] rounded-full flex items-center justify-center mb-6">
-                      <FileText className="w-10 h-10 text-gray-400 dark:text-gray-400" />
+                    <div className="w-20 h-20 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mb-6">
+                      <FileText className="w-10 h-10 text-slate-400 dark:text-gray-500" />
                     </div>
-                    <p className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">No generation records yet</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Start writing to see your history here.</p>
+                    <p className="text-lg font-semibold text-slate-600 dark:text-slate-300 mb-2">No generation records yet</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Start writing to see your history here.</p>
                     <Link href="/write" className="btn-primary shadow-lg">Start Writing</Link>
                   </div>
                 ) : (
@@ -1449,33 +1498,33 @@ export default function DashboardPage() {
               <WeeklyEvolutionCard profile={profile} memories={memories} />
               
               {/* Memory Bank Card */}
-              <div className="glass-card p-6 border-l-4 border-emerald-500/30">
+              <div className="card bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 border-emerald-500">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
                     <Brain className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">Memory Bank</h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Your ideas & preferences</p>
+                    <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white">Memory Bank</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Your ideas & preferences</p>
                   </div>
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl">
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Total Memories</span>
+                  <div className="flex justify-between items-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl">
+                    <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Total Memories</span>
                     <span className="text-3xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">{memories.length}</span>
                   </div>
                   
                   {memories.length === 0 ? (
-                    <div className="bg-white/[0.03] dark:bg-white/[0.05] rounded-xl p-6 text-center">
-                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-center">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                         你还没有告诉分身任何想法。去写作页面开始对话吧。
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
                       {memories.slice(0, 5).map((memory, index) => (
-                        <div key={memory.id} className="group flex items-start justify-between gap-3 p-4 bg-white/[0.03] dark:bg-white/[0.05] rounded-xl border border-gray-100 dark:border-gray-800 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all shadow-sm">
+                        <div key={memory.id} className="group flex items-start justify-between gap-3 p-4 bg-gradient-to-br from-white to-slate-50 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-slate-100 dark:border-gray-700 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all shadow-sm">
                           {index < 2 && <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0 shadow-sm" />}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-2">

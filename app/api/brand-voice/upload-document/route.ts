@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzeDocumentStyle, convertToBrandVoiceProfile } from "@/lib/document-style-analyzer";
-import { BrandVoiceProfile } from "@/lib/brand-voice";
+import { BrandVoiceProfile } from "@/lib/db-brand-voice";
 
 export async function POST(request: NextRequest) {
   try {

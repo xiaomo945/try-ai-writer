@@ -1,10 +1,10 @@
 "use client";
 
-import { useHistory } from "@/lib/history";
+import { useDbHistory } from "@/lib/db-history";
 import { Sparkles } from "lucide-react";
 
 export function AIProgressIndicator() {
-  const { records } = useHistory();
+  const { records } = useDbHistory();
   const sampleCount = records.length;
 
   const getStatus = () => {

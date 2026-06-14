@@ -1,15 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
-import { trackEvent } from '@/lib/analytics';
 
 export default function PaymentPendingPage() {
-  useEffect(() => {
-    // Track payment pending page view
-    trackEvent('payment_pending_view', 'engagement');
-  }, []);
-
   return (
     <main className="min-h-screen bg-white flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md text-center">

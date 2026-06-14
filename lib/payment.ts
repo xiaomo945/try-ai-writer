@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 
 interface PaymentProvider {
-  createCheckoutSession(request: NextRequest, plan: string): Promise<{ url: string }>;
+  createCheckoutSession(plan: string): Promise<{ url: string }>;
 }
 
 const CREEM_URLS = {
@@ -22,7 +22,7 @@ class CreemProvider implements PaymentProvider {
     this.apiUrl = CREEM_URLS[env];
   }
 
-  async createCheckoutSession(request: NextRequest, plan: string): Promise<{ url: string }> {
+  async createCheckoutSession(plan: string): Promise<{ url: string }> {
     console.log(`[Creem] Creating checkout for plan: ${plan}`);
     
     const productId = this.productIds[plan];

@@ -2,15 +2,20 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff, History, Download, Upload, RotateCcw } from "lucide-react";
 import Link from "next/link";
-import { useHistory } from "@/lib/history";
-import { useMemoryBank } from "@/lib/memory-bank";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbHistory } from "@/lib/db-history";
+import { useDbMemoryBank } from "@/lib/db-memory-bank";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
-import { trackEvent, trackPageView, trackFunnelStep } from "@/lib/analytics";
-import { PerformanceMonitor } from "@/app/components/PerformanceMonitor";
+import { FloatingToolbar } from "@/app/components/FloatingToolbar";
+import { MarkdownPreview } from "@/app/components/MarkdownPreview";
+import { LineNumbers } from "@/app/components/LineNumbers";
+import { RichTextEditor } from "@/app/components/RichTextEditor";
+import { useAutoSave } from "@/lib/use-auto-save";
+import { useVersionHistory } from "@/lib/use-version-history";
+import { htmlToMarkdown, markdownToHtml, downloadMarkdown, downloadHtml } from "@/lib/markdown-utils";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -90,6 +95,9 @@ export default function WritePage() {
   const [completionTip, setCompletionTip] = useState<string | null>(null);
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [scrollRatio, setScrollRatio] = useState(0);
+  const [useRichEditor, setUseRichEditor] = useState(false);
 
   // Focus mode state
   const [focusMode, setFocusMode] = useState<boolean>(false);
@@ -98,9 +106,9 @@ export default function WritePage() {
   const focusActionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const searchParams = useSearchParams();
-  const { addRecord, records } = useHistory();
-  const { memories, addMemory } = useMemoryBank();
-  const { profile } = useBrandVoice();
+  const { addRecord, records } = useDbHistory();
+  const { memories, addMemory } = useDbMemoryBank();
+  const { profile } = useDbBrandVoice();
 
   const relatedIdeas = useMemo(() => {
     if (!prompt.trim() || memories.length === 0) return [];
@@ -134,12 +142,6 @@ export default function WritePage() {
     } catch {
       // localStorage unavailable
     }
-
-    // Track page view
-    trackPageView("/write");
-
-    // Track funnel step
-    trackFunnelStep("writing-funnel", "enter_write_page", 1, "anonymous");
   }, []);
 
   // Save focus mode to localStorage when it changes
@@ -151,50 +153,16 @@ export default function WritePage() {
     }
   }, [focusMode]);
 
-  // Handle keyboard shortcuts
+  // Handle Esc key to exit focus mode
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Exit focus mode with Esc
       if (e.key === "Escape" && focusMode) {
         setFocusMode(false);
-        return;
-      }
-
-      // Keyboard shortcuts (Cmd/Ctrl + key)
-      const isMeta = e.metaKey || e.ctrlKey;
-      
-      if (isMeta && e.key === "Enter") {
-        // Generate content
-        e.preventDefault();
-        if (state !== "loading" && prompt.trim()) {
-          handleGenerate();
-        }
-      } else if (isMeta && e.key === "s") {
-        // Save to history
-        e.preventDefault();
-        if (state === "done" && !savedToHistory) {
-          handleSaveToHistory();
-        }
-      } else if (isMeta && e.key === "m") {
-        // Save to memory
-        e.preventDefault();
-        if (state === "done" && !savedToMemory) {
-          handleSaveToMemory();
-        }
-      } else if (isMeta && e.key === "e") {
-        // Export markdown
-        e.preventDefault();
-        if (state === "done") {
-          handleExportMarkdown();
-        }
-      } else if (isMeta && e.key === "c" && state === "done") {
-        // Copy output (only when output exists)
-        // Let default behavior handle it, but we could add custom logic here
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [focusMode, state, prompt, savedToHistory, savedToMemory]);
+  }, [focusMode]);
 
   // Auto-focus textarea when entering focus mode
   useEffect(() => {
@@ -218,6 +186,27 @@ export default function WritePage() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [focusMode]);
+
+  // Load preview mode from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("write_preview_mode");
+      if (saved === "true") {
+        setShowPreview(true);
+      }
+    } catch {
+      // localStorage unavailable
+    }
+  }, []);
+
+  // Save preview mode to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem("write_preview_mode", String(showPreview));
+    } catch {
+      // localStorage unavailable
+    }
+  }, [showPreview]);
 
   // Load record from URL parameter
   useEffect(() => {
@@ -248,11 +237,6 @@ export default function WritePage() {
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
-    const startTime = Date.now();
-
-    // Track generation start
-    trackEvent("content_generation_start", "engagement", { mode, promptLength: prompt.length });
-
     setState("loading");
     setOutput("");
     setSavedToHistory(false);
@@ -266,65 +250,31 @@ export default function WritePage() {
       return;
     }
 
-    const relevantMemories =
-      relatedIdeas.length > 0 ? relatedIdeas.slice(0, 3).map((r) => r.memory.content) : [];
-
-    let enhancedPrompt: string | undefined;
-    if (profile?.styleFingerprint) {
-      const toneHint =
-        profile.commonPhrases && profile.commonPhrases.length > 0
-          ? `\nCommon phrases to use: ${profile.commonPhrases.slice(0, 5).join(", ")}`
-          : "";
-      enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${prompt}`;
-    }
-
     let response: Response | null = null;
     let lastError: Error | null = null;
-    let apiErrorDetail: { error?: string; hint?: string } | null = null;
 
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 45000);
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
         response = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt, mode, enhancedPrompt, relevantMemories }),
+          body: JSON.stringify({ prompt, mode }),
           signal: controller.signal,
         });
         clearTimeout(timeoutId);
         if (response.ok) break;
-        // Try to read detailed error from API response
-        try {
-          apiErrorDetail = await response.json();
-        } catch {
-          apiErrorDetail = null;
-        }
-        lastError = new Error(
-          apiErrorDetail?.error || `HTTP ${response.status}`
-        );
-        if (attempt === 0) {
-          await new Promise((resolve) => setTimeout(resolve, 800));
-        }
+        const errorData = await response.json().catch(() => ({}));
+        lastError = new Error(errorData.error || errorData.suggestion || `HTTP ${response.status}`);
       } catch (e) {
         lastError = e instanceof Error ? e : new Error("Network error");
-        if (attempt === 0) {
-          await new Promise((resolve) => setTimeout(resolve, 800));
-          continue;
-        }
+        if (attempt === 0) continue;
       }
     }
 
     if (!response || !response.ok) {
-      // Show detailed API error if available, otherwise classify
-      if (apiErrorDetail?.error) {
-        setErrorInfo({
-          message: apiErrorDetail.error,
-          suggestion: apiErrorDetail.hint || "请稍后再试，或联系支持。",
-        });
-      } else {
-        setErrorInfo(classifyError(lastError));
-      }
+      setErrorInfo(classifyError(lastError));
       setState("error");
       return;
     }
@@ -342,22 +292,6 @@ export default function WritePage() {
         fullText += text;
         setOutput(fullText);
       }
-
-      if (!fullText.trim()) {
-        setErrorInfo({ message: "AI服务暂时不可用", suggestion: "请稍后再试，或刷新页面" });
-        setState("error");
-        return;
-      }
-
-      // Track successful generation
-      trackEvent("content_generation_success", "engagement", { 
-        mode, 
-        wordCount: fullText.trim().split(/\s+/).filter(Boolean).length,
-        generationTime: Date.now() - startTime 
-      });
-
-      // Track funnel step
-      trackFunnelStep("writing-funnel", "generate_content", 2, "anonymous");
 
       setState("done");
       const wc = fullText.trim().split(/\s+/).filter(Boolean).length;
@@ -393,25 +327,42 @@ export default function WritePage() {
     setTimeout(() => setSavedToMemory(false), 3000);
   };
 
-  const handleExportMarkdown = () => {
-    if (!output) return;
+  const handleFormat = useCallback((formatType: "bold" | "italic" | "quote" | "code") => {
+    if (!promptRef.current) return;
+    const textarea = promptRef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = prompt.substring(start, end);
     
-    const modeLabel = getModeLabel(mode);
-    const timestamp = new Date().toISOString().split('T')[0];
-    const filename = `${modeLabel.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.md`;
-    
-    const markdownContent = `# ${prompt}\n\n${output}\n\n---\n*Generated with Try AI Writer on ${timestamp}*`;
-    
-    const blob = new Blob([markdownContent], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
+    let formattedText = selectedText;
+    switch (formatType) {
+      case "bold":
+        formattedText = `**${selectedText}**`;
+        break;
+      case "italic":
+        formattedText = `*${selectedText}*`;
+        break;
+      case "quote":
+        formattedText = `> ${selectedText}`;
+        break;
+      case "code":
+        formattedText = `\`${selectedText}\``;
+        break;
+    }
+
+    const newText = prompt.substring(0, start) + formattedText + prompt.substring(end);
+    setPrompt(newText);
+
+    // Keep focus and cursor position
+    requestAnimationFrame(() => {
+      textarea.focus();
+      if (formatType === "bold" || formatType === "italic" || formatType === "code") {
+        textarea.setSelectionRange(start + 2, end + 2);
+      } else if (formatType === "quote") {
+        textarea.setSelectionRange(start + 2, end + 2);
+      }
+    });
+  }, [prompt]);
 
   const getModeLabel = (m: WritingMode) => {
     const labels: Record<WritingMode, string> = {
@@ -571,6 +522,7 @@ export default function WritePage() {
   // Normal layout
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0C] text-gray-900 dark:text-white">
+      <FloatingToolbar textareaRef={promptRef} onFormat={handleFormat} />
       <header className="border-b border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -660,14 +612,41 @@ export default function WritePage() {
             )}
 
             <div className="space-y-4">
-              <div className="relative">
-                <textarea
-                  ref={promptRef}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
-                  className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
-                />
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-500 dark:text-slate-400">Your Input</span>
+                <button
+                  onClick={() => setShowPreview(!showPreview)}
+                  className="text-slate-400 hover:text-emerald-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center gap-2"
+                >
+                  {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPreview ? "Hide Preview" : "Preview"}
+                </button>
+              </div>
+              <div className={`${showPreview ? "grid lg:grid-cols-2 gap-4" : "space-y-4"}`}>
+                <div className="flex rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
+                  <LineNumbers text={prompt} />
+                  <textarea
+                    ref={promptRef}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    onScroll={(e) => {
+                      const textarea = e.currentTarget;
+                      const scrollHeight = textarea.scrollHeight;
+                      const clientHeight = textarea.clientHeight;
+                      const maxScroll = scrollHeight - clientHeight;
+                      if (maxScroll > 0) {
+                        setScrollRatio(textarea.scrollTop / maxScroll);
+                      } else {
+                        setScrollRatio(0);
+                      }
+                    }}
+                    placeholder={`Describe your ${getModeLabel(mode).toLowerCase()}...`}
+                    className="flex-1 h-48 bg-gray-50 dark:bg-white/5 p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
+                  />
+                </div>
+                {showPreview && (
+                  <MarkdownPreview content={prompt} className="h-48" scrollRatio={scrollRatio} />
+                )}
               </div>
 
               <div className="space-y-2">
@@ -710,20 +689,18 @@ export default function WritePage() {
                 {state === "done" && (
                   <div className="flex items-center gap-2">
                     <button
+                      onClick={() => setUseRichEditor(!useRichEditor)}
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
+                    >
+                      {useRichEditor ? "纯文本" : "富文本"}
+                    </button>
+                    <button
                       onClick={handleCopy}
                       title="复制到剪贴板，分享或粘贴到别处"
                       className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
                     >
                       {copied ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                       {copied ? "Copied!" : "Copy"}
-                    </button>
-                    <button
-                      onClick={handleExportMarkdown}
-                      title="导出为Markdown文件"
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px]"
-                    >
-                      <Download className="w-4 h-4" />
-                      Export
                     </button>
                     <button
                       onClick={handleSaveToHistory}
@@ -814,9 +791,17 @@ export default function WritePage() {
 
                 {state === "done" && (
                   <div>
-                    <div className="whitespace-pre-wrap text-gray-800 dark:text-slate-200">
-                      {output}
-                    </div>
+                    {useRichEditor ? (
+                      <RichTextEditor
+                        content={output}
+                        onChange={setOutput}
+                        placeholder="开始编辑..."
+                      />
+                    ) : (
+                      <div className="whitespace-pre-wrap text-gray-800 dark:text-slate-200">
+                        {output}
+                      </div>
+                    )}
                     {outputWordCount > 0 && (
                       <div className="mt-4 pt-3 border-t border-gray-200 dark:border-white/10 flex items-center gap-3">
                         <span className="text-xs text-gray-400 dark:text-slate-500">

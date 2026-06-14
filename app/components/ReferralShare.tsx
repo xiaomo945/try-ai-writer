@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Copy, Check, Share2, Twitter, Users } from "lucide-react";
-import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral-client";
+import { initializeReferral, getReferralLink, REFERRAL_REWARDS } from "@/lib/referral";
 import { useToast } from "./ToastContainer";
 
 export function ReferralShare() {
@@ -40,7 +40,7 @@ export function ReferralShare() {
   };
 
   const shareOnTwitter = () => {
-    const text = `I'm using @TryAIWriter to write better content with AI. It learns my brand voice and saves me hours. Try it free: ${referralLink}`;
+    const text = `I'm using @UseAIWriter to write better content with AI. It learns my brand voice and saves me hours. Try it free: ${referralLink}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(twitterUrl, "_blank", "noopener noreferrer");
   };

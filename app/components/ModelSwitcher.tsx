@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { useUsage, type ModelType } from '@/lib/usage';
+import { useDbUsage, type ModelType } from '@/lib/db-usage';
 
 const MODEL_INFO: Record<Exclude<ModelType, 'mock'>, { name: string; color: string; textColor: string; bgColor: string }> = {
   claude: { name: 'Claude', color: 'bg-orange-500', textColor: 'text-orange-700', bgColor: 'bg-orange-100' },
@@ -26,7 +26,7 @@ interface ModelSwitcherProps {
 }
 
 export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
-  const { selectedModel, setSelectedModel, isProUser } = useUsage();
+  const { selectedModel, setSelectedModel, isProUser } = useDbUsage();
   const [isOpen, setIsOpen] = useState(false);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
   const [upgradePromptShown, setUpgradePromptShown] = useState(false);

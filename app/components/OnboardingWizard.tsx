@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Check, SkipForward, PenTool } from "lucide-react";
-import { useBrandVoice } from "@/lib/brand-voice";
+import { useDbBrandVoice } from "@/lib/db-brand-voice";
+import { ScrollReveal } from "./ScrollReveal";
 
 const ONBOARDING_KEY = "onboarding_complete";
 
@@ -12,21 +13,25 @@ const industries = [
   { value: "marketing", label: "Marketing" },
   { value: "education", label: "Education" },
   { value: "finance", label: "Finance" },
+  { value: "healthcare", label: "Healthcare" },
   { value: "ecommerce", label: "E-commerce" },
+  { value: "consulting", label: "Consulting" },
   { value: "other", label: "Other" },
 ];
 
 const tones = [
-  { value: "professional", label: "Professional" },
-  { value: "casual", label: "Casual" },
-  { value: "bold", label: "Bold" },
-  { value: "warm", label: "Warm" },
+  { value: "professional", label: "Professional", description: "Formal and authoritative" },
+  { value: "casual", label: "Casual", description: "Friendly and conversational" },
+  { value: "bold", label: "Bold", description: "Confident and direct" },
+  { value: "warm", label: "Warm", description: "Empathetic and approachable" },
+  { value: "witty", label: "Witty", description: "Clever and engaging" },
 ];
 
 const examplePrompts = [
   "Write a blog post about how AI is transforming content marketing",
   "Draft a professional email announcing a new product feature",
   "Create a LinkedIn post about leadership lessons learned",
+  "Write a Twitter thread explaining complex tech concepts simply",
 ];
 
 interface OnboardingWizardProps {
@@ -38,225 +43,220 @@ export function OnboardingWizard({ onComplete }: OnboardingWizardProps) {
   const [industry, setIndustry] = useState("");
   const [tone, setTone] = useState("");
   const [audience, setAudience] = useState("");
-  const { updateProfile } = useBrandVoice();
+  const [isVisible, setIsVisible] = useState(true);
+  const { updateProfile } = useDbBrandVoice();
 
   const handleSkip = () => {
-    if (typeof window !== "undefined") localStorage.setItem(ONBOARDING_KEY, "true");
+    localStorage.setItem(ONBOARDING_KEY, "true");
+    setIsVisible(false);
     onComplete?.();
   };
 
   const handleComplete = () => {
-    if (typeof window !== "undefined") localStorage.setItem(ONBOARDING_KEY, "true");
+    localStorage.setItem(ONBOARDING_KEY, "true");
+    setIsVisible(false);
     onComplete?.();
   };
 
   const handleNext = () => {
-    if (step === 2) {
+    if (step === 2 && (industry || tone)) {
       updateProfile({
-        industry: industry || undefined,
-        tone: tone || undefined,
-        audience: audience || undefined,
+        industry,
+        tone,
+        audience,
         createdAt: new Date().toISOString(),
       });
     }
-    if (step < 3) setStep(step + 1);
+    if (step < 3) {
+      setStep(step + 1);
+    }
   };
 
-  const [randomPrompt] = useState(
-    () => examplePrompts[Math.floor(Math.random() * examplePrompts.length)]
-  );
+  const getRandomPrompt = () => {
+    return examplePrompts[Math.floor(Math.random() * examplePrompts.length)];
+  };
+
+  if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 p-4 overflow-y-auto">
-      <div className="w-full max-w-2xl py-6 sm:py-12">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 backdrop-blur-sm p-4">
+      <div className="w-full max-w-2xl">
         {/* Progress indicator */}
-        <div className="flex justify-center gap-2 mb-6">
+        <div className="flex justify-center gap-2 mb-8">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                s <= step ? "w-12 bg-gradient-to-r from-emerald-500 to-teal-400" : "w-12 bg-white/10"
+                s <= step ? "w-12 bg-emerald-600" : "w-12 bg-slate-200"
               }`}
             />
           ))}
         </div>
 
-        {/* Step 1: Welcome — compact, all visible, no scrolling needed */}
+        {/* Step 1: Welcome */}
         {step === 1 && (
-          <div className="text-center space-y-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-display font-extrabold text-white mb-3">
-                Your AI Writing Partner,
-                <br />
-                <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                  Trained on Your Voice
-                </span>
-              </h1>
-              <p className="text-base text-gray-400 max-w-lg mx-auto">
-                Try AI Writer learns your style, tone, and preferences to help you write faster and better.
-              </p>
-            </div>
-
-            {/* Quick feature preview so user sees value immediately */}
-            <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
-              {[
-                { icon: "✍️", text: "Blog posts" },
-                { icon: "📧", text: "Emails" },
-                { icon: "📱", text: "Social posts" },
-              ].map((f) => (
-                <div
-                  key={f.text}
-                  className="bg-white/5 border border-white/10 rounded-xl p-3 text-center"
+          <ScrollReveal>
+            <div className="text-center space-y-8">
+              <div className="w-20 h-20 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto">
+                <Sparkles className="w-10 h-10 text-emerald-600" />
+              </div>
+              <div>
+                <h1 className="text-4xl md:text-5xl font-display font-extrabold text-slate-900 mb-4">
+                  Your AI Writing Partner,
+                  <br />
+                  <span className="text-emerald-600">Trained on Your Voice</span>
+                </h1>
+                <p className="text-xl text-slate-500 max-w-lg mx-auto">
+                  Try AI Writer learns your style, tone, and preferences to help you write faster and better.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleNext}
+                  className="btn-primary text-lg px-10 py-5 inline-flex items-center justify-center gap-2"
                 >
-                  <div className="text-xl mb-1">{f.icon}</div>
-                  <div className="text-xs text-gray-400">{f.text}</div>
-                </div>
-              ))}
+                  Get Started
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleSkip}
+                  className="text-slate-400 hover:text-slate-600 text-sm flex items-center justify-center gap-2 py-2"
+                >
+                  <SkipForward className="w-4 h-4" />
+                  Skip for now
+                </button>
+              </div>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-              <button
-                onClick={handleNext}
-                className="btn-primary text-base px-8 py-3.5 inline-flex items-center justify-center gap-2"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleSkip}
-                className="text-gray-500 hover:text-white text-sm flex items-center justify-center gap-2 py-2 transition-colors"
-              >
-                <SkipForward className="w-4 h-4" />
-                Skip for now
-              </button>
-            </div>
-          </div>
+          </ScrollReveal>
         )}
 
         {/* Step 2: Brand Voice Setup */}
         {step === 2 && (
-          <div className="space-y-5">
-            <div className="text-center">
-              <h2 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-2">
-                Build Your Brand Voice
-              </h2>
-              <p className="text-sm text-gray-400">Help AI understand your style. You can change these later.</p>
-            </div>
+          <ScrollReveal>
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 mb-3">
+                  Let&apos;s Build Your Brand Voice
+                </h2>
+                <p className="text-slate-500">
+                  These settings help AI understand your writing style. You can always change them later.
+                </p>
+              </div>
 
-            <div className="space-y-4 bg-white/5 border border-white/10 rounded-2xl p-5">
-              {/* Industry */}
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  What industry are you in?
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {industries.map((ind) => (
-                    <button
-                      key={ind.value}
-                      onClick={() => setIndustry(ind.value)}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                        industry === ind.value
-                          ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/20"
-                          : "bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10"
-                      }`}
-                    >
-                      {ind.label}
-                    </button>
-                  ))}
+              <div className="space-y-6">
+                {/* Industry */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-3">What industry are you in?</label>
+                  <div className="flex flex-wrap gap-2">
+                    {industries.map((ind) => (
+                      <button
+                        key={ind.value}
+                        onClick={() => setIndustry(ind.value)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                          industry === ind.value
+                            ? "bg-emerald-600 text-white"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }`}
+                      >
+                        {ind.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tone */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-3">What&apos;s your preferred tone?</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {tones.map((t) => (
+                      <button
+                        key={t.value}
+                        onClick={() => setTone(t.value)}
+                        className={`p-4 rounded-xl text-left transition-all border-2 ${
+                          tone === t.value
+                            ? "border-emerald-600 bg-emerald-50"
+                            : "border-slate-200 hover:border-slate-300"
+                        }`}
+                      >
+                        <div className="font-semibold text-slate-900">{t.label}</div>
+                        <div className="text-sm text-slate-500">{t.description}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Audience */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-3">
+                    Who is your target audience? (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={audience}
+                    onChange={(e) => setAudience(e.target.value)}
+                    placeholder="e.g., Tech-savvy professionals, Small business owners..."
+                    className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  />
                 </div>
               </div>
 
-              {/* Tone */}
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Preferred tone?
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {tones.map((t) => (
-                    <button
-                      key={t.value}
-                      onClick={() => setTone(t.value)}
-                      className={`p-3 rounded-xl text-left transition-all border-2 ${
-                        tone === t.value
-                          ? "border-emerald-500 bg-emerald-500/10"
-                          : "border-white/10 hover:border-white/20 bg-white/3"
-                      }`}
-                    >
-                      <div className="font-semibold text-white text-sm">{t.label}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Audience */}
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Target audience? <span className="text-gray-500 font-normal">(optional)</span>
-                </label>
-                <input
-                  type="text"
-                  value={audience}
-                  onChange={(e) => setAudience(e.target.value)}
-                  placeholder="e.g., Tech professionals, Small business owners..."
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <button
+                  onClick={handleNext}
+                  className="btn-primary text-lg px-10 py-5 inline-flex items-center justify-center gap-2"
+                >
+                  Continue
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="text-slate-400 hover:text-slate-600 text-sm flex items-center justify-center gap-2 py-2"
+                >
+                  <SkipForward className="w-4 h-4" />
+                  Skip this step
+                </button>
               </div>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-              <button
-                onClick={handleNext}
-                className="btn-primary text-base px-8 py-3.5 inline-flex items-center justify-center gap-2"
-              >
-                Continue
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="text-gray-500 hover:text-white text-sm flex items-center justify-center gap-2 py-2 transition-colors"
-              >
-                <SkipForward className="w-4 h-4" />
-                Skip this step
-              </button>
-            </div>
-          </div>
+          </ScrollReveal>
         )}
 
-        {/* Step 3: Complete — compact */}
+        {/* Step 3: Complete */}
         {step === 3 && (
-          <div className="text-center space-y-5">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
-              <Check className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h2 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-2">
-                You&apos;re All Set!
-              </h2>
-              <p className="text-sm text-gray-400 max-w-lg mx-auto">
-                Your AI writing partner is ready. Try your first creation:
-              </p>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 max-w-xl mx-auto">
-              <div className="flex items-center gap-2 mb-2">
-                <PenTool className="w-4 h-4 text-emerald-400" />
-                <span className="text-xs font-medium text-gray-400">Example prompt</span>
+          <ScrollReveal>
+            <div className="text-center space-y-8">
+              <div className="w-20 h-20 rounded-2xl bg-emerald-100 flex items-center justify-center mx-auto">
+                <Check className="w-10 h-10 text-emerald-600" />
               </div>
-              <p className="text-gray-300 text-left italic text-sm">&ldquo;{randomPrompt}&rdquo;</p>
-            </div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-display font-extrabold text-slate-900 mb-3">
+                  You&apos;re All Set!
+                </h2>
+                <p className="text-xl text-slate-500 max-w-lg mx-auto">
+                  Your AI writing partner is ready. Here&apos;s an example of what you can create:
+                </p>
+              </div>
 
-            <Link
-              href="/write"
-              onClick={handleComplete}
-              className="btn-primary text-base px-8 py-3.5 inline-flex items-center justify-center gap-2"
-            >
-              Start Writing
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+              {/* Example prompt card */}
+              <div className="bg-slate-50 rounded-2xl p-6 max-w-xl mx-auto">
+                <div className="flex items-center gap-2 mb-3">
+                  <PenTool className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm font-medium text-slate-600">Example Prompt</span>
+                </div>
+                <p className="text-slate-800 text-left italic">&ldquo;{getRandomPrompt()}&rdquo;</p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/write"
+                  onClick={handleComplete}
+                  className="btn-primary text-lg px-10 py-5 inline-flex items-center justify-center gap-2"
+                >
+                  Start Writing
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
         )}
       </div>
     </div>

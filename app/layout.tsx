@@ -2,18 +2,17 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SessionProvider } from "@/components/SessionProvider";
 import { Providers } from "@/app/components/Providers";
-import { ThemeProvider } from "@/app/components/ThemeProvider";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tryaiwriter.com"),
-  title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
-  description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
-  keywords: ["AI writing tool", "free AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer", "Claude AI", "DeepSeek AI"],
+  title: "Try AI Writer — Claude-Powered AI Writing Tool | Affordable, Brand Voice Learning",
+  description: "Write blog posts, emails, and social media content 3x faster with this Claude-powered AI writing tool. Affordable, learns your brand voice, and starts free. Perfect for creators, solopreneurs, and small teams.",
+  keywords: ["AI writing tool", "Claude-powered AI writer", "affordable AI writer", "brand voice learning", "AI content generator", "blog writing AI", "email writer"],
   openGraph: {
-    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
-    description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
+    title: "Try AI Writer — Claude-Powered AI Writing Tool",
+    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
     url: "https://tryaiwriter.com",
     siteName: "Try AI Writer",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
@@ -21,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Try AI Writer — Free AI Writing Tool That Learns Your Voice | Start Writing Now",
-    description: "Try AI Writer is a free AI writing assistant that learns your brand voice. Generate blog posts, emails, and social media content in seconds. Start writing now — no credit card required.",
+    title: "Try AI Writer — Claude-Powered AI Writing",
+    description: "Write blog posts, emails, and social media content 3x faster with Claude-powered AI that learns your brand voice. Affordable, fast, and private.",
     images: ["/og-image.png"],
   },
 };
@@ -54,8 +53,6 @@ const organizationSchema = {
   ]
 };
 
-import { ServiceWorkerRegistration } from "@/app/components/ServiceWorkerRegistration";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
@@ -74,10 +71,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" 
           rel="stylesheet"
         />
-
-        {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#10b981" />
 
         {/* Favicon */}
         <link
@@ -142,17 +135,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen">
         <ErrorBoundary>
-          <ThemeProvider>
-            <SessionProvider>
-              <Providers>
-                <div className="page-transition">
-                  {children}
-                </div>
-              </Providers>
-            </SessionProvider>
-          </ThemeProvider>
+          <SessionProvider>
+            <Providers>
+              <div className="page-transition">
+                {children}
+              </div>
+            </Providers>
+          </SessionProvider>
         </ErrorBoundary>
-        <ServiceWorkerRegistration />
         <Analytics />
       </body>
     </html>

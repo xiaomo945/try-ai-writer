@@ -1,13 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import { plans } from "@/lib/pricing";
-import { PersonalizedRecommendations } from "@/app/components/PersonalizedRecommendations";
-import { trackEvent, trackPageView, trackFunnelStep } from "@/lib/analytics";
-import { assignVariant, trackConversion } from "@/lib/ab-testing";
 
 // Product structured data — derived from shared pricing module
 const productSchema = {
@@ -52,111 +49,60 @@ const breadcrumbSchema = {
 
 export default function PricingContent() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [abVariant, setAbVariant] = useState<string | null>(null);
   const { data: session, status } = useSession();
 
-  // A/B Testing & Analytics Integration
-  useEffect(() => {
-    const userId = session?.user?.email || "anonymous";
-    
-    // Track page view
-    trackPageView("/pricing", document.referrer, userId);
-
-    // Assign A/B test variant for pricing CTA
-    const variant = assignVariant("pricing-cta-test", userId);
-    setAbVariant(variant);
-
-    // Track funnel step
-    trackFunnelStep("pricing-funnel", "view_pricing", 1, userId);
-  }, [session]);
-
   const handlePlanClick = async (planName: string) => {
-    const planKey = planName.toLowerCase() as "pro" | "max" | "free";
-
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
-    // Track conversion event
-    const userId = session?.user?.email || "anonymous";
-    trackEvent("plan_selected", "conversion", { plan: planKey, variant: abVariant || "control" }, userId);
-
-    // Track A/B test conversion
-    if (abVariant) {
-      trackConversion("pricing-cta-test", abVariant, userId, "plan_click");
+    if (planName.toLowerCase() === "free") {
+      window.location.href = "/login";
+      return;
     }
 
-    // Track funnel step
-    trackFunnelStep("pricing-funnel", "select_plan", 2, userId, { plan: planKey });
-
+    // 如果 session 还在加载，等待一下
     if (status === "loading") {
       alert("Please wait, checking your login status...");
       return;
     }
 
-    if (status === "unauthenticated") {
-      // Save selected plan to localStorage before redirecting to login
-      localStorage.setItem("pending_plan", planKey);
-      window.location.href = "/login?redirect=/pricing";
+    // 如果未登录，先跳转到登录页
+    if (!session) {
+      window.location.href = "/login";
       return;
     }
 
-    if (planKey === "free") {
-      window.location.href = "/write";
-      return;
-    }
-
+    const planKey = planName.toLowerCase() as "pro" | "max" | "team";
     setLoadingPlan(planName);
-
+    
     try {
-      console.log("[Pricing] 发起支付请求...");
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
       const response = await fetch("/api/payment/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: planKey }),
-        signal: controller.signal,
       });
 
-      clearTimeout(timeoutId);
-
+      // 检查响应状态
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
+        const errorMessage = errorData.error || `HTTP ${response.status}: Failed to create checkout session`;
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
-
+      
+      // 检查返回的数据
       if (!data.url) {
-        throw new Error("No checkout URL returned");
+        throw new Error("No checkout URL returned from server");
       }
-
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
+      
+      // 跳转到支付页面
       window.location.href = data.url;
     } catch (error) {
-      const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
-      alert("支付错误: " + message + "\n\n请稍后再试");
+      console.error("Checkout error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to start checkout process";
+      alert(`Checkout Error: ${errorMessage}\n\nPlease make sure you are logged in and try again.`);
     } finally {
       setLoadingPlan(null);
     }
   };
-
-  // Auto-trigger payment if returning from login with plan parameter
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const planParam = urlParams.get("plan");
-    
-    if (planParam && status === "authenticated" && !loadingPlan) {
-      console.log(`[Pricing] 检测到 plan 参数: ${planParam}，自动触发支付`);
-      // Clean up URL
-      window.history.replaceState({}, "", "/pricing");
-      // Trigger payment for the plan
-      handlePlanClick(planParam);
-    }
-  }, [status, loadingPlan]);
 
   const isPaidPlan = (planName: string) => {
     return planName.toLowerCase() !== "free";
@@ -260,11 +206,6 @@ export default function PricingContent() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Personalized Recommendations */}
-          <div className="mt-12">
-            <PersonalizedRecommendations context="pricing" maxItems={3} />
           </div>
 
           {/* Compare with Alternatives */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
@@ -60,91 +60,61 @@ export default function PricingContentZh() {
   const { data: session, status } = useSession();
 
   const handlePlanClick = async (planName: string) => {
-    let planKey: "pro" | "max" | "free";
-    if (planName === "免费版") planKey = "free";
-    else if (planName === "专业版") planKey = "pro";
-    else planKey = "max";
+    if (planName === "免费版") {
+      window.location.href = "/login";
+      return;
+    }
 
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
+    // 如果 session 还在加载，等待一下
     if (status === "loading") {
-      alert("正在检查登录状态...");
+      alert("请稍候，正在检查登录状态...");
       return;
     }
 
-    if (status === "unauthenticated") {
-      // 保存待支付的套餐到localStorage
-      localStorage.setItem("pending_plan", planKey);
-      window.location.href = "/login?redirect=/pricing/zh";
+    // 如果未登录，先跳转到登录页
+    if (!session) {
+      window.location.href = "/login";
       return;
     }
 
-    if (planKey === "free") {
-      window.location.href = "/write";
-      return;
-    }
+    let planKey: "pro" | "max" | "team";
+    if (planName === "专业版") planKey = "pro";
+    else if (planName === "旗舰版") planKey = "max";
+    else planKey = "team";
 
     setLoadingPlan(planName);
-
+    
     try {
-      console.log("[Pricing] 发起支付请求...");
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
       const response = await fetch("/api/payment/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: planKey }),
-        signal: controller.signal,
       });
 
-      clearTimeout(timeoutId);
-
+      // 检查响应状态
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
+        const errorMessage = errorData.error || `HTTP ${response.status}: 创建结账会话失败`;
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
-
+      
+      // 检查返回的数据
       if (!data.url) {
         throw new Error("服务器未返回支付链接");
       }
-
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
+      
+      // 跳转到支付页面
       window.location.href = data.url;
     } catch (error) {
-      const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
-      alert("支付错误: " + message + "\n\n请稍后再试");
+      console.error("Checkout error:", error);
+      const errorMessage = error instanceof Error ? error.message : "启动结账流程失败";
+      alert(`结账错误: ${errorMessage}\n\n请确保您已登录并重试。`);
     } finally {
       setLoadingPlan(null);
     }
   };
-
-  // 登录后自动触发支付流程
-  useEffect(() => {
-    if (status === "authenticated" && !loadingPlan) {
-      const pendingPlan = localStorage.getItem("pending_plan");
-      if (pendingPlan) {
-        console.log(`[Pricing] 检测到待支付套餐: ${pendingPlan}`);
-        localStorage.removeItem("pending_plan");
-        
-        // 映射planKey到中文套餐名
-        const planNameMap: Record<string, string> = {
-          "pro": "专业版",
-          "max": "旗舰版",
-          "free": "免费版"
-        };
-        const planName = planNameMap[pendingPlan] || pendingPlan;
-        
-        // 自动触发支付
-        setTimeout(() => handlePlanClick(planName), 100);
-      }
-    }
-  }, [status, loadingPlan]);
 
   const isPaidPlan = (planName: string) => {
     return planName !== "免费版";

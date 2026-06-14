@@ -1,5 +1,8 @@
-import { Zap, Brain, Shield, Sparkles, ArrowRight, ChevronDown, Check } from "lucide-react";
+"use client";
+import { Zap, Brain, Shield, Sparkles, ArrowRight, ChevronDown, Check, Star, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Logo from "@/app/components/Logo";
 import DemoAnimation from "@/app/components/DemoAnimation";
 import { Testimonials } from "@/app/components/Testimonials";
@@ -7,38 +10,128 @@ import { UseCases } from "@/app/components/UseCases";
 import { IridescentRibbon } from "@/app/components/IridescentRibbon";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { WaitlistSignup } from "@/app/components/WaitlistSignup";
-import { NavWrapper } from "@/app/components/NavWrapper";
+import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { LaunchCountdown } from "@/app/components/LaunchCountdown";
 import { WhyDifferent } from "@/app/components/WhyDifferent";
 
 export default function LandingPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
+
   return (
     <main className="flex flex-col items-center w-full bg-obsidian-950 text-white min-h-screen">
-      <NavWrapper />
-
-      {/* Quick-start CTA for non-authenticated users */}
-      <section className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-base sm:text-lg font-medium">
-            No sign-up required. Start writing in 10 seconds.
-          </p>
-          <Link
-            href="/write"
-            className="inline-flex items-center gap-2 bg-white text-emerald-600 font-semibold px-6 py-2.5 rounded-full hover:bg-emerald-50 transition-colors min-h-[44px]"
-          >
-            Try It Now <ArrowRight className="w-4 h-4" />
+      <LaunchCountdown />
+      
+      {/* 导航栏 */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Logo size={32} />
+            <span className="text-lg font-display font-extrabold text-white">Use AI<span className="text-blue-400">Writer</span></span>
           </Link>
+          {/* 桌面端导航 */}
+          <div className="hidden md:flex items-center gap-8 text-sm">
+            <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
+            <Link href="/templates" className="text-slate-300 hover:text-white transition-colors">Templates</Link>
+            <Link href="/interview" className="text-slate-300 hover:text-white transition-colors">Interview</Link>
+            <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
+            <Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link>
+            <ThemeToggle />
+            {session ? (
+              <>
+                <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors">Dashboard</Link>
+                <div className="flex items-center gap-3">
+                  {session.user?.image ? (
+                    <img 
+                      src={session.user.image} 
+                      alt={session.user.name || 'User'} 
+                      className="w-8 h-8 rounded-full border-2 border-white/20"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+                      {session.user?.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                  )}
+                  <span className="text-white text-sm font-medium">{session.user?.name || 'User'}</span>
+                </div>
+                <Link href="/write" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Write Now</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/write" className="btn-primary !min-h-[40px] !px-5 !py-2 !text-sm">Try Free</Link>
+                <Link href="/login" className="btn-outline !min-h-[40px] !px-5 !py-2 !text-sm">Sign In</Link>
+              </>
+            )}
+          </div>
+          {/* 移动端汉堡菜单 */}
+          <button 
+            className="md:hidden text-slate-300 hover:text-white min-h-[44px] min-w-[44px] flex items-center justify-center"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
-      </section>
+        {/* 移动端下拉菜单 */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-obsidian-950/95 backdrop-blur-2xl border-b border-white/5">
+            <div className="flex flex-col gap-4 px-6 py-6">
+              <Link href="/write" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Write</Link>
+              <Link href="/templates" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Templates</Link>
+              <Link href="/interview" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Interview</Link>
+              <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+              <Link href="/blog" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              <div className="flex items-center justify-center py-2">
+                <ThemeToggle />
+              </div>
+              {session ? (
+                <>
+                  <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-lg">
+                    {session.user?.image ? (
+                      <img 
+                        src={session.user.image} 
+                        alt={session.user.name || 'User'} 
+                        className="w-10 h-10 rounded-full border-2 border-white/20"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-lg font-bold">
+                        {session.user?.name?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                    )}
+                    <div className="flex flex-col">
+                      <span className="text-white text-base font-medium">{session.user?.name || 'User'}</span>
+                      <span className="text-emerald-400 text-xs">Signed in</span>
+                    </div>
+                  </div>
+                  <Link href="/dashboard" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                  <Link href="/write" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Write Now</Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/write" className="btn-primary w-full text-center" onClick={() => setMobileMenuOpen(false)}>Try Free</Link>
+                  <Link href="/login" className="btn-outline w-full text-center" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </nav>
 
-      {/* Hero */}
+      {/* 🔴 视觉验证标记 — 如果你看到这个，说明是最新版本已部署！
+          深色背景 #0A0A0C，玻璃卡片，蓝紫渐变按钮
+      */}
+      <div className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-2 text-center text-sm font-bold">
+        🎨 新版本已部署！(2026-05-28 视觉更新
+      </div>
+      {/* Hero区 — 左右分栏 */}
       <section className="section-container section-spacing pt-24 md:pt-32 relative">
         <ScrollReveal parallax parallaxSpeed={0.4}>
           <IridescentRibbon className="absolute inset-0 z-0 opacity-40 md:opacity-50" />
         </ScrollReveal>
         <div className="relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="flex flex-col items-start">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{ textShadow: "0 0 100px rgba(91,156,245,0.3)" }}>
-              Your Thoughts,<br />
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-extrabold leading-tight" style={{textShadow: "0 0 100px rgba(91,156,245,0.3)"}}>
+              Your Thoughts,<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
                 Amplified.
               </span>
@@ -75,7 +168,24 @@ export default function LandingPage() {
         <div className="flex justify-center mt-16"><ChevronDown className="w-6 h-6 text-slate-600 animate-bounce" /></div>
       </section>
 
-      {/* Social proof */}
+      {/* 快速试用入口 */}
+      {!session && (
+        <section className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-base sm:text-lg font-medium">
+              No sign-up required. Start writing in 10 seconds.
+            </p>
+            <Link
+              href="/write"
+              className="inline-flex items-center gap-2 bg-white text-emerald-600 font-semibold px-6 py-2.5 rounded-full hover:bg-emerald-50 transition-colors min-h-[44px]"
+            >
+              Try It Now <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* 社会证明条 */}
       <section className="section-container py-12">
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16 text-slate-500 text-sm">
           <span className="text-slate-400 font-medium">Trusted by creators from</span>
@@ -86,7 +196,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Bento Grid */}
+      {/* Bento Grid 功能展示 */}
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
@@ -102,7 +212,7 @@ export default function LandingPage() {
               <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Generate in 30 Seconds</h3>
               <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">From prompt to polished draft faster than brewing coffee. Claude-powered quality, DeepSeek speed.</p>
             </div>
-            <div className="mt-6 flex items-center gap-4"><span className="text-4xl sm:text-5xl font-display font-extrabold text-blue-400">30s</span><span className="text-slate-500 text-sm">average time<br />to first draft</span></div>
+            <div className="mt-6 flex items-center gap-4"><span className="text-4xl sm:text-5xl font-display font-extrabold text-blue-400">30s</span><span className="text-slate-500 text-sm">average time<br/>to first draft</span></div>
           </div>
           <div className="glass-card-purple flex flex-col">
             <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4"><Brain className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" /></div>
@@ -120,15 +230,15 @@ export default function LandingPage() {
               <h3 className="text-xl sm:text-2xl font-display font-bold mb-3">Creative Interview Engine</h3>
               <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg">Tell your digital twin what you want — it asks the right questions, then assembles the perfect prompt for you.</p>
             </div>
-            <div className="mt-6 font-mono text-sm text-slate-500">{">"} &quot;What tone should it have? Who&apos;s your audience?&quot;<br />{">"} &quot;Got it. Generating now...&quot;</div>
+            <div className="mt-6 font-mono text-sm text-slate-500">{">"} "What tone should it have? Who's your audience?"<br/>{">"} "Got it. Generating now..."</div>
           </div>
         </div>
       </section>
 
-      {/* Why Different */}
+      {/* 竞品对比区 */}
       <WhyDifferent />
 
-      {/* Pricing */}
+      {/* 定价区 — 3列水平对比 */}
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
@@ -139,12 +249,12 @@ export default function LandingPage() {
           <p className="text-base sm:text-lg text-slate-400 mt-4">Start free, upgrade when you need more. No hidden fees.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {[
+          {[ 
             { name: "Free", price: "$0", desc: "For casual writers", features: ["10 generations/day", "DeepSeek model", "Basic brand voice"], btn: "outline" },
             { name: "Pro", price: "$9", desc: "For serious creators", features: ["100 generations/day", "Claude + DeepSeek", "Full brand voice", "Document upload"], btn: "primary", popular: true },
             { name: "Max", price: "$25", desc: "For power users", features: ["Unlimited generations", "Claude + DeepSeek", "Advanced brand voice", "Document + image upload", "Priority support"], btn: "primary" }
           ].map((plan) => (
-            <div key={plan.name} className={`glass-card flex flex-col relative ${plan.popular ? 'glass-card-purple glass-card-recommended' : ''}`} style={plan.popular ? { borderColor: "rgba(155,109,255,0.25)" } : {}}>
+            <div key={plan.name} className={`glass-card flex flex-col relative ${plan.popular ? 'glass-card-purple glass-card-recommended' : ''}`} style={plan.popular ? {borderColor: "rgba(155,109,255,0.25)"} : {}}>
               {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500">Most Popular</span>}
               <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
               <p className="text-slate-400 text-sm mb-6">{plan.desc}</p>
@@ -160,10 +270,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Use Cases */}
+      {/* 使用案例展示 */}
       <UseCases />
 
-      {/* Testimonials */}
+      {/* 用户评价区 */}
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">Loved by Creators Worldwide</h2>
@@ -172,7 +282,7 @@ export default function LandingPage() {
         <Testimonials />
       </section>
 
-      {/* FAQ */}
+      {/* FAQ区 */}
       <section className="section-container section-spacing max-w-3xl">
         <h2 className="text-3xl font-display font-extrabold text-center mb-12">Frequently Asked Questions</h2>
         <div className="space-y-4">
@@ -191,17 +301,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Waitlist */}
+      {/* Waitlist Signup */}
       <section className="section-container section-spacing">
         <ScrollReveal>
           <WaitlistSignup />
         </ScrollReveal>
       </section>
 
-      {/* Bottom CTA */}
+      {/* 底部CTA */}
       <section className="w-full section-spacing">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{ background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)" }}>
+          <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)"}}>
             <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
             <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 500+ creators already using Try AI Writer. Start free, no credit card required.</p>

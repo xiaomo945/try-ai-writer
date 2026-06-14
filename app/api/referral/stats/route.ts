@@ -1,47 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { getReferralRecord, getReferralLink } from "@/lib/referral";
+import { readFileSync, existsSync } from "fs";
+import { join } from "path";
+
+const DATA_DIR = join(process.cwd(), "data", "referrals");
 
 export async function GET(req: NextRequest) {
   try {
-    // Authenticate user
-    const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const userId = req.nextUrl.searchParams.get("userId");
+    if (!userId) return NextResponse.json({ error: "userId required" }, { status: 400 });
 
-    // Users can only query their own stats unless explicitly passed
-    if (userId && userId !== session.user.email) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+    const filePath = join(DATA_DIR, `${userId}.json`);
+    if (!existsSync(filePath)) return NextResponse.json({ referralCode: null, referralCount: 0, successfulSubscriptions: 0 });
 
-    const effectiveUserId = userId || session.user.email || "";
-
-    const record = getReferralRecord(effectiveUserId);
-    if (!record) {
-      return NextResponse.json({
-        referralCode: null,
-        referralCount: 0,
-        successfulSubscriptions: 0,
-        referralLink: null,
-      });
-    }
-
-    const baseUrl = process.env.NEXTAUTH_URL || "https://tryaiwriter.com";
-
+    const data = JSON.parse(readFileSync(filePath, "utf-8"));
     return NextResponse.json({
-      referralCode: record.code,
-      referralLink: getReferralLink(record.code, baseUrl),
-      referralCount: record.referralCount,
-      successfulSubscriptions: record.successfulSubscriptions,
+      referralCode: data.code,
+      referralCount: data.referralCount || 0,
+      successfulSubscriptions: data.successfulSubscriptions || 0,
+      referralLink: `https://tryaiwriter.com?ref=${data.code}`,
     });
-  } catch (err) {
-    console.error("[Referral Stats] Error:", err);
-    return NextResponse.json(
-      { error: "Failed to fetch stats" },
-      { status: 500 }
-    );
+  } catch {
+    return NextResponse.json({ error: "Failed to fetch stats" }, { status: 500 });
   }
 }
