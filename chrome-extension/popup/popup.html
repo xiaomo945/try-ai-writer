@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use AI Writer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <h1>Use AI Writer</h1>
+      <div class="auth-status" id="authStatus">
+        <span class="status-dot"></span>
+        <span class="status-text">未登录</span>
+      </div>
+    </header>
+
+    <div class="popup-content">
+      <!-- Login Section -->
+      <div id="loginSection" class="section">
+        <p class="login-text">登录后即可使用AI写作功能</p>
+        <button id="loginBtn" class="btn btn-primary">登录</button>
+      </div>
+
+      <!-- Main Content Section -->
+      <div id="mainSection" class="section hidden">
+        <!-- Mode Selection -->
+        <div class="mode-selector">
+          <button class="mode-btn active" data-mode="blog">
+            <span class="mode-icon">📝</span>
+            <span>博客</span>
+          </button>
+          <button class="mode-btn" data-mode="email">
+            <span class="mode-icon">📧</span>
+            <span>邮件</span>
+          </button>
+          <button class="mode-btn" data-mode="social">
+            <span class="mode-icon">💬</span>
+            <span>社交</span>
+          </button>
+          <button class="mode-btn" data-mode="custom">
+            <span class="mode-icon">⚙️</span>
+            <span>自定义</span>
+          </button>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+          <textarea 
+            id="promptInput" 
+            placeholder="输入主题、关键词或内容描述..."
+            rows="4"
+          ></textarea>
+          <div class="input-actions">
+            <button id="generateBtn" class="btn btn-primary">
+              <span class="btn-text">生成内容</span>
+              <span class="btn-loader hidden"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="result-section hidden">
+          <div class="result-header">
+            <h3>生成结果</h3>
+            <div class="result-actions">
+              <button id="copyBtn" class="btn-icon" title="复制">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+              <button id="insertBtn" class="btn-icon" title="插入到页面">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 5v14M5 12h14"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="resultContent" class="result-content"></div>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+          <div class="history-header">
+            <h3>历史记录</h3>
+            <button id="clearHistoryBtn" class="btn-text">清空</button>
+          </div>
+          <div id="historyList" class="history-list">
+            <div class="empty-state">暂无历史记录</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="popup-footer">
+      <a href="https://useaiwriter.com" target="_blank">访问网站</a>
+      <span class="divider">|</span>
+      <a href="https://useaiwriter.com/docs" target="_blank">帮助文档</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
