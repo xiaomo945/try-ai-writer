@@ -1,4 +1,4 @@
-import { Team, TeamMember, TeamInvitation, TeamRoleType, CreateTeamRequest, InviteMemberRequest } from "./types";
+import { Team, TeamMember, TeamInvitation, TeamRoleType, CreateTeamRequest, InviteMemberRequest, TeamPermission, hasPermission as checkRolePermission } from "./types";
 import { randomUUID } from "crypto";
 
 // In-memory storage (replace with database in production)
@@ -228,4 +228,14 @@ export async function canManageMembers(teamId: string, userId: string): Promise<
 export async function isTeamMember(teamId: string, userId: string): Promise<boolean> {
   const role = await getUserRoleInTeam(teamId, userId);
   return role !== null;
+}
+
+export async function hasPermission(
+  teamId: string,
+  userId: string,
+  permission: TeamPermission
+): Promise<boolean> {
+  const role = await getUserRoleInTeam(teamId, userId);
+  if (!role) return false;
+  return checkRolePermission(role, permission);
 }
