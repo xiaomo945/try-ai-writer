@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Eye, EyeOff, History, Download, Upload, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useDbHistory } from "@/lib/db-history";
 import { useDbMemoryBank } from "@/lib/db-memory-bank";
@@ -13,6 +13,9 @@ import { FloatingToolbar } from "@/app/components/FloatingToolbar";
 import { MarkdownPreview } from "@/app/components/MarkdownPreview";
 import { LineNumbers } from "@/app/components/LineNumbers";
 import { RichTextEditor } from "@/app/components/RichTextEditor";
+import { useAutoSave } from "@/lib/use-auto-save";
+import { useVersionHistory } from "@/lib/use-version-history";
+import { htmlToMarkdown, markdownToHtml, downloadMarkdown, downloadHtml } from "@/lib/markdown-utils";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";

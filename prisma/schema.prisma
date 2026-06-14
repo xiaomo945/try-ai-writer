@@ -25,6 +25,7 @@ model User {
   brandVoice    BrandVoiceProfile?
   memories      MemoryItem[]
   usage         UsageRecord[]
+  versions      DocumentVersion[]
 }
 
 model Account {
@@ -122,4 +123,20 @@ model UsageRecord {
 
   @@unique([userId, date])
   @@index([userId])
+}
+
+model DocumentVersion {
+  id          String   @id @default(cuid())
+  userId      String
+  documentId  String
+  content     String   @db.Text
+  title       String   @default("Untitled")
+  version     Int
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, version])
+  @@index([userId])
+  @@index([documentId])
 }
