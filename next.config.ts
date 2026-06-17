@@ -7,12 +7,8 @@ const baseConfig = {
   images: {
     remotePatterns: [],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
-  },
+  // Enable compression
+  compress: true,
   // Security headers
   async headers() {
     return [
@@ -39,8 +35,6 @@ const baseConfig = {
       },
     ];
   },
-  // Enable compression
-  compress: true,
 };
 
 // Only wrap with Sentry if DSN is configured
