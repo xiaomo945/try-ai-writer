@@ -4,17 +4,29 @@ import { Zap, Shield, Brain, Sparkles, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+function getRedirectPath(): string {
+  if (typeof window === "undefined") return "/dashboard";
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect");
+  return redirect && redirect.startsWith("/") ? redirect : "/dashboard";
+}
 
 export default function LoginPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [redirectTo, setRedirectTo] = useState("/dashboard");
+
+  useEffect(() => {
+    setRedirectTo(getRedirectPath());
+  }, []);
 
   useEffect(() => {
     if (session) {
-      router.push("/dashboard");
+      router.push(redirectTo);
     }
-  }, [session, router]);
+  }, [session, router, redirectTo]);
 
   return (
     <main className="min-h-screen flex">
@@ -34,7 +46,7 @@ export default function LoginPage() {
           </div>
           <div className="space-y-4">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={() => signIn("google", { callbackUrl: redirectTo })}
               className="w-full btn-outline flex items-center justify-center gap-3 py-4 text-lg"
             >
               <svg className="w-6 h-6" viewBox="0 0 24 24">
