@@ -23,7 +23,7 @@ export function SocialProofWall() {
               <p className="text-slate-900 font-semibold text-lg mt-1">Launch Day</p>
             </div>
 
-            {/* Trusted by creators */}
+            {/* Growing community */}
             <div className="flex flex-col items-center justify-center py-8 px-6 text-center">
               <div className="flex items-center -space-x-2 mb-3">
                 {["bg-emerald-400", "bg-blue-400", "bg-purple-400", "bg-pink-400", "bg-amber-400"].map((color, i) => (
@@ -35,21 +35,19 @@ export function SocialProofWall() {
                   </div>
                 ))}
               </div>
-              <p className="text-2xl font-bold text-slate-900">500+</p>
-              <p className="text-sm text-slate-500 mt-1">Trusted by creators worldwide</p>
+              <p className="text-2xl font-bold text-slate-900">50+</p>
+              <p className="text-sm text-slate-500 mt-1">Growing community</p>
             </div>
 
-            {/* Rating */}
+            {/* Privacy focused */}
             <div className="flex flex-col items-center justify-center py-8 px-6 text-center">
-              <div className="flex items-center gap-1 mb-3">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg key={star} className="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                ))}
+              <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center mb-3">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
               </div>
-              <p className="text-2xl font-bold text-slate-900">4.9/5</p>
-              <p className="text-sm text-slate-500 mt-1">from 120+ reviews</p>
+              <p className="text-2xl font-bold text-slate-900">Privacy First</p>
+              <p className="text-sm text-slate-500 mt-1">Your data stays yours</p>
             </div>
           </div>
         </div>

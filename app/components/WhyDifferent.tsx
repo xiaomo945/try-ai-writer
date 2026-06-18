@@ -144,7 +144,7 @@ export function WhyDifferent() {
             {/* Bottom CTA */}
             <div className="mt-8 text-center">
               <p className="text-slate-400 text-sm mb-4">
-                Join 500+ creators who switched to Try AI Writer
+                Join 50+ creators who switched to Try AI Writer
               </p>
               <a href="/write" className="btn-primary inline-flex items-center gap-2">
                 <Brain className="w-4 h-4" />

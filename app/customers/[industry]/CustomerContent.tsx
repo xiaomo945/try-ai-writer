@@ -101,7 +101,7 @@ const INDUSTRIES: Record<string, Industry> = {
     cases: [
       { company: "Notionary", logo: "N", size: "50-200 人", useCase: "产品发布说明 + 博客 + 邮件", result: "SEO 流量 6x 增长,获客成本降低 58%", quote: "Try AI Writer 让我们的内容团队规模不变,产出却翻了 5 倍。", contact: "Marketing Director", duration: "12 个月" },
       { company: "DataPilot", logo: "D", size: "20-50 人", useCase: "数据报告 + 客户案例", result: "客户案例从月产 2 篇到周产 4 篇,签单率 +35%", quote: "数据报告写作时间从 8 小时压到 1.5 小时,质量反而更好。", contact: "Content Lead", duration: "8 个月" },
-      { company: "CloudSync", logo: "C", size: "500+ 人", useCase: "帮助文档 + FAQ", result: "客服工单 -42%,自助率 +180%", quote: "AI 生成 + 人工审核,文档维护成本降低 70%。", contact: "Head of Support", duration: "18 个月" },
+      { company: "CloudSync", logo: "C", size: "团队规模", useCase: "帮助文档 + FAQ", result: "客服工单 -42%,自助率 +180%", quote: "AI 生成 + 人工审核,文档维护成本降低 70%。", contact: "Head of Support", duration: "18 个月" },
     ],
     testimonials: [
       { quote: "Try AI Writer 把我们的内容运营从'做不完'变成'做得完还要复盘'。", author: "李文", role: "Content Marketing Manager", company: "Notionary", avatar: "L" },
@@ -147,7 +147,7 @@ const INDUSTRIES: Record<string, Industry> = {
     ],
     cases: [
       { company: "美妆品牌 Y2K", logo: "Y", size: "20-50 人", useCase: "淘宝详情页 + 抖音种草", result: "详情页转化 +32%,日均 GMV +180%", quote: "1 个运营能维护 200+ SKU 文案,这在过去不可想象。", contact: "电商负责人", duration: "10 个月" },
-      { company: "Anker 子品牌", logo: "A", size: "500+ 人", useCase: "Amazon 英文 Listing", result: "新 SKU 上市速度 +400%,ACOS -22%", quote: "英文 Listing 一次过审率从 65% 提升到 92%。", contact: "Amazon 运营总监", duration: "14 个月" },
+      { company: "Anker 子品牌", logo: "A", size: "团队规模", useCase: "Amazon 英文 Listing", result: "新 SKU 上市速度 +400%,ACOS -22%", quote: "英文 Listing 一次过审率从 65% 提升到 92%。", contact: "Amazon 运营总监", duration: "14 个月" },
       { company: "独立站 SleepWell", logo: "S", size: "10-20 人", useCase: "Shopify + Klaviyo 邮件", result: "邮件打开率 +45%,回购率 +28%", quote: "邮件营销从一周 1 封变成一周 5 封,转化率还更高。", contact: "Founder", duration: "6 个月" },
     ],
     testimonials: [
@@ -194,7 +194,7 @@ const INDUSTRIES: Record<string, Industry> = {
     ],
     cases: [
       { company: "启程教育", logo: "Q", size: "100-500 人", useCase: "K12 课程大纲 + 营销", result: "新课程上线速度 +300%,招生率 +45%", quote: "我们一年新增 50 门课程,以前一年只能做 12 门。", contact: "课程总监", duration: "16 个月" },
-      { company: "英语流利说", logo: "E", size: "500+ 人", useCase: "学员故事 + 社群内容", result: "社群活跃度 +80%,续费 +25%", quote: "AI 把我们的学员故事写得比真实学员还生动。", contact: "社群运营", duration: "12 个月" },
+      { company: "英语流利说", logo: "E", size: "团队规模", useCase: "学员故事 + 社群内容", result: "社群活跃度 +80%,续费 +25%", quote: "AI 把我们的学员故事写得比真实学员还生动。", contact: "社群运营", duration: "12 个月" },
     ],
     testimonials: [
       { quote: "教育行业最被低估的 AI 工具,没有之一。", author: "张老师", role: "课程总监", company: "启程教育", avatar: "Z" },
@@ -239,7 +239,7 @@ const INDUSTRIES: Record<string, Industry> = {
     ],
     cases: [
       { company: "国信证券", logo: "G", size: "1000+ 人", useCase: "研报 + 客户教育", result: "研报产出速度 +400%,合规通过率 99%", quote: "AI 让研究员从'写'变成'审',效率质变。", contact: "研究所所长", duration: "20 个月" },
-      { company: "平安保险某部门", logo: "P", size: "500+ 人", useCase: "产品介绍 + 销售话术", result: "新人培训周期 -50%,签单率 +18%", quote: "新员工上手速度提升一倍,客户反馈也更专业。", contact: "培训总监", duration: "14 个月" },
+      { company: "平安保险某部门", logo: "P", size: "团队规模", useCase: "产品介绍 + 销售话术", result: "新人培训周期 -50%,签单率 +18%", quote: "新员工上手速度提升一倍,客户反馈也更专业。", contact: "培训总监", duration: "14 个月" },
     ],
     testimonials: [
       { quote: "金融行业 AI 工具的天花板,合规做得最好。", author: "陈博士", role: "首席分析师", company: "国信证券", avatar: "C" },
@@ -284,7 +284,7 @@ const INDUSTRIES: Record<string, Industry> = {
     ],
     cases: [
       { company: "丁香医生合作医生", logo: "D", size: "个人", useCase: "患者教育 + 科普", result: "科普文章产出 +400%,粉丝增长 +120%", quote: "AI 把医学论文翻译成普通人能懂的话,效率质变。", contact: "三甲医院主治医师", duration: "10 个月" },
-      { company: "美中宜和妇儿医院", logo: "M", size: "500+ 人", useCase: "孕妇教育 + 公众号", result: "公众号粉丝 +250%,孕产课程报名 +85%", quote: "我们的内容专业度评分反而更高了,因为 AI 帮我们梳理了逻辑。", contact: "市场总监", duration: "12 个月" },
+      { company: "美中宜和妇儿医院", logo: "M", size: "团队规模", useCase: "孕妇教育 + 公众号", result: "公众号粉丝 +250%,孕产课程报名 +85%", quote: "我们的内容专业度评分反而更高了,因为 AI 帮我们梳理了逻辑。", contact: "市场总监", duration: "12 个月" },
     ],
     testimonials: [
       { quote: "医学科普写作的得力助手,值得每个医生拥有。", author: "王医生", role: "三甲医院主治医师", company: "丁香医生", avatar: "W" },
@@ -373,7 +373,7 @@ const INDUSTRIES: Record<string, Industry> = {
     ],
     cases: [
       { company: "增长引擎 Agency", logo: "Z", size: "20-50 人", useCase: "多客户品牌内容", result: "客户数 +200%,团队规模不变,GMV +480%", quote: "我们用 Try AI Writer 把人均产值翻了三倍,工资也翻倍。", contact: "Founder", duration: "14 个月" },
-      { company: "蓝色光标某部门", logo: "L", size: "500+ 人", useCase: "汽车客户整合营销", result: "项目提案效率 +400%,客户满意度 +20%", quote: "AI 让我们能服务更大的客户,接更复杂的项目。", contact: "客户总监", duration: "10 个月" },
+      { company: "蓝色光标某部门", logo: "L", size: "团队规模", useCase: "汽车客户整合营销", result: "项目提案效率 +400%,客户满意度 +20%", quote: "AI 让我们能服务更大的客户,接更复杂的项目。", contact: "客户总监", duration: "10 个月" },
     ],
     testimonials: [
       { quote: "营销代理的核武器,没有它我们早就累垮了。", author: "高总", role: "Founder", company: "增长引擎 Agency", avatar: "G" },
@@ -790,34 +790,6 @@ export default function CustomerContent({ params }: Props) {
                     {cs.quote}
                     <span className="text-slate-500 not-italic">— {cs.contact}</span>
                   </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800/60">
-        <div className="flex items-center gap-2 mb-8">
-          <Star className="w-7 h-7 text-amber-400" />
-          <h2 className="font-serif text-3xl font-extrabold text-white">用户证言</h2>
-        </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          {ind.testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-6 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300"
-            >
-              <Quote className="w-8 h-8 text-emerald-400 mb-3" />
-              <p className="text-base text-slate-100 leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
-              <div className="flex items-center gap-3 pt-3 border-t border-slate-800/80">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-bold">
-                  {t.avatar}
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-white">{t.author}</div>
-                  <div className="text-xs text-slate-400">{t.role} · {t.company}</div>
                 </div>
               </div>
             </div>

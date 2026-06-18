@@ -60,50 +60,5 @@ function StarRating() {
 }
 
 export function Testimonials() {
-  return (
-    <ScrollReveal>
-      <section className="w-full py-16 md:py-32">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-display font-extrabold mb-2 text-center">
-            Loved by Creators Worldwide
-          </h2>
-          <p className="text-center text-slate-400 mb-10 max-w-xl mx-auto">
-            Join 500+ writers who already use Try AI Writer
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial.id}
-                className="glass-card p-6"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Top: Avatar + Name/Role */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-semibold"
-                  >
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-sm text-slate-400">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </div>
-                {/* Middle: Quote */}
-                <p className="text-slate-300 text-lg leading-relaxed italic mb-4">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                {/* Bottom: Stars */}
-                <StarRating />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </ScrollReveal>
-  );
+  return null;
 }
