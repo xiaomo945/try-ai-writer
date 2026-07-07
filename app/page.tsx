@@ -9,7 +9,7 @@ const DemoAnimation = dynamic(() => import("@/app/components/DemoAnimation"), {
   loading: () => <div className="w-full h-96 bg-obsidian-900 animate-pulse rounded-2xl" />,
 });
 const Testimonials = dynamic(() => import("@/app/components/Testimonials").then(m => ({ default: m.Testimonials })), {
-  loading: () => <div className="w-full h-64 bg-obsidian-900 animate-pulse rounded-2xl" />,
+  loading: () => null,
 });
 const UseCases = dynamic(() => import("@/app/components/UseCases").then(m => ({ default: m.UseCases })), {
   loading: () => <div className="w-full h-48 bg-obsidian-900 animate-pulse rounded-2xl" />,
@@ -74,10 +74,10 @@ export default function LandingPage() {
             <div className="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
               <div className="flex -space-x-2">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 border-2 border-obsidian-950" />
+                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-600 to-teal-500 border-2 border-white dark:border-obsidian-950" />
                 ))}
               </div>
-              <p className="text-sm text-slate-400"><span className="text-white font-semibold">50+</span> creators already writing</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-semibold">Built</span> for creators who write every day</p>
             </div>
           </div>
           <div className="hidden lg:flex justify-center">
@@ -92,11 +92,11 @@ export default function LandingPage() {
       {/* Social proof */}
       <section className="section-container py-12">
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-16 text-slate-500 text-sm">
-          <span className="text-slate-400 font-medium">Trusted by creators from</span>
-          <span className="text-white font-semibold">Product Hunt</span>
-          <span className="text-white font-semibold">Reddit</span>
-          <span className="text-white font-semibold">Twitter/X</span>
-          <span className="text-white font-semibold">Indie Hackers</span>
+          <span className="text-slate-500 dark:text-slate-400 font-medium">Used by creators from</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Product Hunt</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Reddit</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Twitter/X</span>
+          <span className="text-slate-900 dark:text-white font-semibold">Indie Hackers</span>
         </div>
       </section>
 
@@ -177,11 +177,11 @@ export default function LandingPage() {
       {/* Use Cases */}
       <UseCases />
 
-      {/* Testimonials */}
+      {/* Features Preview */}
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">Loved by Creators Worldwide</h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4">Join 50+ writers who already use Try AI Writer</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-slate-900 dark:text-white">Built for Creators Worldwide</h2>
+          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-4">Try AI Writer helps writers, marketers, and founders create content faster.</p>
         </div>
         <Testimonials />
       </section>
@@ -216,9 +216,9 @@ export default function LandingPage() {
       <section className="w-full section-spacing">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <div className="glass-card p-8 sm:p-12 md:p-16 relative overflow-hidden" style={{ background: "radial-gradient(circle at 50% 50%, rgba(91,156,245,0.1), rgba(155,109,255,0.05), transparent)" }}>
-            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write 3x faster?</h2>
-            <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-lg mx-auto">Join 50+ creators already using Try AI Writer. Start free, no credit card required.</p>
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-400 mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold mb-6">Ready to write faster?</h2>
+          <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-lg mx-auto">Start writing with Try AI Writer today. No credit card required.</p>
             <Link href="/write" className="btn-primary text-base sm:text-lg px-10 sm:px-14 py-5 sm:py-6 rounded-2xl">Try It Now — No Sign Up Required <ArrowRight className="ml-2 w-5 h-5" /></Link>
           </div>
         </div>

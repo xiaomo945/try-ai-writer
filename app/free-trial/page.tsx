@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, Star, Zap, Shield, PenLine } from "lucide-react";
+import { ArrowRight, Check, Zap, Shield, PenLine } from "lucide-react";
 import { NavWrapper } from "@/app/components/NavWrapper";
 
 const features = [
@@ -22,18 +22,7 @@ const features = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "I went from idea to publish-ready blog post in under 5 minutes.",
-    author: "Sarah L.",
-    role: "Content Marketer",
-  },
-  {
-    quote: "The free trial was enough to convince me to upgrade to Pro.",
-    author: "Daniel K.",
-    role: "Indie Founder",
-  },
-];
+
 
 export default function FreeTrialPage() {
   return (
@@ -86,36 +75,6 @@ export default function FreeTrialPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="section-container section-spacing w-full max-w-5xl">
-        <h2 className="text-3xl font-display font-extrabold text-center mb-10">
-          Loved by Early Writers
-        </h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {testimonials.map((t) => (
-            <div key={t.author} className="glass-card p-6">
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-amber-400 fill-amber-400"
-                  />
-                ))}
-              </div>
-              <p className="text-slate-700 dark:text-slate-300 mb-4">
-                “{t.quote}”
-              </p>
-              <p className="text-sm font-semibold text-slate-900 dark:text-white">
-                {t.author}
-              </p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                {t.role}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Trust + Final CTA */}
       <section className="section-container section-spacing text-center max-w-3xl pb-24">
         <div className="glass-card p-8 sm:p-12">
@@ -123,8 +82,7 @@ export default function FreeTrialPage() {
             Ready to write 3x faster?
           </h2>
           <p className="text-slate-500 dark:text-slate-400 mb-8">
-            Join 50+ creators who already use Try AI Writer for their daily
-            content.
+            Start writing smarter with Try AI Writer today.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -138,7 +96,7 @@ export default function FreeTrialPage() {
             </Link>
           </div>
           <p className="text-xs text-slate-500 mt-6">
-            Trusted by 50+ creators · No credit card required · Cancel anytime
+            No credit card required · Cancel anytime
           </p>
         </div>
       </section>

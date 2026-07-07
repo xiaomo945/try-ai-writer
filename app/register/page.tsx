@@ -159,7 +159,7 @@ export default function RegisterPage() {
           </ul>
           <div className="flex items-center gap-2 pt-6">
             <Sparkles className="w-5 h-5 text-emerald-200" />
-            <p className="text-emerald-100 text-sm">Trusted by 100+ early adopters</p>
+            <p className="text-emerald-100 text-sm">Built for creators who value privacy and speed</p>
           </div>
         </div>
       </div>

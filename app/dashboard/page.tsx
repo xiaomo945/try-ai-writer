@@ -785,81 +785,9 @@ export default function DashboardPage() {
 
   return (
     <main className="min-h-screen flex flex-col bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 text-white">
-      {/* Onboarding Wizard */}
-      {showOnboarding && <OnboardingWizard onComplete={handleOnboardingComplete} />}
-      
-      {/* Referral Popup (Manual Trigger) */}
-      {showReferralPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl max-w-md w-full p-6 relative">
-            <button 
-              onClick={() => setShowReferralPopup(false)}
-              className="absolute top-4 right-4 p-1 hover:bg-slate-100 dark:hover:bg-gray-800 rounded-full"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-2">
-                邀请好友一起写作
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                邀请好友，双方各得3天Pro体验
-              </p>
-            </div>
-            <div className="space-y-3">
-              <button
-                onClick={() => {
-                  copyReferralLink();
-                  // 复制后关闭弹窗
-                  setTimeout(() => setShowReferralPopup(false), 1500);
-                }}
-                className="w-full btn-primary min-h-[48px] flex items-center justify-center gap-2 text-base"
-              >
-                {referralLinkCopied ? (
-                  <>
-                    <Copy className="w-5 h-5" /> 已复制！
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-5 h-5" /> 复制邀请链接
-                  </>
-                )}
-              </button>
-              <button
-                onClick={() => setShowReferralPopup(false)}
-                className="w-full text-center text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 py-2"
-              >
-                关闭
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* Referral Reward Notification */}
-      {referralRewardNotification && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce-once">
-          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3">
-            <Gift className="w-6 h-6 flex-shrink-0" />
-            <div>
-              <p className="font-semibold">
-                {referralRewardNotification.type === 'referee'
-                  ? `🎉 邀请奖励到账！获得 ${referralRewardNotification.extraGenerations} 次额外生成`
-                  : `🎁 好友已加入！获得 ${referralRewardNotification.proDays} 天 Pro 试用`
-                }
-              </p>
-            </div>
-            <button
-              onClick={() => setReferralRewardNotification(null)}
-              className="p-1 hover:bg-white/20 rounded-full ml-2"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Onboarding Wizard — temporarily disabled to prevent popup */}
+      {/* Referral Popup — temporarily disabled */}
+      {/* Referral Reward Notification — temporarily disabled */}
 
       {/* Header */}
       <header className="border-b border-white/10 bg-obsidian-900/80 backdrop-blur-md sticky top-0 z-40">

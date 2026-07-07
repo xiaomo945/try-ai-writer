@@ -440,7 +440,7 @@ export default function HeadlineGeneratorContent() {
             </div>
             <ul className="space-y-3">
               {[
-                "标题党:点击进来发现内容不符,跳出率 90%+",
+                "标题党:点击进来发现内容不符,用户体验差",
                 "关键词堆砌:SEO 标题不自然,Google 排名反降",
                 "过度承诺:'X 天 10 万粉'类标题难以兑现",
                 "完全照搬爆款:失去个人品牌,内容同质化",

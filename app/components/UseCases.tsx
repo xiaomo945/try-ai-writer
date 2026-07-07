@@ -13,26 +13,26 @@ const USE_CASES: UseCase[] = [
   {
     icon: "📦",
     title: "Amazon Seller Listing Optimization",
-    description: "输入产品信息，AI自动生成高转化五点描述和长描述",
-    result: "平均提高点击率35%",
+    description: "输入产品信息，AI自动生成结构化的五点描述和长描述",
+    result: "节省大量编辑时间",
   },
   {
     icon: "📝",
     title: "Dropshipping Blog Writing",
-    description: "根据关键词自动生成结构化长文，Google排名提升",
-    result: "流量提升50%+",
+    description: "根据关键词自动生成结构化长文，辅助SEO内容布局",
+    result: "加速内容产出",
   },
   {
     icon: "📧",
     title: "Email Marketing Sequences",
-    description: "生成高转化欢迎邮件、弃购挽回、促销序列",
-    result: "打开率提升28%",
+    description: "生成欢迎邮件、弃购挽回、促销序列等邮件草稿",
+    result: "提升邮件写作效率",
   },
   {
     icon: "✨",
     title: "Creative Writing",
     description: "通过创意采访引擎，从模糊想法到完整故事大纲",
-    result: "创作效率提升3倍",
+    result: "让创作更顺畅",
   },
 ];
 
@@ -49,10 +49,10 @@ export function UseCases() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
-            Trusted by Creators Across Industries
+            Use Cases for Every Creator
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            See how Try AI Writer helps professionals in different fields
+            See how Try AI Writer can help professionals in different fields
           </p>
         </div>
 

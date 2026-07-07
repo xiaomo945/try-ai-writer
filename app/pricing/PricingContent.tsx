@@ -54,9 +54,6 @@ export default function PricingContent() {
   const handlePlanClick = async (planName: string) => {
     const planKey = planName.toLowerCase() as "pro" | "max" | "free";
 
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
     if (status === "loading") {
       alert("Please wait, checking your login status...");
       return;
@@ -77,8 +74,6 @@ export default function PricingContent() {
     setLoadingPlan(planName);
 
     try {
-      console.log("[Pricing] 发起支付请求...");
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -102,13 +97,11 @@ export default function PricingContent() {
         throw new Error("No checkout URL returned");
       }
 
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = data.url;
     } catch (error) {
-      const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
-      alert("支付错误: " + message + "\n\n请稍后再试");
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert("Payment error: " + message + "\n\nPlease try again later");
     } finally {
       setLoadingPlan(null);
     }

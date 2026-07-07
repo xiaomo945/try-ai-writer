@@ -65,9 +65,6 @@ export default function PricingContentZh() {
     else if (planName === "专业版") planKey = "pro";
     else planKey = "max";
 
-    console.log(`[Pricing] 用户点击套餐: ${planName} (key: ${planKey})`);
-    console.log(`[Pricing] Session 状态: ${status}`);
-
     if (status === "loading") {
       alert("正在检查登录状态...");
       return;
@@ -88,8 +85,6 @@ export default function PricingContentZh() {
     setLoadingPlan(planName);
 
     try {
-      console.log("[Pricing] 发起支付请求...");
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
 
@@ -113,12 +108,10 @@ export default function PricingContentZh() {
         throw new Error("服务器未返回支付链接");
       }
 
-      console.log(`[Pricing] 跳转到支付页面: ${data.url}`);
       // eslint-disable-next-line react-hooks/immutability -- intentional redirect
       window.location.href = data.url;
     } catch (error) {
       const message = error instanceof Error ? error.message : "未知错误";
-      console.log(`[Pricing] 支付错误: ${message}`);
       alert("支付错误: " + message + "\n\n请稍后再试");
     } finally {
       setLoadingPlan(null);
