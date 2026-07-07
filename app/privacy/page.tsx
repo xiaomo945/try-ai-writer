@@ -8,11 +8,16 @@ export default function PrivacyPage() {
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="text-lg font-display font-extrabold text-white">Use AI<span className="text-blue-400">Writer</span></span>
+            <span className="text-lg font-display font-extrabold text-slate-900 dark:text-white">Try AI<span className="text-emerald-400">Writer</span></span>
           </Link>
-          <Link href="/" className="btn-outline text-sm px-4 py-2">
-            Back to Home
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/free-trial" className="btn-primary text-sm px-4 py-2">
+              Start Free
+            </Link>
+            <Link href="/" className="btn-outline text-sm px-4 py-2">
+              Back to Home
+            </Link>
+          </div>
         </div>
       </header>
 

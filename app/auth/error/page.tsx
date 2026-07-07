@@ -33,6 +33,12 @@ export default function AuthErrorPage() {
           >
             Back to Home
           </Link>
+          <p className="text-sm text-slate-500">
+            Want to skip signing in?{" "}
+            <Link href="/free-trial" className="text-emerald-600 hover:underline font-medium">
+              Try it free →
+            </Link>
+          </p>
         </div>
       </div>
     </main>

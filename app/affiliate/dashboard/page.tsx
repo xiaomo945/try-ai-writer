@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Copy, CheckCircle2, Download, Users, DollarSign, TrendingUp, Gift } from "lucide-react";
 
 export default function AffiliateDashboard() {
@@ -92,7 +93,7 @@ export default function AffiliateDashboard() {
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Code: {referralCode}</p>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm mb-8">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Promotional Materials</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button className="flex items-center gap-3 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-500 transition-colors">
@@ -109,6 +110,24 @@ export default function AffiliateDashboard() {
                 <p className="text-xs text-gray-500 dark:text-gray-400">Pre-written copy</p>
               </div>
             </button>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h2>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/" className="text-sm text-emerald-600 hover:underline font-medium">
+              Home
+            </Link>
+            <Link href="/pricing" className="text-sm text-emerald-600 hover:underline font-medium">
+              Pricing
+            </Link>
+            <Link href="/free-trial" className="text-sm text-emerald-600 hover:underline font-medium">
+              Free Trial
+            </Link>
+            <Link href="/write" className="text-sm text-emerald-600 hover:underline font-medium">
+              Try AI Writer
+            </Link>
           </div>
         </div>
       </div>
