@@ -47,10 +47,10 @@ const organizationSchema = {
   "name": "Try AI Writer",
   "url": "https://tryaiwriter.com",
   "logo": "https://tryaiwriter.com/logo.png",
-  "sameAs": [
-    "https://twitter.com/useaiwriter",
-    "https://github.com/useaiwriter"
-  ]
+    "sameAs": [
+      "https://twitter.com/tryaiwriter",
+      "https://github.com/xiaomo945"
+    ]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
