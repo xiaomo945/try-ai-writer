@@ -1,4 +1,5 @@
-# Use AI Writer — 核心商业战略
+> **[归档]** 本目录为历史开发记录快照，其中的品牌名与技术栈描述可能已过时。请以 `use-ai-writer-docs/` 与 `ONBOARDING.md` 为准。
+# Try AI Writer — 核心商业战略
 
 ## 定价体系
 | 市场 | 套餐 | 月费 | Claude/月 | DeepSeek/天 | 利润率 |

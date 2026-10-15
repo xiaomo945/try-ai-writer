@@ -19,7 +19,7 @@ Your digital twin is an AI that:
 
 ## How to Build It
 
-Here's the process we use at [Use AI Writer](https://tryaiwriter.com):
+Here's the process we use at [Try AI Writer](https://tryaiwriter.com):
 
 ### 1. Gather Your Best Work
 Collect 5-10 pieces of writing that truly represent your voice. Quality matters more than quantity.

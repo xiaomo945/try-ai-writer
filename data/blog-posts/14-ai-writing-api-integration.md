@@ -116,7 +116,7 @@ Here’s a basic example of what an API call might look like:
 ```javascript
 async function generateContent(prompt, styleGuide) {
   try {
-    const response = await fetch('https://api.useaiwriter.com/v1/generate', {
+    const response = await fetch('https://api.tryaiwriter.com/v1/generate', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${API_KEY}`,

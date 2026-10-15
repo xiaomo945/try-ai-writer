@@ -9,6 +9,13 @@ import { useMemoryBank } from "@/lib/memory-bank";
 import { useBrandVoice } from "@/lib/brand-voice";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
+import { getTemplateById } from "@/lib/templates";
+import {
+  analyzeSeo,
+  analyzeOriginality,
+  type SeoReport,
+  type OriginalityReport,
+} from "@/lib/content-analyzer";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -206,6 +213,112 @@ function ExportMenu({
   );
 }
 
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="bg-gray-50 dark:bg-white/5 rounded-lg px-2 py-1.5">
+      <div className="text-gray-400 dark:text-slate-500">{label}</div>
+      <div className="font-medium text-gray-700 dark:text-slate-200 truncate">{value}</div>
+    </div>
+  );
+}
+
+function ContentInsights({
+  seo,
+  originality,
+}: {
+  seo: SeoReport;
+  originality: OriginalityReport;
+}) {
+  const scoreColor = (s: number) =>
+    s >= 80 ? "text-emerald-400" : s >= 60 ? "text-yellow-400" : "text-orange-400";
+
+  return (
+    <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-5 shadow-sm">
+      <div className="flex items-center gap-2 mb-4">
+        <BarChart3 className="w-5 h-5 text-emerald-400" />
+        <h3 className="font-semibold">内容体检：SEO + 原创性</h3>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-gray-50 dark:bg-white/5 rounded-lg p-3 text-center">
+          <div className={`text-3xl font-bold ${scoreColor(seo.score)}`}>{seo.score}</div>
+          <div className="text-xs text-gray-400 dark:text-slate-500">SEO 评分</div>
+        </div>
+        <div className="bg-gray-50 dark:bg-white/5 rounded-lg p-3 text-center">
+          <div className={`text-3xl font-bold ${scoreColor(originality.score)}`}>
+            {originality.score}
+          </div>
+          <div className="text-xs text-gray-400 dark:text-slate-500">原创性评分</div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 text-xs">
+        <Stat label="字数" value={seo.wordCount} />
+        <Stat label="句均词数" value={seo.avgWordsPerSentence} />
+        <Stat label="小标题" value={seo.headings.h2 + seo.headings.h3} />
+        <Stat label="可读性" value={`${seo.readability.score} ${seo.readability.label}`} />
+      </div>
+
+      {seo.keywords.length > 0 && (
+        <div className="mb-4">
+          <div className="text-xs text-gray-400 dark:text-slate-500 mb-2">主要关键词</div>
+          <div className="flex flex-wrap gap-1.5">
+            {seo.keywords.slice(0, 5).map((k) => (
+              <span
+                key={k.term}
+                className="text-xs bg-emerald-900/40 text-emerald-300 px-2 py-0.5 rounded-full"
+              >
+                {k.term} · {k.density.toFixed(1)}%
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {seo.suggestions.length > 0 && (
+        <div className="mb-4">
+          <div className="text-xs text-gray-400 dark:text-slate-500 mb-2">SEO 建议</div>
+          <ul className="space-y-1.5">
+            {seo.suggestions.map((s, i) => (
+              <li
+                key={i}
+                className="text-xs text-gray-600 dark:text-slate-300 flex items-start gap-1.5"
+              >
+                <Sparkles className="w-3 h-3 text-emerald-400 mt-0.5 flex-shrink-0" />
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div>
+        <div className="text-xs text-gray-400 dark:text-slate-500 mb-2">原创性 / 重复度</div>
+        <ul className="space-y-1.5">
+          {originality.findings.map((f, i) => (
+            <li
+              key={i}
+              className="text-xs text-gray-600 dark:text-slate-300 flex items-start gap-1.5"
+            >
+              <CheckCircle2 className="w-3 h-3 text-emerald-400 mt-0.5 flex-shrink-0" />
+              {f}
+            </li>
+          ))}
+        </ul>
+        {originality.duplicateSentences.length > 0 && (
+          <div className="mt-2 space-y-1">
+            {originality.duplicateSentences.slice(0, 3).map((d, i) => (
+              <div key={i} className="text-xs text-orange-400 line-clamp-1">
+                重复 ×{d.count}：{d.text}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function WritePage() {
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -236,6 +349,12 @@ export default function WritePage() {
     if (!prompt.trim() || memories.length === 0) return [];
     return findRelatedIdeas(prompt, memories, 3);
   }, [prompt, memories]);
+
+  const seoReport = useMemo(() => (output ? analyzeSeo(output) : null), [output]);
+  const originalityReport = useMemo(
+    () => (output ? analyzeOriginality(output) : null),
+    [output]
+  );
 
   const styleMatch = useMemo(() => {
     if (!output || !profile?.styleFingerprint) return null;
@@ -322,6 +441,16 @@ export default function WritePage() {
       }
     }
   }, [searchParams, records]);
+
+  // Pre-fill from ?template=<id> (linked from the templates page)
+  useEffect(() => {
+    const templateId = searchParams?.get("template");
+    if (!templateId) return;
+    const tpl = getTemplateById(templateId);
+    if (!tpl) return;
+    setMode(tpl.mode as WritingMode);
+    setPrompt((prev) => (prev.trim() ? prev : tpl.starterPrompt));
+  }, [searchParams]);
 
   useEffect(() => {
     if (state === "loading") {
@@ -904,6 +1033,10 @@ export default function WritePage() {
                     ))}
                   </div>
                 </div>
+              )}
+
+              {state === "done" && seoReport && originalityReport && (
+                <ContentInsights seo={seoReport} originality={originalityReport} />
               )}
             </div>
           </div>

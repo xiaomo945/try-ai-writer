@@ -26,9 +26,9 @@ When evaluating AI writing tools, focus on:
 3. **Brand voice consistency**: Can it learn your style?
 4. **Fair pricing**: Are you getting value for money?
 
-## Our Pick: Use AI Writer
+## Our Pick: Try AI Writer
 
-We might be biased, but here's why [Use AI Writer](https://tryaiwriter.com) stands out:
+We might be biased, but here's why [Try AI Writer](https://tryaiwriter.com) stands out:
 - Generous free tier (10 Claude + 10 DeepSeek generations/day)
 - Pro plan is just $9/mo (comparable tools charge $29-49/mo)
 - Max plan at $25/mo with unlimited DeepSeek

@@ -1,4 +1,4 @@
-# Product Hunt Launch: Use AI Writer
+# Product Hunt Launch: Try AI Writer
 
 Launch Date: June 3, 2026
 

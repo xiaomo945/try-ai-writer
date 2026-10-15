@@ -35,7 +35,7 @@ DeepSeek is fantastic for:
 
 ## The Best of Both Worlds
 
-You don't have to choose! At [Use AI Writer](https://tryaiwriter.com), we use both models:
+You don't have to choose! At [Try AI Writer](https://tryaiwriter.com), we use both models:
 - Claude handles the initial brand voice learning and strategic content
 - DeepSeek powers rapid iterations and high-volume needs
 

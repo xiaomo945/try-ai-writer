@@ -1,6 +1,7 @@
-# ONBOARDING — Use AI Writer
+# ONBOARDING — Try AI Writer
 
 > 项目防失联手册。任何开发者接手此仓库后，可在 5 分钟内理解全貌。
+> 本文件于 2026-10 按**当前代码状态**重写；若与代码不符，以代码为准并请更新此处。
 
 ---
 
@@ -8,173 +9,141 @@
 
 | 字段 | 值 |
 |------|------|
-| 项目名称 | Use AI Writer |
+| 项目名称 | **Try AI Writer**（早期曾名 "Use AI Writer"，已全面迁移） |
 | 域名 | https://tryaiwriter.com |
-| 代码仓库 | https://github.com/xiaomo945/use-ai-writer |
-| 部署平台 | Vercel (CI/CD 自动部署) |
-| 本地开发端口 | 3001 |
+| 代码仓库 | https://github.com/xiaomo945/try-ai-writer |
+| 部署平台 | Vercel（推送 `main` 自动构建部署） |
+| 本地端口 | 3000（旧文档写的 3001 已不适用） |
 
-### 技术栈
+### 技术栈（实际）
 
-| 层 | 技术 |
-|------|------|
-| 框架 | Next.js 16 (App Router, Turbopack) |
-| 语言 | TypeScript (strict mode) |
-| 样式 | Tailwind CSS v4 |
-| UI 图标 | lucide-react |
-| 认证 | NextAuth v5 (Google Provider) |
-| AI | Anthropic Claude (claude-sonnet-4-20250514) |
-| 分析 | Vercel Analytics |
-| 字体 | Playfair Display (标题) + Inter (正文) |
-
-### 页面清单
-
-| 路由 | 文件 | 类型 | 说明 |
-|------|------|------|------|
-| `/` | `app/page.tsx` | Static | 品牌着陆页 (Hero/Features/Comparison/Pricing/CTA) |
-| `/login` | `app/login/page.tsx` | Static | 登录页 (Google OAuth) |
-| `/pricing` | `app/pricing/page.tsx` | Static | 定价页 (Free/Pro/Team + FAQ) |
-| `/dashboard` | `app/dashboard/page.tsx` | Client | 仪表盘 (用量统计/历史记录) |
-| `/write` | `app/write/page.tsx` | Client | 写作编辑器 (4种模式/流式生成/历史) |
-
-### API 路由
-
-| 路径 | 文件 | 说明 |
+| 层 | 技术 | 注意 |
 |------|------|------|
-| `/api/auth/[...nextauth]` | `app/api/auth/[...nextauth]/route.ts` | NextAuth 端点 |
-| `/api/generate` | `app/api/generate/route.ts` | Claude API 流式生成 |
+| 框架 | Next.js **16.3.8**（App Router + Turbopack） | 曾为 16.2.6，为修复严重漏洞升级 |
+| UI | React **19** | 不是 18 |
+| 语言 | TypeScript（strict） | |
+| 样式 | Tailwind CSS **v3** | 不是 v4；生效配置是 `postcss.config.js` |
+| 图标 | lucide-react | |
+| 认证 | NextAuth **v5**（beta.32） | Google + Apple OAuth |
+| AI | Anthropic Claude + DeepSeek | **两者都是裸 fetch 直调 REST API，未用官方 SDK** |
+| 支付 | Creem | 曾有 Stripe 试验分支，未采用 |
+| 分析/监控 | Vercel Analytics、Sentry（可选） | |
+| 字体 | Playfair Display（标题）+ Inter（正文） | |
+
+### 主要路由
+
+| 路由 | 说明 |
+|------|------|
+| `/` | 落地页 |
+| `/write` | **写作工作台**（核心）：4 种模式、流式生成、导出、改写润色、SEO 与原创性分析 |
+| `/dashboard` | 用量、历史、品牌声音、记忆库 |
+| `/templates` | 模板库（数据在 `lib/templates.ts`） |
+| `/tools`、`/tools/headline-generator` | 小工具 |
+| `/interview` | 创意采访（引导式生成） |
+| `/onboarding` | 新用户引导 |
+| `/blog/*` | 384 篇 SEO 文章 + 对比页 + 客户案例 |
+| `/pricing`、`/pricing/credits`、`/payment/*` | 定价与支付 |
+| `/login`、`/register`、`/auth/error` | 认证 |
+
+### 核心 API
+
+| 路径 | 说明 |
+|------|------|
+| `/api/generate` | 流式生成；支持 `mode`、`enhancedPrompt`、`relevantMemories`、`instruction`（改写） |
+| `/api/auth/[...nextauth]` | NextAuth |
+| `/api/payment/*` | Creem 支付与 webhook |
+| `/api/brand-voice`、`/api/history`、`/api/user`、`/api/referral` | 需登录 |
 
 ### 核心模块
 
-| 模块 | 文件 | 说明 |
-|------|------|------|
-| 认证配置 | `lib/auth.ts` | NextAuth v5 Google Provider |
-| 用量管理 | `lib/usage.ts` | localStorage 每日 10 次限制 |
-| 历史记录 | `lib/history.ts` | localStorage 最近 20 条生成记录 |
-
-### Sitemap URL 数
-
-当前 sitemap 包含 4 个 URL：`/`, `/write`, `/login`, `/pricing`。
-
----
-
-## 2. 变现通路
-
-| 方式 | 说明 |
+| 模块 | 文件 |
 |------|------|
-| 订阅付费 | Free ($0/10次/天) → Pro ($5/月) → Team ($15/月) |
-| 联盟链接 | 预留 (CTA 按钮可配置 affiliate URL) |
-| API 接入 | Pro/Team 计划包含 API 访问权限 |
+| 模型适配 | `lib/ai-providers/claude.ts`、`deepseek.ts` |
+| 鉴权 / 支付 | `lib/auth.ts`、`lib/payment.ts` |
+| 品牌声音 | `lib/brand-voice.ts`、`lib/style-matcher.ts` |
+| 记忆与历史 | `lib/memory-bank.ts`、`lib/history.ts`、`lib/idea-linker.ts` |
+| 模板 | `lib/templates.ts` |
+| 内容分析 | `lib/content-analyzer.ts`（SEO + 原创性） |
+| 其他 | `lib/rate-limiter.ts`、`lib/workflows.ts`、`lib/logger.ts` |
 
 ---
 
-## 3. 架构决策
+## 2. 生成管线（最重要的一块）
 
-### Server vs Client Component 分离原则
+`app/write/page.tsx` → `POST /api/generate` → `lib/ai-providers/*` → 流式回写前端。
 
-- **Server Components (默认)**: 着陆页、定价页、登录页 — 纯静态渲染，无交互
-- **Client Components (`"use client"`)**: 写作编辑器、仪表盘 — 需要 useState/useEffect 等 React hooks
-- **原则**: 优先 Server Component，仅在有客户端交互需求时使用 Client Component
-
-### 数据存储方式
-
-| 数据类型 | 存储方式 | 位置 |
-|------|------|------|
-| 每日用量 | localStorage | `use-ai-writer-usage` key |
-| 生成历史 | localStorage | `use-ai-writer-history` key (最多 20 条) |
-| 认证会话 | NextAuth cookies | 自动管理 |
-| API 密钥 | 环境变量 | `.env.local` |
-
-### 环境变量命名规范
-
-| 变量 | 用途 | 必需 |
-|------|------|------|
-| `CLAUDE_API_KEY` | Anthropic Claude API 密钥 | 是 (生成功能) |
-| `NEXTAUTH_SECRET` | NextAuth 会话加密密钥 | 是 |
-| `NEXTAUTH_URL` | NextAuth 回调 URL | 是 |
-| `GOOGLE_CLIENT_ID` | Google OAuth Client ID | 是 (登录功能) |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth Client Secret | 是 (登录功能) |
-
-### 部署流程
-
-1. 代码推送到 `main` 分支
-2. Vercel 自动检测变更并触发构建
-3. `npm run build` 执行生产构建
-4. 构建成功后自动部署到生产环境
-5. 环境变量在 Vercel Dashboard 中配置
+- 按 `mode`（blog / email / social / custom）拼装 system prompt。
+- **品牌声音注入**：前端算出 `enhancedPrompt`（句长、段落长度、常用短语）一起传入。
+- **记忆召回**：`relevantMemories` 把过去相关想法放进上下文。
+- **改写模式**：传 `instruction` 时由指令接管 system prompt，正文当作"待改写内容"，并跳过品牌声音与记忆注入。
+- **Provider 策略**：显式 `deepseek` / `claude` / `mock`，留空则自动降级 **DeepSeek → Claude → mock**。
+- 每个 provider 有 2 次重试 + 30s 超时；错误做了中文本地化（key 无效、额度不足、超时等）。
+- **不配 API key 也能跑**：自动模式下无 key 会回退 mock，返回预置文本并模拟流式，便于先看界面。
 
 ---
 
-## 4. 规范体系 (.trae/rules/)
+## 3. 数据存储
 
-| 文件 | 用途 |
-|------|------|
-| `01-programming.md` | 编程标准 (TypeScript strict, 零 any, Server > Client) |
-| `02-design.md` | 设计规范 (品牌色、字体、间距、暗色模式、动画) |
-| `03-copywriting.md` | 文案指南 (语气、CTA、标题策略) |
-| `08-security.md` | 安全实践 (环境变量、外链处理、依赖审计) |
+**当前没有数据库**，靠文件 + 客户端存储：历史、记忆、品牌声音主要在 localStorage。所以数据**不跨设备同步**。
 
-### 核心铁律
+> 曾有分支引入 Prisma + Postgres，现保留为标签 `archive/trae-1RaD7T-prisma`；要上真实数据库可从那里 cherry-pick 参考。
 
-1. **TypeScript strict mode** — `tsconfig.json` 中 `strict: true`
-2. **零 any** — 所有类型必须明确声明，禁止使用 `any`
-3. **Single responsibility** — 每个文件只做一件事
-4. **Prefer interfaces** — 公共 API 使用 interface 而非 type alias
-5. **完整状态处理** — 所有异步操作必须处理 loading/error/empty 状态
-6. **无硬编码敏感信息** — 所有密钥和令牌必须在 `.env.local` 中
-7. **ESLint 零 Error** — 构建必须通过 `next lint` 检查
+---
+
+## 4. 需要登录吗
+
+`proxy.ts`（原 `middleware.ts`）保护以下路径，未登录跳 `/login`，API 返回 401：
+
+- 页面：`/dashboard`、`/write`、`/onboarding`、`/interview`、`/tools`、`/pricing/credits`
+- API：`/api/payment`、`/api/referral`、`/api/user`、`/api/brand-voice`、`/api/history`
+
+> `/write` 虽在保护列表内，但产品上同时强调"免登录即用"，改动鉴权前先确认产品意图。
 
 ---
 
 ## 5. 快速启动
 
 ```bash
-# 1. 安装依赖
 npm install
-
-# 2. 配置环境变量
-cp .env.local.example .env.local
-# 编辑 .env.local 填入真实值
-
-# 3. 开发模式
-npm run dev -- -p 3001
-
-# 4. 生产构建
-npm run build
-
-# 5. 代码检查
-npm run lint
+cp .env.local.example .env.local   # 不填 key 也能跑（mock 模式）
+npm run dev                        # http://localhost:3000
 ```
+
+| 命令 | 作用 |
+|------|------|
+| `npm run dev` | 开发服务器 |
+| `npm run build` | 生产构建（预渲染约 452 个页面） |
+| `npm run start` | 起生产服务 |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run test` | vitest |
+| `npm run lint` | eslint |
+| `npm run check` | typecheck + test + build |
+
+### 环境变量要点
+
+`AI_PROVIDER`（claude / deepseek / mock / 留空自动）、`CLAUDE_API_KEY`、`CLAUDE_MODEL`、`DEEPSEEK_API_KEY`、`DEEPSEEK_MODEL`、`NEXTAUTH_SECRET`、`NEXTAUTH_URL`、Google/Apple OAuth、`CREEM_*`。完整列表见 `.env.local.example`。
 
 ---
 
-## 6. 目录结构
+## 6. 已知坑
 
-```
-use-ai-writer/
-├── app/
-│   ├── api/
-│   │   ├── auth/[...nextauth]/route.ts   # NextAuth API
-│   │   └── generate/route.ts             # Claude 流式生成
-│   ├── dashboard/page.tsx                # 仪表盘 (Client)
-│   ├── login/page.tsx                    # 登录页
-│   ├── pricing/page.tsx                  # 定价页
-│   ├── write/page.tsx                    # 写作编辑器 (Client)
-│   ├── layout.tsx                        # 根布局 + 元数据
-│   ├── page.tsx                          # 着陆页
-│   ├── robots.ts                         # robots.txt
-│   ├── sitemap.ts                        # sitemap.xml
-│   └── globals.css                       # 全局样式 + Tailwind
-├── lib/
-│   ├── auth.ts                           # NextAuth 配置
-│   ├── usage.ts                          # 用量管理 Hook
-│   └── history.ts                        # 历史记录 Hook
-├── .trae/rules/                          # 项目规范文件
-├── .env.local.example                    # 环境变量模板
-├── .gitignore
-├── next.config.ts
-├── package.json
-├── tsconfig.json
-├── eslint.config.mjs
-└── ONBOARDING.md                         # ← 本文件
-```
+- **Tailwind 是 v3**。仓库曾误留 `postcss.config.mjs`（引用 v4 插件）已删除，别加回来。
+- **构建卡住**：若 `npm run build` 长时间无输出，移走 `.next` 后重试。
+- **Next 16.3 弃用 `middleware.ts`**，本项目已迁到 `proxy.ts`。
+- **依赖审计仍有 12 个 high**，全部来自 `tailwindcss` / `eslint-config-next` 构建工具链（devDependencies），不进生产运行时，已在 README 说明为何接受。
+- **模板需靠 URL 参数生效**：模板链接为 `/write?template=<id>`，写作页读取后预填 prompt 与模式。
+
+---
+
+## 7. 规范（.trae/rules/）
+
+`01-programming`（TS strict、零 any、Server 优先）、`02-design`（品牌色/字体/暗色模式）、`03-copywriting`（语气与 CTA）、`08-security`（环境变量、外链、依赖审计）。
+
+---
+
+## 8. 分支现状
+
+仓库已清理，**只有 `main`**。早期编码 agent 产生的 12 个 `trae/solo-agent-*` 与 `vercel/*` 分支已删除；含独有工作量的两条保留为标签：
+
+- `archive/trae-1RaD7T-prisma` — Prisma + Postgres 数据层
+- `archive/trae-VCqSdK-conversion` — 转化漏斗、A/B 测试、留存系统

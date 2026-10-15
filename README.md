@@ -11,6 +11,8 @@
 
 - **Streaming generation** across 4 modes: Blog, Email, Social, and Custom.
 - **One-click rewrite / polish** — rewrite, shorten, expand, switch to a formal or casual tone, or translate to Chinese, applied directly to the generated draft.
+- **Content health check** — an on-page SEO score (word count, headings, keyword density, links, readability) plus an originality/repetition score (duplicate sentences, n-gram self-similarity, keyword stuffing). Runs fully locally; see the note below.
+- **Template library** — 40 templates across 8 categories in `lib/templates.ts`; picking one opens `/write?template=<id>` with the prompt and mode pre-filled.
 - **Export** — download the result as Markdown (`.md`), plain text (`.txt`), or a formatted web page (`.html`), ready to drop into a blog, doc, or WeChat.
 - **Dual AI providers** — Anthropic Claude (`claude-sonnet-4`) and DeepSeek (`deepseek-chat`), with automatic fallback (DeepSeek → Claude → mock) so the app never hard-fails.
 - **Brand Voice learning** — upload a writing sample or use the Creative Interview Engine; the AI adapts to your voice.
@@ -23,6 +25,8 @@
 - **Referral & affiliate** system.
 - **Browser extension** (popup) under `public/extension/`.
 - **Dark mode**, fully responsive, accessible.
+
+> **Note on the "originality" score**: it detects *internal* repetition (duplicate sentences, n-gram self-similarity) and keyword stuffing by analysing the text locally. It does **not** compare against the web, so it is **not** a plagiarism / copyright scanner. A true plagiarism check requires an external service (e.g. Copyscape) and is not wired up.
 
 ## Tech Stack
 
@@ -110,6 +114,26 @@ These 12 stale branches have now been **deleted** from the remote. Before deleti
 - `archive/trae-VCqSdK-conversion` — conversion funnel, A/B testing, and retention system
 
 The repository is now down to a single clean branch: `main`.
+
+## Security
+
+Dependency posture as of 2026-10, after the revival pass:
+
+**Fixed — critical count is now 0:**
+
+- `next-auth` `5.0.0-beta.31` → `beta.32` — fixes a critical `@auth/core` advisory (`≤ 0.41.2`).
+- `next` `16.2.6` → `16.3.8` — fixes critical middleware-bypass and Server Actions DoS/SSRF advisories.
+- Removed three dependencies that were declared but **never imported** (`@anthropic-ai/sdk`, `mammoth`, `pdf-parse`). This dropped two high-severity advisories out of the production tree.
+
+**Remaining and accepted — 12 high / 12 moderate.** Every one of them comes from the **build and lint toolchain**: `tailwindcss` (v3), `eslint-config-next`, and their transitives (`micromatch`, `braces`, `fast-glob`, `chokidar`, `browserslist`, `source-map-js`, `js-yaml`, `fast-uri`, `brace-expansion`).
+
+Why these are accepted:
+
+- They are `devDependencies` used **only at build/lint time**; none of them run in production.
+- The advisories are DoS-class and require untrusted input to reach the build tooling.
+- `npm audit fix` currently fails with npm's own `edgesOut` error, and the versions it proposes are not viable: it suggests `tailwindcss@4.3.3` (a v3 → v4 major migration that would rewrite the styling setup) and `eslint-config-next@14.2.35` (a **downgrade** from 16 to 14). Both are worse than the risk they remove.
+
+Revisit when a Tailwind v4 migration is planned, or when a Next release ships an `eslint-config-next` that pulls patched transitives.
 
 ## Deployment
 

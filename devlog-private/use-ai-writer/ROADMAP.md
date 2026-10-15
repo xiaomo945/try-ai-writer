@@ -1,4 +1,5 @@
-# Use AI Writer — 产品路线图
+> **[归档]** 本目录为历史开发记录快照，其中的品牌名与技术栈描述可能已过时。请以 `use-ai-writer-docs/` 与 `ONBOARDING.md` 为准。
+# Try AI Writer — 产品路线图
 - 第一期 MVP（✅）着陆页+登录+写作编辑器
 - 第二期 MVP+（✅）用量统计/Dashboard/历史记录/定价页/写作模板
 - 第三期 变现（✅）Creem支付/数字替身v1-v3/创意采访/SEO博客80篇

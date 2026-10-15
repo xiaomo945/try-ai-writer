@@ -1,89 +1,66 @@
-# Use AI Writer 环境变量清单
+# Try AI Writer 环境变量清单
 
-## 生产环境配置
-```env
-# ==================== AI模型配置 ====================
-CLAUDE_API_KEY=sk-ant-...              # Anthropic Claude API密钥
-DEEPSEEK_API_KEY=sk-...                # DeepSeek API密钥（备用）
+> 权威来源是仓库根目录的 `.env.local.example`（与代码同步）。本文件补充分组说明与安全注意事项。
+> 2026-10 复核：补上了此前遗漏的 `AI_PROVIDER`、`*_MODEL`、`CREEM_ENV` 与积分包产品 ID。
 
-# ==================== 支付系统配置 ====================
-CREEM_API_KEY=creem_live_...           # Creem生产环境API密钥
-CREEM_PRODUCT_PRO=prod_abc123          # 专业版产品ID
-CREEM_PRODUCT_MAX=prod_def456          # 旗舰版产品ID
-CREEM_PRODUCT_TEAM=prod_ghi789         # 团队版产品ID
-CREEM_WEBHOOK_SECRET=whsec_...         # Creem Webhook签名密钥
+## AI Provider
 
-# ==================== 认证配置 ====================
-NEXTAUTH_SECRET=your-secure-random-string-here  # NextAuth加密密钥（32字符+）
-NEXTAUTH_URL=https://tryaiwriter.com             # 生产环境URL
+| 变量 | 说明 |
+|------|------|
+| `AI_PROVIDER` | `claude` \| `deepseek` \| `mock` \| **留空 = 自动降级** |
+| `CLAUDE_API_KEY` | Anthropic 密钥 |
+| `CLAUDE_MODEL` | 默认 `claude-sonnet-4-20250514` |
+| `DEEPSEEK_API_KEY` | DeepSeek 密钥 |
+| `DEEPSEEK_MODEL` | 默认 `deepseek-chat` |
 
-# ==================== OAuth提供商 ====================
-GOOGLE_CLIENT_ID=...apps.googleusercontent.com   # Google OAuth客户端ID
-GOOGLE_CLIENT_SECRET=...                        # Google OAuth客户端密钥
-APPLE_CLIENT_ID=com.tryaiwriter.service         # Apple OAuth客户端ID
-APPLE_CLIENT_SECRET=...                         # Apple OAuth客户端密钥
+**自动模式（推荐）**：`AI_PROVIDER` 留空时按 DeepSeek → Claude → mock 依次降级，任一环节失败不会让整体硬失败。
+**不配 key 也能跑**：无可用 key 时回退 mock，返回预置文本并模拟流式，便于本地看界面。
 
-# ==================== 部署配置 ====================
-NODE_ENV=production                            # 环境标识
-VERCEL_ENV=production                          # Vercel环境
-```
+## 认证
 
-## 开发环境配置
-```env
-# ==================== AI模型配置 ====================
-CLAUDE_API_KEY=sk-ant-...              # 测试用Claude API密钥
-DEEPSEEK_API_KEY=sk-...                # 测试用DeepSeek API密钥
+| 变量 | 说明 |
+|------|------|
+| `NEXTAUTH_SECRET` | 会话加密密钥，用 `openssl rand -hex 32` 生成 |
+| `NEXTAUTH_URL` | 回调基地址，生产为 `https://tryaiwriter.com`，本地 `http://localhost:3000` |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth |
+| `APPLE_CLIENT_ID` / `APPLE_CLIENT_SECRET` | Apple OAuth |
 
-# ==================== 支付系统配置 ====================
-CREEM_API_KEY=creem_test_...           # Creem测试环境API密钥
-CREEM_PRODUCT_PRO=prod_test_abc123     # 测试版专业版产品ID
-CREEM_PRODUCT_MAX=prod_test_def456     # 测试版旗舰版产品ID
-CREEM_PRODUCT_TEAM=prod_test_ghi789    # 测试版团队版产品ID
-CREEM_WEBHOOK_SECRET=whsec_test_...    # 测试Webhook密钥
+## 支付（Creem）
 
-# ==================== 认证配置 ====================
-NEXTAUTH_SECRET=dev-secret-key-here-change-in-production
-NEXTAUTH_URL=http://localhost:3000
+| 变量 | 说明 |
+|------|------|
+| `CREEM_ENV` | `test`（沙箱，不真扣款）或 `production` |
+| `CREEM_API_KEY` | `creem_test_xxx` / `creem_live_xxx` |
+| `CREEM_PRODUCT_PRO` / `_MAX` / `_TEAM` | 订阅产品 ID |
+| `CREEM_PRODUCT_CREDITS_SMALL` / `_MEDIUM` / `_LARGE` | 积分包（$5/50、$12/150、$35/500） |
+| `CREEM_WEBHOOK_SECRET` | Webhook 签名密钥 |
 
-# ==================== OAuth提供商 ====================
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-APPLE_CLIENT_ID=...
-APPLE_CLIENT_SECRET=...
+> 测试环境务必使用 `CREEM_ENV=test` 与 `creem_test_` 前缀密钥，避免真实扣款。
 
-# ==================== 部署配置 ====================
-NODE_ENV=development
-VERCEL_ENV=development
-```
+## 可选
 
-## 安全注意事项
+- `SENTRY_DSN`：配置后启用 Sentry，不配则不启用。
 
-### 必须遵守的安全准则
-1. **永远不要提交** `.env.local` 到Git仓库
-2. **定期轮换** API密钥和访问凭证
-3. **使用最小权限原则** 配置API访问权限
-4. **启用API密钥限制** - IP白名单、速率限制
-5. **监控异常使用** - 设置用量告警
+## 安全准则
 
-### 环境变量最佳实践
-- 使用不同的API密钥用于测试和生产
-- 在CI/CD系统中安全管理密钥
-- 定期审计密钥使用情况
-- 实施密钥轮换机制
+1. **绝不提交** `.env.local` 到 Git。
+2. 测试与生产使用**不同**密钥。
+3. 定期轮换密钥，启用用量告警与速率限制。
+4. Webhook 必须校验签名。
 
-### 密钥生成指南
+生成密钥：
+
 ```bash
-# 生成NextAuth安全密钥
 openssl rand -hex 32
-
-# 或使用Node.js
+# 或
 node -e "console.log(crypto.randomBytes(32).toString('hex'))"
 ```
 
 ## 配置检查清单
-- [ ] 所有API密钥已正确配置
-- [ ] 环境变量未提交到Git
-- [ ] 生产/测试环境分离配置
-- [ ] NextAuth密钥符合安全标准
-- [ ] Webhook签名验证已启用
-- [ ] 部署前已进行安全审计
+
+- [ ] `AI_PROVIDER` 已按意图设置（或留空走自动）
+- [ ] 所有 API 密钥已配置
+- [ ] `.env.local` 未提交到 Git
+- [ ] 生产/测试密钥分离，`CREEM_ENV` 正确
+- [ ] `NEXTAUTH_SECRET` 符合安全标准
+- [ ] Webhook 签名校验已启用

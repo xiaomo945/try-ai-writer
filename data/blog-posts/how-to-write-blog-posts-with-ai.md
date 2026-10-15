@@ -19,7 +19,7 @@ Here's the workflow that works best for most creators:
 4. **AI draft generation**: Let the AI produce a first version
 5. **Human editing and enhancement**: Add your personal touch, fix errors, and refine
 
-This is exactly the approach designed into [Use AI Writer](https://tryaiwriter.com)!
+This is exactly the approach designed into [Try AI Writer](https://tryaiwriter.com)!
 
 ---
 
@@ -65,9 +65,9 @@ AI outputs are drafts, not final products. You should:
 
 ---
 
-## Using Use AI Writer for Blog Posts
+## Using Try AI Writer for Blog Posts
 
-[Use AI Writer](https://tryaiwriter.com) is designed specifically for this workflow:
+[Try AI Writer](https://tryaiwriter.com) is designed specifically for this workflow:
 - It learns your writing style from your existing content
 - It generates drafts in your brand voice
 - It provides helpful suggestions while keeping you in control
