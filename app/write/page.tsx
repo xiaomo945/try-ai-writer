@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw, RotateCcw, Cloud, X } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw, RotateCcw, Cloud, X, Wand2 } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
@@ -18,6 +18,11 @@ import {
   type SeoReport,
   type OriginalityReport,
 } from "@/lib/content-analyzer";
+import {
+  optimizePrompt,
+  type PromptOptimizeResult,
+  type OptimizeMode,
+} from "@/lib/prompt-optimizer";
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
@@ -411,6 +416,35 @@ export default function WritePage() {
     setPendingDraft(null);
   }, []);
 
+  // ── Prompt optimizer ─────────────────────────────────────────────────────
+  // `forPrompt` records which input the result was derived from, so editing the
+  // prompt afterwards invalidates it automatically instead of applying a stale
+  // optimisation to different text.
+  const [optimization, setOptimization] = useState<{
+    forPrompt: string;
+    result: PromptOptimizeResult;
+  } | null>(null);
+  const [showOptimize, setShowOptimize] = useState(false);
+
+  const handleOptimizePrompt = useCallback(() => {
+    if (!prompt.trim()) return;
+    const result = optimizePrompt(prompt, mode as OptimizeMode, profile);
+    setOptimization({ forPrompt: prompt, result });
+    setShowOptimize(true);
+  }, [prompt, mode, profile]);
+
+  const applyOptimization = useCallback(() => {
+    if (!optimization) return;
+    setShowOptimize(false);
+    // The result was derived from the current prompt, so `optimizationIsCurrent`
+    // is already true and the next generate call will pick it up.
+    void handleGenerate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optimization, prompt]);
+
+  const optimizationIsCurrent =
+    optimization !== null && optimization.forPrompt === prompt;
+
   const { isSaving: isDraftSaving, lastSaved: draftSavedAt } = useAutoSave({
     content: `${mode}\u0000${prompt}\u0000${output}`,
     onSave: () => {
@@ -539,12 +573,18 @@ export default function WritePage() {
       options?.instruction ? [] : relatedIdeas.length > 0 ? relatedIdeas.slice(0, 3).map((r) => r.memory.content) : [];
 
     let enhancedPrompt: string | undefined;
-    if (!options?.instruction && profile?.styleFingerprint) {
-      const toneHint =
-        profile.commonPhrases && profile.commonPhrases.length > 0
-          ? `\nCommon phrases to use: ${profile.commonPhrases.slice(0, 5).join(", ")}`
-          : "";
-      enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${effectivePrompt}`;
+    if (!options?.instruction) {
+      if (optimizationIsCurrent && optimization) {
+        // The optimizer already folded the brand voice profile in, and added
+        // structural constraints, so it beats the ad-hoc prompt below.
+        enhancedPrompt = optimization.result.optimized;
+      } else if (profile?.styleFingerprint) {
+        const toneHint =
+          profile.commonPhrases && profile.commonPhrases.length > 0
+            ? `\nCommon phrases to use: ${profile.commonPhrases.slice(0, 5).join(", ")}`
+            : "";
+        enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${effectivePrompt}`;
+      }
     }
 
     let response: Response | null = null;
@@ -965,6 +1005,87 @@ export default function WritePage() {
                   className="w-full h-48 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 resize-none focus:outline-none focus:border-emerald-500/50"
                 />
               </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleOptimizePrompt}
+                  disabled={!prompt.trim()}
+                  className="flex items-center gap-1.5 rounded-lg border border-emerald-300 dark:border-emerald-500/40 px-3 py-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[36px]"
+                >
+                  <Wand2 className="w-3.5 h-3.5" />
+                  优化这段提示词
+                </button>
+                {optimizationIsCurrent && optimization && (
+                  <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                    已优化 · 完整度 {optimization.result.score}/100
+                  </span>
+                )}
+              </div>
+
+              {showOptimize && optimization && (
+                <div className="rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-sm font-medium text-emerald-900 dark:text-emerald-200">
+                      提示词完整度
+                    </span>
+                    <span
+                      className={`text-sm font-bold ${
+                        optimization.result.score >= 70
+                          ? "text-emerald-600"
+                          : optimization.result.score >= 40
+                          ? "text-amber-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {optimization.result.score}/100
+                    </span>
+                  </div>
+
+                  {optimization.result.applied.length > 0 && (
+                    <div className="mb-3">
+                      <p className="text-xs text-emerald-800 dark:text-emerald-300 mb-1">
+                        已自动补充：
+                      </p>
+                      <ul className="text-xs text-emerald-900 dark:text-emerald-200 space-y-0.5">
+                        {optimization.result.applied.map((a) => (
+                          <li key={a}>· {a}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {optimization.result.issues.length > 0 && (
+                    <div className="mb-3">
+                      <p className="text-xs text-amber-800 dark:text-amber-300 mb-1">
+                        这些只有你能补上（补充后输出会准很多）：
+                      </p>
+                      <ul className="text-xs text-gray-600 dark:text-slate-300 space-y-1">
+                        {optimization.result.issues.map((i) => (
+                          <li key={i.id}>
+                            · <span className="font-medium">{i.label}</span>：{i.advice}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={applyOptimization}
+                      className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-sm font-medium text-white transition-colors"
+                    >
+                      应用优化版并生成
+                    </button>
+                    <button
+                      onClick={() => setShowOptimize(false)}
+                      className="rounded-lg px-3 py-1.5 text-sm text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-500/10 transition-colors"
+                    >
+                      知道了
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2">
                 <p className="text-sm text-gray-400 dark:text-slate-500">Try these:</p>

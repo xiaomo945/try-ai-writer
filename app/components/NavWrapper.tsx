@@ -23,6 +23,7 @@ export function NavWrapper() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8 text-sm">
           <Link href="/write" className="text-slate-300 hover:text-white transition-colors">Write</Link>
+          <Link href="/workflows" className="text-slate-300 hover:text-white transition-colors">Workflows</Link>
           <Link href="/templates" className="text-slate-300 hover:text-white transition-colors">Templates</Link>
           <Link href="/interview" className="text-slate-300 hover:text-white transition-colors">Interview</Link>
           <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</Link>
@@ -64,6 +65,7 @@ export function NavWrapper() {
         <div className="md:hidden bg-obsidian-950/95 backdrop-blur-2xl border-b border-white/5">
           <div className="flex flex-col gap-4 px-6 py-6">
             <Link href="/write" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Write</Link>
+            <Link href="/workflows" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Workflows</Link>
             <Link href="/templates" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Templates</Link>
             <Link href="/interview" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Interview</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition-colors text-lg" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>

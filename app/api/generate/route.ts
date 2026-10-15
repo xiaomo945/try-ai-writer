@@ -8,6 +8,7 @@ type ModePrompt = {
   email: string;
   social: string;
   custom: string;
+  fiction: string;
 };
 
 const modePrompts: ModePrompt = {
@@ -36,6 +37,14 @@ Brief: `,
 
 Topic: `,
   custom: "",
+  fiction: `You are a fiction writer with a strong command of scene craft. Requirements:
+- Write in scene, not summary: concrete action, sensory detail, and dialogue
+- Every line of dialogue must carry intent; no small talk, no restating what the reader knows
+- Show interior states through behaviour and choice, never by explaining them
+- Vary sentence rhythm to match the emotional temperature of the moment
+- Do not editorialise, moralise, or summarise at the end
+
+Material: `,
 };
 
 function buildMockStream(text: string): ReadableStream<Uint8Array> {
@@ -73,6 +82,7 @@ const MOCK_RESPONSES: ModePrompt = {
   email: `Subject: Quick question about your Q2 content strategy\n\nHi there,\n\nI hope this email finds you well. I wanted to follow up on our conversation about scaling your content output this quarter.\n\nHere is what I would recommend:\n\n1. **Leverage AI for first drafts** - Cut writing time by 60%\n2. **Create a content calendar** - Plan 2 weeks ahead minimum\n3. **Batch similar tasks** - Write all blog posts on Monday, edit on Tuesday\n\nWould you be open to a quick 15-minute call this week to discuss? I have some ideas that could really move the needle for your team.\n\nLooking forward to hearing from you.\n\nBest regards`,
   social: `🚀 Stop writing from scratch.\n\nAI-powered writing tools can generate blog posts, emails, and social content in seconds.\n\nThe best part? They learn your style and get better every time.\n\nTry it free today. Your future self will thank you. ✨\n\n#AIWriting #ContentCreation #ProductivityHacks #WriterLife #AItools`,
   custom: `Here is your custom generated content based on your prompt.\n\nThank you for using Try AI Writer. In a full setup with API credentials, this section would contain AI-generated content tailored to your specific prompt.\n\nTo unlock full functionality, please configure your Claude or DeepSeek API key in the environment variables.`,
+  fiction: `[Mock mode — no API key configured.]\n\nThe door opened and nobody came in.\n\nThat was the part she would remember later, standing in the wet hallway with the keys still in her hand: the door had opened, the chain had not caught, and the apartment beyond was exactly as she had left it, right down to the cup ring on the side table.\n\nExcept for the sound of running water.\n\n"Hello?"\n\nNo answer. Only the tap, going steadily, as though someone had turned it on and then been called away. She set the keys down on the side table beside the cup ring — her own cup ring, she was certain of it — and walked toward the kitchen, one hand flat against the wall because the floor was uneven there and she had learned to compensate.\n\nThe kitchen light was already on.\n\nShe stopped in the doorway. The tap ran into a clean, empty sink, the basin scrubbed and dry around the drain. Whoever had turned it on had not used it. Someone had stood here, turned the water on, and then stood here some more, doing nothing.\n\nOn the counter, beside the kettle, was a single earring. Not hers.\n\nShe did not pick it up. She looked at it for a long moment, then backed out of the kitchen the way she had come, keeping one hand on the wall, and went out into the hallway and pulled the door shut behind her.\n\nOutside, the rain had stopped. She stood on the step with her phone in her hand and thought about the sound of the water, and about the fact that whoever had been in there had heard her come in and had chosen the tap instead of the window.\n\nThey wanted her to know they had been careful.`,
 };
 
 function analyzeDeepSeekError(err: unknown): { message: string; hint: string } {

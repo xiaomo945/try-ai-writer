@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 const PAGE_PROTECTED_PATHS = [
   "/dashboard",
   "/write",
+  "/workflows",
   "/onboarding",
   "/interview",
   "/tools",
