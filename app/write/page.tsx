@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw, RotateCcw, Cloud, X } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
 import { useBrandVoice } from "@/lib/brand-voice";
+import { createStorage } from "@/lib/storage";
+import { useAutoSave } from "@/lib/use-auto-save";
 import { scoreStyleMatch, type BrandVoiceProfile as MatcherProfile } from "@/lib/style-matcher";
 import { findRelatedIdeas } from "@/lib/idea-linker";
 import { getTemplateById } from "@/lib/templates";
@@ -19,6 +21,17 @@ import {
 
 type WritingMode = "blog" | "email" | "social" | "custom";
 type GenerateState = "idle" | "loading" | "done" | "error";
+
+/** A snapshot of work-in-progress, persisted so a refresh never loses the draft. */
+type Draft = {
+  prompt: string;
+  output: string;
+  mode: WritingMode;
+  savedAt: string;
+};
+
+const draftStorage = createStorage("draft");
+const DRAFT_KEY = "current";
 
 const examplePrompts = [
   { text: "How to write blog posts with AI that actually sound like you", icon: "📝" },
@@ -373,6 +386,45 @@ export default function WritePage() {
     return output.trim().split(/\s+/).filter(Boolean).length;
   }, [output]);
 
+  // ── Draft auto-save ────────────────────────────────────────────────────────
+  // A draft left behind by a previous visit. Surfaced as an opt-in banner
+  // rather than silently overwriting whatever the user is currently typing.
+  const [pendingDraft, setPendingDraft] = useState<Draft | null>(null);
+
+  useEffect(() => {
+    const d = draftStorage.get<Draft>(DRAFT_KEY);
+    if (d && (d.prompt || d.output)) {
+      setPendingDraft(d);
+    }
+  }, []);
+
+  const clearDraft = useCallback(() => {
+    draftStorage.remove(DRAFT_KEY);
+    setPendingDraft(null);
+  }, []);
+
+  const restoreDraft = useCallback((d: Draft) => {
+    setMode(d.mode);
+    setPrompt(d.prompt);
+    setOutput(d.output);
+    if (d.output) setState("done");
+    setPendingDraft(null);
+  }, []);
+
+  const { isSaving: isDraftSaving, lastSaved: draftSavedAt } = useAutoSave({
+    content: `${mode}\u0000${prompt}\u0000${output}`,
+    onSave: () => {
+      draftStorage.set<Draft>(DRAFT_KEY, {
+        prompt,
+        output,
+        mode,
+        savedAt: new Date().toISOString(),
+      });
+    },
+    enabled: Boolean(prompt || output),
+    debounceMs: 1500,
+  });
+
   // Load focus mode from localStorage on mount
   useEffect(() => {
     try {
@@ -589,6 +641,8 @@ export default function WritePage() {
       result: output,
     });
     setSavedToHistory(true);
+    // Once it lives in history, the recovery draft has done its job.
+    clearDraft();
     setTimeout(() => setSavedToHistory(false), 3000);
   };
 
@@ -767,6 +821,26 @@ export default function WritePage() {
               ✨ Write
             </Link>
             <div className="flex items-center gap-3">
+              {/* Auto-save status. Deliberately quiet: only says something
+                  while writing or right after a save settles. */}
+              {(prompt || output) && (
+                <span
+                  className="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 dark:text-slate-500"
+                  title={draftSavedAt ? `草稿已保存 ${draftSavedAt.toLocaleTimeString()}` : undefined}
+                >
+                  {isDraftSaving ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      保存草稿…
+                    </>
+                  ) : draftSavedAt ? (
+                    <>
+                      <Cloud className="w-3.5 h-3.5" />
+                      草稿已保存
+                    </>
+                  ) : null}
+                </span>
+              )}
               <button
                 onClick={() => setFocusMode(true)}
                 className="text-slate-400 hover:text-emerald-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
@@ -786,6 +860,39 @@ export default function WritePage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8 pb-28 lg:pb-8">
+        {pendingDraft && (
+          <div className="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-3">
+            <RotateCcw className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <span className="text-sm text-emerald-900 dark:text-emerald-200">
+              发现上次未保存的草稿
+              {pendingDraft.savedAt
+                ? `（${new Date(pendingDraft.savedAt).toLocaleString()}）`
+                : ""}
+            </span>
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                onClick={() => pendingDraft && restoreDraft(pendingDraft)}
+                className="rounded-lg bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-sm font-medium text-white transition-colors"
+              >
+                恢复
+              </button>
+              <button
+                onClick={clearDraft}
+                className="rounded-lg px-3 py-1.5 text-sm text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-500/10 transition-colors"
+              >
+                丢弃
+              </button>
+              <button
+                onClick={clearDraft}
+                className="text-emerald-700 dark:text-emerald-400 hover:opacity-70 min-h-[32px] min-w-[32px] flex items-center justify-center"
+                aria-label="关闭"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div>
