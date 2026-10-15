@@ -232,20 +232,26 @@ export async function POST(request: NextRequest) {
     const mode: string | undefined = body.mode;
     const enhancedPrompt: string | undefined = body.enhancedPrompt;
     const relevantMemories: string[] | undefined = body.relevantMemories;
+    const instruction: string | undefined = body.instruction;
 
     if (!prompt || typeof prompt !== "string") {
       return errorResponse("Prompt 参数缺失或类型不正确", "请提供有效的 prompt 字符串", 400);
     }
 
+    const isRefine = !!(instruction && instruction.trim());
+
     let systemPrompt: string;
-    if (enhancedPrompt) {
+    if (isRefine) {
+      // Refine / transform mode: the instruction drives the rewrite of the supplied content
+      systemPrompt = `${instruction.trim()}\n\nOriginal content:\n${prompt}`;
+    } else if (enhancedPrompt) {
       systemPrompt = enhancedPrompt;
     } else {
       const basePrompt = modePrompts[mode as keyof ModePrompt] || modePrompts.custom;
       systemPrompt = mode === "custom" ? prompt : `${basePrompt}${prompt}`;
     }
 
-    if (relevantMemories && relevantMemories.length > 0) {
+    if (relevantMemories && relevantMemories.length > 0 && !isRefine) {
       const memoriesText = relevantMemories.join("\n\n");
       systemPrompt = `以下是你过去的相关想法，请在创作时保持观点的连贯性：\n\n${memoriesText}\n\n---\n\n${systemPrompt}`;
     }

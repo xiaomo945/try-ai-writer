@@ -10,6 +10,8 @@
 ## Features
 
 - **Streaming generation** across 4 modes: Blog, Email, Social, and Custom.
+- **One-click rewrite / polish** — rewrite, shorten, expand, switch to a formal or casual tone, or translate to Chinese, applied directly to the generated draft.
+- **Export** — download the result as Markdown (`.md`), plain text (`.txt`), or a formatted web page (`.html`), ready to drop into a blog, doc, or WeChat.
 - **Dual AI providers** — Anthropic Claude (`claude-sonnet-4`) and DeepSeek (`deepseek-chat`), with automatic fallback (DeepSeek → Claude → mock) so the app never hard-fails.
 - **Brand Voice learning** — upload a writing sample or use the Creative Interview Engine; the AI adapts to your voice.
 - **Digital Twin persona** — memory bank + interview memory that keep context across sessions.
@@ -100,7 +102,14 @@ scripts/             # SEO indexing / generation scripts
 
 ## Branch Status (revival note)
 
-`main` is the canonical, most-complete branch (latest commits July 2026). The older `trae/solo-agent-*` and `vercel/*` branches are **stale** — they were created by earlier coding agents and now lag `main` by 100–156 commits; their unique work was either already incorporated into `main` or is a conflicting parallel experiment (e.g. a Stripe integration vs the adopted Creem, a Prisma/Postgres layer vs the current file-based storage, a full site redesign). They have been left untouched and can be deleted after review.
+`main` is the canonical, most-complete branch. The older `trae/solo-agent-*` and `vercel/*` branches were **stale** — created by earlier coding agents, they lagged `main` by 100–156 commits, and their unique work was either already incorporated into `main` or was a conflicting parallel experiment (a Stripe integration vs the adopted Creem, a Prisma/Postgres layer vs the current file-based storage, a full site redesign).
+
+These 12 stale branches have now been **deleted** from the remote. Before deletion, the two branches carrying genuinely unique work were preserved as tags so nothing valuable is lost:
+
+- `archive/trae-1RaD7T-prisma` — Prisma + Postgres data layer
+- `archive/trae-VCqSdK-conversion` — conversion funnel, A/B testing, and retention system
+
+The repository is now down to a single clean branch: `main`.
 
 ## Deployment
 

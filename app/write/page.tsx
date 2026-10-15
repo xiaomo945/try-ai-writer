@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2 } from "lucide-react";
+import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
@@ -75,6 +75,137 @@ function classifyError(error: unknown): { message: string; suggestion: string } 
   return humanizedErrors.unknown;
 }
 
+const REFINE_ACTIONS: { id: string; label: string; instruction: string }[] = [
+  {
+    id: "rewrite",
+    label: "重写",
+    instruction:
+      "Rewrite the following text completely. Keep the same core meaning, key points and approximate length, but use fresh wording, varied sentence structures, and improved flow. Preserve any markdown formatting.",
+  },
+  {
+    id: "shorter",
+    label: "更精简",
+    instruction:
+      "Rewrite the following text to be roughly half as long. Keep only the most essential information, remove redundancy, and preserve markdown formatting.",
+  },
+  {
+    id: "longer",
+    label: "更丰富",
+    instruction:
+      "Expand the following text with more detail, concrete examples, and elaboration while keeping the same tone, style, and markdown formatting.",
+  },
+  {
+    id: "formal",
+    label: "更正式",
+    instruction:
+      "Rewrite the following text in a more formal, professional, and polished tone. Keep the meaning and markdown formatting.",
+  },
+  {
+    id: "casual",
+    label: "更随性",
+    instruction:
+      "Rewrite the following text in a more casual, friendly, and conversational tone. Keep the meaning and markdown formatting.",
+  },
+  {
+    id: "zh",
+    label: "译中文",
+    instruction: "将下面的内容翻译成中文，保持原意、语气、风格与段落结构，并保留 markdown 格式。",
+  },
+];
+
+function triggerDownload(content: string, filename: string, mime: string) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function ExportMenu({
+  output,
+  title,
+  modeLabel,
+  up = false,
+}: {
+  output: string;
+  title: string;
+  modeLabel: string;
+  up?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const safeTitle = (title.trim().slice(0, 40) || "try-ai-writer").replace(/[\\/:*?"<>|]/g, "_");
+
+  const build = (format: "md" | "txt" | "html") => {
+    let content = "";
+    let ext = "";
+    let mime = "";
+    if (format === "txt") {
+      content = output;
+      ext = "txt";
+      mime = "text/plain;charset=utf-8";
+    } else if (format === "md") {
+      content = `# ${modeLabel}\n\n${output}`;
+      ext = "md";
+      mime = "text/markdown;charset=utf-8";
+    } else {
+      const escaped = output
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      const body = escaped
+        .split(/\n{2,}/)
+        .map((p) => `<p>${p.replace(/\n/g, "<br/>")}</p>`)
+        .join("\n");
+      content = `<!DOCTYPE html>\n<html lang="zh">\n<head><meta charset="utf-8"><title>${title.slice(0, 60)}</title>\n<style>body{font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:48px auto;padding:0 16px;line-height:1.75;color:#1a1a1a}h1{font-size:1.7em;margin-bottom:.6em}p{margin:.8em 0}</style></head>\n<body>\n<h1>${modeLabel}</h1>\n${body}\n</body>\n</html>`;
+      ext = "html";
+      mime = "text/html;charset=utf-8";
+    }
+    triggerDownload(content, `${safeTitle}.${ext}`, mime);
+    setOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        disabled={!output}
+        title="导出为文件，方便粘到博客、文档或微信"
+        className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-sm transition-all min-h-[44px] disabled:opacity-50"
+      >
+        <Download className="w-4 h-4" />
+        导出
+        <ChevronDown className="w-3 h-3 opacity-60" />
+      </button>
+      {open && (
+        <div className={`absolute right-0 w-44 bg-white dark:bg-[#17171c] border border-gray-200 dark:border-white/10 rounded-xl shadow-xl p-1 z-50 ${up ? "bottom-full mb-2" : "mt-2"}`}>
+          <button
+            onClick={() => build("md")}
+            className="w-full flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-slate-200 transition-all text-left min-h-[40px]"
+          >
+            <FileText className="w-4 h-4 text-emerald-500" /> Markdown (.md)
+          </button>
+          <button
+            onClick={() => build("txt")}
+            className="w-full flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-slate-200 transition-all text-left min-h-[40px]"
+          >
+            <FileText className="w-4 h-4 text-slate-500" /> 纯文本 (.txt)
+          </button>
+          <button
+            onClick={() => build("html")}
+            className="w-full flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-slate-200 transition-all text-left min-h-[40px]"
+          >
+            <FileCode2 className="w-4 h-4 text-orange-500" /> 网页 (.html)
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function WritePage() {
   const [mode, setMode] = useState<WritingMode>("blog");
   const [prompt, setPrompt] = useState("");
@@ -87,6 +218,7 @@ export default function WritePage() {
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const [completionTip, setCompletionTip] = useState<string | null>(null);
   const [errorInfo, setErrorInfo] = useState<{ message: string; suggestion: string } | null>(null);
+  const [activeRefine, setActiveRefine] = useState<string | null>(null);
   const loadingMsgRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Focus mode state
@@ -203,8 +335,9 @@ export default function WritePage() {
     };
   }, [state]);
 
-  const handleGenerate = async () => {
-    if (!prompt.trim()) return;
+  const handleGenerate = async (options?: { instruction?: string; promptOverride?: string }) => {
+    const effectivePrompt = options?.promptOverride ?? prompt;
+    if (!effectivePrompt.trim()) return;
 
     setState("loading");
     setOutput("");
@@ -212,23 +345,25 @@ export default function WritePage() {
     setSavedToMemory(false);
     setErrorInfo(null);
     setCompletionTip(null);
+    setActiveRefine(options?.instruction ?? null);
 
     if (!navigator.onLine) {
       setErrorInfo(humanizedErrors.offline);
       setState("error");
+      setActiveRefine(null);
       return;
     }
 
     const relevantMemories =
-      relatedIdeas.length > 0 ? relatedIdeas.slice(0, 3).map((r) => r.memory.content) : [];
+      options?.instruction ? [] : relatedIdeas.length > 0 ? relatedIdeas.slice(0, 3).map((r) => r.memory.content) : [];
 
     let enhancedPrompt: string | undefined;
-    if (profile?.styleFingerprint) {
+    if (!options?.instruction && profile?.styleFingerprint) {
       const toneHint =
         profile.commonPhrases && profile.commonPhrases.length > 0
           ? `\nCommon phrases to use: ${profile.commonPhrases.slice(0, 5).join(", ")}`
           : "";
-      enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${prompt}`;
+      enhancedPrompt = `You are writing in the user's unique brand voice. Key characteristics:\n- Average sentence length: ~${profile.styleFingerprint.avgSentenceLength || 18} words\n- Average paragraph length: ~${profile.styleFingerprint.avgParagraphSentenceCount || 3} sentences\n- Maintain a natural, conversational tone${toneHint}\n\nWrite content for this prompt: ${effectivePrompt}`;
     }
 
     let response: Response | null = null;
@@ -241,7 +376,13 @@ export default function WritePage() {
         response = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt, mode, enhancedPrompt, relevantMemories }),
+          body: JSON.stringify({
+            prompt: effectivePrompt,
+            mode,
+            enhancedPrompt,
+            relevantMemories,
+            instruction: options?.instruction,
+          }),
           signal: controller.signal,
         });
         clearTimeout(timeoutId);
@@ -263,6 +404,7 @@ export default function WritePage() {
     if (!response || !response.ok) {
       setErrorInfo(classifyError(lastError));
       setState("error");
+      setActiveRefine(null);
       return;
     }
 
@@ -283,17 +425,25 @@ export default function WritePage() {
       if (!fullText.trim()) {
         setErrorInfo({ message: "AI服务暂时不可用", suggestion: "请稍后再试，或刷新页面" });
         setState("error");
+        setActiveRefine(null);
         return;
       }
 
       setState("done");
+      setActiveRefine(null);
       const wc = fullText.trim().split(/\s+/).filter(Boolean).length;
       setCompletionTip(getCompletionFeedback(wc));
       setTimeout(() => setCompletionTip(null), 5000);
     } catch (error) {
       setErrorInfo(classifyError(error));
       setState("error");
+      setActiveRefine(null);
     }
+  };
+
+  const handleRefine = (instruction: string) => {
+    if (!output) return;
+    handleGenerate({ instruction, promptOverride: output });
   };
 
   const handleCopy = useCallback(() => {
@@ -360,7 +510,7 @@ export default function WritePage() {
         {/* Generate button */}
         <div className="px-6 pb-4">
           <button
-            onClick={handleGenerate}
+            onClick={() => handleGenerate()}
             disabled={state === "loading" || !prompt.trim()}
             className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all min-h-[44px]"
           >
@@ -409,7 +559,7 @@ export default function WritePage() {
               <p className="text-lg font-semibold text-red-400 mb-2">{errorInfo.message}</p>
               <p className="text-sm text-slate-500 mb-6">{errorInfo.suggestion}</p>
               <button
-                onClick={handleGenerate}
+                onClick={() => handleGenerate()}
                 className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-all min-h-[44px]"
               >
                 <Zap className="w-4 h-4" />
@@ -448,6 +598,9 @@ export default function WritePage() {
           copied={copied}
           savedToHistory={savedToHistory}
           savedToMemory={savedToMemory}
+          output={output}
+          title={prompt}
+          modeLabel={getModeLabel(mode)}
           onCopy={handleCopy}
           onSaveToHistory={handleSaveToHistory}
           onSaveToMemory={handleSaveToMemory}
@@ -593,7 +746,7 @@ export default function WritePage() {
               </div>
 
               <button
-                onClick={handleGenerate}
+                onClick={() => handleGenerate()}
                 disabled={state === "loading" || !prompt.trim()}
                 className="hidden lg:flex w-full items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all min-h-[44px]"
               >
@@ -642,6 +795,7 @@ export default function WritePage() {
                       {savedToMemory ? <CheckCircle2 className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
                       {savedToMemory ? "Memorized!" : "Memory"}
                     </button>
+                    <ExportMenu output={output} title={prompt} modeLabel={getModeLabel(mode)} />
                   </div>
                 )}
               </div>
@@ -695,7 +849,7 @@ export default function WritePage() {
                     <p className="text-sm text-gray-400 dark:text-slate-500 mb-6">{errorInfo.suggestion}</p>
                     <div className="flex items-center gap-4">
                       <button
-                        onClick={handleGenerate}
+                        onClick={() => handleGenerate()}
                         className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl transition-all min-h-[44px]"
                       >
                         <Zap className="w-4 h-4" />
@@ -729,6 +883,28 @@ export default function WritePage() {
                   </div>
                 )}
               </div>
+
+              {state === "done" && (
+                <div className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 shadow-sm">
+                  <div className="flex items-center gap-2 mb-3">
+                    <RefreshCw className="w-4 h-4 text-emerald-400" />
+                    <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-200">一键改写 / 润色</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {REFINE_ACTIONS.map((a) => (
+                      <button
+                        key={a.id}
+                        onClick={() => handleRefine(a.instruction)}
+                        disabled={activeRefine !== null}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-600 dark:text-slate-300 transition-all min-h-[40px] disabled:opacity-50"
+                      >
+                        {activeRefine === a.instruction ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                        {a.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -851,7 +1027,7 @@ export default function WritePage() {
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 dark:bg-[#0A0A0C]/90 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 z-40 lg:hidden">
         <button
-          onClick={handleGenerate}
+          onClick={() => handleGenerate()}
           disabled={state === "loading" || !prompt.trim()}
           className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-all min-h-[48px]"
         >
@@ -876,6 +1052,9 @@ function FocusModeActions({
   copied,
   savedToHistory,
   savedToMemory,
+  output,
+  title,
+  modeLabel,
   onCopy,
   onSaveToHistory,
   onSaveToMemory,
@@ -884,6 +1063,9 @@ function FocusModeActions({
   copied: boolean;
   savedToHistory: boolean;
   savedToMemory: boolean;
+  output: string;
+  title: string;
+  modeLabel: string;
   onCopy: () => void;
   onSaveToHistory: () => void;
   onSaveToMemory: () => void;
@@ -931,6 +1113,7 @@ function FocusModeActions({
         {savedToMemory ? <CheckCircle2 className="w-4 h-4" /> : <Brain className="w-4 h-4" />}
         {savedToMemory ? "Memorized!" : "Memory"}
       </button>
+      <ExportMenu output={output} title={title} modeLabel={modeLabel} up />
     </div>
   );
 }
