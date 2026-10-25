@@ -33,8 +33,11 @@ yarn-error.log*
 # vercel
 .vercel
 
-# local KV store (dev/test filesystem backend of lib/kv.ts) — never deploy
-/data/
+# local KV store + runtime data (dev/test) — never deploy.
+# NOTE: data/blog-posts/ is real content and MUST stay tracked.
+/data/.kv/
+/data/referrals/
+/data/referral-rewards/
 
 # typescript
 *.tsbuildinfo

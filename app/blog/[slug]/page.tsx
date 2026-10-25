@@ -4,11 +4,13 @@ import type { Metadata } from "next";
 import Logo from "@/app/components/Logo";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog-index";
+import { isNoIndexed } from "@/lib/blog-audit";
 import fs from "fs";
 import path from "path";
 
 type Props = {
-  params: { slug: string };
+  // Next.js 15/16: route params are a Promise and must be awaited.
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -17,16 +19,24 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = params.slug || "";
+  const { slug: rawSlug } = await params;
+  const slug = rawSlug || "";
   const post = getBlogPost(slug);
   const title = post?.title || slug.replaceAll("-", " ");
   const description =
     post?.description ||
     "AI writing tips and tutorials to help you write better content faster.";
 
+  // Thin / duplicate posts (per the audit) are de-indexed to reduce
+  // scaled-content-abuse risk, but stay reachable for users who have the link.
+  const robots = isNoIndexed(slug)
+    ? { index: false, follow: true }
+    : undefined;
+
   return {
     title: `${title} | Try AI Writer Blog`,
     description,
+    ...(robots ? { robots } : {}),
     openGraph: {
       title: `${title} | Try AI Writer Blog`,
       description,
@@ -85,8 +95,9 @@ function renderMarkdown(content: string): string {
     });
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const slug = params.slug || "";
+export default async function BlogPostPage({ params }: Props) {
+  const { slug: rawSlug } = await params;
+  const slug = rawSlug || "";
   const post = getBlogPost(slug);
 
   // Read and render the markdown content
