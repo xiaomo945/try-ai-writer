@@ -33,6 +33,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local KV store (dev/test filesystem backend of lib/kv.ts) — never deploy
+/data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

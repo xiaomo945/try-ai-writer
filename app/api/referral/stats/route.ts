@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
     const effectiveUserId = userId || session.user.email || "";
 
-    const record = getReferralRecord(effectiveUserId);
+    const record = await getReferralRecord(effectiveUserId);
     if (!record) {
       return NextResponse.json({
         referralCode: null,

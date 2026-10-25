@@ -1,7 +1,6 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { kvGetJson, kvSetJson, kvListByPrefix } from "./kv";
 
-const DATA_DIR = join(process.cwd(), "data", "subscriptions");
+const KEY_PREFIX = "subscription:";
 
 export interface SubscriptionRecord {
   userId: string;
@@ -15,32 +14,21 @@ export interface SubscriptionRecord {
   cancelledAt?: string;
 }
 
-function ensureDir() {
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR, { recursive: true });
-  }
+function keyFor(userId: string): string {
+  return `${KEY_PREFIX}${userId}`;
 }
 
-function filePath(userId: string): string {
-  return join(DATA_DIR, `${userId}.json`);
+export async function getSubscription(
+  userId: string
+): Promise<SubscriptionRecord | null> {
+  return kvGetJson<SubscriptionRecord>(keyFor(userId));
 }
 
-export function getSubscription(userId: string): SubscriptionRecord | null {
-  ensureDir();
-  const fp = filePath(userId);
-  if (!existsSync(fp)) return null;
-  try {
-    return JSON.parse(readFileSync(fp, "utf-8"));
-  } catch {
-    return null;
-  }
-}
-
-export function upsertSubscription(record: SubscriptionRecord): SubscriptionRecord {
-  ensureDir();
+export async function upsertSubscription(
+  record: SubscriptionRecord
+): Promise<SubscriptionRecord> {
   const now = new Date().toISOString();
-
-  const existing = getSubscription(record.userId);
+  const existing = await getSubscription(record.userId);
   const merged: SubscriptionRecord = {
     ...existing,
     ...record,
@@ -48,15 +36,17 @@ export function upsertSubscription(record: SubscriptionRecord): SubscriptionReco
     createdAt: existing?.createdAt || now,
   };
 
-  writeFileSync(filePath(record.userId), JSON.stringify(merged, null, 2));
+  await kvSetJson(keyFor(record.userId), merged);
   console.log(
     `[Subscription] ${merged.userId}: ${merged.tier} (${merged.status}) via ${merged.provider}`
   );
   return merged;
 }
 
-export function cancelSubscription(userId: string): SubscriptionRecord | null {
-  const existing = getSubscription(userId);
+export async function cancelSubscription(
+  userId: string
+): Promise<SubscriptionRecord | null> {
+  const existing = await getSubscription(userId);
   if (!existing) return null;
   return upsertSubscription({
     ...existing,
@@ -65,21 +55,10 @@ export function cancelSubscription(userId: string): SubscriptionRecord | null {
   });
 }
 
-export function getAllSubscriptions(): SubscriptionRecord[] {
-  ensureDir();
-  try {
-    const { readdirSync: rd } = require("fs");
-    return rd(DATA_DIR)
-      .filter((f: string) => f.endsWith(".json"))
-      .map((f: string) => {
-        try {
-          return JSON.parse(readFileSync(join(DATA_DIR, f), "utf-8"));
-        } catch {
-          return null;
-        }
-      })
-      .filter(Boolean);
-  } catch {
-    return [];
-  }
+export async function getAllSubscriptions(): Promise<SubscriptionRecord[]> {
+  const keys = await kvListByPrefix(KEY_PREFIX);
+  const records = await Promise.all(
+    keys.map((k) => kvGetJson<SubscriptionRecord>(k))
+  );
+  return records.filter((r): r is SubscriptionRecord => r !== null);
 }

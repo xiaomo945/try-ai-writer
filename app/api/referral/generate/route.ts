@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     const userId = session.user.id;
-    const record = createReferralRecord(userId);
+    const record = await createReferralRecord(userId);
     const baseUrl = process.env.NEXTAUTH_URL || "https://tryaiwriter.com";
     const link = getReferralLink(record.code, baseUrl);
 

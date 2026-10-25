@@ -1,7 +1,23 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from "fs";
-import { join } from "path";
+/**
+ * Server-side referral store.
+ *
+ * The previous implementation wrote JSON files into `data/referrals` with
+ * `fs.writeFileSync`. On Vercel that cannot work: serverless instances have an
+ * ephemeral, non-shared filesystem, so a referral created by instance A is
+ * invisible to instance B. Conversions silently never register -- the same
+ * class of bug as the broken subscription store.
+ *
+ * This rewrite routes every read/write through `lib/kv.ts`, which abstracts
+ * Redis (production) / filesystem (dev) / in-memory (fallback). A secondary
+ * `referral-code:<CODE>` index makes `findReferrerByCode` an O(1) lookup
+ * instead of a directory scan.
+ */
 
-const DATA_DIR = join(process.cwd(), "data", "referrals");
+import { kvGetJson, kvSetJson, kvListByPrefix } from "./kv";
+
+const KEY_PREFIX = "referral:";
+const CODE_INDEX_PREFIX = "referral-code:";
+const REWARD_PREFIX = "referral-reward:";
 
 export interface ReferralRecord {
   userId: string;
@@ -28,66 +44,21 @@ export const REFERRAL_REWARDS = {
   },
 };
 
-function ensureDir() {
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR, { recursive: true });
-  }
+function recordKey(userId: string): string {
+  return `${KEY_PREFIX}${userId}`;
 }
 
-function filePath(userId: string): string {
-  return join(DATA_DIR, `${userId}.json`);
+function codeKey(code: string): string {
+  return `${CODE_INDEX_PREFIX}${code}`;
 }
 
-export function getReferralRecord(userId: string): ReferralRecord | null {
-  ensureDir();
-  const fp = filePath(userId);
-  if (!existsSync(fp)) return null;
-  try {
-    return JSON.parse(readFileSync(fp, "utf-8"));
-  } catch {
-    return null;
-  }
+export async function getReferralRecord(
+  userId: string
+): Promise<ReferralRecord | null> {
+  return kvGetJson<ReferralRecord>(recordKey(userId));
 }
 
-export function createReferralRecord(userId: string): ReferralRecord {
-  ensureDir();
-  const existing = getReferralRecord(userId);
-  if (existing) return existing;
-
-  const code = generateReferralCode(userId);
-  const record: ReferralRecord = {
-    userId,
-    code,
-    createdAt: new Date().toISOString(),
-    referralCount: 0,
-    successfulSubscriptions: 0,
-  };
-
-  writeFileSync(filePath(userId), JSON.stringify(record, null, 2));
-  return record;
-}
-
-export function incrementReferralCount(referrerId: string): ReferralRecord | null {
-  const record = getReferralRecord(referrerId);
-  if (!record) return null;
-  record.referralCount += 1;
-  writeFileSync(filePath(referrerId), JSON.stringify(record, null, 2));
-  return record;
-}
-
-export function incrementSuccessfulSubscriptions(userId: string): ReferralRecord | null {
-  const record = getReferralRecord(userId);
-  if (!record) return null;
-  record.successfulSubscriptions += 1;
-  writeFileSync(filePath(userId), JSON.stringify(record, null, 2));
-  return record;
-}
-
-export function getReferralLink(code: string, baseUrl: string): string {
-  return `${baseUrl}/?ref=${code}`;
-}
-
-function generateReferralCode(userId: string): string {
+function generateCodeRaw(): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let code = "";
   for (let i = 0; i < 6; i++) {
@@ -96,39 +67,83 @@ function generateReferralCode(userId: string): string {
   return `REF-${code}`;
 }
 
-export function findReferrerByCode(code: string): ReferralRecord | null {
-  ensureDir();
-  try {
-    const files = readdirSync(DATA_DIR).filter((f) => f.endsWith(".json"));
-    for (const file of files) {
-      const record: ReferralRecord = JSON.parse(
-        readFileSync(join(DATA_DIR, file), "utf-8")
-      );
-      if (record.code === code) return record;
-    }
-  } catch {
-    // directory might not exist
+export async function createReferralRecord(
+  userId: string
+): Promise<ReferralRecord> {
+  const existing = await getReferralRecord(userId);
+  if (existing) return existing;
+
+  // Generate a code that is not already claimed (collision is astronomically
+  // unlikely with 36^6 combos, but the index lets us guarantee uniqueness).
+  let code = generateCodeRaw();
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const owner = await kvGetJson<string>(codeKey(code));
+    if (!owner) break;
+    code = generateCodeRaw();
   }
-  return null;
+
+  const record: ReferralRecord = {
+    userId,
+    code,
+    createdAt: new Date().toISOString(),
+    referralCount: 0,
+    successfulSubscriptions: 0,
+  };
+
+  await kvSetJson(recordKey(userId), record);
+  await kvSetJson(codeKey(code), userId);
+  return record;
 }
 
-export function trackReferralConversion(
+export async function incrementReferralCount(
+  referrerId: string
+): Promise<ReferralRecord | null> {
+  const record = await getReferralRecord(referrerId);
+  if (!record) return null;
+  record.referralCount += 1;
+  await kvSetJson(recordKey(referrerId), record);
+  return record;
+}
+
+export async function incrementSuccessfulSubscriptions(
+  userId: string
+): Promise<ReferralRecord | null> {
+  const record = await getReferralRecord(userId);
+  if (!record) return null;
+  record.successfulSubscriptions += 1;
+  await kvSetJson(recordKey(userId), record);
+  return record;
+}
+
+export function getReferralLink(code: string, baseUrl: string): string {
+  return `${baseUrl}/?ref=${code}`;
+}
+
+export async function findReferrerByCode(
+  code: string
+): Promise<ReferralRecord | null> {
+  const userId = await kvGetJson<string>(codeKey(code));
+  if (!userId) return null;
+  return getReferralRecord(userId);
+}
+
+export async function trackReferralConversion(
   newUserId: string,
   referralCode: string
-): { referrerId: string | null; rewards: ReferralRewards | null } {
-  const referrer = findReferrerByCode(referralCode);
+): Promise<{ referrerId: string | null; rewards: ReferralRewards | null }> {
+  const referrer = await findReferrerByCode(referralCode);
   if (!referrer) {
     return { referrerId: null, rewards: null };
   }
 
   // Update referrer stats
-  incrementReferralCount(referrer.userId);
-  incrementSuccessfulSubscriptions(referrer.userId);
+  await incrementReferralCount(referrer.userId);
+  await incrementSuccessfulSubscriptions(referrer.userId);
 
   // Record who referred this new user
-  const newUserRecord = createReferralRecord(newUserId);
+  const newUserRecord = await createReferralRecord(newUserId);
   newUserRecord.referredBy = referralCode;
-  writeFileSync(filePath(newUserId), JSON.stringify(newUserRecord, null, 2));
+  await kvSetJson(recordKey(newUserId), newUserRecord);
 
   const rewards: ReferralRewards = {
     referrerReward: {
@@ -140,48 +155,30 @@ export function trackReferralConversion(
     },
   };
 
-  // Store pending rewards
-  const rewardsDir = join(process.cwd(), "data", "referral-rewards");
-  if (!existsSync(rewardsDir)) mkdirSync(rewardsDir, { recursive: true });
-  writeFileSync(
-    join(rewardsDir, `${referrer.userId}.json`),
-    JSON.stringify({
-      userId: referrer.userId,
-      type: "referrer",
-      proDays: rewards.referrerReward.proDays,
-      extraGenerations: rewards.referrerReward.extraGenerations,
-      rewardedAt: new Date().toISOString(),
-      claimed: false,
-    }, null, 2)
-  );
-  writeFileSync(
-    join(rewardsDir, `${newUserId}.json`),
-    JSON.stringify({
-      userId: newUserId,
-      type: "referee",
-      extraGenerations: rewards.refereeReward.extraGenerations,
-      rewardedAt: new Date().toISOString(),
-      claimed: false,
-    }, null, 2)
-  );
+  // Store pending rewards (KV-backed, survives redeploys)
+  await kvSetJson(`${REWARD_PREFIX}${referrer.userId}:referrer`, {
+    userId: referrer.userId,
+    type: "referrer",
+    proDays: rewards.referrerReward.proDays,
+    extraGenerations: rewards.referrerReward.extraGenerations,
+    rewardedAt: new Date().toISOString(),
+    claimed: false,
+  });
+  await kvSetJson(`${REWARD_PREFIX}${newUserId}:referee`, {
+    userId: newUserId,
+    type: "referee",
+    extraGenerations: rewards.refereeReward.extraGenerations,
+    rewardedAt: new Date().toISOString(),
+    claimed: false,
+  });
 
   return { referrerId: referrer.userId, rewards };
 }
 
-export function getAllReferralRecords(): ReferralRecord[] {
-  ensureDir();
-  try {
-    return readdirSync(DATA_DIR)
-      .filter((f) => f.endsWith(".json"))
-      .map((f) => {
-        try {
-          return JSON.parse(readFileSync(join(DATA_DIR, f), "utf-8"));
-        } catch {
-          return null;
-        }
-      })
-      .filter(Boolean) as ReferralRecord[];
-  } catch {
-    return [];
-  }
+export async function getAllReferralRecords(): Promise<ReferralRecord[]> {
+  const keys = await kvListByPrefix(KEY_PREFIX);
+  const records = await Promise.all(
+    keys.map((k) => kvGetJson<ReferralRecord>(k))
+  );
+  return records.filter((r): r is ReferralRecord => r !== null);
 }
