@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SessionProvider } from "@/components/SessionProvider";
 import { Providers } from "@/app/components/Providers";
+import { ConsentProvider } from "@/components/ConsentProvider";
+import { AdSlot } from "@/components/AdSlot";
+import { CookieConsent } from "@/components/CookieConsent";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 import "./globals.css";
 
@@ -143,9 +146,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ErrorBoundary>
           <SessionProvider>
             <Providers>
-              <div className="page-transition" id="main-content" role="main">
-                {children}
-              </div>
+              <ConsentProvider>
+                <div className="page-transition" id="main-content" role="main">
+                  {children}
+                  {/* Site-wide bottom display ad (consent-gated, CLS-safe). */}
+                  <AdSlot
+                    slot="banner_bottom"
+                    className="max-w-5xl mx-auto my-10 px-4"
+                  />
+                </div>
+                <CookieConsent />
+              </ConsentProvider>
             </Providers>
           </SessionProvider>
         </ErrorBoundary>

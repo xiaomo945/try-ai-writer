@@ -1,0 +1,13 @@
+# ads.txt — required by Google AdSense (and recommended for other networks).
+# This file must be served from the site root: https://tryaiwriter.com/ads.txt
+#
+# Replace the placeholder publisher ID below with YOUR real AdSense publisher
+# ID (found in AdSense → Account → Account information → Publisher ID).
+# Format: domain, publisher-id, account-type, certification-authority-id
+#
+# Example (replace pub-0000000000000000 with your own):
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+#
+# Once you add a bridge network (Monetag / Adsterra), also add their records
+# here per their dashboard instructions.
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
