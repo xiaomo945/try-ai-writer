@@ -12,7 +12,8 @@ export async function generateClaudeStream(options: GenerateStreamOptions): Prom
     temperature = 0.7,
   } = options;
 
-  const apiKey = process.env.CLAUDE_API_KEY;
+  // BYOK key takes precedence over the server env key.
+  const apiKey = options.apiKey || process.env.CLAUDE_API_KEY;
 
   logger.info("Starting generation", { model });
 

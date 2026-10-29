@@ -31,7 +31,8 @@ export async function generateDeepSeekStream(options: GenerateStreamOptions): Pr
     temperature = 0.7,
   } = options;
 
-  const apiKey = process.env.DEEPSEEK_API_KEY;
+  // BYOK key takes precedence over the server env key.
+  const apiKey = options.apiKey || process.env.DEEPSEEK_API_KEY;
 
   logger.info("Starting generation", { model });
 

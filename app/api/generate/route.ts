@@ -69,6 +69,8 @@ type GenerationOptions = {
   claudeModel?: string;
   maxTokens: number;
   temperature: number;
+  /** Bring-your-own-key (BYOK); falls back to server env var when unset. */
+  apiKey?: string;
 };
 
 type ProviderAttemptResult = {
@@ -281,6 +283,48 @@ export async function POST(request: NextRequest) {
       temperature: 0.7,
     };
 
+    // ── Bring-your-own-key ──────────────────────────────────────────────
+    // If the client supplies its own API key, use it and treat it as
+    // authoritative: no env key needed, no mock fallback. This is what makes
+    // AI writing zero-cost for the operator.
+    const userApiKey = request.headers.get("x-user-api-key")?.trim();
+    const userProviderHeader = (request.headers.get("x-user-provider") || "").toLowerCase();
+
+    if (userApiKey && userApiKey.length > 10) {
+      const provider = userProviderHeader === "claude" ? "claude" : "deepseek";
+      console.log(`[Generate] BYOK 模式 — provider: ${provider}`);
+
+      const byokOptions: GenerationOptions = {
+        ...generationOptions,
+        apiKey: userApiKey,
+        ...(provider === "claude" ? { model: generationOptions.claudeModel } : {}),
+      };
+
+      const result =
+        provider === "claude"
+          ? await attemptWithTimeoutAndRetry("Claude (BYOK)", () =>
+              generateClaudeStream(byokOptions)
+            )
+          : await attemptWithTimeoutAndRetry("DeepSeek (BYOK)", () =>
+              generateDeepSeekStream(byokOptions)
+            );
+
+      if (result.success && result.stream) {
+        return streamResponse(result.stream);
+      }
+
+      const analyzed =
+        provider === "claude"
+          ? analyzeClaudeError(result.error ? new Error(result.error.message) : new Error("未知错误"))
+          : analyzeDeepSeekError(result.error ? new Error(result.error.message) : new Error("未知错误"));
+
+      return errorResponse(
+        analyzed.message,
+        "这是你自带的 API Key 返回的错误，请检查 Key 是否正确、账户余额是否充足，或更换 Provider。",
+        502
+      );
+    }
+
     const isExplicitMock = aiProvider === "mock";
     const isExplicitDeepSeek = aiProvider === "deepseek";
     const isExplicitClaude = aiProvider === "claude";
@@ -341,10 +385,21 @@ export async function POST(request: NextRequest) {
       return errorResponse(analyzed.message, analyzed.hint, 500);
     }
 
-    console.log("[Generate] Provider 策略: auto (deepseek -> claude -> mock)");
+    console.log("[Generate] Provider 策略: auto (deepseek -> claude -> byok-required)");
 
     const hasDeepSeekKey = !!process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_API_KEY.length > 10;
     const hasClaudeKey = !!process.env.CLAUDE_API_KEY && process.env.CLAUDE_API_KEY.length > 10;
+
+    // Zero-cost model: if the operator has not paid for server-side keys, AI
+    // writing is only available through the user's own BYOK key (already
+    // handled above). Never silently return fake mock text.
+    if (!hasDeepSeekKey && !hasClaudeKey) {
+      return errorResponse(
+        "AI 写作需要你自己的 API Key",
+        "本站不提供付费 AI 额度。请点击右上角「API Key」填入你自己的 DeepSeek 或 Claude Key 后重试。Key 仅保存在你的浏览器，不会上传到服务器。",
+        402
+      );
+    }
 
     if (hasDeepSeekKey) {
       console.log("[Generate] 自动模式 — 尝试 DeepSeek");
@@ -377,9 +432,12 @@ export async function POST(request: NextRequest) {
       console.log("[Generate] 自动模式 — 跳过 Claude（未配置 CLAUDE_API_KEY）");
     }
 
-    console.log("[Generate] 自动模式 — 回退到 Mock");
-    const mockText = MOCK_RESPONSES[mode as keyof ModePrompt] || MOCK_RESPONSES.custom;
-    return streamResponse(buildMockStream(mockText));
+    // Both provider keys failed (operator-paid path). Do not fall back to mock.
+    return errorResponse(
+      "AI 服务调用失败",
+      "服务器配置的 AI Key 调用失败，请稍后重试，或改用你自己的 API Key（右上角「API Key」）。",
+      502
+    );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Internal server error";
     console.error("[Generate] 致命错误:", error);

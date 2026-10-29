@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { getByokHeaders } from "@/lib/byok";
 import {
   Play,
   Loader2,
@@ -157,7 +158,7 @@ function WorkflowsInner() {
 
         const res = await fetch("/api/generate", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...getByokHeaders() },
           body: JSON.stringify({
             prompt: baseIdea,
             mode: "fiction",

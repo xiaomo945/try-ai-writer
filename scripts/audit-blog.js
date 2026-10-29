@@ -27,6 +27,10 @@ const BLOG_DIR = path.join(process.cwd(), "data", "blog-posts");
 const OUT_JSON = path.join(process.cwd(), "data", "blog-audit.json");
 const OUT_MD = path.join(process.cwd(), "BLOG_AUDIT_REPORT.md");
 
+// Programmatic template families that are bulk-deindexed regardless of length.
+// These are the "one template x N industries" pages that read as scaled content.
+const TEMPLATE_PREFIXES = ["ai-writing-for-"];
+
 const STOPWORDS = new Set([
   "the","and","for","that","with","this","from","have","has","are","was","were",
   "you","your","our","their","they","them","but","not","can","will","would",
@@ -202,7 +206,10 @@ function main() {
   // Grade.
   for (const p of posts) {
     const r = p.reasons;
-    if (p.wordCount < 400) {
+    if (TEMPLATE_PREFIXES.some((pre) => p.slug.startsWith(pre))) {
+      p.grade = "noindex";
+      r.push("template family (ai-writing-for-*), bulk noindex per policy");
+    } else if (p.wordCount < 400) {
       p.grade = "noindex";
       r.push(`thin (${p.wordCount} words < 400)`);
     } else if (p.introFamilySize >= 4 && p.wordCount < 900) {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T17:53:31.883Z",
+  "generatedAt": "2026-10-25T18:14:04.097Z",
   "total": 384,
   "stats": {
     "wordCount": {
@@ -10,9 +10,9 @@
       "under700": 146
     },
     "gradeCount": {
-      "noindex": 80,
-      "rewrite": 66,
-      "keep": 238
+      "noindex": 274,
+      "rewrite": 22,
+      "keep": 88
     },
     "dateBuckets": {
       "2026-01": 2,
@@ -864,7 +864,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin (266 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -878,7 +878,7 @@
       "maxSim": 0.047,
       "grade": "noindex",
       "reasons": [
-        "thin (192 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -890,9 +890,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -904,9 +904,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -918,9 +918,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -932,9 +932,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -946,9 +946,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -960,9 +960,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -974,9 +974,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -990,7 +990,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (408 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1002,9 +1002,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1016,9 +1016,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1030,9 +1030,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1044,9 +1044,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1058,9 +1058,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1074,7 +1074,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin (185 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1088,7 +1088,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (467 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1100,9 +1100,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1114,9 +1114,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.02) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1128,9 +1128,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1142,9 +1142,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1156,9 +1156,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1170,9 +1170,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1186,7 +1186,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (438 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1198,9 +1198,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1212,9 +1212,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1226,9 +1226,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1242,7 +1242,7 @@
       "maxSim": 0.037,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (500 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1254,9 +1254,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1268,9 +1268,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1282,9 +1282,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1296,9 +1296,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1310,9 +1310,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1324,9 +1324,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1338,9 +1338,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.01) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1352,9 +1352,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1366,9 +1366,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1380,9 +1380,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1394,9 +1394,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1408,9 +1408,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1424,7 +1424,7 @@
       "maxSim": 0.028,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (540 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1436,9 +1436,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.00) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1450,9 +1450,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1464,9 +1464,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1478,9 +1478,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1492,9 +1492,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1506,9 +1506,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1520,9 +1520,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1534,9 +1534,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1550,7 +1550,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (404 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1562,9 +1562,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1578,7 +1578,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (186 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1590,9 +1590,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1604,9 +1604,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1618,9 +1618,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1632,9 +1632,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1646,9 +1646,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.556,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.56)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1662,7 +1662,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (428 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1674,9 +1674,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1690,7 +1690,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (448 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1702,9 +1702,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1718,7 +1718,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin (250 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1730,9 +1730,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1744,9 +1744,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1758,9 +1758,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1772,9 +1772,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1786,9 +1786,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1800,9 +1800,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1816,7 +1816,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (219 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1828,9 +1828,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1842,9 +1842,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1856,9 +1856,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1870,9 +1870,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.01) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1884,9 +1884,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1898,9 +1898,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1912,9 +1912,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1926,9 +1926,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.647,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.65)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1940,9 +1940,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1954,9 +1954,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1970,7 +1970,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin (221 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1982,9 +1982,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -1996,9 +1996,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.577,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.58)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2010,9 +2010,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2024,9 +2024,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2040,7 +2040,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (469 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2054,7 +2054,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (219 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2068,7 +2068,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (329 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2082,7 +2082,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (232 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2096,7 +2096,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin (217 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2110,7 +2110,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin (210 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2124,7 +2124,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (268 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2136,9 +2136,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.647,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.65)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2150,9 +2150,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2164,9 +2164,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2178,9 +2178,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2192,9 +2192,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2206,9 +2206,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2220,9 +2220,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2234,9 +2234,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2248,9 +2248,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.00) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2262,9 +2262,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.00) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2276,9 +2276,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2290,9 +2290,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2304,9 +2304,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.01) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2318,9 +2318,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2332,9 +2332,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2346,9 +2346,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2362,7 +2362,7 @@
       "maxSim": 0.018,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (412 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2374,9 +2374,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2388,9 +2388,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2402,9 +2402,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2416,9 +2416,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2430,9 +2430,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2444,9 +2444,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2460,7 +2460,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (488 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2472,9 +2472,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2486,9 +2486,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2500,9 +2500,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.02) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2514,9 +2514,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.00) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2528,9 +2528,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2542,9 +2542,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2556,9 +2556,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2570,9 +2570,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2584,9 +2584,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2600,7 +2600,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (459 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2612,9 +2612,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2626,9 +2626,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2640,9 +2640,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2654,9 +2654,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2668,9 +2668,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2684,7 +2684,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin (210 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2696,9 +2696,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2710,9 +2710,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2724,9 +2724,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2738,9 +2738,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2752,9 +2752,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2766,9 +2766,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2782,7 +2782,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin (299 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2794,9 +2794,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2810,7 +2810,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (514 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2824,7 +2824,7 @@
       "maxSim": 0.028,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (436 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2838,7 +2838,7 @@
       "maxSim": 0.077,
       "grade": "noindex",
       "reasons": [
-        "thin (188 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2850,9 +2850,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2864,9 +2864,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2878,9 +2878,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2894,7 +2894,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (417 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2906,9 +2906,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2920,9 +2920,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2936,7 +2936,7 @@
       "maxSim": 0.077,
       "grade": "noindex",
       "reasons": [
-        "thin (183 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2948,9 +2948,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2962,9 +2962,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2976,9 +2976,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.647,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.65)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -2990,9 +2990,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3004,9 +3004,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3018,9 +3018,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3032,9 +3032,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3046,9 +3046,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3060,9 +3060,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3076,7 +3076,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (426 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3088,9 +3088,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3102,9 +3102,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3116,9 +3116,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3130,9 +3130,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.549,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.55) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3144,9 +3144,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3158,9 +3158,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3172,9 +3172,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3186,9 +3186,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3200,9 +3200,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.619,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3214,9 +3214,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3228,9 +3228,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3244,7 +3244,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (421 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3256,9 +3256,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3270,9 +3270,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3284,9 +3284,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3300,7 +3300,7 @@
       "maxSim": 0.028,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (515 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3312,9 +3312,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3326,9 +3326,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3340,9 +3340,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.6,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.60)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3354,9 +3354,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3368,9 +3368,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.586,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.59)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3382,9 +3382,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3396,9 +3396,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3410,9 +3410,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3424,9 +3424,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3438,9 +3438,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3452,9 +3452,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.619,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3466,9 +3466,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3480,9 +3480,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3494,9 +3494,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3508,9 +3508,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3522,9 +3522,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.577,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.58)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3536,9 +3536,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3550,9 +3550,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3564,9 +3564,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3578,9 +3578,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3592,9 +3592,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3608,7 +3608,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (432 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3620,9 +3620,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3634,9 +3634,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3650,7 +3650,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (538 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3662,9 +3662,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3676,9 +3676,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3690,9 +3690,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.647,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.65)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3704,9 +3704,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3720,7 +3720,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin (331 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3732,9 +3732,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3746,9 +3746,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3762,7 +3762,7 @@
       "maxSim": 0.037,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (406 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3774,9 +3774,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3788,9 +3788,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3802,9 +3802,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3816,9 +3816,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3830,9 +3830,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3844,9 +3844,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3858,9 +3858,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3872,9 +3872,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3886,9 +3886,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3900,9 +3900,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3914,9 +3914,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.623,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.62)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3928,9 +3928,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3944,7 +3944,7 @@
       "maxSim": 0.037,
       "grade": "noindex",
       "reasons": [
-        "thin (166 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3956,9 +3956,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3972,7 +3972,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (465 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -3984,9 +3984,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4000,7 +4000,7 @@
       "maxSim": 0.047,
       "grade": "noindex",
       "reasons": [
-        "thin (197 words < 400)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4012,9 +4012,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4026,9 +4026,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4040,9 +4040,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4056,7 +4056,7 @@
       "maxSim": 0.028,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (421 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4068,9 +4068,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4084,7 +4084,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (446 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4096,9 +4096,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4112,7 +4112,7 @@
       "maxSim": 0,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (417 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4124,9 +4124,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4138,9 +4138,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.576,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "near-duplicate intro (maxSim 0.58)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4154,7 +4154,7 @@
       "maxSim": 0.009,
       "grade": "noindex",
       "reasons": [
-        "thin-ish (419 words)"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4166,9 +4166,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.018,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4180,9 +4180,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4194,9 +4194,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.028,
-      "grade": "rewrite",
+      "grade": "noindex",
       "reasons": [
-        "moderate overlap (maxSim 0.03) or length"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {
@@ -4208,9 +4208,9 @@
       "familySize": 1,
       "introFamilySize": 1,
       "maxSim": 0.009,
-      "grade": "keep",
+      "grade": "noindex",
       "reasons": [
-        "distinct and substantial"
+        "template family (ai-writing-for-*), bulk noindex per policy"
       ]
     },
     {

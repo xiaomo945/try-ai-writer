@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Zap, Copy, Loader2, Save, Brain, Sparkles, BarChart3, CheckCircle2, XCircle, Maximize2, Minimize2, Download, FileText, FileCode2, ChevronDown, RefreshCw, RotateCcw, Cloud, X, Wand2 } from "lucide-react";
 import Link from "next/link";
+import { ApiKeySettings } from "@/components/ApiKeySettings";
+import { getByokHeaders } from "@/lib/byok";
 import { useHistory } from "@/lib/history";
 import { useMemoryBank } from "@/lib/memory-bank";
 import { useBrandVoice } from "@/lib/brand-voice";
@@ -596,7 +598,7 @@ export default function WritePage() {
         const timeoutId = setTimeout(() => controller.abort(), 45000);
         response = await fetch("/api/generate", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...getByokHeaders() },
           body: JSON.stringify({
             prompt: effectivePrompt,
             mode,
@@ -881,6 +883,7 @@ export default function WritePage() {
                   ) : null}
                 </span>
               )}
+              <ApiKeySettings />
               <button
                 onClick={() => setFocusMode(true)}
                 className="text-slate-400 hover:text-emerald-400 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
