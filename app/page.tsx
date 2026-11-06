@@ -146,28 +146,26 @@ export default function LandingPage() {
       <section className="section-container section-spacing">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold">
-            Simple,{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Transparent</span>{" "}
-            Pricing
+            Free{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Forever</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 mt-4">Start free, upgrade when you need more. No hidden fees.</p>
+          <p className="text-base sm:text-lg text-slate-400 mt-4">No subscription, no credit card. Use free offline tools or your own API key.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {[
-            { name: "Free", price: "$0", desc: "For casual writers", features: ["10 generations/day", "DeepSeek model", "Basic brand voice"], btn: "outline" },
-            { name: "Pro", price: "$9", desc: "For serious creators", features: ["100 generations/day", "Claude + DeepSeek", "Full brand voice", "Document upload"], btn: "primary", popular: true },
-            { name: "Max", price: "$25", desc: "For power users", features: ["Unlimited generations", "Claude + DeepSeek", "Advanced brand voice", "Document + image upload", "Priority support"], btn: "primary" }
+            { name: "Free Offline Tools", price: "$0", priceNote: "", desc: "For everyone", features: ["SEO analyzer & originality checker", "Prompt optimizer & word counter", "Full editor + brand voice", "No API key, no account"], btn: "outline", href: "/tools" },
+            { name: "AI Writing (BYOK)", price: "Your Key", priceNote: "", desc: "Unlimited generations", features: ["Bring your own DeepSeek/Claude key", "Unlimited AI generations", "Key stays in your browser", "Pay only your provider"], btn: "primary", popular: true, href: "/write" }
           ].map((plan) => (
             <div key={plan.name} className={`glass-card flex flex-col relative ${plan.popular ? 'glass-card-purple glass-card-recommended' : ''}`} style={plan.popular ? { borderColor: "rgba(155,109,255,0.25)" } : {}}>
-              {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500">Most Popular</span>}
+              {plan.popular && <span className="absolute top-0 right-6 -translate-y-1/2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-blue-500 to-purple-500">Recommended</span>}
               <h3 className="text-xl font-display font-bold mb-2">{plan.name}</h3>
               <p className="text-slate-400 text-sm mb-6">{plan.desc}</p>
-              <p className="text-4xl sm:text-5xl font-display font-extrabold mb-8">{plan.price}<span className="text-base sm:text-lg font-normal text-slate-500">/mo</span></p>
+              <p className="text-4xl sm:text-5xl font-display font-extrabold mb-8">{plan.price}</p>
               <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
                 {plan.features.map((f, j) => <li key={j} className="flex items-center gap-2 sm:gap-3 text-sm text-slate-300"><Check className="w-4 h-4 text-blue-400 flex-shrink-0" />{f}</li>)}
               </ul>
-              <Link href="/login" className={plan.btn === 'primary' ? 'btn-primary w-full text-center' : 'btn-outline w-full text-center'}>
-                {plan.name === 'Free' ? 'Get Started' : `Start ${plan.name}`}
+              <Link href={plan.href} className={plan.btn === 'primary' ? 'btn-primary w-full text-center' : 'btn-outline w-full text-center'}>
+                {plan.name === 'Free Offline Tools' ? 'Explore Free Tools' : 'Add Your API Key'}
               </Link>
             </div>
           ))}
@@ -191,11 +189,11 @@ export default function LandingPage() {
         <h2 className="text-3xl font-display font-extrabold text-center mb-12">Frequently Asked Questions</h2>
         <div className="space-y-4">
           {[
-            { q: "What's the difference between DeepSeek and Claude?", a: "DeepSeek is fast and affordable (great for drafts). Claude Sonnet 4.6 delivers premium writing quality (Pro/Max plans). You can switch anytime." },
-            { q: "Can I cancel anytime?", a: "Absolutely. No contracts, no cancellation fees. You can cancel or change your plan at any time." },
+            { q: "What's the difference between DeepSeek and Claude?", a: "DeepSeek is fast and affordable (great for drafts). Claude Sonnet delivers premium writing quality. You can switch anytime — both run on your own API key." },
+            { q: "Do I have to pay for AI writing?", a: "No. AI writing runs on your own DeepSeek or Claude API key (BYOK) — you pay your provider directly. Our offline tools are completely free and need no key." },
             { q: "Is my data used to train AI?", a: "Never. Your content and brand voice data are 100% private. We do not use your data for model training." },
             { q: "How does brand voice learning work?", a: "Upload a writing sample or let our Creative Interview Engine guide you. The AI learns your tone, vocabulary, and style preferences over time." },
-            { q: "Do I need a credit card to start?", a: "No! Start with the Free plan — no credit card required. Upgrade when you need more power." },
+            { q: "Do I need a credit card to start?", a: "No! Everything is free. Use the offline tools with no signup, or add your own API key whenever you want AI generations." },
           ].map((faq, i) => (
             <details key={i} className="glass-card group cursor-pointer">
               <summary className="flex items-center justify-between font-semibold text-white text-sm sm:text-base">{faq.q}<ChevronDown className="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" /></summary>

@@ -1,31 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
-import { plans } from "@/lib/pricing";
-
-// Product structured data — derived from shared pricing module
-const productSchema = {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Try AI Writer",
-  "description": "AI writing tool that learns your voice",
-  "brand": {
-    "@type": "Brand",
-    "name": "Try AI Writer",
-  },
-  "offers": plans.map((plan) => ({
-    "@type": "Offer",
-    "name": `${plan.name} Plan`,
-    "price": plan.price.replace("$", ""),
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "description": plan.features.slice(0, 2).join(", "),
-    ...(plan.price !== "$0" ? { "priceValidUntil": "2027-12-31" } : {}),
-  })),
-};
+import { Check, KeyRound, PenLine, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 
 // BreadcrumbList structured data
 const breadcrumbSchema = {
@@ -47,77 +23,45 @@ const breadcrumbSchema = {
   ],
 };
 
+const freeTools = [
+  "SEO Analyzer — score any page against 20+ on-page factors",
+  "Originality Checker — detect AI vs. human-written text",
+  "Prompt Optimizer — turn vague briefs into sharp prompts",
+  "Word Counter — counts, reading time, keyword density",
+  "Full editor with brand-voice learning & templates",
+];
+
+const byokFeatures = [
+  "Paste your own DeepSeek or Claude API key",
+  "Unlimited generations — no daily cap, no markup",
+  "Your key is stored only in your browser",
+  "Never uploaded to our servers",
+  "Pay only your provider's API rates",
+];
+
+const faqs = [
+  {
+    q: "Is Try AI Writer really free?",
+    a: "Yes. The app is free to use. AI writing runs on your own API key (BYOK); our offline writing tools need no key at all. We don't sell subscriptions or credits.",
+  },
+  {
+    q: "Where is my API key stored?",
+    a: "Only in your browser's local storage. It is sent directly to your chosen provider and is never uploaded to or stored on our servers.",
+  },
+  {
+    q: "How do you make money if it's free?",
+    a: "We are supported by privacy-friendly ads, not subscriptions. That's why there is no credit card, no trial expiry, and no paywall.",
+  },
+  {
+    q: "Do I need an account?",
+    a: "No. You can use every tool without signing up. An account only helps you save your work and brand voice across devices.",
+  },
+];
+
 export default function PricingContent() {
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const { data: session, status } = useSession();
-
-  const handlePlanClick = async (planName: string) => {
-    const planKey = planName.toLowerCase() as "pro" | "max" | "free";
-
-    if (status === "loading") {
-      alert("Please wait, checking your login status...");
-      return;
-    }
-
-    if (status === "unauthenticated") {
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = "/login?redirect=/pricing";
-      return;
-    }
-
-    if (planKey === "free") {
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = "/write";
-      return;
-    }
-
-    setLoadingPlan(planName);
-
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-      const response = await fetch("/api/payment/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: planKey }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (!data.url) {
-        throw new Error("No checkout URL returned");
-      }
-
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = data.url;
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      alert("Payment error: " + message + "\n\nPlease try again later");
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
-
-  const isPaidPlan = (planName: string) => {
-    return planName.toLowerCase() !== "free";
-  };
-
   return (
     <>
       {/* Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -138,172 +82,113 @@ export default function PricingContent() {
           </div>
         </header>
 
-        {/* Pricing Content */}
+        {/* Content */}
         <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
-          {/* Header */}
+          {/* Hero */}
           <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(168,85,247,0.3)] bg-[rgba(168,85,247,0.08)] px-4 py-1 text-sm text-[#A855F7] mb-6">
+              <Sparkles className="w-4 h-4" /> 100% Free · No Subscription
+            </span>
             <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
-              Simple, Transparent Pricing
+              Free Forever. Bring Your Own Key.
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Start free, upgrade when you need more.
+              Try AI Writer costs you nothing. Use our free offline writing tools with no key, or add your own DeepSeek / Claude API key for unlimited AI generations. We make money from ads — never from you.
             </p>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
-              <div
-                key={plan.name}
-                className={`glass-card p-8 ${plan.recommended ? "border-[rgba(168,85,247,0.2)]" : ""}`}
-                style={plan.recommended ? { boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" } : {}}
-              >
-                <div>
-                  {/* Plan Name */}
-                  <h2 className="text-xl font-display font-bold text-white">
-                    {plan.name}
-                  </h2>
-                  <p className="text-sm text-slate-400 mt-1">
-                    {plan.description}
-                  </p>
-
-                  {/* Price */}
-                  <div className="mt-6">
-                    <p className="text-5xl font-display font-extrabold text-white">
-                      {plan.price}
-                    </p>
-                    <p className="text-sm text-slate-400">
-                      /month
-                    </p>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="mt-8 space-y-3">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
-                        <span className="text-slate-400">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={() => handlePlanClick(plan.name)}
-                    disabled={loadingPlan === plan.name}
-                    className={`w-full mt-8 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                      plan.recommended || isPaidPlan(plan.name)
-                        ? "btn-primary"
-                        : "btn-outline"
-                    }`}
-                  >
-                    {loadingPlan === plan.name ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Redirecting...
-                      </div>
-                    ) : (
-                      plan.cta
-                    )}
-                  </button>
+          {/* Two ways to use — informational, not purchasable */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Free offline tools */}
+            <div className="glass-card p-8">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <Wrench className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
+                <h2 className="text-xl font-display font-bold text-white">Free Offline Tools</h2>
               </div>
-            ))}
-          </div>
+              <p className="text-5xl font-display font-extrabold text-white mt-4">
+                $0
+                <span className="text-base font-normal text-slate-400 ml-2">forever</span>
+              </p>
+              <p className="text-sm text-slate-400 mt-1">No API key. No account. No quota.</p>
+              <ul className="mt-8 space-y-3">
+                {freeTools.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span className="text-sm font-mono text-emerald-400 mt-0.5 flex-shrink-0">{"✓"}</span>
+                    <span className="text-slate-400">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/tools"
+                className="w-full mt-8 py-3 rounded-lg text-sm font-semibold btn-outline inline-flex items-center justify-center"
+              >
+                Explore Free Tools
+              </Link>
+            </div>
 
-          {/* Compare with Alternatives */}
-          <div className="mt-20 md:mt-32">
-            <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
-              Compare with Alternatives
-            </h2>
-            <div className="glass-card overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left p-4 text-slate-400 font-semibold">Feature</th>
-                    <th className="text-center p-4 text-blue-400 font-semibold">Try AI Writer Pro</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Jasper</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Copy.ai</th>
-                    <th className="text-center p-4 text-slate-400 font-semibold">Writesonic</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Monthly Price</td>
-                    <td className="p-4 text-center text-white font-bold">$9</td>
-                    <td className="p-4 text-center text-slate-400">$49</td>
-                    <td className="p-4 text-center text-slate-400">$29</td>
-                    <td className="p-4 text-center text-slate-400">$39</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Free Tier</td>
-                    <td className="p-4 text-center text-emerald-400">✅ 10/day</td>
-                    <td className="p-4 text-center text-red-400">❌ 7-day trial</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Brand Voice Learning</td>
-                    <td className="p-4 text-center text-emerald-400">✅ Digital Twin</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Claude Model</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="p-4 text-slate-300">Creative Interview</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                  </tr>
-                  <tr>
-                    <td className="p-4 text-slate-300">Chinese Optimization</td>
-                    <td className="p-4 text-center text-emerald-400">✅</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                    <td className="p-4 text-center text-red-400">❌</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* BYOK AI writing */}
+            <div
+              className="glass-card p-8 border-[rgba(168,85,247,0.2)]"
+              style={{ boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(168,85,247,0.12)] flex items-center justify-center">
+                  <KeyRound className="w-5 h-5 text-[#A855F7]" />
+                </div>
+                <h2 className="text-xl font-display font-bold text-white">AI Writing (BYOK)</h2>
+              </div>
+              <p className="text-5xl font-display font-extrabold text-white mt-4">
+                Your Key
+                <span className="text-base font-normal text-slate-400 ml-2">unlimited</span>
+              </p>
+              <p className="text-sm text-slate-400 mt-1">You pay your provider. We add zero markup.</p>
+              <ul className="mt-8 space-y-3">
+                {byokFeatures.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span className="text-sm font-mono text-[#A855F7] mt-0.5 flex-shrink-0">{"✓"}</span>
+                    <span className="text-slate-400">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/write"
+                className="w-full mt-8 py-3 rounded-lg text-sm font-semibold btn-primary inline-flex items-center justify-center"
+              >
+                Add Your API Key
+              </Link>
             </div>
           </div>
 
-          {/* FAQ Section */}
-          <div className="mt-20 md:mt-32">
+          {/* How we make money */}
+          <div className="mt-16 glass-card p-8 flex items-start gap-4">
+            <ShieldCheck className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-display font-bold text-white text-lg mb-1">
+                How we stay free
+              </h3>
+              <p className="text-slate-400">
+                We are ad-supported, not subscription-supported. That is why there is no credit card,
+                no trial that expires, and no paywall in front of your work. Bring your own API key and
+                the AI runs at your provider&apos;s rates; everything else is on us.
+              </p>
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div className="mt-20">
             <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
               Frequently Asked Questions
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  question: "Can I cancel anytime?",
-                  answer: "Yes, you can cancel your subscription at any time. Your access will continue until the end of your billing period."
-                },
-                {
-                  question: "What payment methods do you accept?",
-                  answer: "We accept all major credit cards, PayPal, and bank transfers for annual plans."
-                },
-                {
-                  question: "Is there a free trial?",
-                  answer: "Our Free plan is essentially an unlimited trial. Use 10 Claude + 10 DeepSeek generations per day forever, no credit card required."
-                },
-                {
-                  question: "Can I switch plans?",
-                  answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately."
-                }
-              ].map((faq, index) => (
+              {faqs.map((faq, index) => (
                 <div key={index} className="glass-card p-6">
-                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-slate-400">
-                    {faq.answer}
-                  </p>
+                  <h3 className="font-semibold text-white mb-2 flex items-start gap-2">
+                    <PenLine className="w-4 h-4 text-[#4A90E2] mt-1 flex-shrink-0" />
+                    {faq.q}
+                  </h3>
+                  <p className="text-slate-400">{faq.a}</p>
                 </div>
               ))}
             </div>

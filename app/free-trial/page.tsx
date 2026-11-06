@@ -7,13 +7,13 @@ import { NavWrapper } from "@/app/components/NavWrapper";
 const features = [
   {
     icon: Zap,
-    title: "3 Free Generations",
-    desc: "Generate blog posts, emails, or social content instantly — no card required.",
+    title: "Unlimited Free Tools",
+    desc: "SEO analyzer, originality checker, prompt optimizer, and word counter — free, no key, no signup.",
   },
   {
     icon: PenLine,
-    title: "Learns Your Voice",
-    desc: "Our Digital Twin adapts to your tone and style with every prompt.",
+    title: "Bring Your Own Key",
+    desc: "Paste your DeepSeek or Claude API key for unlimited AI writing. Your key stays in your browser.",
   },
   {
     icon: Shield,
@@ -38,22 +38,23 @@ export default function FreeTrialPage() {
           </span>
         </h1>
         <p className="text-lg sm:text-xl text-slate-500 dark:text-slate-400 mt-6">
-          No credit card required. Get 3 free generations and see why bloggers
-          and marketers choose Try AI Writer.
+          No credit card. No subscription. No trial that expires. Use our free
+          offline writing tools instantly, or add your own API key for unlimited
+          AI generations.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
           <Link
             href="/write"
             className="btn-primary text-lg px-8 py-4 flex items-center gap-2"
           >
-            Start Free Trial <ArrowRight className="w-5 h-5" />
+            Start Writing Free <ArrowRight className="w-5 h-5" />
           </Link>
           <Link href="/pricing" className="btn-outline text-lg px-8 py-4">
-            See Pricing
+            How It Works
           </Link>
         </div>
         <p className="text-sm text-slate-500 mt-4">
-          Free plan includes DeepSeek model. No signup needed.
+          Free forever · No signup needed · Your API key stays in your browser.
         </p>
       </section>
 
@@ -82,21 +83,21 @@ export default function FreeTrialPage() {
             Ready to write 3x faster?
           </h2>
           <p className="text-slate-500 dark:text-slate-400 mb-8">
-            Start writing smarter with Try AI Writer today.
+            Start writing smarter with Try AI Writer today — free, forever.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/write"
               className="btn-primary text-lg px-8 py-4 flex items-center gap-2"
             >
-              <Check className="w-5 h-5" /> Start Free Trial
+              <Check className="w-5 h-5" /> Start Writing Free
             </Link>
-            <Link href="/" className="btn-outline text-lg px-8 py-4">
-              Learn More
+            <Link href="/pricing" className="btn-outline text-lg px-8 py-4">
+              How It Works
             </Link>
           </div>
           <p className="text-xs text-slate-500 mt-6">
-            No credit card required · Cancel anytime
+            Free forever · No credit card · No subscription
           </p>
         </div>
       </section>

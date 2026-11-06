@@ -186,7 +186,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-display font-bold text-white mb-4">10. Termination</h2>
               <div className="text-slate-300 space-y-4">
                 <p>
-                  <strong className="text-white">By You:</strong> You may cancel your subscription at any time through your account settings. Cancellation takes effect at the end of your current billing period.
+                  <strong className="text-white">By You:</strong> Try AI Writer is a free service with no paid subscription. You may stop using the Service at any time, or delete your account through your account settings.
                 </p>
                 <p>
                   <strong className="text-white">By Us:</strong> We may terminate or suspend your account immediately if you violate these Terms or engage in illegal activities.

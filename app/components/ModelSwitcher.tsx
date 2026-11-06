@@ -131,8 +131,8 @@ export function ModelSwitcher({ onModelSwitch }: ModelSwitcherProps) {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <Link href="/pricing" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
-                🚀 Upgrade to Pro — $9/month
+              <Link href="/write" className="btn-primary text-center min-h-[44px] flex items-center justify-center">
+                🚀 Use Claude with your API key
               </Link>
               <button
                 onClick={() => setShowUpgradePrompt(false)}

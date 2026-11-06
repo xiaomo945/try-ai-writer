@@ -18,7 +18,7 @@ const features = [
   },
   {
     name: "Starting Price",
-    tryaiwriter: { value: "$0 Free / $9 Pro", supported: true },
+    tryaiwriter: { value: "$0 — Free forever", supported: true },
     jasper: { value: "$49/mo", supported: true },
     copyai: { value: "$29/mo", supported: true },
   },
@@ -30,7 +30,7 @@ const features = [
   },
   {
     name: "Free Plan",
-    tryaiwriter: { value: "10 generations/day", supported: true },
+    tryaiwriter: { value: "Free offline tools + BYOK", supported: true },
     jasper: { value: "7-day trial only", supported: false },
     copyai: { value: "Limited", supported: true },
   },

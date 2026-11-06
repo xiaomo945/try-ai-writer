@@ -1,127 +1,44 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
+import { Check, KeyRound, PenLine, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 
-// 中文版本的定价计划
-const chinesePlans = [
+const freeTools = [
+  "SEO 分析器 — 对照 20+ 项页面因素为任意网页打分",
+  "原创度检测 — 区分 AI 生成与人工撰写文本",
+  "提示词优化器 — 把模糊需求变成精准提示词",
+  "字数统计 — 字数、阅读时长、关键词密度",
+  "完整编辑器，含品牌语气学习与模板",
+];
+
+const byokFeatures = [
+  "粘贴你自己的 DeepSeek 或 Claude API Key",
+  "无限次生成 — 无每日上限、无加价",
+  "你的 Key 仅保存在浏览器中",
+  "绝不上传到我们的服务器",
+  "只需按你服务商的 API 价格付费",
+];
+
+const faqs = [
   {
-    name: "免费版",
-    description: "适合刚开始使用的用户",
-    price: "$0",
-    features: [
-      "每天 10 次 Claude 生成",
-      "每天 10 次 DeepSeek 生成",
-      "基础品牌声音学习",
-      "标准编辑建议",
-      "社区支持"
-    ],
-    cta: "免费开始",
-    recommended: false
+    q: "Try AI Writer 真的免费吗？",
+    a: "是的。本应用完全免费。AI 写作运行在你自己的 API Key（BYOK）上；我们的离线写作工具则根本不需要 Key。我们不卖订阅，也不卖额度。",
   },
   {
-    name: "专业版",
-    description: "适合专业写作者和内容创作者",
-    price: "$9",
-    features: [
-      "无限 Claude + DeepSeek 生成",
-      "高级品牌声音分析",
-      "完整编辑建议",
-      "文件上传 (50MB)",
-      "优先支持",
-      "记忆银行功能",
-      "数字分身助手"
-    ],
-    cta: "立即升级",
-    recommended: true
+    q: "我的 API Key 保存在哪里？",
+    a: "只保存在你浏览器的本地存储中。它会直接发往你选择的服务商，绝不会上传或存储在我们的服务器上。",
   },
   {
-    name: "旗舰版",
-    description: "适合团队和高频用户",
-    price: "$25",
-    features: [
-      "专业版所有功能",
-      "团队协作功能",
-      "无限文件上传",
-      "API 访问",
-      "专属客户经理",
-      "高级分析报告",
-      "自定义品牌声音模型"
-    ],
-    cta: "选择旗舰版",
-    recommended: false
-  }
+    q: "既然免费，你们靠什么赚钱？",
+    a: "我们由注重隐私的广告支持，而不是靠订阅。所以没有信用卡、没有试用到期、也没有付费墙。",
+  },
+  {
+    q: "我需要注册账号吗？",
+    a: "不需要。你可以不注册就使用每一个工具。账号只是帮你跨设备保存作品和品牌语气。",
+  },
 ];
 
 export default function PricingContentZh() {
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const { data: session, status } = useSession();
-
-  const handlePlanClick = async (planName: string) => {
-    let planKey: "pro" | "max" | "free";
-    if (planName === "免费版") planKey = "free";
-    else if (planName === "专业版") planKey = "pro";
-    else planKey = "max";
-
-    if (status === "loading") {
-      alert("正在检查登录状态...");
-      return;
-    }
-
-    if (status === "unauthenticated") {
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = "/login?redirect=/pricing";
-      return;
-    }
-
-    if (planKey === "free") {
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = "/write";
-      return;
-    }
-
-    setLoadingPlan(planName);
-
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-      const response = await fetch("/api/payment/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: planKey }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (!data.url) {
-        throw new Error("服务器未返回支付链接");
-      }
-
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = data.url;
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "未知错误";
-      alert("支付错误: " + message + "\n\n请稍后再试");
-    } finally {
-      setLoadingPlan(null);
-    }
-  };
-
-  const isPaidPlan = (planName: string) => {
-    return planName !== "免费版";
-  };
-
   return (
     <>
       <main className="min-h-screen flex flex-col">
@@ -139,108 +56,111 @@ export default function PricingContentZh() {
           </div>
         </header>
 
-        {/* Pricing Content */}
+        {/* Content */}
         <div className="flex-1 max-w-5xl mx-auto w-full px-4 py-16 md:py-24">
-          {/* Header */}
+          {/* Hero */}
           <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(168,85,247,0.3)] bg-[rgba(168,85,247,0.08)] px-4 py-1 text-sm text-[#A855F7] mb-6">
+              <Sparkles className="w-4 h-4" /> 完全免费 · 无需订阅
+            </span>
             <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4">
-              简单透明的定价
+              永久免费，自带 API Key
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              免费开始，需要时再升级。
+              Try AI Writer 不花你一分钱。无需 Key 即可使用免费离线写作工具，或添加你自己的 DeepSeek / Claude API Key 进行无限次 AI 生成。我们靠广告盈利——绝不是靠你。
             </p>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {chinesePlans.map((plan, index) => (
-              <div
-                key={plan.name}
-                className={`glass-card p-8 ${plan.recommended ? "border-[rgba(168,85,247,0.2)]" : ""}`}
-                style={plan.recommended ? { boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" } : {}}
-              >
-                <div>
-                  {/* Plan Name */}
-                  <h2 className="text-xl font-display font-bold text-white">
-                    {plan.name}
-                  </h2>
-                  <p className="text-sm text-slate-400 mt-1">
-                    {plan.description}
-                  </p>
-
-                  {/* Price */}
-                  <div className="mt-6">
-                    <p className="text-5xl font-display font-extrabold text-white">
-                      {plan.price}
-                    </p>
-                    <p className="text-sm text-slate-400">
-                      /month
-                    </p>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="mt-8 space-y-3">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <span className="text-sm font-mono text-[#4A90E2] mt-0.5 flex-shrink-0">{">"}</span>
-                        <span className="text-slate-400">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={() => handlePlanClick(plan.name)}
-                    disabled={loadingPlan === plan.name}
-                    className={`w-full mt-8 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                      plan.recommended || isPaidPlan(plan.name)
-                        ? "btn-primary"
-                        : "btn-outline"
-                    }`}
-                  >
-                    {loadingPlan === plan.name ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        重定向中...
-                      </div>
-                    ) : (
-                      plan.cta
-                    )}
-                  </button>
+          {/* 两种使用方式 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* 免费离线工具 */}
+            <div className="glass-card p-8">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                  <Wrench className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
+                <h2 className="text-xl font-display font-bold text-white">免费离线工具</h2>
               </div>
-            ))}
+              <p className="text-5xl font-display font-extrabold text-white mt-4">
+                ¥0
+                <span className="text-base font-normal text-slate-400 ml-2">永久</span>
+              </p>
+              <p className="text-sm text-slate-400 mt-1">无 API Key、无账号、无限额。</p>
+              <ul className="mt-8 space-y-3">
+                {freeTools.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span className="text-sm font-mono text-emerald-400 mt-0.5 flex-shrink-0">{"✓"}</span>
+                    <span className="text-slate-400">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/tools"
+                className="w-full mt-8 py-3 rounded-lg text-sm font-semibold btn-outline inline-flex items-center justify-center"
+              >
+                浏览免费工具
+              </Link>
+            </div>
+
+            {/* BYOK AI 写作 */}
+            <div
+              className="glass-card p-8 border-[rgba(168,85,247,0.2)]"
+              style={{ boxShadow: "0 0 40px rgba(168, 85, 247, 0.1)" }}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(168,85,247,0.12)] flex items-center justify-center">
+                  <KeyRound className="w-5 h-5 text-[#A855F7]" />
+                </div>
+                <h2 className="text-xl font-display font-bold text-white">AI 写作（自带 Key）</h2>
+              </div>
+              <p className="text-5xl font-display font-extrabold text-white mt-4">
+                你的 Key
+                <span className="text-base font-normal text-slate-400 ml-2">无限次</span>
+              </p>
+              <p className="text-sm text-slate-400 mt-1">你按服务商付费，我们零加价。</p>
+              <ul className="mt-8 space-y-3">
+                {byokFeatures.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span className="text-sm font-mono text-[#A855F7] mt-0.5 flex-shrink-0">{"✓"}</span>
+                    <span className="text-slate-400">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/write"
+                className="w-full mt-8 py-3 rounded-lg text-sm font-semibold btn-primary inline-flex items-center justify-center"
+              >
+                添加你的 API Key
+              </Link>
+            </div>
           </div>
 
-          {/* FAQ Section */}
-          <div className="mt-20 md:mt-32">
+          {/* 我们如何保持免费 */}
+          <div className="mt-16 glass-card p-8 flex items-start gap-4">
+            <ShieldCheck className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-display font-bold text-white text-lg mb-1">
+                我们如何保持免费
+              </h3>
+              <p className="text-slate-400">
+                我们由广告支持，而非订阅支持。这就是为什么没有信用卡、没有到期的试用、也没有挡在你作品前的付费墙。带上你自己的 API Key，AI 就按你服务商的价格运行；其余一切由我们承担。
+              </p>
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div className="mt-20">
             <h2 className="text-3xl font-display font-bold text-white text-center mb-12">
               常见问题
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  question: "我可以随时取消吗？",
-                  answer: "是的，您可以随时取消订阅。您的访问权限将持续到计费周期结束。"
-                },
-                {
-                  question: "你们接受哪些支付方式？",
-                  answer: "我们接受所有主要信用卡、PayPal，以及年度计划的银行转账。"
-                },
-                {
-                  question: "有免费试用吗？",
-                  answer: "我们的免费版实际上就是无限试用。每天可以使用 10 次 Claude + 10 次 DeepSeek 生成，无需信用卡。"
-                },
-                {
-                  question: "我可以切换套餐吗？",
-                  answer: "是的，您可以随时升级或降级套餐。更改将立即生效。"
-                }
-              ].map((faq, index) => (
+              {faqs.map((faq, index) => (
                 <div key={index} className="glass-card p-6">
-                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-slate-400">
-                    {faq.answer}
-                  </p>
+                  <h3 className="font-semibold text-white mb-2 flex items-start gap-2">
+                    <PenLine className="w-4 h-4 text-[#4A90E2] mt-1 flex-shrink-0" />
+                    {faq.q}
+                  </h3>
+                  <p className="text-slate-400">{faq.a}</p>
                 </div>
               ))}
             </div>

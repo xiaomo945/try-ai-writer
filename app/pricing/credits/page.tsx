@@ -1,64 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import { creditPackages, useCredits } from "@/lib/credits";
 import Link from "next/link";
+import { KeyRound, ShieldCheck, Wrench } from "lucide-react";
 import Logo from "@/app/components/Logo";
-import { Loader2 } from "lucide-react";
 
-export default function CreditsPurchasePage() {
-  const { addPoints } = useCredits();
-  const [loading, setLoading] = useState<string | null>(null);
+const points = [
+  {
+    icon: Wrench,
+    title: "Free offline tools — no quota",
+    desc: "SEO analyzer, originality checker, prompt optimizer, and word counter are free and need no key at all.",
+  },
+  {
+    icon: KeyRound,
+    title: "AI writing runs on your own key",
+    desc: "Paste your DeepSeek or Claude API key in the browser. Unlimited generations, no markup, no credit balance to top up.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Your key stays with you",
+    desc: "Stored only in your browser and sent straight to your provider. We never see it and never bill you.",
+  },
+];
 
-  const handlePurchase = async (pkg: (typeof creditPackages)[0]) => {
-    // 如果是在开发/测试环境，直接添加点数
-    if (process.env.NODE_ENV === "development") {
-      addPoints(pkg.credits);
-      alert(`Test mode: Added ${pkg.credits} credits!`);
-      return;
-    }
-
-    setLoading(pkg.id);
-    
-    try {
-      // 调用支付 API
-      const response = await fetch("/api/payment/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          plan: `credits-${pkg.id}`,
-          credits: pkg.credits,
-          price: pkg.price
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Payment failed (${response.status})`);
-      }
-
-      const data = await response.json();
-      
-      // 检查返回的 checkout URL
-      if (!data.url) {
-        throw new Error("No checkout URL returned from payment provider");
-      }
-      
-      // 跳转到支付页面
-      // eslint-disable-next-line react-hooks/immutability -- intentional redirect
-      window.location.href = data.url;
-      
-    } catch (error) {
-      console.error("Purchase error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to start payment";
-      alert(`Payment Error: ${errorMessage}\n\nPlease try again or contact support.`);
-    } finally {
-      setLoading(null);
-    }
-  };
-
+export default function CreditsInfoPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white dark:from-gray-950 dark:to-gray-900">
       <header className="border-b border-slate-200 dark:border-gray-800 bg-white dark:bg-gray-950">
@@ -72,64 +36,49 @@ export default function CreditsPurchasePage() {
           </Link>
         </div>
       </header>
+
       <main className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-display font-extrabold text-slate-900 dark:text-white mb-4">
-            💎 Buy Credits
+            No Credits to Buy
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400">
-            Get extra credits for Claude generations and file uploads
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Try AI Writer doesn&apos;t sell credits or subscriptions. Everything is free — AI
+            generations run on your own API key, and our offline tools cost nothing.
           </p>
         </div>
+
         <div className="grid md:grid-cols-3 gap-6">
-          {creditPackages.map((pkg) => (
-            <div
-              key={pkg.id}
-              className={`card relative ${pkg.id === "medium" ? "scale-105 border-emerald-300 shadow-lg" : ""}`}
-            >
-              {pkg.id === "medium" && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-1 rounded-full text-white text-sm font-semibold shadow-md">
-                  Most Popular
-                </div>
-              )}
-              <div className="pt-4">
-                <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mb-2">
-                  {pkg.id === "small" ? "Starter" : pkg.id === "medium" ? "Pro" : "Enterprise"}
-                </h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">
-                    ${pkg.price}
-                  </span>
-                </div>
-                <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-6">
-                  {pkg.credits} Credits
-                </p>
-                <ul className="text-sm text-slate-600 dark:text-slate-400 mb-6 space-y-2">
-                  <li>• {pkg.credits} DeepSeek generations</li>
-                  <li>• {Math.floor(pkg.credits / 5)} Claude generations</li>
-                  <li>• {Math.floor(pkg.credits / 3)} file uploads</li>
-                </ul>
-                <button
-                  onClick={() => handlePurchase(pkg)}
-                  disabled={loading !== null}
-                  className={`w-full min-h-[48px] flex items-center justify-center rounded-xl font-semibold transition-all duration-300 ${
-                    pkg.id === "medium"
-                      ? "bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-lg hover:shadow-emerald-500/25 hover:-translate-y-1"
-                      : "btn-primary"
-                  } ${loading !== null ? "opacity-70 cursor-not-allowed" : ""}`}
-                >
-                  {loading === pkg.id ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                      Processing...
-                    </>
-                  ) : (
-                    "Buy Now"
-                  )}
-                </button>
+          {points.map((p) => (
+            <div key={p.title} className="card p-6 flex flex-col items-start">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mb-4">
+                <p.icon className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
               </div>
+              <h3 className="text-xl font-display font-bold text-slate-900 dark:text-white mb-2">
+                {p.title}
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400">{p.desc}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 glass-card dark:bg-gray-900/60 p-8 text-center">
+          <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white mb-3">
+            How it works
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            We&apos;re supported by ads, not by selling you credits. Bring your own API key for
+            unlimited AI writing, or just use the free offline tools — no account, no card, no
+            balance to manage.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <Link href="/write" className="btn-primary text-lg px-8 py-4">
+              Add Your API Key
+            </Link>
+            <Link href="/tools" className="btn-outline text-lg px-8 py-4">
+              Browse Free Tools
+            </Link>
+          </div>
         </div>
       </main>
     </div>
