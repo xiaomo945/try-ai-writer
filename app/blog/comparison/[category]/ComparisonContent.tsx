@@ -63,11 +63,11 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作工具",
     founded: "Jasper 成立于 2021 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$49/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$49/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$49/月起",
     pros: {
-      us: ["价格便宜 10x,适合个人和小团队", "中文写作质量行业领先", "界面简洁,5 分钟上手", "100+ 写作工具覆盖全场景", "内置 50+ 行业模板"],
+      us: ["完全免费,适合个人和小团队", "中文写作质量行业领先", "界面简洁,5 分钟上手", "100+ 写作工具覆盖全场景", "内置 50+ 行业模板"],
       them: ["品牌历史悠久,企业认知度高", "英文长文质量稳定", "SEO 集成更成熟(Surfer SEO)", "团队协作功能完善", "B2B 大客户服务经验"],
     },
     cons: {
@@ -104,7 +104,7 @@ const COMPARISONS: Record<string, Comparison> = {
       { feature: "团队功能", us: 3, them: 5 },
     ],
     verdict:
-      "如果你主要做中文内容创作,Try AI Writer 在质量、价格、易用性上都完胜 Jasper;如果你的核心需求是英文 B2B 长文,Jasper 的 SEO 集成和英文模型仍有一战之力。但综合 9 维度评估,Try AI Writer 性价比高出 8 倍。",
+      "如果你主要做中文内容创作,Try AI Writer 在质量、价格、易用性上都完胜 Jasper;如果你的核心需求是英文 B2B 长文,Jasper 的 SEO 集成和英文模型仍有一战之力。但综合 9 维度评估,Try AI Writer 性价比完胜。",
     testimonial: {
       quote: "从 Jasper 切换到 Try AI Writer,中文内容产出效率提升 5 倍,成本反而降低 80%。",
       author: "陈雨桐",
@@ -121,8 +121,8 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 文案工具",
     founded: "Copy.ai 成立于 2020 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$36/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$36/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$36/月起",
     pros: {
       us: ["100+ 写作工具场景全覆盖", "中文写作流畅自然", "免费版即可生成完整文章", "内置 SEO / 翻译 / 文案 3 大模块", "模板更新快"],
@@ -175,11 +175,11 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI SEO 写作",
     founded: "Writesonic 成立于 2020 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$19/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$19/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$19/月起",
     pros: {
-      us: ["价格便宜 4x,适合个人", "中文质量更优", "工具细分(100+ 场景)", "界面现代,新手友好", "免费额度慷慨"],
+      us: ["完全免费,适合个人", "中文质量更优", "工具细分(100+ 场景)", "界面现代,新手友好", "免费额度慷慨"],
       them: ["AI Article Writer 长文生成强", "Surfer SEO 集成", "Chatsonic 聊天机器人", "Photosonic AI 生图"],
     },
     cons: {
@@ -210,7 +210,7 @@ const COMPARISONS: Record<string, Comparison> = {
       { feature: "生图功能", us: 1, them: 5 },
     ],
     verdict:
-      "Writesonic 的 AI Article Writer 在英文 SEO 长文上仍是行业标杆,但价格不透明 + 中文弱是硬伤。Try AI Writer 用 1/4 价格提供 90% 的中文 SEO 体验,加上 100+ 细分工具,综合优势明显。",
+      "Writesonic 的 AI Article Writer 在英文 SEO 长文上仍是行业标杆,但价格不透明 + 中文弱是硬伤。Try AI Writer 以完全免费的方式提供 90% 的中文 SEO 体验,加上 100+ 细分工具,综合优势明显。",
   },
   rytr: {
     slug: "rytr",
@@ -218,25 +218,25 @@ const COMPARISONS: Record<string, Comparison> = {
     competitorLogo: "R",
     title: "Try AI Writer vs Rytr",
     subtitle: "平价 AI 写作工具的对比",
-    intro: "Rytr 是入门级 AI 写作工具,价格便宜;Try AI Writer 也是平价定位,但工具丰富度远胜。本页对比两者在价格、模板、生成质量上的差异。",
+    intro: "Rytr 是入门级 AI 写作工具,价格便宜;Try AI Writer 则完全免费,工具丰富度远胜。本页对比两者在价格、模板、生成质量上的差异。",
     winner: "Try AI Writer",
     category: "平价 AI 写作",
     founded: "Rytr 成立于 2021 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$9/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$9/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$9/月起",
     pros: {
       us: ["工具数量 100+ 是 Rytr 的 5x", "中文质量更好", "支持 50+ 写作场景", "SEO / 翻译 / 文案 一体", "现代 UI 设计"],
       them: ["价格便宜,免费版功能不错", "界面极简,新手 1 分钟上手", "Chrome 插件可用"],
     },
     cons: {
-      us: ["免费版额度较小", "无 Chrome 插件"],
+      us: ["AI 写作需自带 API Key", "无 Chrome 插件"],
       them: ["模板数量仅 40+", "中文质量不佳", "功能比较单一", "SEO 集成弱"],
     },
     features: [
       { name: "工具丰富度", us: "★★★★★ (100+)", them: "★★☆☆☆ (40+)" },
       { name: "中文质量", us: "★★★★★", them: "★★☆☆☆" },
-      { name: "价格", us: "★★★★★ ($5)", them: "★★★★☆ ($9)" },
+      { name: "价格", us: "★★★★★ (免费)", them: "★★★★☆ ($9)" },
       { name: "上手难度", us: "★★★★★", them: "★★★★★" },
       { name: "Chrome 插件", us: "★☆☆☆☆", them: "★★★★★" },
     ],
@@ -256,7 +256,7 @@ const COMPARISONS: Record<string, Comparison> = {
       { feature: "易用性", us: 5, them: 5 },
     ],
     verdict:
-      "Rytr 是合格的入门级工具,但功能单一、中文弱;Try AI Writer 在同等价格下提供 5x 工具丰富度和优秀中文,适合中长期使用。",
+      "Rytr 是合格的入门级工具,但功能单一、中文弱;Try AI Writer 以免费方式提供 5x 工具丰富度和优秀中文,适合中长期使用。",
   },
   sudowrite: {
     slug: "sudowrite",
@@ -268,11 +268,11 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作工具",
     founded: "Sudowrite 成立于 2022 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$19/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$19/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$19/月起",
     pros: {
-      us: ["通用场景覆盖广(100+ 工具)", "价格便宜 4x", "中文商业写作更优", "团队 / 营销 / SEO 全栈", "上手简单"],
+      us: ["通用场景覆盖广(100+ 工具)", "完全免费", "中文商业写作更优", "团队 / 营销 / SEO 全栈", "上手简单"],
       them: ["英文小说创作能力顶尖", "Story Bible 长篇连贯性强", "Twist Generator 创意工具", "Write Style 模仿作家风格"],
     },
     cons: {
@@ -314,8 +314,8 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作 vs 文档 AI",
     founded: "Notion AI 成立于 2023 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$10/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$10/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$10/月起",
     pros: {
       us: ["独立工具,无需 Notion", "100+ 写作工具场景", "中文质量行业第一", "模板丰富,可直接套用", "SEO / 翻译 / 文案一体化"],
@@ -360,8 +360,8 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作 vs 通用 AI",
     founded: "ChatGPT 成立于 2022 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$20/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$20/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$20/月起",
     pros: {
       us: ["专业写作场景深度优化", "100+ 工具直接套用", "无需 Prompt,5 秒生成", "中文写作质量行业领先", "SEO / 营销 / 文案模板齐全"],
@@ -407,8 +407,8 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作 vs 大模型",
     founded: "Claude 成立于 2023 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$20/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$20/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$20/月起",
     pros: {
       us: ["100+ 写作工具开箱即用", "中文质量行业第一", "无需 Prompt Engineering", "模板 + 场景化引导", "SEO/翻译/营销一体化"],
@@ -453,11 +453,11 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作 vs 润色",
     founded: "Grammarly 成立于 2009 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$12/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$12/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$12/月起",
     pros: {
-      us: ["中英文双语支持", "100+ 写作工具场景", "从 0 到 1 写完整文章", "价格便宜 2.4x", "中文优化是 Grammarly 没有的"],
+      us: ["中英文双语支持", "100+ 写作工具场景", "从 0 到 1 写完整文章", "完全免费", "中文优化是 Grammarly 没有的"],
       them: ["英文润色能力行业第一", "Chrome / Word 插件完善", "语法纠错细致", "语气/清晰度建议专业"],
     },
     cons: {
@@ -499,8 +499,8 @@ const COMPARISONS: Record<string, Comparison> = {
     winner: "Try AI Writer",
     category: "AI 写作 vs 改写",
     founded: "QuillBot 成立于 2017 年 / Try AI Writer 成立于 2025 年",
-    pricing: { us: "$5/月起", them: "$8/月起" },
-    pricingUs: "$5/月起",
+    pricing: { us: "免费 / BYOK", them: "$8/月起" },
+    pricingUs: "免费 / BYOK",
     pricingThem: "$8/月起",
     pros: {
       us: ["100+ 写作工具全场景", "改写只是其中一项", "中文改写质量更好", "创作 + 翻译 + SEO 一体", "适合中文母语者"],
@@ -834,7 +834,7 @@ export default function ComparisonContent({ params }: Props) {
             体验更好的 AI 写作工具
           </h2>
           <p className="text-slate-300 max-w-2xl mx-auto">
-            100+ 写作工具,5 分钟上手,首月 $5 即可解锁全部功能。
+            100+ 写作工具,5 分钟上手,免费即可使用全部功能。
           </p>
           <Link
             href="/signup"
